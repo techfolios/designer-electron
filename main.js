@@ -1,4 +1,5 @@
 const electron = require('electron')
+const electronOauth2 = require('electron-oauth2')
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
@@ -11,17 +12,24 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+var config = {
+    clientId: '4578d8f7380fb75dcfc6',
+    clientSecret: '0e3e90b709d2efae7e7b0ca48e12f3d06efca68a',
+    authorizationUrl: 'https://github.com/login/oauth/authorize',
+    tokenUrl: 'https://github.com/login/oauth/access_token',
+    useBasicAuthorizationHeader: false,
+    redirectUri: 'http://localhost'
+};
+
+function createWindow (token) {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
-
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
-
+     pathname: path.join(__dirname, 'index.html'),
+     protocol: 'file:',
+     slashes: true
+   }))
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
@@ -37,7 +45,38 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+
+app.on('ready', createWindow);
+
+app.on('ready', () => {
+  const windowParams = {
+    alwaysOnTop: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: false
+    }
+  }
+  let scopes = ["user:email", "notifications"];
+
+  const options = {
+    scope: scopes.join("%20"),
+    accessType: 'offline'
+  };
+
+  const myApiOauth = electronOauth2(config, windowParams);
+
+  myApiOauth.getAccessToken(options)
+    .then(token => {
+      console.log(token);
+      // use your token.access_token
+      // createWindow(token);
+
+      myApiOauth.refreshToken(token.refresh_token)
+        .then(newToken => {
+          //use your new token
+        });
+    });
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
