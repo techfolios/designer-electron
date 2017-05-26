@@ -23,13 +23,10 @@ var config = {
 
 function createWindow (token) {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({width: 800, height: 600});
   // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-     pathname: path.join(__dirname, 'index.html'),
-     protocol: 'file:',
-     slashes: true
-   }))
+  mainWindow.loadURL(`file://${__dirname}/index.html?access_token=${token.access_token}&token_type=${token.token_type}&scope=${token.scope}`)
+
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
@@ -45,8 +42,6 @@ function createWindow (token) {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-
-app.on('ready', createWindow);
 
 app.on('ready', () => {
   const windowParams = {
@@ -67,14 +62,14 @@ app.on('ready', () => {
 
   myApiOauth.getAccessToken(options)
     .then(token => {
-      console.log(token);
       // use your token.access_token
-      // createWindow(token);
+      console.log(token)
+      createWindow(token);
 
-      myApiOauth.refreshToken(token.refresh_token)
-        .then(newToken => {
-          //use your new token
-        });
+      // myApiOauth.refreshToken(token.refresh_token)
+      //   .then(newToken => {
+      //     //use your new token
+      //   });
     });
 });
 
