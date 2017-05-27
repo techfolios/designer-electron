@@ -11,6 +11,7 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let token
 
 var config = {
     clientId: '4578d8f7380fb75dcfc6',
@@ -21,7 +22,7 @@ var config = {
     redirectUri: 'http://localhost'
 };
 
-function createWindow (token) {
+function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
   // and load the index.html of the app.
@@ -51,23 +52,22 @@ app.on('ready', () => {
       nodeIntegration: false
     }
   }
-  let scopes = ["user:email", "notifications"];
+  let scopes = ["user", "notifications"];
 
   const options = {
-    scope: scopes.join("%20"),
-    accessType: 'offline'
-  };
+    scope: scopes.join(" "),
+    accessType: 'online'
+  }
 
   const myApiOauth = electronOauth2(config, windowParams);
 
   myApiOauth.getAccessToken(options)
-    .then(token => {
-      // use your token.access_token
-      console.log(token)
-      createWindow(token);
-
+    .then(t => {
+      console.log(t);
+      token = t;
+      createWindow();
       // myApiOauth.refreshToken(token.refresh_token)
-      //   .then(newToken => {
+      //   .then(newT => {
       //     //use your new token
       //   });
     });

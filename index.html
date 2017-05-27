@@ -2,16 +2,25 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>DownGit 2.0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
   </head>
   <body>
-    <center>
-    <h1>Cuck Squad</h1>
-  </center>
+    <div class="ui container center aligned">
+      <div class="ui text container">
+        <h1 class="ui dividing header">DownGit 2.0</h1>
+        <h3 class="first">Download Me</h3>
+        <div class="ui input">
+          <input id="search" type="text" placeholder="Search...">
+        </div>
+      </div>
+      <div id="repos" class="ui text container">
+      </div>
+    </div>
   </body>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js" type="text/javascript"></script>
   <script>
-    require('./jquery.min.js')
     require('./renderer.js')
   </script>
 </html>
