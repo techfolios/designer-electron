@@ -13,14 +13,7 @@ const url = require('url')
 let mainWindow
 let token
 
-var config = {
-    clientId: '4578d8f7380fb75dcfc6',
-    clientSecret: '0e3e90b709d2efae7e7b0ca48e12f3d06efca68a',
-    authorizationUrl: 'https://github.com/login/oauth/authorize',
-    tokenUrl: 'https://github.com/login/oauth/access_token',
-    useBasicAuthorizationHeader: false,
-    redirectUri: 'http://localhost'
-};
+var config = require('./config.js')
 
 function createWindow () {
   // Create the browser window.
@@ -63,7 +56,6 @@ app.on('ready', () => {
 
   myApiOauth.getAccessToken(options)
     .then(t => {
-      console.log(t);
       token = t;
       createWindow();
       // myApiOauth.refreshToken(token.refresh_token)
@@ -89,6 +81,3 @@ app.on('activate', function () {
     createWindow()
   }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
