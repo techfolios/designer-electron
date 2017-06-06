@@ -55,10 +55,21 @@
           showNoResults: false
         });
     </script>
-    <script>
-      require('./renderer.js')
+    <script type="text/javascript">
+    const mkdir = require('mkdirp');
+    const path = require('path');
+    const os = require('os');
+    mkdir(`${os.homedir()}/.techfolios`, function (err) {
+      if (err) console.error(err);
+      else {
+        console.log("Nice Meme!");
+      }
+    });
     </script>
   <!-- Insert this line after script imports -->
   <script>if (window.module) module = window.module;</script>
+  <script>
+    require('./renderer.js')
+  </script>
 
 </html>

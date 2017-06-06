@@ -22,7 +22,6 @@ $.ajaxSetup({
 
 $.getJSON('https://api.github.com/user/repos', function (data) {
   data.forEach(function(e, i, a) {
-    // if (i == 0) console.log(e);
     const box = `
     <div class="ui raised very padded text container segment">
       <h2 class="ui header"><a href="#">${e.full_name}</a></h2>
