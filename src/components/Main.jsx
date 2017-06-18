@@ -1,7 +1,6 @@
 import React from 'react';
 import fs from 'fs';
 import os from 'os';
-import swal from 'sweetalert2';
 import mkdir from 'mkdirp';
 import $ from 'jquery';
 import Git from 'nodegit';
@@ -53,34 +52,7 @@ class Main extends React.Component {
   }
   directory() {
     if (!fs.existsSync(`${os.homedir()}/.techfolios`)) {
-      swal({
-        title: '~/.techfolios',
-        text: "Do we have your permission to create the above directory? (You need to say yes for techfolios to work.)",
-        type: 'info',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, create it!'
-      }).then(function () {
-        mkdir(`${os.homedir()}/.techfolios`, function (err) {
-          if (err) console.error(err);
-          else {
-            swal(
-              'Success!',
-              'Your directory has been created!',
-              'success'
-            )
-        }
-      });
-      }, function (dismiss) {
-        if (dismiss === 'cancel') {
-          swal(
-            'Cancelled',
-            'The directory has not been created. (???)',
-            'error'
-          )
-        }
-      });
+      
     }
   }
   populateRepos() {

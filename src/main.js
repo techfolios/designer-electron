@@ -34,11 +34,15 @@ function authenticate() {
 }
 
 app.on('ready', () => {
-  let token;
+  let token = {
+    access_token: '',
+    token_type: '',
+    token_scope: ''
+  };
+  mainWindow = createWindow(`file://${__dirname}/index.html?access_token=${token.access_token}&token_type=${token.token_type}&scope=${token.scope}`);
   authenticate()
   .then((res) => {
     token = res;
-    mainWindow = createWindow(`file://${__dirname}/index.html?access_token=${token.access_token}&token_type=${token.token_type}&scope=${token.scope}`);
   }, (rej) => console.log(rej));
 });
 
