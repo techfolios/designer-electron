@@ -1,27 +1,26 @@
 {
   "name": "electron-adam",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/main.js",
+  "description": "node git test",
+  "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/techfolios/electron-adam.git"
   },
-  "author": "adambutac",
+  "keywords": [
+    "ndoegit"
+  ],
+  "author": "adam butac",
   "license": "ISC",
-  "devDependencies": {
-    "electron-prebuilt-compile": "^1.6.11",
-    "electron-rebuild": "^1.5.11"
+  "bugs": {
+    "url": "https://github.com/techfolios/electron-adam/issues"
   },
+  "homepage": "https://github.com/techfolios/electron-adam#readme",
   "dependencies": {
-    "electron-oauth2": "^2.4.1",
-    "jquery": "^3.2.1",
-    "nodegit": "^0.18.3",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-router-dom": "^4.1.1"
+    "nodegit": "^0.18.3"
   }
 }
