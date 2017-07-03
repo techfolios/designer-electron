@@ -1,47 +1,50 @@
-const Git = require("nodegit");
-const os = require('os');
+const electron = require('electron');
+const auth = require('./auth.js');
+const git = require('./git.js');
 
-let techfolios = {
-  url: "https://github.com/techfolios/techfolios.github.io"
-}
+const app = electron.app;
 
-let user = {
-  name: "adambutac",
-  url: {
-    git : "https://github.com/${this.name}/",
-    techfolio : "https://github.com/${this.name}/${this.name}.github.io",
-    local : os.homedir() + "/.techfolios"
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow;
+
+app.on('ready', init);
+
+// Quit when all windows are closed.
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') {
+    app.quit();
   }
+});
+
+app.on('activate', function () {
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow();
+  }
+});
+
+function init() {
+  auth.authenticate();  
+  createWindow();
 }
 
-Git.Clone(techfolios.url, user.url.local)
-  // // Look up this known commit.
-  // .then(function(repo) {
-  //   // Use a known commit sha from this repository.
-  //   return repo.getCommit("59b20b8d5c6ff8d09518454d4dd8b7b30f095ab5");
-  // })
-  // // Look up a specific file within that commit.
-  // .then(function(commit) {
-  //   return commit.getEntry("README.md");
-  // })
-  // // Get the blob contents from the file.
-  // .then(function(entry) {
-  //   // Patch the blob to contain a reference to the entry.
-  //   return entry.getBlob().then(function(blob) {
-  //     blob.entry = entry;
-  //     return blob;
-  //   });
-  // })
-  // // Display information about the blob.
-  // .then(function(blob) {
-  //   // Show the path, sha, and filesize in bytes.
-  //   console.log(blob.entry.path() + blob.entry.sha() + blob.rawsize() + "b");
+function createWindow() {
 
-  //   // Show a spacer.
-  //   console.log(Array(72).join("=") + "\n\n");
+  mainWindow = new BrowserWindow({ width: 920, height: 600 });
 
-  //   // Show the entire file.
-  //   console.log(String(blob));
-  // })
-  .catch(function(err) { console.log(err); });
+  mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file:',
+        slashes: true
+      }));
+  mainWindow.show();
 
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null;
+  });
+}
