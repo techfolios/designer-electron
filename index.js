@@ -1,50 +1,48 @@
-const electron = require('electron');
-const auth = require('./auth.js');
-const git = require('./git.js');
+const os = require('os');
+const fs = require('fs');
 
-const app = electron.app;
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
-
-app.on('ready', init);
-
-// Quit when all windows are closed.
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit();
+// check if directory exists
+console.log('searching for ~/.techfolios directory...');
+let tfDir = os.homedir() + '/.techfolios';
+fs.exists(tfDir, (res) => {
+  if(res) {
+    console.log(tfDir + ' exists.');
+    console.log('searching for ~/.techfolios/.git directory... ');
+    fs.exists(tfDir + '/.git',  (res) => {
+      console.log('~/.techfolios/.git directory exists.');
+      console.log('starting app...');
+    });
+  } else {
+    console.log(tfDir + ' not found.');
+    ask('.techfolios directory not found. Create one? (y/n)', /[y,n]/, (res) => {
+      if(res === 'y'){
+        console.log('check if user has github.io repo');
+        console.log('user has/has not');
+        console.log('begin init.');
+        console.log('git clone https://github.com/techfolios/template');
+        console.log('git remote rm origin');
+        console.log('git remote add origin https://github.com/${user}/${user}.github.io');
+      }
+    });
   }
 });
 
-app.on('activate', function () {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
+function ask(question, format, callback) {
+  var stdin = process.stdin, stdout = process.stdout;
 
-function init() {
-  auth.authenticate();  
-  createWindow();
-}
+  stdin.resume();
+  stdout.write(question + ": ");
 
-function createWindow() {
+  stdin.once('data', function(data) {
+    data = data.toString().trim();
 
-  mainWindow = new BrowserWindow({ width: 920, height: 600 });
-
-  mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'index.html'),
-        protocol: 'file:',
-        slashes: true
-      }));
-  mainWindow.show();
-
-  mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null;
+    if (format.test(data)) {
+      callback(data);
+      stdin.end();
+    } else {
+      stdout.write("It should match: "+ format +"\n");
+      ask(question, format, callback);
+    }
   });
 }
+
