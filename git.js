@@ -1,4 +1,5 @@
 const SimpleGit = require("simple-git");
+const FS = require('fs');
 
 class Git {
   constructor(gitUserName) {
@@ -13,34 +14,47 @@ class Git {
         githubPage: `https://github.com/${gitUserName}/${gitUserName}.github.io`,
       }
     };
+    FS.mkdir(Git.local, (err) => {
+      if(err.code == 'EEXIST') {
+        console.log("Directory exists.");
+      } else {
+        console.log(err);
+      }
+    });
   }
 
-  hasGithubPage(callback) {
-    return SimpleGit()
-      .listRemote([this.user.url.githubPage], function (err, data) {
-        if (!err) {
-          console.log('Remote url for repository at ' + __dirname + ':');
-          console.log(data);
-          callback(data);
-        } 
-      });
+  hasGithubPage() {
+    return new Promise((res, rej) => {
+      SimpleGit()
+        .listRemote([this.user.url.githubPage], function (err, data) {
+          if (!err) {
+            console.log('Remote url for repository at ' + __dirname + ':');
+            res(data);
+          } else {
+            rej(err);
+          }
+        });
+    });
   }
 
   cloneGithubPage() {
     let options = [];
     let remote = this.user.url.githubPage;
 
-    return SimpleGit(Git.local)
+    return new Promise((res, rej) => {
+      SimpleGit(Git.local)
       .exec(() => {
         console.log(`Cloning ${remote}...`);
       }).clone(remote, Git.local, options, (err) => {
         if (err) {
-          console.log(err);
           console.log(`Could not clone ${remote}`);
+          rej(err);
         } else {
-          console.log(`Cloned ${remote} to ${Git.local}`);          
+          console.log(`Cloned ${remote} to ${Git.local}`); 
+          res(true);
         }
       });
+    });
   }
 
   cloneTechfoliosTemplate() {
@@ -49,24 +63,27 @@ class Git {
     let userRemote = this.user.url.githubPage;
     let userAlias = this.user.name;
 
-    return SimpleGit(Git.local)
-      .exec(() => {
-        console.log(`Cloning ${remote}...`);
-      }).clone(remote, Git.local, options, (err) => {
-        if (err) {
-          console.log(err);
-          console.log(`Could not clone ${remote}`);
-        }
-      }).exec(() => {
-        console.log(`Adding remote ${userAlias} ${userRemote}`);
-      }).addRemote(`${userAlias}`, userRemote, (err) => {
-        if (err) {
-          console.log(err);
-          console.log(`Could not add remote ${userAlias} ${userRemote}`);
-        } else {
-          console.log(`Cloned ${remote} to ${Git.local}`);
-        }
-      });
+    return new Promise((res, rej) => {
+      SimpleGit(Git.local)
+        .exec(() => {
+          console.log(`Cloning ${remote}...`);
+        }).clone(remote, Git.local, options, (err) => {
+          if (err) {
+            console.log(`Could not clone ${remote}`);
+            rej(err);
+          }
+        }).exec(() => {
+          console.log(`Adding remote ${userAlias} ${userRemote}`);
+        }).addRemote(`${userAlias}`, userRemote, (err) => {
+          if (err) {
+            console.log(`Could not add remote ${userAlias} ${userRemote}`);
+            rej(err);
+          } else {
+            console.log(`Cloned ${remote} to ${Git.local}`);
+            res(true);
+          }
+        });
+    });
   }
 }
 

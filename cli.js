@@ -2,34 +2,52 @@ const FS = require('fs');
 const Git = require('./git.js');
 
 class Cli {
+  constructor() {
+    this.git = null;
+  }
 
   start() {
+    this.askUsername()
+      .then((res) => {
+        this.git = new Git(res);
+        return this.git.hasGithubPage();
+      })
+      .then((res) => {
+        console.log(res);
+        return this.askGithubPage();
+      }, (rej) => {
+        console.log(rej);
+        return this.git.cloneTechfoliosTemplate();
+      })
+      .then((res) => {
+        console.log(res);
+        console.log('Ok, getting your exsiting techfolio page.');
+        return this.git.cloneGithubPage();
+      }, (rej) => {
+        console.log(rej);
+        return this.git.cloneTechfoliosTemplate();
+      })
+      .then((res) => {
+        console.log(res);
+      }, (rej) => {
+        console.log(rej);
+      });
+  }
 
-    console.log('searching for ~/.techfolios directory...');
-    FS.exists(Git.local, (exists) => {
-      if (!exists) {
-        console.log(`Adding local directory ${Git.local}.`);
-        FS.mkdir(Git.local);
-      }
+  askUsername() {
+    return new Promise((res) => {
+      Cli.ask('What is your github username?', /[a-z,A-Z,0-9]/, res);
+    });
+  }
 
-      Cli.ask('What is your github username?', /[a-z,A-Z,0-9]/, (name) => {
-        let git = new Git(name);
-
-        git.hasGithubPage((repoUrl) => {
-          if (repoUrl) {
-            Cli.ask('You have an existing github page. Is it a techfolio? (y/n)', /[y,n]/, (isTechfolio) => {
-              if (isTechfolio === 'y') {
-                console.log('Ok, getting your exsiting techfolio page.');
-                git.cloneGithubPage();
-              } else if (isTechfolio === 'n') {
-                git.cloneTechfoliosTemplate();            
-              }
-            });
-          } else {
-            console.log('.techfolios directory not found. Cloning template.');
-            git.cloneTechfoliosTemplate();
-          }
-        });
+  askGithubPage() {
+    return new Promise((res, rej) => {
+      Cli.ask('You have an existing github page. Is it a techfolio? (y/n)', /[y,n]/, (ans) => {
+        if (ans === 'y') {
+          res(ans);
+        } else if (ans === 'n') {
+          rej(ans);
+        }
       });
     });
   }
