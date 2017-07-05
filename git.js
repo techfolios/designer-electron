@@ -14,9 +14,15 @@ class Git {
         githubPage: `https://github.com/${gitUserName}/${gitUserName}.github.io`,
       }
     };
+
+    this.localExists = false;
+
     FS.mkdir(Git.local, (err) => {
-      if(err.code == 'EEXIST') {
+      if(!err) {
+        console.log(`Added local directory ${Git.local}`);
+      } else if(err.code == 'EEXIST') {
         console.log("Directory exists.");
+        this.localExists = true;
       } else {
         console.log(err);
       }
