@@ -1,26 +1,52 @@
-const NodeGit = require("nodegit");
+const SimpleGit = require("simple-git");
 const OS = require("os");
 
-export class Git {
-  constructor() {
+class Git {
+  constructor(gitUserName) {
     this.techfolios = {
       url: "https://github.com/techfolios/techfolios.github.io"
     };
 
     this.user = {
-      name: "adambutac",
+      name: gitUserName,
       url: {
-        git: "https://github.com/${this.name}/",
-        techfolio: "https://github.com/${this.name}/${this.name}.github.io",
+        github: `https://github.com/${this.name}/`,
+        techfolio: `https://github.com/${this.name}/${this.name}.github.io`,
         local: OS.homedir() + "/.techfolios"
       }
     };
   }
 
-  clone() {
-    return NodeGit.Clone(techfolios.url, user.url.local).catch(function(err) {
-      return err;
+  hasGithubIO() {
+    SimpleGit(this.user.url.local).listRemote(['--get-url'], function (err, data) {
+      if (!err) {
+        console.log('Remote url for repository at ' + __dirname + ':');
+        console.log(data);
+        return false;
+      }
     });
+  }
+
+  cloneTechfoliosTemplate() {
+    let options = {};
+    return SimpleGit(this.user.url.local)
+      .then(() => {
+        console.log(`Cloning ${this.techfolios.url}...`);
+      }).clone(this.techfolios.url, this.user.url.local, options, (err) => {
+        if (err) {
+          console.log(err);
+          console.log(`Could not clone ${this.techfolios.url}`);
+        }
+      }).then(() => {
+        console.log(`Adding remote ${this.name} ${this.user.url.techfolio}`);
+      }).addRemote(`${this.name}`, this.user.url.techfolio, (err) => {
+        if (err) {
+          console.log(err);
+          console.log(`Could not add remote ${this.name} ${this.user.url.techfolio}`);
+        } else {
+          console.log(`Cloned ${this.techfolios.url} to ${this.user.url.local}`);
+        }
+      });
   }
 }
 

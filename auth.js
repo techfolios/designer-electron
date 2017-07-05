@@ -1,22 +1,29 @@
-const oauth = require('electron-oauth-github');
-const secure = require('./secure.js');
+const OauthGithub = require('electron-oauth-github');
+const Secret = require('./secret.js');
 
-export class auth {
-  client_id     = secure.client_id;
-  client_secret = secure.client_secret;
-  scopes        = secure.scopes;
-  token         = '';
+class Auth {
+
+  constructor() {
+    this.token = '';
+    this.github = new OauthGithub({
+      id: Secret.client_id,
+      secret: Secret.client_secret,
+      scopes: Secret.scopes,
+    });
+  }
 
   authenticate() {
-    return new Promise((resolve, fail) =>
-      github.startRequest(function (access_token, err) {
+    return new Promise((res, rej) => {
+      this.github.startRequest(function (access_token, err) {
         if (err) {
           console.error(err);
         }
-        token = access_token;
-        console.log(token);
-    }));
+
+        console.log("Retrieved Github token: " + access_token);
+        this.token = access_token;
+      });
+    });
   }
 }
 
-module.exports = auth;
+module.exports = Auth;

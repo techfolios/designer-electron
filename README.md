@@ -2,7 +2,8 @@
 
 Authenticate and retrieve a token, or init an ssh key.
 
-Check if .techfolios exists and .techfolios/.git exists
+~~Check if .techfolios exists and .techfolios/.git exists~~
+Check if the user has a repo first, then ask if they want to clone it or not.
 
 if new then init repo and 'sync'
   Clone https://github.com/techfolios/template to .techfolios
