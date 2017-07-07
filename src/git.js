@@ -1,5 +1,6 @@
 const SimpleGit = require("simple-git");
 const FS = require('fs');
+const path = require('path');
 
 class Git {
   constructor(gitUserName) {
@@ -93,6 +94,6 @@ class Git {
   }
 }
 
-Git.local = `${__dirname}/.techfolios`; //OS.homedir() + "/.techfolios"
+Git.local = path.resolve(__dirname, '../.techfolios'); //OS.homedir() + "/.techfolios"
 
 module.exports = Git;
