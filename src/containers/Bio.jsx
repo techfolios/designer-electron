@@ -11,7 +11,6 @@ class Bio extends React.Component {
     super(props);
     this.bio = props.bio;
     this.state = { bio: this.bio };
-
     this.addInterest = this.addInterest.bind(this);
     this.save = this.save.bind(this);
     this.cancel = this.cancel.bind(this);
@@ -36,6 +35,7 @@ class Bio extends React.Component {
   }
 
   render() {
+    console.log('render');
     return (
       <div>
         <Segment basic >
@@ -48,27 +48,88 @@ class Bio extends React.Component {
           <Form>
             <Form.Group>
               <Form.Input label='Name'
-                value={this.state.bio.basics.name}
-                placeholder={this.state.bio.basics.name}
-                onChange={(event) => this.state.bio.basics.name = event.target.value} />
-              <Form.Input label='E-Mail'
-                value={this.state.bio.basics.email}
-                placeholder={this.state.bio.basics.email}
-                onChange={(event) => this.state.bio.basics.email = event.target.value} />
+                defaultValue={this.state.bio.basics.name}
+                placeholder={"John Smith"}
+                onChange={(event) => {
+                  this.setState({
+                    bio: {
+                      basics: {
+                        name: event.target.value
+                      }
+                    }
+                  });
+                }}
+              />              
+              <Form.Input label='Label'
+                defaultValue={this.state.bio.basics.label}
+                placeholder={'Student'}
+                onChange={(event) => {
+                  this.setState({
+                    bio: {
+                      basics: {
+                        label: event.target.value
+                      }
+                    }
+                  });
+                }}
+              />              
               <Form.Input label='Phone Number'
-                value={this.state.bio.basics.phone}
-                placeholder={this.state.bio.basics.phone}
-                onChange={(event) => this.state.bio.basics.phone = event.target.value} />
-            </Form.Group>
-            <Form.Input label='Website'
-              width={9}
-              value={this.state.bio.basics.website}
-              placeholder="https://www.example.com"
-              onChange={(event) => this.state.bio.basics.site = event.target.value} />
+                defaultValue={this.state.bio.basics.phone}
+                placeholder={'+1-808-867-5309'}
+                onChange={(event) => {
+                  this.setState({
+                    bio: {
+                      basics: {
+                        phone: event.target.value
+                      }
+                    }
+                  });
+                }}
+              />            
+            </Form.Group>              
+            <Form.Group>              
+              <Form.Input label='E-Mail'
+                defaultValue={this.state.bio.basics.email}
+                placeholder='jsmith@example.com'
+                onChange={(event) => {
+                  this.setState({
+                    bio: {
+                      basics: {
+                        email: event.target.value
+                      }
+                    }
+                  });
+                }}
+              />
+              <Form.Input label='Website'
+                width={9}
+                defaultValue={this.state.bio.basics.website}
+                placeholder="https://www.example.com"
+                onChange={(event) => {
+                  this.setState({
+                    bio: {
+                      basics: {
+                        website: event.target.value
+                      }
+                    }
+                  });
+                }} 
+              />
+            </Form.Group>                            
             <Form.TextArea label='Summary'
-              value={this.state.bio.basics.summary}
-              onChange={(event) => this.state.bio.basics.summary = event.target.value} />
-            <Form.Dropdown multiple label='Interests'
+              defaultValue={this.state.bio.basics.summary}
+              placeholder="Once upon a midnight dreary, while I pondered weak and weary..."
+                onChange={(event) => {
+                  this.setState({
+                    bio: {
+                      basics: {
+                        summary: event.target.value
+                      }
+                    }
+                  });
+                }}
+              />            
+              <Form.Dropdown multiple label='Interests'
               options={this.state.bio.interests.map((item, index) => {
                 return {
                   key: index,
