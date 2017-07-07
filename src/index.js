@@ -1,9 +1,11 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
+const Git = require('git.js');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const USERNAME = 'adambutac';
 
 let mainWindow;
 
@@ -17,6 +19,15 @@ app.on('window-all-closed', function () {
 
 app.on('activate', function () {
   if (mainWindow === null) {
+    this.git = new Git(USERNAME);
+    this.git.hasGithubPage()
+      .then((res) => {
+        console.log(res);
+        return this.git.cloneGithubPage();
+      }, (rej) => {
+        console.log(rej);
+        return this.git.cloneTechfoliosTemplate();
+      });
     createWindow();
   }
 });

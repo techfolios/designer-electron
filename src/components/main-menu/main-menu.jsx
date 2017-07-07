@@ -19,7 +19,7 @@ class MainMenu extends React.Component {
   render() {
     const { activeItem } = this.state;
     return (
-      <Menu inverted vertical fixed="left" icon='labeled'>
+      <Menu vertical fixed="left" icon='labeled' color="teal">
         <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} >
           <Icon name='user circle'/>
           Bio    
@@ -35,9 +35,9 @@ class MainMenu extends React.Component {
           Resume
         </Menu.Item>
 
-        <Menu.Item name='links' active={activeItem === 'links'} onClick={this.handleItemClick} >
-          <Icon name='linkify'/>
-          Links
+        <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleItemClick} >
+          <Icon name='upload'/>
+          Upload
         </Menu.Item>
       </Menu>
     );

@@ -37,29 +37,35 @@ class Bio extends React.Component {
   render() {
     return (
       <div>
-        <Header as='h1' icon textAlign="center">
-          <Icon name='user circle'/>
-          Bio
-        </Header>
-        <Segment basic>
+        <Segment basic >
+          <Header as='h2' icon textAlign="center">
+            <Icon name='user circle'/>
+            Bio
+          </Header>
+        </Segment>
+        <Segment color="teal">
           <Form>
             <Form.Group>
               <Form.Input label='Name'
                 width={3}
                 value={this.state.bio.basics.name}
+                placeholder={this.state.bio.basics.name}
                 onChange={(event) => this.state.bio.basics.name = event.target.value} />
               <Form.Input label='E-Mail'
                 width={3}
                 value={this.state.bio.basics.email}
+                placeholder={this.state.bio.basics.email}
                 onChange={(event) => this.state.bio.basics.email = event.target.value} />
               <Form.Input label='Phone Number'
                 width={3}
                 value={this.state.bio.basics.phone}
+                placeholder={this.state.bio.basics.phone}
                 onChange={(event) => this.state.bio.basics.phone = event.target.value} />
             </Form.Group>
             <Form.Input label='Website'
               width={9}
               value={this.state.bio.basics.site}
+              placeholder="https://www.example.com"
               onChange={(event) => this.state.bio.basics.site = event.target.value} />
             <Form.TextArea label='Summary'
               value={this.state.bio.basics.summary}
