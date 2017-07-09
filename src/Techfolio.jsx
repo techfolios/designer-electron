@@ -6,8 +6,8 @@ import FS from 'fs';
 import Path from 'path';
 import SimpleGit from 'simple-git';
 
-import MainMenu from './containers/MainMenu.jsx';
-import Bio from './containers/Bio.jsx';
+import MainMenu from './components/MainMenu.jsx';
+import Bio from './containers/bio/Bio.jsx';
 
 class Techfolio extends React.Component {
 
