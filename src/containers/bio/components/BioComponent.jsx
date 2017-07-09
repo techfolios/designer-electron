@@ -9,13 +9,20 @@ class BioComponent extends React.Component {
   }
 
   renderHeader() {
-    return <Header as="h2"> { this.state.name } </Header>      
+    return <Header as="h2"> { this.state.name } </Header>   
+  }
+
+  renderComponent(callback) {
+    return <Segment basic>
+      { this.renderHeader() }
+      { callback() }
+    </Segment>
   }
 
   render() {
-      return <Segment>
+      return <Segment basic>
         { this.renderHeader() }
-        { JSON.stringify(this.state.data, null, 4) }
+        <code> { JSON.stringify(this.state, null, 4) } </code>   
       </Segment>
   }
 }

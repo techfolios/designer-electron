@@ -43,12 +43,12 @@ class Bio extends React.Component {
         <Segment color="teal">
           <Basics name="Basics" data={ this.state.basics }/>
           <Interests name="Interests" data={ this.state.interests }/>
-          <Skills data={ this.state.skills }/>
-          <Education data={ this.state.education }/>
-          <Work data={ this.state.work }/>
-          <Voulnteer data={ this.state.voulnteer }/>
-          <Awards data={ this.state.awards }/>
-          <References data={ this.state.references }/>
+          <Skills name="Skills" data={ this.state.skills }/>
+          <Education name="Education" data={ this.state.education }/>
+          <Work name="Work" data={ this.state.work }/>
+          <Voulnteer name="Volunteer" data={ this.state.voulnteer }/>
+          <Awards name="Awards" data={ this.state.awards }/>
+          <References name="" data={ this.state.references }/>
           <Button onClick={ this.cancel }>Cancel</Button>
           <Button onClick={ this.save }>Save</Button>
         </Segment>

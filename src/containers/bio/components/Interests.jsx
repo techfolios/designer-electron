@@ -7,22 +7,25 @@ class Interests extends BioComponent {
     super(props);
   }
 
-  render() {
-    return <Segment>
-      { this.renderHeader() }
-      <Form>
-        <Form.Dropdown multiple label='Interests'
-          options={
-            this.state.data.map((item, index) => {
-              return {
-                key:   index,
-                value: item.name,
-                text:  item.name,
-              }
-            })
-          } />
-      </Form>
-    </Segment>
+  render() { 
+    return <div>
+      { 
+        this.renderComponent(() => {
+          return <Form>
+            <Form.Dropdown multiple label='Interests'
+              options={
+                this.state.data.map((item, index) => {
+                  return {
+                    key:   index,
+                    value: item.name,
+                    text:  item.name,
+                  }
+                })
+              } />
+          </Form>
+        })
+      }
+    </div>
   }
 }
 
