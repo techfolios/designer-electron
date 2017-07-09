@@ -13,7 +13,7 @@ class Education extends React.Component{
   render() {
     return <div>
       { this.state.data.map((education) => {
-        return <Form>
+        return <div>
           <Header as="h3">{ education.name }</Header>
             <Form.Group>
               <Form.Input label='Institution'
@@ -53,7 +53,7 @@ class Education extends React.Component{
                     }
                   })
                 } />                                       
-          </Form>
+          </div>
         }) 
       }
     </div>

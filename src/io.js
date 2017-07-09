@@ -82,31 +82,32 @@ class IO {
   }
 
   loadBio() {
-    return require(Path.resolve(this.localURL, '_data/bio.json'));
+    return new Promise((res, rej) => {
+      let path = Path.resolve(this.localURL, '_data/bio.json');
+      FS.readFile(path, (err, data) => {
+        if(err) {
+          rej(err);
+        }
+        res(JSON.parse(data));
+      })
+    });
   }
   
   writeBio(data) {
-    FS.writeFile(Path.resolve(this.localURL, '_data/bio.json'), data, (err) => {
-      return new Promise((res, rej) => {
+    return new Promise((res, rej) => {
+      FS.writeFile(Path.resolve(this.localURL, '_data/bio.json'), JSON.stringify(data, null, 2), (err) => {
         if (err) {
           rej(err);
         }
-        res(true);
+        SimpleGit(this.localURL).commit(`Saved on machine: ${OS.hostname}`, (err) => {
+          if (err) {
+            rej(err);
+            // prompt an error to the user that the state could not be saved.
+          }
+          res(true);
+        });
       })
     })
-      .then((res) => {
-        if (res) {
-          SimpleGit(this.localURL).commit(`Saved on machine: ${OS.hostname}`, (err) => {
-            if (err) {
-              console.log(err);
-              // prompt an error to the user that the state could not be saved.
-            }
-          });
-        }
-      }, (rej) => {
-        console.log(rej);
-        // prompt an error to the user that the state could not be saved.
-      });
   }
 }
 

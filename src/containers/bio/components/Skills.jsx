@@ -13,7 +13,7 @@ class Skills extends React.Component{
   render() {
     return <div>
       {this.state.data.map((skill) => {
-          return <Form>
+          return <div>
             <Header as="h3">{skill.name}</Header>
             <Form.Group>
               <Form.Input label='Level'
@@ -31,7 +31,7 @@ class Skills extends React.Component{
                   })
                 } />
             </Form.Group>
-          </Form>
+          </div>
         })
       }
     </div>

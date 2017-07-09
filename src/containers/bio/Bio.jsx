@@ -7,7 +7,7 @@ import Education from './components/Education';
 import Interests from './components/Interests';
 import References from './components/References';
 import Skills from './components/Skills';
-import Voulnteer from './components/Voulnteer';
+import Volunteer from './components/Volunteer';
 import Work from './components/Work';
 
 function BioComponent(props) {
@@ -22,6 +22,26 @@ class Bio extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.bio;
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSaveBio = this.handleSaveBio.bind(this);
+    this.handleLoadBio = this.handleLoadBio.bind(this);
+    
+  }
+
+  handleChange(key, data) {
+    let state = this.state;
+    state[key] = data;
+    this.setState(state);
+  }
+
+
+  handleSaveBio(e) {
+    e.preventDefault();
+    this.props.onSaveBio(this.state);
+  }
+
+  handleLoadBio() {
+    this.props.onLoadBio();
   }
 
   render() {
@@ -33,32 +53,33 @@ class Bio extends React.Component {
         </Header>
       </Segment>
       <Segment color="teal">
-        <BioComponent name="Basics">
-          <Basics data={this.state.basics} />
-        </BioComponent>
-        <BioComponent name="Interests">
-          <Interests data={this.state.interests} />
-        </BioComponent>
-        <BioComponent name="Skills">
-          <Skills data={this.state.skills} />
-        </BioComponent>
-        <BioComponent name="Education">
-          <Education data={this.state.education} />
-        </BioComponent>
-        <BioComponent name="Work">
-          <Work data={this.state.work} />
-        </BioComponent>
-        <BioComponent name="Volunteer">
-          <Voulnteer data={this.state.voulnteer} />
-        </BioComponent>
-        <BioComponent name="Awards">
-          <Awards data={this.state.awards} />
-        </BioComponent>
-        <BioComponent name="References">
-          <References data={this.state.references} />
-        </BioComponent>
-        <Button onClick={() => this.setState(this.io.loadBio)}>Cancel</Button>
-        <Button onClick={() => this.io.saveBio()}>Save</Button>
+        <Form onSubmit={this.handleSaveBio}>
+          <BioComponent name="Basics">
+            <Basics data={this.state.basics} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Interests">
+            <Interests data={this.state.interests} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Skills">
+            <Skills data={this.state.skills} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Education">
+            <Education data={this.state.education} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Work">
+            <Work data={this.state.work} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Volunteer">
+            <Volunteer data={this.state.volunteer} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Awards">
+            <Awards data={this.state.awards} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="References">
+            <References data={this.state.references} onChange={ this.handleChange } />
+          </BioComponent>
+          <Form.Button type="Submit">Save</Form.Button>
+        </Form>
       </Segment>
     </div>
   }

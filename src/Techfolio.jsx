@@ -11,7 +11,8 @@ class Techfolio extends React.Component {
   constructor() {
     super();
     this.io = new IO('adambutac');
-    this.save = this.save.bind(this);
+    this.handleSaveBio = this.handleSaveBio.bind(this);
+    this.handleLoadBio = this.handleLoadBio.bind(this);
     this.state = {
       bio: {},
       isLoading: false
@@ -23,17 +24,24 @@ class Techfolio extends React.Component {
     this.io.hasLocal()
       .then((res) => {
         if (!res) {
-          return this.io.cloneUserRemote();
+          this.io.cloneUserRemote()
+            .then((res) => {
+              if(res){
+                return this.io.loadBio();
+              }
+            }, (rej) => {
+              console.log(rej);
+            });
+        } else {
+          return this.io.loadBio();
         }
-        this.setState({ bio: this.io.loadBio() });
-        this.setState({ isLoading: false });
       }, (rej) => {
         console.log(rej);
         this.setState({ isLoading: false });
       })
       .then((res) => {
         console.log(res);
-        this.setState({ bio: this.io.loadBio() });
+        this.setState({ bio: res });
         this.setState({ isLoading: false });
       }, (rej) => {
         console.log(rej);
@@ -41,8 +49,19 @@ class Techfolio extends React.Component {
       });
   }
 
-  save(data) {
+  handleSaveBio(data) {
+    this.io.writeBio(data);
+  }
 
+  handleLoadBio() {
+    this.setState({ isLoading: true });
+    this.io.loadBio()
+      .then((res) => {
+        this.setState({bio: res});
+        this.setState({ isLoading: false });
+      }, (rej) => {
+        this.setState({ isLoading: false });
+      });
   }
 
   componentDidMount() {
@@ -50,7 +69,7 @@ class Techfolio extends React.Component {
   }
 
   getRender() {
-    return <Bio bio={ this.state.bio }/>;
+    return <Bio bio={ this.state.bio } onSaveBio={ this.handleSaveBio } onLoadBio={ this.handleLoadBio }/>;
   }
  
   render() {
