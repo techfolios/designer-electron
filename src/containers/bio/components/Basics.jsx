@@ -26,22 +26,22 @@ class Basics extends React.Component{
           defaultValue={this.state.label}
           placeholder={'Student'}
           onChange={(e) => this.handleChange(e, 'label')} />
+      </Form.Group>      
+      <Form.Group>    
         <Form.Input label='Phone Number'
           defaultValue={this.state.phone}
           placeholder={'+1-808-867-5309'}
           onChange={(e) => this.handleChange(e, 'phone')} />
-      </Form.Group>
-      <Form.Group>
         <Form.Input label='E-Mail'
           defaultValue={this.state.email}
           placeholder='jsmith@example.com'
           onChange={(e) => this.handleChange(e, 'email')} />
-        <Form.Input label='Website'
-          width={9}
-          defaultValue={this.state.website}
-          placeholder="https://www.example.com"
-          onChange={(e) => this.handleChange(e, 'website')} />
-      </Form.Group>
+      </Form.Group>      
+      <Form.Input label='Website'
+        width={9}
+        defaultValue={this.state.website}
+        placeholder="https://www.example.com"
+        onChange={(e) => this.handleChange(e, 'website')} />
       <Form.Input label='Picture'
         defaultValue={this.state.picture}
         placeholder="https://www.example.com"

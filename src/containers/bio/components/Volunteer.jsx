@@ -31,10 +31,6 @@ class Voulnteer extends React.Component{
               defaultValue={volunteer.organization}
               placeholder='Example High School'
               onChange={(e) => this.handleChange(e, 'organization', index)} />
-            <Form.Input label='Website'
-              defaultValue={volunteer.website}
-              placeholder="https://www.example.org"
-              onChange={(e) => this.handleChange(e, 'website', index)} />
             <Form.Input label='position'
               defaultValue={volunteer.position}
               placeholder="Example Specialist"
@@ -49,7 +45,11 @@ class Voulnteer extends React.Component{
               defaultValue={volunteer.endDate}
               placeholder="01/01/9999"
               onChange={(e) => this.handleChange(e, 'endDate', index)} />
-          </Form.Group>
+        </Form.Group>
+          <Form.Input label='Website'
+            defaultValue={volunteer.website}
+            placeholder="https://www.example.org"
+            onChange={(e) => this.handleChange(e, 'website', index)} />
           <Form.Input label='Summary'
             defaultValue={volunteer.summary}
             placeholder="Lead developer for weather sensing project"

@@ -35,21 +35,21 @@ class Work extends React.Component {
               defaultValue={work.position}
               placeholder="Example Specialist"
               onChange={(e) => this.handleChange(e, 'position', index)} />
-            <Form.Input label='website'
-              defaultValue={work.website}
-              placeholder="www.exampleco.com"
-              onChange={(e) => this.handleChange(e, 'website', index)} />
           </Form.Group>
           <Form.Group>
-            <Form.Input label='Start Date'
-              defaultValue={work.startDate}
-              placeholder='01/01/1970'
-              onChange={(e) => this.handleChange(e, 'startDate', index)} />
             <Form.Input label='End Date'
               defaultValue={work.endDate}
               placeholder="01/01/9999"
               onChange={(e) => this.handleChange(e, 'endDate', index)} />
+            <Form.Input label='Start Date'
+              defaultValue={work.startDate}
+              placeholder='01/01/1970'
+              onChange={(e) => this.handleChange(e, 'startDate', index)} />
           </Form.Group>
+          <Form.Input label='website'
+            defaultValue={work.website}
+            placeholder="www.exampleco.com"
+            onChange={(e) => this.handleChange(e, 'website', index)} />
           <Form.Input label='Summary'
             defaultValue={work.summary}
             placeholder="Lead developer for weather sensing project"

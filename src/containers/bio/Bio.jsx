@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Segment, Header, Icon } from 'semantic-ui-react';
+import { Form, Button, Segment, Grid, Header, Icon, Image } from 'semantic-ui-react';
 
 import Awards from './components/Awards';
 import Basics from './components/Basics';
@@ -11,10 +11,10 @@ import Volunteer from './components/Volunteer';
 import Work from './components/Work';
 
 function BioComponent(props) {
-  return <Segment basic>
+  return <Grid.Column >
     <Header as="h2"> {props.name} </Header>
     {props.children}
-  </Segment>
+  </Grid.Column>
 }
 
 class Bio extends React.Component {
@@ -46,14 +46,12 @@ class Bio extends React.Component {
 
   render() {
     return <div>
-      <Segment basic >
-        <Header as='h2' icon textAlign="center">
-          <Icon name='user circle' />
-          Bio
-        </Header>
+      <Segment basic>
+        <Image centered src={this.state.basics.picture} size='small' shape='circular' />
       </Segment>
       <Segment color="teal">
         <Form onSubmit={this.handleSaveBio}>
+          <Grid doubling relaxed padded columns={2}>
           <BioComponent name="Basics">
             <Basics data={this.state.basics} onChange={ this.handleChange } />
           </BioComponent>
@@ -78,7 +76,8 @@ class Bio extends React.Component {
           <BioComponent name="References">
             <References data={this.state.references} onChange={ this.handleChange } />
           </BioComponent>
-          <Form.Button type="Submit">Save</Form.Button>
+          </Grid>
+          <Form.Button positive type="Submit">Save</Form.Button>
         </Form>
       </Segment>
     </div>

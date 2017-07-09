@@ -21,35 +21,34 @@ class Education extends React.Component {
     return <div>
       {this.state.data.map((education, index) => {
         return <div key={index}>
-          <Header as="h3">{education.name}</Header>
+          <Form.Input label='Institution'
+            defaultValue={education.institution}
+            placeholder={""}
+            onChange={(e) => this.handleChange(e, 'institution', index)} />
+          <Form.Input label='Area'
+            defaultValue={education.area}
+            placeholder={""}
+            onChange={(e) => this.handleChange(e, 'area', index)} />
           <Form.Group>
-            <Form.Input label='Institution'
-              defaultValue={education.institution}
-              placeholder={"Diamond"}
-              onChange={(e) => this.handleChange(e, 'institution', index)} />
             <Form.Input label='Start Date'
               defaultValue={education.startDate}
-              placeholder={"Diamond"}
+              placeholder={""}
               onChange={(e) => this.handleChange(e, 'startDate', index)} />
-          </Form.Group>
-          <Form.Group>
-            <Form.Input label='Area'
-              defaultValue={education.area}
-              placeholder={"Diamond"}
-              onChange={(e) => this.handleChange(e, 'area', index)} />
             <Form.Input label='End Date'
               defaultValue={education.endDate}
-              placeholder={"Diamond"}
+              placeholder={""}
               onChange={(e) => this.handleChange(e, 'endDate', index)} />
           </Form.Group>
-          <Form.Input label='Study Type'
-            defaultValue={education.studyType}
-            placeholder={"Diamond"}
-            onChange={(e) => this.handleChange(e, 'studyType', index)} />
-          <Form.Input label='GPA'
-            defaultValue={education.gpa}
-            placeholder={"Diamond"}
-            onChange={(e) => this.handleChange(e, 'gpa', index)} />
+          <Form.Group>
+            <Form.Input label='Study Type'
+              defaultValue={education.studyType}
+              placeholder={""}
+              onChange={(e) => this.handleChange(e, 'studyType', index)} />
+            <Form.Input label='GPA'
+              defaultValue={education.gpa}
+              placeholder={""}
+              onChange={(e) => this.handleChange(e, 'gpa', index)} />
+          </Form.Group>
           <Form.Dropdown multiple label='Courses'
             options={
               education.courses.map((course, index) => {
