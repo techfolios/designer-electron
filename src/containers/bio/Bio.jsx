@@ -19,8 +19,8 @@ class Bio extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state =  props.bio;
-    this.save = this.save.bind(this);
+    this.state  = props.bio;
+    this.save   = this.save.bind(this);
     this.cancel = this.cancel.bind(this);
   }
   
@@ -33,9 +33,7 @@ class Bio extends React.Component {
   }
 
   render() {
-    console.log('render');
-    return (
-      <div>
+    return <div>
         <Segment basic >
           <Header as='h2' icon textAlign="center">
             <Icon name='user circle' />
@@ -43,32 +41,18 @@ class Bio extends React.Component {
           </Header>
         </Segment>
         <Segment color="teal">
-          <Basics data    = { this.state.basics } />
-          <Interests data = { this.state.interests }/>
-          <Skills data    = { this.state.skills }/>
-          <Education data = { this.state.education }/>
-          <Work data      = { this.state.work }/>
-          <Voulnteer data = { this.state.voulnteer }/>
-          <Awards data    = { this.state.awards }/>
-        <References/>
-          <Form>
-            <Form.Dropdown multiple label='Interests'
-              options={
-                this.state.interests.map((item, index) => {
-                  return {
-                    key: index,
-                    value: item.name,
-                    text: item.name,
-                  }
-                }
-              )} />
-            <Button onClick={ this.cancel }>Cancel</Button>
-            <Button onClick={ this.save }>Save</Button>
-          </Form>
-          <Awards/>
+          <Basics name="Basics" data={ this.state.basics }/>
+          <Interests name="Interests" data={ this.state.interests }/>
+          <Skills data={ this.state.skills }/>
+          <Education data={ this.state.education }/>
+          <Work data={ this.state.work }/>
+          <Voulnteer data={ this.state.voulnteer }/>
+          <Awards data={ this.state.awards }/>
+          <References data={ this.state.references }/>
+          <Button onClick={ this.cancel }>Cancel</Button>
+          <Button onClick={ this.save }>Save</Button>
         </Segment>
       </div>
-    );
   }
 }
 
