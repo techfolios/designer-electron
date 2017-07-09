@@ -1,0 +1,113 @@
+import FS from 'fs';
+import OS from 'os';
+import Path from 'path';
+import SimpleGit from 'simple-git';
+
+class IO {
+  constructor(username) {
+    this.templateURL = 'https://github.com/techfolios/template';
+    this.localURL = Path.resolve(__dirname, '../.techfolios'); //OS.homedir() + "/.techfolios,
+    this.remoteURL = `https://github.com/${username}/${username}.github.io`;
+  }
+
+  hasLocal() {
+    return new Promise((res, rej) => {
+      FS.mkdir(this.localURL, (err) => {
+        if (!err) {
+          res(false);
+        } else if (err.code == 'EEXIST') {
+          res(true);
+        } else {
+          rej(err);
+        }
+      });
+    });
+  }
+
+  hasGithubPage() {
+    return new Promise((res, rej) => {
+      SimpleGit()
+        .listRemote([this.remoteURL], function (err, data) {
+          if (!err) {
+            res(data);
+          } else {
+            rej(err);
+          }
+        });
+    });
+  }
+
+  cloneUserRemote() {
+    let options = [];
+
+    return new Promise((res, rej) => {
+      SimpleGit(this.localURL)
+        .exec(() => {
+          console.log(`Cloning ${this.remoteURL}...`);
+        }).clone(this.remoteURL, this.localURL, options, (err) => {
+          if (err) {
+            rej(err);
+          } else {
+            console.log(`Cloned ${this.remoteURL} to ${this.localURL}`);
+            res(true);
+          }
+        });
+    });
+  }
+
+  cloneTechfoliosTemplate() {
+    let options = [];
+
+    return new Promise((res, rej) => {
+      SimpleGit(this.localURL)
+        .exec(() => {
+          console.log(`Cloning ${this.remoteURL}...`);
+        }).clone(this.remoteURL, this.localURL, options, (err) => {
+          if (err) {
+            console.log(`Could not clone ${this.remoteURL}`);
+            rej(err);
+          }
+        }).exec(() => {
+          console.log(`Adding remote ${this.username} ${this.remoteURL}`);
+        }).addRemote(`${this.username}`, this.remoteURL, (err) => {
+          if (err) {
+            console.log(`Could not add remote ${this.username} ${this.remoteURL}`);
+            rej(err);
+          } else {
+            console.log(`Cloned ${this.remoteURL} to ${this.localURL}`);
+            res(true);
+          }
+        });
+    });
+  }
+
+  loadBio() {
+    return require(Path.resolve(this.localURL, '_data/bio.json'));
+  }
+  
+  writeBio(data) {
+    FS.writeFile(Path.resolve(this.localURL, '_data/bio.json'), data, (err) => {
+      return new Promise((res, rej) => {
+        if (err) {
+          rej(err);
+        }
+        res(true);
+      })
+    })
+      .then((res) => {
+        if (res) {
+          SimpleGit(this.localURL).commit(`Saved on machine: ${OS.hostname}`, (err) => {
+            if (err) {
+              console.log(err);
+              // prompt an error to the user that the state could not be saved.
+            }
+          });
+        }
+      }, (rej) => {
+        console.log(rej);
+        // prompt an error to the user that the state could not be saved.
+      });
+  }
+}
+
+module.exports = IO;

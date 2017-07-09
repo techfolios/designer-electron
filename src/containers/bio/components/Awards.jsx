@@ -1,10 +1,20 @@
 import React from 'react';
-import BioComponent from './BioComponent';
+import { Segment } from 'semantic-ui-react';
 
-class Awards extends BioComponent {
-    constructor(props) {
-        super(props);
+class Awards extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: props.data
     }
+  }
+
+  render() {
+    return <Segment basic>
+      <code> { JSON.stringify(this.state.data) } </code>
+    </Segment>
+  }
 }
 
 export default Awards;
