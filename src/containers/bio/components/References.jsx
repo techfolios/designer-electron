@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 class References extends React.Component{
 
@@ -10,10 +10,28 @@ class References extends React.Component{
     }
   }
 
+  handleChange(e, key, index) {
+    let state = this.state.data;
+    state[index][key] = e.target.value;
+    this.props.onChange('education', state);
+  }
+
   render() {
-    return <Segment basic>
-      <code> { JSON.stringify(this.state.data) } </code>
-    </Segment>
+    return <div>
+      {this.state.data.map((reference, index) => {
+          return <div key={index}>
+            <Form.Input label='Name'
+              defaultValue={reference.name}
+              placeholder={"Available upon request"}
+              onChange={(e) => this.handleChange(e, 'name', index)} />
+            <Form.Input label='Reference'
+              defaultValue={reference.reference}
+              placeholder={""}
+              onChange={(e) => this.handleChange(e, 'reference', index)} />
+          </div>
+        })
+      }
+      </div>
   }  
 }
 
