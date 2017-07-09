@@ -61,17 +61,26 @@ class IO {
     return new Promise((res, rej) => {
       SimpleGit(this.localURL)
         .exec(() => {
-          console.log(`Cloning ${this.remoteURL}...`);
-        }).clone(this.remoteURL, this.localURL, options, (err) => {
+          console.log(`Cloning ${this.templateURL}...`);
+        }).clone(this.templateURL, this.localURL, options, (err) => {
           if (err) {
-            console.log(`Could not clone ${this.remoteURL}`);
+            console.log(`Could not clone ${this.templateURL}`);
             rej(err);
           }
         }).exec(() => {
-          console.log(`Adding remote ${this.username} ${this.remoteURL}`);
-        }).addRemote(`${this.username}`, this.remoteURL, (err) => {
+          console.log(`Removing remote origin => ${this.templateURL} to replace with origin => ${this.remoteURL}`);
+        })
+        .removeRemote('origin', (err) => {
+          if(err) {
+            console.log('Could not remove remote origin.');
+            rej(err);
+          }
+        })
+        .exec(() => {
+          console.log(`Adding remote origin ${this.remoteURL}`);
+        }).addRemote('origin', this.remoteURL, (err) => {
           if (err) {
-            console.log(`Could not add remote ${this.username} ${this.remoteURL}`);
+            console.log(`Could not add remote origin ${this.remoteURL}`);
             rej(err);
           } else {
             console.log(`Cloned ${this.remoteURL} to ${this.localURL}`);
@@ -99,15 +108,32 @@ class IO {
         if (err) {
           rej(err);
         }
-        SimpleGit(this.localURL).commit(`Saved on machine: ${OS.hostname}`, (err) => {
-          if (err) {
-            rej(err);
-            // prompt an error to the user that the state could not be saved.
-          }
+        SimpleGit(this.localURL)
+          .exec(() => {
+            console.log(`Commiting changes in ${this.localURL}`);
+          })
+          .add('.')
+          .commit(`Saved from machine: ${OS.hostname()}`, (err) => {
+            if (err) {
+              rej(err);
+              // prompt an error to the user that the state could not be saved.
+            }
           res(true);
         });
       })
     })
+  }
+
+  push() {
+    return new Promise((res, rej) => {
+      SimpleGit(this.localURL)
+        .push('origin', 'master', (err) => {
+          if(err) {
+            rej(err);
+          }
+          res(true);
+        });
+    });
   }
 }
 

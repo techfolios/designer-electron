@@ -14,6 +14,9 @@ class MainMenu extends React.Component {
 
   handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
+    if(name === 'upload') {
+      this.props.onUpload();
+    }
   }
 
   render() {

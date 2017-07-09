@@ -13,10 +13,42 @@ class Techfolio extends React.Component {
     this.io = new IO('adambutac');
     this.handleSaveBio = this.handleSaveBio.bind(this);
     this.handleLoadBio = this.handleLoadBio.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
     this.state = {
       bio: {},
       isLoading: false
     };
+  }
+
+
+  handleSaveBio(data) {
+    this.io.writeBio(data);
+  }
+
+  handleLoadBio() {
+    this.setState({ isLoading: true });
+    this.io.loadBio()
+      .then((res) => {
+        this.setState({ bio: res });
+        this.setState({ isLoading: false });
+      }, (rej) => {
+        console.log(rej);
+        this.setState({ isLoading: false });
+      });
+  }
+
+  handleUpload() {
+    this.setState({isLoading: true});
+    this.io.push()
+      .then((res) => {
+        if (res) {
+          console.log('success');
+        }
+        this.setState({isLoading: false});
+      }, (rej) => {
+        console.log(rej);
+        this.setState({isLoading: false});
+      });
   }
 
   componentWillMount() {
@@ -26,7 +58,7 @@ class Techfolio extends React.Component {
         if (!res) {
           this.io.cloneUserRemote()
             .then((res) => {
-              if(res){
+              if (res) {
                 return this.io.loadBio();
               }
             }, (rej) => {
@@ -49,29 +81,14 @@ class Techfolio extends React.Component {
       });
   }
 
-  handleSaveBio(data) {
-    this.io.writeBio(data);
-  }
-
-  handleLoadBio() {
-    this.setState({ isLoading: true });
-    this.io.loadBio()
-      .then((res) => {
-        this.setState({bio: res});
-        this.setState({ isLoading: false });
-      }, (rej) => {
-        this.setState({ isLoading: false });
-      });
-  }
-
   componentDidMount() {
 
   }
 
   getRender() {
-    return <Bio bio={ this.state.bio } onSaveBio={ this.handleSaveBio } onLoadBio={ this.handleLoadBio }/>;
+    return <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio} />;
   }
- 
+
   render() {
 
     if (this.state.isLoading) {
@@ -83,7 +100,7 @@ class Techfolio extends React.Component {
           <Loader label="Loading your techfolio..." />
         </Dimmer>
         <Grid.Column width={3}>
-          <MainMenu />
+          <MainMenu onUpload={this.handleUpload} />
         </Grid.Column>
         <Grid.Column stretched width={12}>
           {this.getRender()}
