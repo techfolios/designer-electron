@@ -9,8 +9,7 @@ class BioComponent extends React.Component {
   }
 
   render() {
-    return <div>
-    </div>
+      return <div>{ JSON.stringify(this.state.data) }</div>
   }
 }
 

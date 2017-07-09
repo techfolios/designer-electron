@@ -5,10 +5,6 @@ class Interests extends BioComponent {
     constructor(props) {
         super(props);
     }
-
-    render() {
-        return <div>Interests</div>
-    }
 }
 
 export default Interests;

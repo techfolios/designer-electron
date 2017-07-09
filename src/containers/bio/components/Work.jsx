@@ -5,10 +5,6 @@ class Work extends BioComponent {
     constructor(props) {
         super(props);
     }
-
-    render() {
-        return <div>Work</div>
-    }
 }
 
 export default Work;
