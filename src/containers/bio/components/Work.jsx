@@ -26,25 +26,23 @@ class Work extends React.Component {
     return <div>
       {this.state.data.map((work, index) => {
         return <div key={index}>
+          <Form.Input label='Company'
+            defaultValue={work.company}
+            placeholder='Example Co.'
+            onChange={(e) => this.handleChange(e, 'company', index)} />
+          <Form.Input label='Position'
+            defaultValue={work.position}
+            placeholder="Example Specialist"
+            onChange={(e) => this.handleChange(e, 'position', index)} />
           <Form.Group>
-            <Form.Input label='Company'
-              defaultValue={work.company}
-              placeholder='Example Co.'
-              onChange={(e) => this.handleChange(e, 'company', index)} />
-            <Form.Input label='Position'
-              defaultValue={work.position}
-              placeholder="Example Specialist"
-              onChange={(e) => this.handleChange(e, 'position', index)} />
-          </Form.Group>
-          <Form.Group>
-            <Form.Input label='End Date'
-              defaultValue={work.endDate}
-              placeholder="01/01/9999"
-              onChange={(e) => this.handleChange(e, 'endDate', index)} />
             <Form.Input label='Start Date'
               defaultValue={work.startDate}
               placeholder='01/01/1970'
               onChange={(e) => this.handleChange(e, 'startDate', index)} />
+            <Form.Input label='End Date'
+              defaultValue={work.endDate}
+              placeholder="01/01/9999"
+              onChange={(e) => this.handleChange(e, 'endDate', index)} />            
           </Form.Group>
           <Form.Input label='website'
             defaultValue={work.website}

@@ -29,4 +29,4 @@ How does authentication work with simple-git?
 
 Forgot to add profiles in Bio.
 
-Add an 'add award' button to awards, instead of empty object.
+need 'add' button for arrays.
