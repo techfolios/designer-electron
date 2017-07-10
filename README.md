@@ -32,3 +32,5 @@ Forgot to add profiles in Bio.
 need 'add' button for arrays.
 
 add notifications 
+
+should do pull on startup?
