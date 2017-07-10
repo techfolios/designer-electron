@@ -27,4 +27,6 @@ Passes null bio object to the Bio class.
 
 How does authentication work with simple-git?
 
-Forgot to add address in Bio.
+Forgot to add profiles in Bio.
+
+Add an 'add award' button to awards, instead of empty object.
