@@ -22,7 +22,7 @@ class MainMenu extends React.Component {
   render() {
     const { activeItem } = this.state;
     return (
-      <Menu vertical fixed="left" icon='labeled' color="teal">
+      <Menu vertical tabular fixed="left" icon='labeled' color="teal">
         <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} >
           <Icon name='user circle' />
           Bio
