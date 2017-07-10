@@ -24,6 +24,8 @@ Notes
 Bugs/Issues
 -----------
 
-    When user first runs, clones a repo or the template, but is stuck on loading screen. Passes null bio object to the Bio class.
-    
+    When user first runs, clones a repo or the template, but is stuck on loading screen. 
+
+    Passes null bio object to the Bio class.
+
     How does authentication work with simple-git?
