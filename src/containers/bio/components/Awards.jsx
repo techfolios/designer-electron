@@ -17,10 +17,19 @@ class Awards extends React.Component {
   }
 
   render() {
+    if(!this.state.data || this.state.data.length == 0) {
+      this.state.data = [{
+        title: '',
+        date: '',
+        awarder: '',
+        summary: ''
+      }];
+    }
+
     return <div>
       {this.state.data.map((award, index) => {
           return <div key={index}>
-            <Form.Input label='Name'
+            <Form.Input label='Title'
               defaultValue={award.title}
               placeholder={"Example Award"}
               onChange={(e) => this.handleChange(e, 'title', index)} />
