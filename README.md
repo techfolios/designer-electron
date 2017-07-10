@@ -30,3 +30,5 @@ How does authentication work with simple-git?
 Forgot to add profiles in Bio.
 
 need 'add' button for arrays.
+
+add notifications 
