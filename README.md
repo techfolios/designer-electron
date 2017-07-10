@@ -26,3 +26,5 @@ When user first runs, clones a repo or the template, but is stuck on loading scr
 Passes null bio object to the Bio class.
 
 How does authentication work with simple-git?
+
+Forgot to add address in Bio.
