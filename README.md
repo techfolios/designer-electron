@@ -1,11 +1,9 @@
-Techfolio Client
-================
+# Techfolio Client
 
     A client for painless editing of your techfolio built with Electron and React with Semantic-UI zaz.
     You can learn more about Techfolios [here](https://techfolios.github.io).
 
-Notes
------
+## Notes
 
     Authenticate and retrieve a token, or init an ssh key.
 
@@ -21,8 +19,7 @@ Notes
 
       `git@github.com/${username}/${username}.github.io` for ssh push to origin master
 
-Bugs/Issues
------------
+## Bugs/Issues
 
     When user first runs, clones a repo or the template, but is stuck on loading screen. 
 
