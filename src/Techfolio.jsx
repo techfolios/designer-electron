@@ -63,6 +63,7 @@ class Techfolio extends React.Component {
               }
             }, (rej) => {
               console.log(rej);
+              this.setState({ isLoading: false });
             });
         } else {
           return this.io.loadBio();
@@ -92,12 +93,12 @@ class Techfolio extends React.Component {
   render() {
 
     if (this.state.isLoading) {
-      return <Dimmer active> <Loader /> </Dimmer>
+      return <Dimmer inverted active> <Loader size="big" content="Loading techfolio..." /> </Dimmer>
     }
     return (
       <Grid>
         <Dimmer active={this.state.isLoading}>
-          <Loader label="Loading your techfolio..." />
+          <Loader size="big" content="Loading techfolio..." />
         </Dimmer>
         <Grid.Column width={3}>
           <MainMenu onUpload={this.handleUpload} />
