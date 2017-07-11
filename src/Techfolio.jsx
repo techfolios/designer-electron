@@ -12,11 +12,11 @@ class Techfolio extends React.Component {
     super();
     this.io = new IO('adambutac');
     this.handleSaveBio = this.handleSaveBio.bind(this);
-    this.handleLoadBio = this.handleLoadBio.bind(this);
-    this.handleUpload = this.handleUpload.bind(this);
+    this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.state = {
+      selected: 'bio',
       bio: {},
-      isLoading: false
+      isLoading: false,
     };
   }
 
@@ -27,6 +27,7 @@ class Techfolio extends React.Component {
 
   handleLoadBio() {
     this.setState({ isLoading: true });
+    this.setState({selected: 'bio'});
     this.io.loadBio()
       .then((res) => {
         this.setState({ bio: res });
@@ -35,6 +36,14 @@ class Techfolio extends React.Component {
         console.log(rej);
         this.setState({ isLoading: false });
       });
+  }
+
+  handleLoadProjects() {
+
+  }
+
+  handleLoadResume() {
+
   }
 
   handleUpload() {
@@ -86,25 +95,31 @@ class Techfolio extends React.Component {
 
   }
 
-  getRender() {
-    return <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio} />;
+  handleMenuSelect(item) {
+    this.setState({selected: item})
   }
 
   render() {
-
     if (this.state.isLoading) {
       return <Dimmer inverted active> <Loader size="big" content="Loading techfolio..." /> </Dimmer>
     }
+
+    let selected;
+    switch(this.state.selected) {
+      case 'bio':
+        selected = <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio}/>;
+        break;
+      default:
+        selected = <div>Default page here</div>;
+    }
+
     return (
       <Grid>
-        <Dimmer active={this.state.isLoading}>
-          <Loader size="big" content="Loading techfolio..." />
-        </Dimmer>
         <Grid.Column width={3}>
-          <MainMenu onUpload={this.handleUpload} />
+          <MainMenu onMenuSelect={this.handleMenuSelect} />
         </Grid.Column>
         <Grid.Column stretched width={12}>
-          {this.getRender()}
+          {selected}
         </Grid.Column>
       </Grid>
     );

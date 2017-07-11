@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Segment, Grid, Header, Icon, Image } from 'semantic-ui-react';
+import { Form, Button, Segment, Grid, Header, Icon, Image, Menu } from 'semantic-ui-react';
 
 import Awards from './components/Awards';
 import Basics from './components/Basics';
@@ -45,6 +45,7 @@ class Bio extends React.Component {
   }
 
   render() {
+    let activeItem = 'basics';
     return <div>
       <Segment basic>
         <Image centered src={this.state.basics.picture} size='small' shape='circular' />

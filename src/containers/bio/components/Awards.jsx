@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'semantic-ui-react';
+import { Form, Segment } from 'semantic-ui-react';
 
 class Awards extends React.Component {
 
@@ -28,7 +28,7 @@ class Awards extends React.Component {
 
     return <div>
       {this.state.data.map((award, index) => {
-          return <div key={index}>
+          return <Segment key={index}>
             <Form.Input label='Title'
               defaultValue={award.title}
               placeholder={"Example Award"}
@@ -45,7 +45,7 @@ class Awards extends React.Component {
               defaultValue={award.summary}
               placeholder={'My team won first place in 2015. See my partfolio site for more details.'}
               onChange={(e) => this.handleChange(e, 'summary', index)} />
-          </div>
+          </Segment>
         })
       }
     </div>

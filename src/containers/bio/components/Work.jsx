@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'semantic-ui-react';
+import { Form, Segment } from 'semantic-ui-react';
 
 class Work extends React.Component {
 
@@ -25,7 +25,7 @@ class Work extends React.Component {
   render() {
     return <div>
       {this.state.data.map((work, index) => {
-        return <div key={index}>
+        return <Segment key={index}>
           <Form.Input label='Company'
             defaultValue={work.company}
             placeholder='Example Co.'
@@ -35,14 +35,14 @@ class Work extends React.Component {
             placeholder="Example Specialist"
             onChange={(e) => this.handleChange(e, 'position', index)} />
           <Form.Group>
+            <Form.Input label='End Date'
+              defaultValue={work.endDate}
+              placeholder="01/01/9999"
+              onChange={(e) => this.handleChange(e, 'endDate', index)} />
             <Form.Input label='Start Date'
               defaultValue={work.startDate}
               placeholder='01/01/1970'
               onChange={(e) => this.handleChange(e, 'startDate', index)} />
-            <Form.Input label='End Date'
-              defaultValue={work.endDate}
-              placeholder="01/01/9999"
-              onChange={(e) => this.handleChange(e, 'endDate', index)} />            
           </Form.Group>
           <Form.Input label='website'
             defaultValue={work.website}
@@ -60,7 +60,7 @@ class Work extends React.Component {
                 onChange={(e) => this.handleHighlightChange(e, 'highlights', index, hindex)} />
             })
           }
-        </div>
+        </Segment>
       })
       }
     </div>
