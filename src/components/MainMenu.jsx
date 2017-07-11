@@ -10,10 +10,17 @@ class MainMenu extends React.Component {
       activeItem: 'bio'
     };
     this.handleItemClick = this.handleItemClick.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
   }
 
   handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
+    this.props.onMenuSelect(name);
+  }
+
+  handleUpload(e, {name}) {
+    this.setState({ activeItem: name });
+    this.props.onUpload();
     this.props.onMenuSelect(name);
   }
 
@@ -36,7 +43,7 @@ class MainMenu extends React.Component {
           Resume
         </Menu.Item>
 
-        <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleItemClick} >
+        <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload} >
           <Icon name='upload' />
           Upload
         </Menu.Item>

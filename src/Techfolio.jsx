@@ -13,6 +13,7 @@ class Techfolio extends React.Component {
     this.io = new IO('adambutac');
     this.handleSaveBio = this.handleSaveBio.bind(this);
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
     this.state = {
       selected: 'bio',
       bio: {},
@@ -109,14 +110,23 @@ class Techfolio extends React.Component {
       case 'bio':
         selected = <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio}/>;
         break;
+      case 'projects':
+        selected = <h1>Projects</h1>
+        break;
+      case 'resume':
+        selected = <h1>Resume</h1>
+        break;
+      case 'upload':
+        selected = <h1>Upload</h1>
+        break;
       default:
-        selected = <div>Default page here</div>;
+        selected = <h1>Default page</h1>;
     }
 
     return (
       <Grid>
         <Grid.Column width={3}>
-          <MainMenu onMenuSelect={this.handleMenuSelect} />
+          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}/>
         </Grid.Column>
         <Grid.Column stretched width={12}>
           {selected}
