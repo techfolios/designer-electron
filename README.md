@@ -5,7 +5,7 @@ You can learn more about Techfolios [here](https://techfolios.github.io).
 
 ## Download
 
-You can download this project [here](https://github.com/techfolios/electron-adam/master.zip).
+You can download this project [here](https://github.com/techfolios/electron-adam/archive/master.zip).
 
 ## Install
 
