@@ -12,7 +12,7 @@ Extract the zip file.
 
 You will need [Nodejs](https://nodejs.org).
 
-Open a terminal and cd to the contents of the extracted zip file.
+Open a terminal and `cd` to the contents of the extracted zip file.
 
 
 Use the command `npm install` to download all the necessary files to run the program.
