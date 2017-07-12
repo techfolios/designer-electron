@@ -1,12 +1,14 @@
 import React from 'react';
 import { Form, Segment, Header } from 'semantic-ui-react';
 
+import Profiles from './Profiles'
+
 class Basics extends React.Component{
 
   constructor(props) {
     super(props);
     this.state = props.data;
-    this.handleProfileChange = this.handleProfileChange.bind(this);
+    this.handleProfilesChange = this.handleProfilesChange.bind(this);
   }
 
   handleChange(e, key) {
@@ -76,7 +78,7 @@ class Basics extends React.Component{
         placeholder="Once upon a midnight dreary, while I pondered weak and weary..."
         onChange={(e) => this.handleChange(e, 'summary')} />
         {this.renderLocation()}
-        <Profiles key={index} data={profile} onChange={this.handleProfilesChange} ></Profiles>
+        <Profiles data={this.state.profiles} onChange={this.handleProfilesChange} ></Profiles>
 
     </div>
   }
