@@ -3,10 +3,10 @@
 A client for painless editing of your techfolio built with Electron and React with Semantic-UI zaz.
 You can learn more about Techfolios [here](https://techfolios.github.io).
 
-![alt text](https://github.com/techfolios/electron-adam/images/bio-top-large.JPG "")
-![alt text](https://github.com/techfolios/electron-adam/images/bio-bottom-large.JPG "")
-![alt text](https://github.com/techfolios/electron-adam/images/bio-bottom-small.JPG "")
-![alt text](https://github.com/techfolios/electron-adam/images/bio-projects.JPG "")
+![alt text](https://github.com/techfolios/electron-adam/raw/master/images/bio-top-large.JPG "")
+![alt text](https://github.com/techfolios/electron-adam/raw/master/images/bio-bottom-large.JPG "")
+![alt text](https://github.com/techfolios/electron-adam/raw/master/images/bio-bottom-small.JPG "")
+![alt text](https://github.com/techfolios/electron-adam/raw/master/images/bio-projects.JPG "")
 
 ## Download
 
