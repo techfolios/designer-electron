@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment } from 'semantic-ui-react';
+import { Icon, Form, Segment } from 'semantic-ui-react';
 
 class Work extends React.Component {
 
@@ -8,6 +8,8 @@ class Work extends React.Component {
     this.state = {
       data: props.data
     }
+    this.add = this.add.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   handleChange(e, key, index) {
@@ -20,6 +22,26 @@ class Work extends React.Component {
     let state = this.state.data;
     state[windex][key][hindex] = e.target.value;
     this.props.onChange('work', state);
+  }
+
+  add() {
+    let data = this.state.data;
+    data.push({
+      company:'',
+      position: '',      
+      website: '',      
+      startDate:'',
+      endDate:'',
+      summary:'',
+      highlights:['']
+    });
+    this.props.onChange('volunteer', data);    
+  }
+
+  remove() {
+    let data = this.state.data;
+    data.pop();
+    this.props.onChange('volunteer', data);
   }
 
   render() {
@@ -63,6 +85,8 @@ class Work extends React.Component {
         </Segment>
       })
       }
+      <Icon link name="minus" onClick={this.remove} ></Icon>                                  
+      <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
     </div>
   }
 }

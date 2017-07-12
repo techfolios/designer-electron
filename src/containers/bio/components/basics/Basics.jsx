@@ -6,7 +6,7 @@ class Basics extends React.Component{
   constructor(props) {
     super(props);
     this.state = props.data;
-    this.handleChange = this.handleChange.bind(this);
+    this.handleProfileChange = this.handleProfileChange.bind(this);
   }
 
   handleChange(e, key) {
@@ -19,6 +19,12 @@ class Basics extends React.Component{
     let state = this.state;
     state.location[key] = e.target.value;
     this.props.onChange('basics', state)
+  }
+
+  handleProfilesChange(data) {
+    let state = this.state;
+    state.profile = data;
+    this.props.onChange('basics', data)
   }
 
   renderLocation() {
@@ -70,6 +76,8 @@ class Basics extends React.Component{
         placeholder="Once upon a midnight dreary, while I pondered weak and weary..."
         onChange={(e) => this.handleChange(e, 'summary')} />
         {this.renderLocation()}
+        <Profiles key={index} data={profile} onChange={this.handleProfilesChange} ></Profiles>
+
     </div>
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Header } from 'semantic-ui-react';
+import { Icon, Form, Header } from 'semantic-ui-react';
 
 class Education extends React.Component {
 
@@ -8,13 +8,34 @@ class Education extends React.Component {
     this.state = {
       data: props.data
     }
-    this.handleChange = this.handleChange.bind(this);
+    this.add = this.add.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   handleChange(e, key, index) {
     let state = this.state.data;
     state[index][key] = e.target.value;
     this.props.onChange('education', state);
+  }
+
+  add() {
+    let data = this.state.data;
+    data.push({
+      company:'',
+      position: '',      
+      website: '',      
+      startDate:'',
+      endDate:'',
+      summary:'',
+      highlights:['']
+    });
+    this.props.onChange('volunteer', data);    
+  }
+
+  remove() {
+    let data = this.state.data;
+    data.pop();
+    this.props.onChange('volunteer', data);
   }
 
   render() {
@@ -62,6 +83,8 @@ class Education extends React.Component {
         </div>
       })
       }
+      <Icon link name="minus" onClick={this.remove} ></Icon>                                  
+      <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
     </div>
   }
 }

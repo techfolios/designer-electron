@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment } from 'semantic-ui-react';
+import { Icon, Form, Segment } from 'semantic-ui-react';
 
 class Voulnteer extends React.Component{
 
@@ -8,18 +8,40 @@ class Voulnteer extends React.Component{
     this.state = {
       data: props.data
     }
+    this.add = this.add.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   handleChange(e, key, index) {
-    let state = this.state.data;
-    state[index][key] = e.target.value;
-    this.props.onChange('volunteer', state);
+    let data = this.state.data;
+    data[index][key] = e.target.value;
+    this.props.onChange('volunteer', data);
   }
 
   handleHighlightChange(e, key, windex, hindex) {
-    let state = this.state.data;
-    state[windex][key][hindex] = e.target.value;
-    this.props.onChange('volunteer', state);
+    let data = this.state.data;
+    data[windex][key][hindex] = e.target.value;
+    this.props.onChange('volunteer', data);
+  }
+
+  add() {
+    let data = this.state.data;
+    data.push({
+      organization:'',
+      position: '',
+      startDate: '',
+      endDate: '',
+      website: '',
+      summary: '',
+      highlights:['']
+    });
+    this.props.onChange('volunteer', data);    
+  }
+
+  remove() {
+    let data = this.state.data;
+    data.pop();
+    this.props.onChange('volunteer', data);
   }
 
   render() {
@@ -43,7 +65,7 @@ class Voulnteer extends React.Component{
               defaultValue={volunteer.endDate}
               placeholder="01/01/9999"
               onChange={(e) => this.handleChange(e, 'endDate', index)} />
-        </Form.Group>
+          </Form.Group>
           <Form.Input label='Website'
             defaultValue={volunteer.website}
             placeholder="https://www.example.org"
@@ -63,6 +85,8 @@ class Voulnteer extends React.Component{
         </Segment>
       })
       }
+      <Icon link name="minus" onClick={this.remove} ></Icon>                                  
+      <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
     </div>
   }
 }

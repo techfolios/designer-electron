@@ -38,9 +38,9 @@ class MainMenu extends React.Component {
           Projects
         </Menu.Item>
 
-        <Menu.Item name='resume' active={activeItem === 'resume'} onClick={this.handleItemClick} >
+        <Menu.Item name='essays' active={activeItem === 'essays'} onClick={this.handleItemClick} >
           <Icon name='file text outline' />
-          Resume
+          Essays
         </Menu.Item>
 
         <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload} >

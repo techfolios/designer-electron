@@ -15,24 +15,26 @@ class Techfolio extends React.Component {
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.state = {
-      selected: 'bio',
-      bio: {},
-      isLoading: false,
+      bio: null,
+      projects: null,
+      essays: null,
+      selected: <h1>Default page</h1>,
+      isLoading: false
     };
   }
 
-
   handleSaveBio(data) {
+    this.setState({bio: data});
     this.io.writeBio(data);
   }
 
   handleLoadBio() {
     this.setState({ isLoading: true });
-    this.setState({selected: 'bio'});
     this.io.loadBio()
       .then((res) => {
         this.setState({ bio: res });
         this.setState({ isLoading: false });
+        this.setState({selected: 'bio'});
       }, (rej) => {
         console.log(rej);
         this.setState({ isLoading: false });
@@ -43,7 +45,7 @@ class Techfolio extends React.Component {
 
   }
 
-  handleLoadResume() {
+  handleLoadEssays() {
 
   }
 
@@ -61,66 +63,54 @@ class Techfolio extends React.Component {
       });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ isLoading: true });
-    this.io.hasLocal()
-      .then((res) => {
-        if (!res) {
-          this.io.cloneUserRemote()
-            .then((res) => {
-              if (res) {
-                return this.io.loadBio();
-              }
-            }, (rej) => {
-              console.log(rej);
-              this.setState({ isLoading: false });
-            });
-        } else {
-          return this.io.loadBio();
-        }
-      }, (rej) => {
-        console.log(rej);
-        this.setState({ isLoading: false });
-      })
-      .then((res) => {
+    this.io.init()
+      .then(res => {
         console.log(res);
-        this.setState({ bio: res });
-        this.setState({ isLoading: false });
-      }, (rej) => {
+        this.io.loadBio()
+          .then(res => {
+            this.setState({ bio: res });
+            this.setState({ isLoading: false });            
+          }, rej => {
+            console.log(rej);
+            this.setState({ isLoading: false });                        
+          });
+      }, rej => {
         console.log(rej);
         this.setState({ isLoading: false });
       });
   }
 
-  componentDidMount() {
-
-  }
-
-  handleMenuSelect(item) {
-    this.setState({selected: item})
-  }
-
-  render() {
-    if (this.state.isLoading) {
-      return <Dimmer inverted active> <Loader size="big" content="Loading techfolio..." /> </Dimmer>
-    }
-
-    let selected;
-    switch(this.state.selected) {
+  getSelected(selected) {
+    switch(selected) {
       case 'bio':
         selected = <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio}/>;
         break;
       case 'projects':
-        selected = <h1>Projects</h1>
+        selected = <h1>Projects</h1>;
         break;
-      case 'resume':
-        selected = <h1>Resume</h1>
+      case 'essays':
+        selected = <h1>Essays</h1>;
         break;
       case 'upload':
-        selected = <h1>Upload</h1>
-        break;
+        selected = <h1>Upload</h1>;
+        break; 
       default:
         selected = <h1>Default page</h1>;
+    }
+    return selected;
+  }
+
+  handleMenuSelect(item) {
+    let selected = this.getSelected(item);
+    this.setState({selected: selected});      
+  }
+
+  render() {
+
+    if(this.state.isLoading){
+      return <Dimmer inverted active> <Loader size="big" content="One sec..." /> </Dimmer>;
     }
 
     return (
@@ -129,7 +119,7 @@ class Techfolio extends React.Component {
           <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}/>
         </Grid.Column>
         <Grid.Column stretched width={12}>
-          {selected}
+          {this.state.selected}
         </Grid.Column>
       </Grid>
     );
