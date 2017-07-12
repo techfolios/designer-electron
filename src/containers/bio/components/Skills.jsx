@@ -15,7 +15,7 @@ class Skills extends React.Component{
   handleChange(e, key, index) {
     let state = this.state.data;
     state[index][key] = e.target.value;
-    this.props.onChange('education', state);
+    this.props.onChange('skills', state);
   }
 
   add() {
@@ -25,20 +25,23 @@ class Skills extends React.Component{
       level: '',      
       keywords: ['']
     });
-    this.props.onChange('volunteer', data);    
+    this.props.onChange('skills', data);    
   }
 
   remove() {
     let data = this.state.data;
     data.pop();
-    this.props.onChange('volunteer', data);
+    this.props.onChange('skills', data);
   }
 
   render() {
     return <div>
       {this.state.data.map((skill, index) => {
           return <div key={index}>
-            <Header as="h3">{skill.name}</Header>
+            <Form.Input label='Name'
+                defaultValue={skill.name}
+                placeholder={"Hacky Sack"}
+                onChange={(e) => this.handleChange(e, 'name', index)} />
             <Form.Group>
               <Form.Input label='Level'
                 defaultValue={skill.level}

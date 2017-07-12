@@ -76,7 +76,7 @@ class Bio extends React.Component {
           <References data={this.state.references} onChange={ this.handleChange } />
         </BioComponent>
         </Grid>
-        <Form.Button positive type="Submit">Save</Form.Button>
+        <Form.Button positive floated="right" type="Submit">Save</Form.Button>
       </Form>
     </div>
   }

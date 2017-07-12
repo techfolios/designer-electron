@@ -35,13 +35,13 @@ class Work extends React.Component {
       summary:'',
       highlights:['']
     });
-    this.props.onChange('volunteer', data);    
+    this.props.onChange('work', data);    
   }
 
   remove() {
     let data = this.state.data;
     data.pop();
-    this.props.onChange('volunteer', data);
+    this.props.onChange('work', data);
   }
 
   render() {

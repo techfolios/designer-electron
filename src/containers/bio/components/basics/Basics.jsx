@@ -3,7 +3,7 @@ import { Form, Segment, Header } from 'semantic-ui-react';
 
 import Profiles from './Profiles'
 
-class Basics extends React.Component{
+class Basics extends React.Component {
 
   constructor(props) {
     super(props);
@@ -25,14 +25,14 @@ class Basics extends React.Component{
 
   handleProfilesChange(data) {
     let state = this.state;
-    state.profile = data;
-    this.props.onChange('basics', data)
+    state.profiles = data;
+    this.props.onChange('basics', state)
   }
 
   renderLocation() {
     let obj = [];
     Object.keys(this.state.location).forEach((key) => {
-      obj.push( <Form.Input 
+      obj.push(<Form.Input
         key={key}
         label={key}
         defaultValue={this.state.location[key]}
@@ -53,8 +53,8 @@ class Basics extends React.Component{
           defaultValue={this.state.label}
           placeholder={'Student'}
           onChange={(e) => this.handleChange(e, 'label')} />
-      </Form.Group>      
-      <Form.Group>    
+      </Form.Group>
+      <Form.Group>
         <Form.Input label='Phone Number'
           defaultValue={this.state.phone}
           placeholder={'+1-808-867-5309'}
@@ -63,7 +63,7 @@ class Basics extends React.Component{
           defaultValue={this.state.email}
           placeholder='jsmith@example.com'
           onChange={(e) => this.handleChange(e, 'email')} />
-      </Form.Group>      
+      </Form.Group>
       <Form.Input label='Website'
         width={9}
         defaultValue={this.state.website}
@@ -77,9 +77,8 @@ class Basics extends React.Component{
         defaultValue={this.state.summary}
         placeholder="Once upon a midnight dreary, while I pondered weak and weary..."
         onChange={(e) => this.handleChange(e, 'summary')} />
-        {this.renderLocation()}
-        <Profiles data={this.state.profiles} onChange={this.handleProfilesChange} ></Profiles>
-
+      {this.renderLocation()}
+      <Profiles data={this.state.profiles} onChange={this.handleProfilesChange} />
     </div>
   }
 }

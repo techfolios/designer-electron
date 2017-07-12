@@ -12,6 +12,12 @@ class Interests extends React.Component{
     this.remove = this.remove.bind(this);
   }
 
+  handleChange(e, key, index) {
+    let state = this.state.data;
+    state[index][key] = e.target.value;
+    this.props.onChange('interests', state);
+  }
+
   add(){
     let data = this.state.data;
     data.push({
@@ -31,10 +37,10 @@ class Interests extends React.Component{
     return <div>
       {this.state.data.map((interest, index) => {
         return <div key={index}>
-            <Form.Input label='Activity'
+            <Form.Input label='Name'
               defaultValue={interest.name}
               placeholder={"Programming"}
-              onChange={(e) => this.handleChange(e, 'level', index)} />
+              onChange={(e) => this.handleChange(e, 'name', index)} />
             <Form.Dropdown multiple label='Keywords'
               options={
                 interest.keywords.map((item, index) => {

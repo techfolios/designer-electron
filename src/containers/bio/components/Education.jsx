@@ -21,21 +21,21 @@ class Education extends React.Component {
   add() {
     let data = this.state.data;
     data.push({
-      company:'',
-      position: '',      
-      website: '',      
+      institution:'',
+      area: '',      
+      studyType: '',      
       startDate:'',
       endDate:'',
-      summary:'',
-      highlights:['']
+      gpa:'',
+      courses:['']
     });
-    this.props.onChange('volunteer', data);    
+    this.props.onChange('education', data);    
   }
 
   remove() {
     let data = this.state.data;
     data.pop();
-    this.props.onChange('volunteer', data);
+    this.props.onChange('education', data);
   }
 
   render() {

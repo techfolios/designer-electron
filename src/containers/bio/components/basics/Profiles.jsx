@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Header } from 'semantic-ui-react';
+import { Icon, Form, Segment, Header } from 'semantic-ui-react';
 
 class Profiles extends React.Component {
 
@@ -13,10 +13,11 @@ class Profiles extends React.Component {
     this.remove = this.remove.bind(this);
   }
 
-  handleChange(e, key) {
+  handleChange(e, key, index) {
     let data = this.state.data;
-    data[key] = e.target.value;
+    data[index][key] = e.target.value;
     this.setState(data);
+    this.props.onChange(data);
   }
 
   add() {
@@ -34,21 +35,30 @@ class Profiles extends React.Component {
     data.pop();
     this.props.onChange(data);
   }
-  
+
   render() {
     return <div>
-      <Form.Input label="Network" 
-        defaultValue={this.state.data.network} 
-        placeholder="Github" 
-        onChange={e => this.handleChange(e, 'network')}/>
-      <Form.Input label="Username" 
-        defaultValue={this.state.data.network} 
-        placeholder="Username" 
-        onChange={e => this.handleChange(e, 'username')}/>
-      <Form.Input label="Url" 
-        defaultValue={this.state.data.network} 
-        placeholder="https://github.com" 
-        onChange={e => this.handleChange(e, 'url')}/>
+      <Header as="h3">Profiles</Header>
+      {this.state.data.map((profile, index) => {
+        return <div key={index}>
+          <Form.Input label="Network"
+            defaultValue={profile.network}
+            placeholder="Github"
+            onChange={e => this.handleChange(e, 'network', index)} />
+          <Form.Input label="Username"
+            defaultValue={profile.username}
+            placeholder="Username"
+            onChange={e => this.handleChange(e, 'username', index)} />
+          <Form.Input label="Url"
+            defaultValue={profile.url}
+            placeholder="https://github.com"
+            onChange={e => this.handleChange(e, 'url', index)} />
+        </div>
+      })}
+      <Icon link name="minus" onClick={this.remove} ></Icon>                                  
+      <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
     </div>
   }
 }
+
+export default Profiles;

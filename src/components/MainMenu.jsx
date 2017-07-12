@@ -7,7 +7,7 @@ class MainMenu extends React.Component {
     super();
     this.state = {
       visible: true,
-      activeItem: 'bio'
+      activeItem: ''
     };
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);

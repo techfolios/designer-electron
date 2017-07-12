@@ -3,6 +3,33 @@
 A client for painless editing of your techfolio built with Electron and React with Semantic-UI zaz.
 You can learn more about Techfolios [here](https://techfolios.github.io).
 
+## Download
+
+You can download this project [here](https://github.com/techfolios/electron-adam/master.zip).
+
+## Install
+
+## Run
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Notes
 
 Authenticate and retrieve a token, or init an ssh key.

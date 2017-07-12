@@ -60,15 +60,18 @@ class IO {
 
   hasRemote() {
     return new Promise((res, rej) => {
-      SimpleGit()
-        .listRemote([this.remoteURL], function (err, data) {
-          if (!err) {
-            res(data);
-          } else {
-            rej(err);
-          }
-        });
+      res(false);
     });
+    // return new Promise((res, rej) => {
+    //   SimpleGit()
+    //     .listRemote([this.remoteURL], function (err, data) {
+    //       if (!err) {
+    //         res(data);
+    //       } else {
+    //         rej(err);
+    //       }
+    //     });
+    // });
   }
 
   cloneUserRemote() {
