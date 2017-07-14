@@ -36,9 +36,12 @@ app.on('ready', () => {
 });
 
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  /* This causes app to close in windows.
+   * We need to have a window open at all times, but auth must happen
+   * before the app is loaded. */
+  // if (process.platform !== 'darwin') {
+  //   app.quit();
+  // }
 });
 
 app.on('activate', function () {
