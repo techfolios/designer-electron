@@ -1,7 +1,7 @@
 import FS from 'fs';
 import OS from 'os';
 import Path from 'path';
-import SimpleGit from 'simple-git';
+import Git from 'nodegit';
 
 class IO {
   constructor(username) {
@@ -27,7 +27,7 @@ class IO {
                     .then(clone => res('Cloned user remote techfolio.'),
                     err => rej(err));
                 } else {
-                  // no remote, clone template                  
+                  // no remote, clone template
                   this.cloneTechfoliosTemplate()
                     .then(clone => res('Cloned remote techfolio template.'),
                     err => rej(err));
@@ -78,17 +78,11 @@ class IO {
     let options = [];
 
     return new Promise((res, rej) => {
-      SimpleGit(this.localURL)
-        .exec(() => {
-          console.log(`Cloning ${this.remoteURL}...`);
-        }).clone(this.remoteURL, this.localURL, options, (err) => {
-          if (err) {
-            rej(err);
-          } else {
-            console.log(`Cloned ${this.remoteURL} to ${this.localURL}`);
-            res(true);
-          }
-        });
+      Git.Clone(this.remoteURL, this.localURL)
+          .then(function (repo) {
+            res(repo.mergeBranches("master", "origin/master"));
+          })
+          .catch(function(err) { rej(err); });
     });
   }
 
@@ -96,34 +90,41 @@ class IO {
     let options = [];
 
     return new Promise((res, rej) => {
-      SimpleGit(this.localURL)
-        .exec(() => {
-          console.log(`Cloning ${this.templateURL}...`);
-        }).clone(this.templateURL, this.localURL, options, (err) => {
-          if (err) {
-            console.log(`Could not clone ${this.templateURL}`);
-            rej(err);
-          }
-        }).exec(() => {
-          console.log(`Removing remote origin => ${this.templateURL} to replace with origin => ${this.remoteURL}`);
-        })
-        .removeRemote('origin', (err) => {
-          if (err) {
-            console.log('Could not remove remote origin.');
-            rej(err);
-          }
-        })
-        .exec(() => {
-          console.log(`Adding remote origin ${this.remoteURL}`);
-        }).addRemote('origin', this.remoteURL, (err) => {
-          if (err) {
-            console.log(`Could not add remote origin ${this.remoteURL}`);
-            rej(err);
-          } else {
-            console.log(`Cloned ${this.remoteURL} to ${this.localURL}`);
-            res(true);
-          }
-        });
+      Git.Clone(this.templateURL, this.localURL)
+          .then(function (repo) {
+            res(repo.mergeBranches("master", "origin/master"));
+          })
+          .catch(function(err) { rej(err); });
+          //reset remote url and add
+
+      // SimpleGit(this.localURL)
+      //   .exec(() => {
+      //     console.log(`Cloning ${this.templateURL}...`);
+      //   }).clone(this.templateURL, this.localURL, options, (err) => {
+      //     if (err) {
+      //       console.log(`Could not clone ${this.templateURL}`);
+      //       rej(err);
+      //     }
+      //   }).exec(() => {
+      //     console.log(`Removing remote origin => ${this.templateURL} to replace with origin => ${this.remoteURL}`);
+      //   })
+      //   .removeRemote('origin', (err) => {
+      //     if (err) {
+      //       console.log('Could not remove remote origin.');
+      //       rej(err);
+      //     }
+      //   })
+      //   .exec(() => {
+      //     console.log(`Adding remote origin ${this.remoteURL}`);
+      //   }).addRemote('origin', this.remoteURL, (err) => {
+      //     if (err) {
+      //       console.log(`Could not add remote origin ${this.remoteURL}`);
+      //       rej(err);
+      //     } else {
+      //       console.log(`Cloned ${this.remoteURL} to ${this.localURL}`);
+      //       res(true);
+      //     }
+      //   });
     });
   }
 

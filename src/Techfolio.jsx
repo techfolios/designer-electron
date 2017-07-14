@@ -71,10 +71,10 @@ class Techfolio extends React.Component {
         this.io.loadBio()
           .then(res => {
             this.setState({ bio: res });
-            this.setState({ isLoading: false });            
+            this.setState({ isLoading: false });
           }, rej => {
             console.log(rej);
-            this.setState({ isLoading: false });                        
+            this.setState({ isLoading: false });
           });
       }, rej => {
         console.log(rej);
@@ -95,7 +95,7 @@ class Techfolio extends React.Component {
         break;
       case 'upload':
         selected = <h1>Upload</h1>;
-        break; 
+        break;
       default:
         selected = <h1>Default page</h1>;
     }
@@ -104,7 +104,7 @@ class Techfolio extends React.Component {
 
   handleMenuSelect(item) {
     let selected = this.getSelected(item);
-    this.setState({selected: selected});      
+    this.setState({selected: selected});
   }
 
   render() {
