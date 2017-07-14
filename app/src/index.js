@@ -2,6 +2,9 @@ const electron = require('electron');
 const electronOauth2 = require('electron-oauth2')
 const url = require('url');
 const path = require('path');
+const react = require('react');
+const reactDOM = require('react-dom');
+const Techfolio = require('./Techfolio');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -51,12 +54,12 @@ app.on('activate', function () {
 });
 
 function createWindow() {
-
   mainWindow = new BrowserWindow({ width: 920, height: 800 });
 
   mainWindow.loadURL(`file://${__dirname}/index.html?access_token=${token.access_token}&token_type=${token.token_type}&scope=${token.scope}`)
 
   mainWindow.on('closed', function () {
     mainWindow = null;
+    app.quit();
   });
 }

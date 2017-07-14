@@ -8,9 +8,9 @@ import IO from './io.js';
 
 class Techfolio extends React.Component {
 
-  constructor() {
-    super();
-    this.io = new IO('adambutac');
+  constructor(props) {
+    super(props);
+    this.io = new IO(props.username);
     this.handleSaveBio = this.handleSaveBio.bind(this);
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
@@ -126,7 +126,4 @@ class Techfolio extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <Techfolio />,
-  document.getElementById('techfolio')
-);
+export default Techfolio;
