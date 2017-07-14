@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Techfolio</title>
+    <link rel="stylesheet" href="../node_modules/semantic-ui-css/semantic.min.css"/>
+  </head>
+  <body>
+    <div id="techfolio" class="container"></div>
+  </body>
+  <script type="text/javascript" src="./Techfolio.jsx"></script>
+  <script>
+    if (typeof module === 'object') {
+      window.module = module;
+      module = undefined;
+    }
+  </script>
+  <!-- Insert this line after script imports -->
+  <script>
+    if (window.module) module = window.module;
+  </script>
+</html>
