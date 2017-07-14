@@ -13,24 +13,24 @@ class Interests extends React.Component{
   }
 
   handleChange(e, key, index) {
-    let state = this.state.data;
-    state[index][key] = e.target.value;
-    this.props.onChange('interests', state);
+    let data = this.state.data;
+    data[index][key] = e.target.value;
+    this.setState({ data: data});
   }
 
   add(){
     let data = this.state.data;
     data.push({
       name: '',
-      keywords: ['']
+      keywords: []
     });    
-    this.props.onChange('interests', data);    
+    this.setState({ data: data});
   }
 
   remove(){
     let data = this.state.data;
     data.pop();
-    this.props.onChange('interests', data);    
+    this.setState({ data: data});
   }
 
   render() {

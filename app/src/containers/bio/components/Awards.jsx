@@ -13,9 +13,9 @@ class Awards extends React.Component {
   }
 
   handleChange(e, key, index) {
-    let state = this.state.data;
-    state[index][key] = e.target.value;
-    this.props.onChange('awards', state);
+    let data = this.state.data;
+    data[index][key] = e.target.value;
+    this.setState({data: data});        
   }
 
   add() {
@@ -27,14 +27,12 @@ class Awards extends React.Component {
       summary: '',
     });
     this.setState({data: data});    
-    this.props.onChange('awards', data);    
   }
 
   remove() {
     let data = this.state.data;
     data.pop();
     this.setState({data: data});    
-    this.props.onChange('awards', data);
   }
 
   render() {

@@ -13,9 +13,9 @@ class References extends React.Component{
   }
 
   handleChange(e, key, index) {
-    let state = this.state.data;
-    state[index][key] = e.target.value;
-    this.props.onChange('references', state);
+    let data = this.state.data;
+    data[index][key] = e.target.value;
+    this.setState({ data: data});
   }
 
   add() {
@@ -24,13 +24,13 @@ class References extends React.Component{
       name:'',
       reference: ''
     });
-    this.props.onChange('references', data);    
+    this.setState({ data: data});
   }
 
   remove() {
     let data = this.state.data;
     data.pop();
-    this.props.onChange('references', data);
+    this.setState({ data: data});
   }
 
   render() {

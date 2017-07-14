@@ -15,7 +15,7 @@ class Skills extends React.Component{
   handleChange(e, key, index) {
     let state = this.state.data;
     state[index][key] = e.target.value;
-    this.props.onChange('skills', state);
+    this.setState({ data: data});
   }
 
   add() {
@@ -23,15 +23,15 @@ class Skills extends React.Component{
     data.push({
       name:'',
       level: '',      
-      keywords: ['']
+      keywords: []
     });
-    this.props.onChange('skills', data);    
+    this.setState({ data: data});
   }
 
   remove() {
     let data = this.state.data;
     data.pop();
-    this.props.onChange('skills', data);
+    this.setState({ data: data});
   }
 
   render() {

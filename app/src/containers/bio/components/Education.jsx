@@ -13,9 +13,9 @@ class Education extends React.Component {
   }
 
   handleChange(e, key, index) {
-    let state = this.state.data;
-    state[index][key] = e.target.value;
-    this.props.onChange('education', state);
+    let data = this.state.data;
+    data[index][key] = e.target.value;
+    this.setState({ data: data });
   }
 
   add() {
@@ -29,13 +29,13 @@ class Education extends React.Component {
       gpa:'',
       courses:['']
     });
-    this.props.onChange('education', data);    
+    this.setState({ data: data });
   }
 
   remove() {
     let data = this.state.data;
     data.pop();
-    this.props.onChange('education', data);
+    this.setState({ data: data });
   }
 
   render() {

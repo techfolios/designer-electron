@@ -13,15 +13,15 @@ class Work extends React.Component {
   }
 
   handleChange(e, key, index) {
-    let state = this.state.data;
-    state[index][key] = e.target.value;
-    this.props.onChange('work', state);
+    let data = this.state.data;
+    data[index][key] = e.target.value;
+    this.setState({ data: data});
   }
 
   handleHighlightChange(e, key, windex, hindex) {
     let state = this.state.data;
     state[windex][key][hindex] = e.target.value;
-    this.props.onChange('work', state);
+    this.setState({ data: data});
   }
 
   add() {
@@ -35,13 +35,13 @@ class Work extends React.Component {
       summary:'',
       highlights:['']
     });
-    this.props.onChange('work', data);    
+    this.setState({ data: data});
   }
 
   remove() {
     let data = this.state.data;
     data.pop();
-    this.props.onChange('work', data);
+    this.setState({ data: data});
   }
 
   render() {

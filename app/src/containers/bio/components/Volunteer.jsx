@@ -15,13 +15,13 @@ class Voulnteer extends React.Component{
   handleChange(e, key, index) {
     let data = this.state.data;
     data[index][key] = e.target.value;
-    this.props.onChange('volunteer', data);
+    this.setState({ data: data});
   }
 
   handleHighlightChange(e, key, windex, hindex) {
     let data = this.state.data;
     data[windex][key][hindex] = e.target.value;
-    this.props.onChange('volunteer', data);
+    this.setState({ data: data});
   }
 
   add() {
@@ -35,13 +35,13 @@ class Voulnteer extends React.Component{
       summary: '',
       highlights:['']
     });
-    this.props.onChange('volunteer', data);    
+    this.setState({ data: data});
   }
 
   remove() {
     let data = this.state.data;
     data.pop();
-    this.props.onChange('volunteer', data);
+    this.setState({ data: data});
   }
 
   render() {
