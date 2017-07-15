@@ -4,7 +4,7 @@ const url = require('url');
 const path = require('path');
 const react = require('react');
 const reactDOM = require('react-dom');
-const Techfolio = require('./Techfolio');
+const Techfolio = require('./Techfolio.jsx');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
