@@ -1,63 +1,58 @@
 import React from 'react';
 import { Icon, Form, Segment } from 'semantic-ui-react';
 
-class Interests extends React.Component{
-
+class Interests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data
-    }
+      data: props.data,
+    };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
   }
 
   handleChange(e, key, index) {
-    let data = this.state.data;
+    const data = this.state.data;
     data[index][key] = e.target.value;
-    this.setState({ data: data});
+    this.setState({ data });
   }
 
-  add(){
-    let data = this.state.data;
+  add() {
+    const data = this.state.data;
     data.push({
       name: '',
-      keywords: []
-    });    
-    this.setState({ data: data});
+      keywords: [],
+    });
+    this.setState({ data });
   }
 
-  remove(){
-    let data = this.state.data;
+  remove() {
+    const data = this.state.data;
     data.pop();
-    this.setState({ data: data});
+    this.setState({ data });
   }
 
   render() {
     return <div>
-      {this.state.data.map((interest, index) => {
-        return <div key={index}>
-            <Form.Input label='Name'
-              defaultValue={interest.name}
-              placeholder={"Programming"}
-              onChange={(e) => this.handleChange(e, 'name', index)} />
-            <Form.Dropdown multiple label='Keywords'
-              options={
-                interest.keywords.map((item, index) => {
-                  return {
-                    key: index,
-                    value: item,
-                    text: item,
-                  }
-                })
-              } />
-          </div>
-        })
+      {this.state.data.map((interest, index) => <div key={index}>
+        <Form.Input label='Name'
+          defaultValue={interest.name}
+          placeholder={'Programming'}
+          onChange={e => this.handleChange(e, 'name', index)} />
+        <Form.Dropdown multiple label='Keywords'
+          options={
+            interest.keywords.map((item, index) => ({
+              key: index,
+              value: item,
+              text: item,
+            }))
+          } />
+      </div>)
       }
-      
-      <Icon link name="minus" onClick={this.remove} ></Icon>                                  
+
+      <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
-    </div>
+    </div>;
   }
 }
 

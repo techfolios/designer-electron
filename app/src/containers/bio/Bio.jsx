@@ -15,12 +15,11 @@ function BioComponent(props) {
     <Segment color="teal">
       <Header as="h2"> {props.name} </Header>
       {props.children}
-    </Segment>      
-  </Grid.Column>
+    </Segment>
+  </Grid.Column>;
 }
 
 class Bio extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = this.props.bio;
@@ -30,7 +29,7 @@ class Bio extends React.Component {
   }
 
   handleChange(key, data) {
-    let state = this.state;
+    const state = this.state;
     state[key] = data;
     this.setState(state);
   }
@@ -51,34 +50,34 @@ class Bio extends React.Component {
       </Segment>
       <Form onSubmit={this.handleSaveBio}>
         <Grid doubling relaxed padded columns={2}>
-        <BioComponent name="Basics">
-          <Basics data={this.state.basics} onChange={ this.handleChange } />
-        </BioComponent>
-        <BioComponent name="Interests">
-          <Interests data={this.state.interests} onChange={ this.handleChange } />
-        </BioComponent>
-        <BioComponent name="Skills">
-          <Skills data={this.state.skills} onChange={ this.handleChange } />
-        </BioComponent>
-        <BioComponent name="Education">
-          <Education data={this.state.education} onChange={ this.handleChange } />
-        </BioComponent>
-        <BioComponent name="Work">
-          <Work data={this.state.work} onChange={ this.handleChange } />
-        </BioComponent>
-        <BioComponent name="Volunteer">
-          <Volunteer data={this.state.volunteer} onChange={ this.handleChange } />
-        </BioComponent>
-        <BioComponent name="Awards">
-          <Awards data={this.state.awards} onChange={ this.handleChange } />
-        </BioComponent>
-        <BioComponent name="References">
-          <References data={this.state.references} onChange={ this.handleChange } />
-        </BioComponent>
+          <BioComponent name="Basics">
+            <Basics data={this.state.basics} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Interests">
+            <Interests data={this.state.interests} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Skills">
+            <Skills data={this.state.skills} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Education">
+            <Education data={this.state.education} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Work">
+            <Work data={this.state.work} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Volunteer">
+            <Volunteer data={this.state.volunteer} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="Awards">
+            <Awards data={this.state.awards} onChange={ this.handleChange } />
+          </BioComponent>
+          <BioComponent name="References">
+            <References data={this.state.references} onChange={ this.handleChange } />
+          </BioComponent>
         </Grid>
         <Form.Button positive floated="right" type="Submit">Save</Form.Button>
       </Form>
-    </div>
+    </div>;
   }
 }
 

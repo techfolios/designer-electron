@@ -6,41 +6,41 @@ import Git from 'nodegit';
 class IO {
   constructor(username) {
     this.templateURL = 'https://github.com/techfolios/template';
-    this.localURL = Path.resolve(__dirname, '../.techfolios'); //OS.homedir() + "/.techfolios,
+    this.localURL = Path.resolve(__dirname, '../.techfolios'); // OS.homedir() + "/.techfolios,
     this.remoteURL = `https://github.com/${username}/${username}.github.io`;
   }
 
   init() {
     return new Promise((res, rej) => {
       this.hasLocal()
-        .then(hasLocal => {
+        .then((hasLocal) => {
           if (hasLocal) {
-            //has local, good to go.
+            // has local, good to go.
             res('Local techfolio found.');
           } else {
-            //no local files, clone user remote or template.
+            // no local files, clone user remote or template.
             this.hasRemote()
-              .then(hasRemote => {
+              .then((hasRemote) => {
                 if (hasRemote) {
-                  //has remote, clone remote
+                  // has remote, clone remote
                   this.cloneUserRemote()
                     .then(clone => res('Cloned user remote techfolio.'),
-                    err => rej(err));
+                      err => rej(err));
                 } else {
                   // no remote, clone template
                   this.cloneTechfoliosTemplate()
                     .then(clone => res('Cloned remote techfolio template.'),
-                    err => rej(err));
+                      err => rej(err));
                 }
-              }, err => {
-                //error checking for user remote
+              }, (err) => {
+                // error checking for user remote
                 rej(err);
-              })
+              });
           }
-        }, err => {
-          //error checking for local repo.
+        }, (err) => {
+          // error checking for local repo.
           rej(err);
-        })
+        });
     });
   }
 
@@ -75,27 +75,27 @@ class IO {
   }
 
   cloneUserRemote() {
-    let options = [];
+    const options = [];
 
     return new Promise((res, rej) => {
       Git.Clone(this.remoteURL, this.localURL)
-          .then(function (repo) {
-            res(repo.mergeBranches("master", "origin/master"));
-          })
-          .catch(function(err) { rej(err); });
+        .then(function (repo) {
+          res(repo.mergeBranches('master', 'origin/master'));
+        })
+        .catch(function (err) { rej(err); });
     });
   }
 
   cloneTechfoliosTemplate() {
-    let options = [];
+    const options = [];
 
     return new Promise((res, rej) => {
       Git.Clone(this.templateURL, this.localURL)
-          .then(function (repo) {
-            res(repo.mergeBranches("master", "origin/master"));
-          })
-          .catch(function(err) { rej(err); });
-          //reset remote url and add
+        .then(function (repo) {
+          res(repo.mergeBranches('master', 'origin/master'));
+        })
+        .catch(function (err) { rej(err); });
+      // reset remote url and add
 
       // SimpleGit(this.localURL)
       //   .exec(() => {
@@ -130,13 +130,13 @@ class IO {
 
   loadBio() {
     return new Promise((res, rej) => {
-      let path = Path.resolve(this.localURL, '_data/bio.json');
+      const path = Path.resolve(this.localURL, '_data/bio.json');
       FS.readFile(path, (err, data) => {
         if (err) {
           rej(err);
         }
         res(JSON.parse(data));
-      })
+      });
     });
   }
 
@@ -158,8 +158,8 @@ class IO {
             }
             res(true);
           });
-      })
-    })
+      });
+    });
   }
 
   push() {

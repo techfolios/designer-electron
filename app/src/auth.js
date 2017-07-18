@@ -2,7 +2,6 @@ const OauthGithub = require('electron-oauth-github');
 const Secret = require('./secret.js');
 
 class Auth {
-
   constructor() {
     this.token = '';
     this.github = new OauthGithub({
@@ -19,7 +18,7 @@ class Auth {
           console.error(err);
         }
 
-        console.log("Retrieved Github token: " + access_token);
+        console.log(`Retrieved Github token: ${access_token}`);
         this.token = access_token;
       });
     });
