@@ -55,7 +55,7 @@ class Profiles extends React.Component {
             onChange={e => this.handleChange(e, 'url', index)} />
         </div>
       })}
-      <Icon link name="minus" onClick={this.remove} ></Icon>                                  
+      <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
     </div>
   }

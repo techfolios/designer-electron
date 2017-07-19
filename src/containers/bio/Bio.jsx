@@ -15,7 +15,7 @@ function BioComponent(props) {
     <Segment color="teal">
       <Header as="h2"> {props.name} </Header>
       {props.children}
-    </Segment>      
+    </Segment>
   </Grid.Column>
 }
 
