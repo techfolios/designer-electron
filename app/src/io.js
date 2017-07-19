@@ -49,7 +49,7 @@ class IO {
       FS.mkdir(this.localURL, (err) => {
         if (!err) {
           res(false);
-        } else if (err.code == 'EEXIST') {
+        } else if (err.code === 'EEXIST') {
           res(true);
         } else {
           rej(err);
@@ -79,10 +79,10 @@ class IO {
 
     return new Promise((res, rej) => {
       Git.Clone(this.remoteURL, this.localURL)
-        .then(function (repo) {
+        .then((repo) => {
           res(repo.mergeBranches('master', 'origin/master'));
         })
-        .catch(function (err) { rej(err); });
+        .catch((err) => { rej(err); });
     });
   }
 
@@ -91,10 +91,10 @@ class IO {
 
     return new Promise((res, rej) => {
       Git.Clone(this.templateURL, this.localURL)
-        .then(function (repo) {
+        .then((repo) => {
           res(repo.mergeBranches('master', 'origin/master'));
         })
-        .catch(function (err) { rej(err); });
+        .catch((err) => { rej(err); });
       // reset remote url and add
 
       // SimpleGit(this.localURL)

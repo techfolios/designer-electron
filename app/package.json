@@ -22,6 +22,7 @@
   "homepage": "https://github.com/techfolios/electron-adam#readme",
   "dependencies": {
     "electron": "^1.6.11",
+    "electron-oauth-github": "^1.1.1",
     "electron-oauth2": "^3.0.0",
     "electron-prebuilt-compile": "^1.6.11",
     "nodegit": "^0.18.3",
