@@ -1,14 +1,14 @@
 import React from 'react';
 import { Form, Button, Segment, Grid, Header, Icon, Image, Menu } from 'semantic-ui-react';
 
-import Awards from './components/Awards';
-import Basics from './components/basics/Basics';
-import Education from './components/Education';
-import Interests from './components/Interests';
-import References from './components/References';
-import Skills from './components/Skills';
-import Volunteer from './components/Volunteer';
-import Work from './components/Work';
+import Awards from './components/Awards.jsx';
+import Basics from './components/basics/Basics.jsx';
+import Education from './components/Education.jsx';
+import Interests from './components/Interests.jsx';
+import References from './components/References.jsx';
+import Skills from './components/Skills.jsx';
+import Volunteer from './components/Volunteer.jsx';
+import Work from './components/Work.jsx';
 
 function BioComponent(props) {
   return <Grid.Column >

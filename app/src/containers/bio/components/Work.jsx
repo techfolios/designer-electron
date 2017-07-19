@@ -18,8 +18,8 @@ class Work extends React.Component {
   }
 
   handleHighlightChange(e, key, windex, hindex) {
-    const state = this.state.data;
-    state[windex][key][hindex] = e.target.value;
+    const data = this.state.data;
+    data[windex][key][hindex] = e.target.value;
     this.setState({ data });
   }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Segment, Header } from 'semantic-ui-react';
 
-import Profiles from './Profiles';
+import Profiles from './Profiles.jsx';
 
 class Basics extends React.Component {
   constructor(props) {

@@ -1,13 +1,13 @@
 const electron = require('electron');
 const electronOauth2 = require('electron-oauth2');
 /*
-  Hid unused consts
+  next five consts are flagged as unused... I'm leaving them in for now as I don't trust ESLint on this
  */
-// const url = require('url');
-// const path = require('path');
-// const react = require('react');
-// const reactDOM = require('react-dom');
-// const Techfolio = require('./Techfolio.jsx');
+const url = require('url');
+const path = require('path');
+const react = require('react');
+const reactDOM = require('react-dom');
+const Techfolio = require('./Techfolio.jsx');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
