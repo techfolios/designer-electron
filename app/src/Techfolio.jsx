@@ -17,6 +17,7 @@ class Techfolio extends React.Component {
       bio: null,
       projects: null,
       essays: null,
+      addItem: null,
       selected: <h1>Default page</h1>,
       isLoading: false,
     };
@@ -94,6 +95,9 @@ class Techfolio extends React.Component {
         break;
       case 'upload':
         selected = <h1>Upload</h1>;
+        break;
+      case 'addItem':
+        selected = <h1>Add Menu Item</h1>;
         break;
       default:
         selected = <h1>Default page</h1>;

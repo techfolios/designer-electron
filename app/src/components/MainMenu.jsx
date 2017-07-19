@@ -46,6 +46,11 @@ class MainMenu extends React.Component {
           <Icon name='upload' />
           Upload
         </Menu.Item>
+
+        <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick} >
+          <Icon name='plus' />
+          Add Menu Item
+        </Menu.Item>
       </Menu>
     );
   }
