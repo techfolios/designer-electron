@@ -22,8 +22,12 @@
   "homepage": "https://github.com/techfolios/electron-adam#readme",
   "dependencies": {
     "electron": "^1.6.11",
+    "electron-oauth-github": "^1.1.1",
     "electron-oauth2": "^3.0.0",
     "electron-prebuilt-compile": "^1.6.11",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-react": "^7.1.0",
     "nodegit": "^0.18.3",
     "octonode": "^0.7.13",
     "react": "^15.6.1",
@@ -32,7 +36,7 @@
     "semantic-ui-react": "^0.70.0"
   },
   "devDependencies": {
-    "eslint": "^4.1.1"
+    "eslint": "^3.19.0"
   },
   "false": {}
 }

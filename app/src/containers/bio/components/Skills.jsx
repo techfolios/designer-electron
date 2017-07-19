@@ -12,8 +12,8 @@ class Skills extends React.Component {
   }
 
   handleChange(e, key, index) {
-    const state = this.state.data;
-    state[index][key] = e.target.value;
+    const data = this.state.data;
+    data[index][key] = e.target.value;
     this.setState({ data });
   }
 

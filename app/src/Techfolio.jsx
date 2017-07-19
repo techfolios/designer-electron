@@ -1,9 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+/*
+  Hid unused consts
+ */
+// import ReactDOM from 'react-dom';
 import { Grid, Segment, Dimmer, Loader } from 'semantic-ui-react';
-
 import MainMenu from './components/MainMenu.jsx';
 import Bio from './containers/bio/Bio.jsx';
+
 import IO from './io.js';
 
 class Techfolio extends React.Component {
@@ -17,6 +20,7 @@ class Techfolio extends React.Component {
       bio: null,
       projects: null,
       essays: null,
+      addItem: null,
       selected: <h1>Default page</h1>,
       isLoading: false,
     };
@@ -90,23 +94,27 @@ class Techfolio extends React.Component {
   }
 
   getSelected(selected) {
+    let retSelection;
     switch (selected) {
       case 'bio':
-        selected = <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio}/>;
+        retSelection = <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio}/>;
         break;
       case 'projects':
-        selected = <h1>Projects</h1>;
+        retSelection = <h1>Projects</h1>;
         break;
       case 'essays':
-        selected = <h1>Essays</h1>;
+        retSelection = <h1>Essays</h1>;
         break;
       case 'upload':
-        selected = <h1>Upload</h1>;
+        retSelection = <h1>Upload</h1>;
+        break;
+      case 'addItem':
+        selected = <h1>Add Menu Item</h1>;
         break;
       default:
-        selected = <h1>Default page</h1>;
+        retSelection = <h1>Default page</h1>;
     }
-    return selected;
+    return retSelection;
   }
 
   handleMenuSelect(item) {
