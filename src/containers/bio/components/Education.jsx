@@ -10,6 +10,7 @@ class Education extends React.Component {
     }
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
+    this.handleAddition = this.handleAddition.bind(this);
   }
 
   handleChange(e, key, index) {
@@ -17,19 +18,28 @@ class Education extends React.Component {
     state[index][key] = e.target.value;
     this.props.onChange('education', state);
   }
+  handleAddition(e, obj) {
+    const data = this.state.data;
+    console.log(e);
+    // need to get array index from e
+    data[0].courses.push(obj.value);
+    this.setState({
+      data: data
+    });
+  }
 
   add() {
     let data = this.state.data;
     data.push({
       institution:'',
-      area: '',      
-      studyType: '',      
+      area: '',
+      studyType: '',
       startDate:'',
       endDate:'',
       gpa:'',
       courses:['']
     });
-    this.props.onChange('education', data);    
+    this.props.onChange('education', data);
   }
 
   remove() {
@@ -70,7 +80,7 @@ class Education extends React.Component {
               placeholder={""}
               onChange={(e) => this.handleChange(e, 'gpa', index)} />
           </Form.Group>
-          <Form.Dropdown multiple label='Courses'
+          <Form.Dropdown className="dropdown" multiple search selection fluid allowAdditions label='Courses'
             options={
               education.courses.map((course, index) => {
                 return {
@@ -79,11 +89,14 @@ class Education extends React.Component {
                   text: course,
                 }
               })
-            } />
+            }
+            onAddItem={this.handleAddition}
+            onChange={this.handleDropdownChange}
+           />
         </div>
       })
       }
-      <Icon link name="minus" onClick={this.remove} ></Icon>                                  
+      <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
     </div>
   }

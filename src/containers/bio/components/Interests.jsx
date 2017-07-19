@@ -23,14 +23,14 @@ class Interests extends React.Component{
     data.push({
       name: '',
       keywords: ['']
-    });    
-    this.props.onChange('interests', data);    
+    });
+    this.props.onChange('interests', data);
   }
 
   remove(){
     let data = this.state.data;
     data.pop();
-    this.props.onChange('interests', data);    
+    this.props.onChange('interests', data);
   }
 
   render() {
@@ -41,7 +41,7 @@ class Interests extends React.Component{
               defaultValue={interest.name}
               placeholder={"Programming"}
               onChange={(e) => this.handleChange(e, 'name', index)} />
-            <Form.Dropdown multiple label='Keywords'
+            <Form.Dropdown className="dropdown" multiple label='Keywords'
               options={
                 interest.keywords.map((item, index) => {
                   return {
@@ -54,8 +54,8 @@ class Interests extends React.Component{
           </div>
         })
       }
-      
-      <Icon link name="minus" onClick={this.remove} ></Icon>                                  
+
+      <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
     </div>
   }

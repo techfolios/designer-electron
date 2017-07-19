@@ -7,7 +7,6 @@ import Bio from './containers/bio/Bio.jsx';
 import IO from './io.js';
 
 class Techfolio extends React.Component {
-
   constructor() {
     super();
     this.io = new IO('adambutac');

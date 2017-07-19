@@ -22,10 +22,10 @@ class Skills extends React.Component{
     let data = this.state.data;
     data.push({
       name:'',
-      level: '',      
+      level: '',
       keywords: ['']
     });
-    this.props.onChange('skills', data);    
+    this.props.onChange('skills', data);
   }
 
   remove() {
@@ -47,7 +47,7 @@ class Skills extends React.Component{
                 defaultValue={skill.level}
                 placeholder={"Diamond"}
                 onChange={(e) => this.handleChange(e, 'level', index)} />
-              <Form.Dropdown multiple label='Keywords'
+              <Form.Dropdown className="dropdown" multiple label='Keywords'
                 options={
                   skill.keywords.map((keyword, index) => {
                     return {
@@ -61,7 +61,7 @@ class Skills extends React.Component{
           </div>
         })
       }
-      <Icon link name="minus" onClick={this.remove} ></Icon>                                  
+      <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
     </div>
   }
