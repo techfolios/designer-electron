@@ -40,8 +40,16 @@ class Techfolio extends React.Component {
       });
   }
 
+  handleSaveProjects(data) {
+
+  }
+
   handleLoadProjects() {
 
+  }
+
+  handleSaveEssays(data) {
+    
   }
 
   handleLoadEssays() {
