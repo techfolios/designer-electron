@@ -24,12 +24,12 @@ class IO {
                 if (hasRemote) {
                   // has remote, clone remote
                   this.cloneUserRemote()
-                    .then(clone => res('Cloned user remote techfolio.'),
+                    .then(() => res('Cloned user remote techfolio.'),
                       err => rej(err));
                 } else {
                   // no remote, clone template
                   this.cloneTechfoliosTemplate()
-                    .then(clone => res('Cloned remote techfolio template.'),
+                    .then(() => res('Cloned remote techfolio template.'),
                       err => rej(err));
                 }
               }, (err) => {
@@ -59,7 +59,7 @@ class IO {
   }
 
   hasRemote() {
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       res(false);
     });
     // return new Promise((res, rej) => {
@@ -75,7 +75,7 @@ class IO {
   }
 
   cloneUserRemote() {
-    const options = [];
+    // const options = [];
 
     return new Promise((res, rej) => {
       Git.Clone(this.remoteURL, this.localURL)
@@ -87,7 +87,7 @@ class IO {
   }
 
   cloneTechfoliosTemplate() {
-    const options = [];
+    // const options = [];
 
     return new Promise((res, rej) => {
       Git.Clone(this.templateURL, this.localURL)
@@ -151,7 +151,7 @@ class IO {
             console.log(`Commiting changes in ${this.localURL}`);
           })
           .add('.')
-          .commit(`Saved from machine: ${OS.hostname()}`, (err) => {
+          .commit(`Saved from machine: ${OS.hostname()}`, () => {
             if (err) {
               rej(err);
               // prompt an error to the user that the state could not be saved.

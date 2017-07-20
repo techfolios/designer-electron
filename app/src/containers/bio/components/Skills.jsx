@@ -48,7 +48,7 @@ class Skills extends React.Component {
             onChange={e => this.handleChange(e, 'level', index)} />
           <Form.Dropdown multiple label='Keywords'
             options={
-              skill.keywords.map((keyword, index) => ({
+              skill.keywords.map(keyword => ({
                 key: index,
                 value: keyword,
                 text: keyword,

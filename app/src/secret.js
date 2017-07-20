@@ -4,5 +4,5 @@ module.exports = {
   authorizationUrl: 'https://github.com/login/oauth/authorize',
   tokenUrl: 'https://github.com/login/oauth/access_token',
   useBasicAuthorizationHeader: false,
-  redirectUri: 'http://localhost'
-}
+  redirectUri: 'http://localhost',
+};

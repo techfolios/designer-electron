@@ -12,7 +12,7 @@ class Auth {
   }
 
   authenticate() {
-    return new Promise((res, rej) => {
+    return new Promise(() => {
       this.github.startRequest((accessToken, err) => {
         if (err) {
           console.error(err);

@@ -42,7 +42,7 @@ class Interests extends React.Component {
           onChange={e => this.handleChange(e, 'name', index)} />
         <Form.Dropdown multiple label='Keywords'
           options={
-            interest.keywords.map((item, index) => ({
+            interest.keywords.map(item => ({
               key: index,
               value: item,
               text: item,

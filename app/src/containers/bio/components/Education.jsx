@@ -71,7 +71,7 @@ class Education extends React.Component {
         </Form.Group>
         <Form.Dropdown multiple label='Courses'
           options={
-            education.courses.map((course, index) => ({
+            education.courses.map(course => ({
               key: index,
               value: course,
               text: course,
