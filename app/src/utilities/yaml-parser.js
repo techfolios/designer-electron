@@ -1,3 +1,4 @@
+/*
 class YAMLParser {
   constructor(file) {
     this.file = file;
@@ -11,3 +12,4 @@ class YAMLParser {
     const file = this.file;
   }
 }
+*/

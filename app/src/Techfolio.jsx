@@ -79,14 +79,17 @@ class Techfolio extends React.Component {
       });
   }
 
+  /*
+  this method causes a confusing ESLint problem...
+   */
   componentDidMount() {
     this.setState({ isLoading: true });
     this.io.init()
       .then((res) => {
         console.log(res);
         this.io.loadBio()
-          .then((res) => {
-            this.setState({ bio: res });
+          .then((res2) => {
+            this.setState({ bio: res2 });
             this.setState({ isLoading: false });
           }, (rej) => {
             console.log(rej);

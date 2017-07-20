@@ -1,3 +1,4 @@
+/*
 class FileCrawler {
   constructor(directory) {
     this.dir = directory;
@@ -11,3 +12,4 @@ class FileCrawler {
     const dir = this.dir;
   }
 }
+*/

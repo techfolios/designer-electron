@@ -1,9 +1,9 @@
 import FS from 'fs';
-import OS from 'os';
+// import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
-import path from 'path';
+// import path from 'path';
 
 class IO {
   constructor(username) {
@@ -60,6 +60,7 @@ class IO {
     });
   }
 
+  /*
   hasRemote() {
     return new Promise((res) => {
       res(false);
@@ -75,6 +76,7 @@ class IO {
     //     });
     // });
   }
+  */
 
   cloneUserRemote() {
     // const options = [];
@@ -148,43 +150,33 @@ class IO {
         if (err) {
           rej(err);
         }
-        let repo,
-          index,
-          oid;
+        let repo;
+        let index;
+        let oid;
         Git.Repository.open(this.localURL)
           .then((repoResult) => {
             repo = repoResult;
-            return fse.ensureDir(path.join(repo.workdir(), this.localURL));
+            return fse.ensureDir(Path.join(repo.workdir(), this.localURL));
           })
-          .then(function () {
-            return repo.refreshIndex();
-          })
-          .then(function (indexResult) {
+          .then(() => repo.refreshIndex())
+          .then((indexResult) => {
             index = indexResult;
           })
-          .then(function () {
-            return index.addAll();
-          })
-          .then(function () {
-            return index.write();
-          })
-          .then(function () {
-            return index.writeTree();
-          })
-          .then(function (oidResult) {
+          .then(() => index.addAll())
+          .then(() => index.write())
+          .then(() => index.writeTree())
+          .then((oidResult) => {
             oid = oidResult;
             return Git.Reference.nameToId(repo, 'HEAD');
           })
-          .then(function (head) {
-            return repo.getCommit(head);
-          })
+          .then(head => repo.getCommit(head))
           .then((parent) => {
             const author = Git.Signature.now('Techfolios', 'me@techfolios.com');
             const committer = Git.Signature.now('Techfolios', 'me@techfolios.com');
             res(true);
             return repo.createCommit('HEAD', author, committer, 'Update Techfolio', oid, [parent]);
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.error(`commitBio: ${error}`);
             rej(error);
           });
@@ -192,6 +184,7 @@ class IO {
     });
   }
 
+  /* ESLint fix needed
   push() {
     return new Promise((res, rej) => {
       SimpleGit(this.localURL)
@@ -203,6 +196,7 @@ class IO {
         });
     });
   }
+  */
 }
 
 module.exports = IO;
