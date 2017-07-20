@@ -1,5 +1,3 @@
-# TechFolio Designer
-
 TechFolio Designer is an native application for creating and maintaining professional portfolios built with [TechFolios](http://techfolios.github.io/).  TechFolio designer downloads your professional portfolio files from GitHub, makes it easy for you to edit them locally, and then push them back to GitHub when you are ready for them to be publicly available.
 
 ## Installation
