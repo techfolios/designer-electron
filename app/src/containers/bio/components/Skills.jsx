@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Segment, Header } from 'semantic-ui-react';
+// import { Segment, Header } from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 class Skills extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class Skills extends React.Component {
             onChange={e => this.handleChange(e, 'level', index)} />
           <Form.Dropdown multiple label='Keywords'
             options={
-              skill.keywords.map((keyword, index) => ({
+              skill.keywords.map(keyword => ({
                 key: index,
                 value: keyword,
                 text: keyword,

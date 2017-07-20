@@ -3,11 +3,12 @@ import React from 'react';
   Hid unused consts
  */
 // import ReactDOM from 'react-dom';
-import { Grid, Segment, Dimmer, Loader } from 'semantic-ui-react';
+// import { Segment } from 'semantic-ui-react';
+import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu.jsx';
 import Bio from './containers/bio/Bio.jsx';
 
-import IO from './io.js';
+import IO from './io';
 
 class Techfolio extends React.Component {
   constructor(props) {
@@ -43,14 +44,26 @@ class Techfolio extends React.Component {
         this.setState({ isLoading: false });
       });
   }
+  /*
+  removing stubs for now, to conform with ESLint
+ */
+  /*
+  handleSaveProjects(data) {
+
+  }
 
   handleLoadProjects() {
+
+  }
+
+  handleSaveEssays(data) {
 
   }
 
   handleLoadEssays() {
 
   }
+  */
 
   handleUpload() {
     this.setState({ isLoading: true });
@@ -101,7 +114,7 @@ class Techfolio extends React.Component {
         retSelection = <h1>Upload</h1>;
         break;
       case 'addItem':
-        selected = <h1>Add Menu Item</h1>;
+        retSelection = <h1>Add Menu Item</h1>;
         break;
       default:
         retSelection = <h1>Default page</h1>;

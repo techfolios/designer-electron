@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Button, Segment, Grid, Header, Icon, Image, Menu } from 'semantic-ui-react';
+// import { Button, Icon, Menu } from 'semantic-ui-react';
+import { Form, Segment, Grid, Header, Image } from 'semantic-ui-react';
 
 import Awards from './components/Awards.jsx';
 import Basics from './components/basics/Basics.jsx';

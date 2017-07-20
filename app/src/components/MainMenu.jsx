@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu, Segment, Icon } from 'semantic-ui-react';
+// import { Segment } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
 
 class MainMenu extends React.Component {
   constructor() {
