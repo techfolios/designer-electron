@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Button, Segment, Grid, Header, Icon, Image, Menu } from 'semantic-ui-react';
+// import { Button, Icon, Image, Menu } from 'semantic-ui-react';
+import { Form, Segment, Grid, Header } from 'semantic-ui-react';
 
 function ProjectComponent(props) {
   return <Grid.Column >
@@ -35,6 +36,10 @@ class Projects extends React.Component {
     this.props.onLoadProjects();
   }
 
+  /*
+  commented out unused method stubs
+   */
+  /*
   add() {
 
   }
@@ -42,6 +47,7 @@ class Projects extends React.Component {
   remove() {
 
   }
+  */
 
   render() {
     const projects = this.state.projects;
@@ -59,4 +65,4 @@ class Projects extends React.Component {
   }
 }
 
-export default Project;
+export default Projects;

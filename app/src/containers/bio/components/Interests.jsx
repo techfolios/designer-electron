@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Segment } from 'semantic-ui-react';
+// import { Segment } from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 class Interests extends React.Component {
   constructor(props) {

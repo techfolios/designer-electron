@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Segment, Header } from 'semantic-ui-react';
+// import { Segment } from 'semantic-ui-react';
+import { Icon, Form, Header } from 'semantic-ui-react';
 
 class Profiles extends React.Component {
   constructor(props) {

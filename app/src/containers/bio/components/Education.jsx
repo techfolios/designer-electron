@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Header } from 'semantic-ui-react';
+// import { Header } from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 class Education extends React.Component {
   constructor(props) {

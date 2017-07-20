@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Segment, Header } from 'semantic-ui-react';
+// import { Segment, Header } from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 class Skills extends React.Component {
   constructor(props) {

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Segment } from 'semantic-ui-react';
+// import { Icon } 'semantic-ui-react';
+import { Form, Segment } from 'semantic-ui-react';
 
 class Project extends React.Component {
   constructor(props) {
@@ -64,4 +65,4 @@ class Project extends React.Component {
   }
 }
 
-export default Voulnteer;
+export default Project;

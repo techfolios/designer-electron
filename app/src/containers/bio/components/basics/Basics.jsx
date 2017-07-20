@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Segment, Header } from 'semantic-ui-react';
+// import { Segment, Header } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 import Profiles from './Profiles.jsx';
 
