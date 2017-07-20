@@ -53,7 +53,7 @@ class Techfolio extends React.Component {
   }
 
   handleSaveEssays(data) {
-    
+
   }
 
   handleLoadEssays() {

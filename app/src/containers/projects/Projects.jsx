@@ -14,7 +14,7 @@ class Projects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      projects: this.props.projects
+      projects: this.props.projects,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSaveProjects = this.handleSaveProjects.bind(this);
@@ -48,11 +48,9 @@ class Projects extends React.Component {
     return <div>
       <Form>
         <Grid doubling relaxed padded columns={4}>
-          {projects.map((project, index) => {
-            return <ProjectComponent name={project.title} key={index}>
-              <Project data={project} onChange={this.handleChange} />
-            </ProjectComponent>
-          })}
+          {projects.map((project, index) => <ProjectComponent name={project.title} key={index}>
+            <Project data={project} onChange={this.handleChange} />
+          </ProjectComponent>)}
         </Grid>
         <Form.Button positive floated="right" onClick={this.add}>Add</Form.Button>
         <Form.Button positive floated="right" onClick={this.remove}>Save</Form.Button>
