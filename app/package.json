@@ -27,6 +27,8 @@
     "electron-oauth-github": "^1.1.1",
     "electron-oauth2": "^3.0.0",
     "electron-prebuilt-compile": "^1.6.11",
+    "fs-extra": "^4.0.0",
+    "jquery": "^3.2.1",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-react": "^7.1.0",
