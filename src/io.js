@@ -2,6 +2,8 @@ import FS from 'fs';
 import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
+import fse from 'fs-extra';
+import path from 'path';
 
 class IO {
   constructor(username) {
@@ -146,18 +148,54 @@ class IO {
         if (err) {
           rej(err);
         }
-        SimpleGit(this.localURL)
-          .exec(() => {
-            console.log(`Commiting changes in ${this.localURL}`);
-          })
-          .add('.')
-          .commit(`Saved from machine: ${OS.hostname()}`, (err) => {
-            if (err) {
-              rej(err);
-              // prompt an error to the user that the state could not be saved.
-            }
-            res(true);
-          });
+        // SimpleGit(this.localURL)
+        //   .exec(() => {
+        //     console.log(`Commiting changes in ${this.localURL}`);
+        //   })
+        //   .add('.')
+        //   .commit(`Saved from machine: ${OS.hostname()}`, (err) => {
+        //     if (err) {
+        //       rej(err);
+        //       // prompt an error to the user that the state could not be saved.
+        //     }
+        //     res(true);
+        //   });
+        var repo, index, oid;
+        Git.Repository.open(this.localURL)
+        .then((repoResult) => {
+          repo = repoResult;
+          return fse.ensureDir(path.join(repo.workdir(), this.localURL));
+        })
+        .then(function() {
+          return repo.refreshIndex();
+        })
+        .then(function(indexResult) {
+          index = indexResult;
+        })
+        .then(function() {
+          return index.addAll();
+        })
+        .then(function() {
+          return index.write();
+        })
+        .then(function() {
+          return index.writeTree();
+        })
+        .then(function(oidResult) {
+          oid = oidResult;
+          return Git.Reference.nameToId(repo, "HEAD");
+        })
+        .then(function(head) {
+          return repo.getCommit(head);
+        })
+        .then((parent) => {
+          var author = Git.Signature.now("Techfolios", "me@techfolios.com");
+          var committer = Git.Signature.now("Techfolios", "me@techfolios.com");
+          return repo.createCommit("HEAD", author, committer, "Update Techfolio", oid, [parent]);
+        })
+        .catch(function (error) {
+          console.error(`commitBio: ${error}`);
+        });
       })
     })
   }

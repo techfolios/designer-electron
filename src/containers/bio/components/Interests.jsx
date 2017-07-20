@@ -10,12 +10,21 @@ class Interests extends React.Component{
     }
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
+    this.handleAddition = this.handleAddition.bind(this);
   }
 
   handleChange(e, key, index) {
     let state = this.state.data;
     state[index][key] = e.target.value;
     this.props.onChange('interests', state);
+  }
+  handleAddition(e, obj) {
+    const data = this.state.data;
+    const index = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
+    data[index].keywords.push(obj.value);
+    this.setState({
+      data: data
+    });
   }
 
   add(){
@@ -41,16 +50,19 @@ class Interests extends React.Component{
               defaultValue={interest.name}
               placeholder={"Programming"}
               onChange={(e) => this.handleChange(e, 'name', index)} />
-            <Form.Dropdown className="dropdown" multiple label='Keywords'
-              options={
-                interest.keywords.map((item, index) => {
-                  return {
-                    key: index,
-                    value: item,
-                    text: item,
-                  }
-                })
-              } />
+              <Form.Dropdown data-index={index} className="dropdown" multiple search selection fluid allowAdditions label='Keywords'
+                defaultValue={interest.keywords}
+                options={
+                  interest.keywords.map((item, index) => {
+                    return {
+                      key: index,
+                      value: item,
+                      text: item
+                    }
+                  })
+                }
+                onAddItem={this.handleAddition}
+              />
           </div>
         })
       }

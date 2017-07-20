@@ -20,9 +20,8 @@ class Education extends React.Component {
   }
   handleAddition(e, obj) {
     const data = this.state.data;
-    console.log(e);
-    // need to get array index from e
-    data[0].courses.push(obj.value);
+    const index = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
+    data[index].courses.push(obj.value);
     this.setState({
       data: data
     });
@@ -80,18 +79,18 @@ class Education extends React.Component {
               placeholder={""}
               onChange={(e) => this.handleChange(e, 'gpa', index)} />
           </Form.Group>
-          <Form.Dropdown className="dropdown" multiple search selection fluid allowAdditions label='Courses'
+          <Form.Dropdown data-index={index} className="dropdown" multiple search selection fluid allowAdditions label='Courses'
+            defaultValue={education.courses}
             options={
               education.courses.map((course, index) => {
                 return {
                   key: index,
                   value: course,
-                  text: course,
+                  text: course
                 }
               })
             }
             onAddItem={this.handleAddition}
-            onChange={this.handleDropdownChange}
            />
         </div>
       })
