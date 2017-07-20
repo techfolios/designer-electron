@@ -8,7 +8,12 @@ class FileCrawler {
   }
 
   getFiles(directory) {
+    const list = [];
     const dir = this.dir;
+    fs.readdirSync(dir).forEach((file) => {
+      list.push(file);
+    });
+    return list;
   }
 
   createFile(fileName) {
