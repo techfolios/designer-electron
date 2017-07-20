@@ -148,46 +148,48 @@ class IO {
         if (err) {
           rej(err);
         }
-        var repo, index, oid;
+        let repo,
+          index,
+          oid;
         Git.Repository.open(this.localURL)
-        .then((repoResult) => {
-          repo = repoResult;
-          return fse.ensureDir(path.join(repo.workdir(), this.localURL));
-        })
-        .then(function() {
-          return repo.refreshIndex();
-        })
-        .then(function(indexResult) {
-          index = indexResult;
-        })
-        .then(function() {
-          return index.addAll();
-        })
-        .then(function() {
-          return index.write();
-        })
-        .then(function() {
-          return index.writeTree();
-        })
-        .then(function(oidResult) {
-          oid = oidResult;
-          return Git.Reference.nameToId(repo, "HEAD");
-        })
-        .then(function(head) {
-          return repo.getCommit(head);
-        })
-        .then((parent) => {
-          var author = Git.Signature.now("Techfolios", "me@techfolios.com");
-          var committer = Git.Signature.now("Techfolios", "me@techfolios.com");
-          res(true);
-          return repo.createCommit("HEAD", author, committer, "Update Techfolio", oid, [parent]);
-        })
-        .catch(function (error) {
-          console.error(`commitBio: ${error}`);
-          rej(error);
-        });
-      })
-    })
+          .then((repoResult) => {
+            repo = repoResult;
+            return fse.ensureDir(path.join(repo.workdir(), this.localURL));
+          })
+          .then(function () {
+            return repo.refreshIndex();
+          })
+          .then(function (indexResult) {
+            index = indexResult;
+          })
+          .then(function () {
+            return index.addAll();
+          })
+          .then(function () {
+            return index.write();
+          })
+          .then(function () {
+            return index.writeTree();
+          })
+          .then(function (oidResult) {
+            oid = oidResult;
+            return Git.Reference.nameToId(repo, 'HEAD');
+          })
+          .then(function (head) {
+            return repo.getCommit(head);
+          })
+          .then((parent) => {
+            const author = Git.Signature.now('Techfolios', 'me@techfolios.com');
+            const committer = Git.Signature.now('Techfolios', 'me@techfolios.com');
+            res(true);
+            return repo.createCommit('HEAD', author, committer, 'Update Techfolio', oid, [parent]);
+          })
+          .catch(function (error) {
+            console.error(`commitBio: ${error}`);
+            rej(error);
+          });
+      });
+    });
   }
 
   push() {

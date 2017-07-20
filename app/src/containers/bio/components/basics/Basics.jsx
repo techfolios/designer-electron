@@ -34,7 +34,7 @@ class Basics extends React.Component {
     Object.keys(this.state.location).forEach((key) => {
       obj.push(<Form.Input
         key={key}
-        label={key.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); })}
+        label={key.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })}
         defaultValue={this.state.location[key]}
         placeholder={''}
         onChange={e => this.handleLocationChange(e, key)}></Form.Input>);

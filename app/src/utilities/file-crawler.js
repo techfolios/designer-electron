@@ -1,5 +1,4 @@
 class FileCrawler {
-
   constructor(directory) {
     this.dir = directory;
   }
@@ -11,5 +10,4 @@ class FileCrawler {
   createFile(fileName) {
     const dir = this.dir;
   }
-
 }

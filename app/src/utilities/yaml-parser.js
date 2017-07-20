@@ -1,5 +1,4 @@
 class YAMLParser {
-
   constructor(file) {
     this.file = file;
   }
@@ -11,5 +10,4 @@ class YAMLParser {
   write() {
     const file = this.file;
   }
-
 }
