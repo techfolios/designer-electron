@@ -1,3 +1,4 @@
-.techfolios
-node_modules
-secret.js
+app/.techfolios
+app/node_modules
+.idea
+*.log

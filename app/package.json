@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "electron src/",
+    "lint": "eslint ./src",
+    "pretest": "npm run lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,13 +29,20 @@
     "electron-prebuilt-compile": "^1.6.11",
     "fs-extra": "^4.0.0",
     "jquery": "^3.2.1",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-react": "^7.1.0",
     "nodegit": "^0.18.3",
+    "octonode": "^0.7.13",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "semantic-ui-css": "^2.2.10",
     "semantic-ui-react": "^0.70.0"
   },
   "devDependencies": {
-    "eslint": "^4.1.1"
-  }
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0"
+  },
+  "false": {}
 }

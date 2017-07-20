@@ -7,8 +7,14 @@
   <body>
     <div id="techfolio" class="container"></div>
   </body>
-  <script type="text/javascript" src="./Techfolio.jsx"></script>
   <script>
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import Techfolio from './Techfolio';
+    ReactDOM.render(
+      <Techfolio username="adambutac" />,
+      document.getElementById('techfolio')
+    );
     if (typeof module === 'object') {
       window.module = module;
       module = undefined;

@@ -1,15 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Grid, Segment, Dimmer, Loader } from 'semantic-ui-react';
-
+/*
+  Hid unused consts
+ */
+// import ReactDOM from 'react-dom';
+// import { Segment } from 'semantic-ui-react';
+import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu.jsx';
 import Bio from './containers/bio/Bio.jsx';
-import IO from './io.js';
+
+import IO from './io';
 
 class Techfolio extends React.Component {
-  constructor() {
-    super();
-    this.io = new IO('adambutac');
+  constructor(props) {
+    super(props);
+    this.io = new IO(props.username);
     this.handleSaveBio = this.handleSaveBio.bind(this);
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
@@ -17,13 +21,14 @@ class Techfolio extends React.Component {
       bio: null,
       projects: null,
       essays: null,
+      addItem: null,
       selected: <h1>Default page</h1>,
-      isLoading: false
+      isLoading: false,
     };
   }
 
   handleSaveBio(data) {
-    this.setState({bio: data});
+    this.setState({ bio: data });
     this.io.writeBio(data);
   }
 
@@ -33,82 +38,97 @@ class Techfolio extends React.Component {
       .then((res) => {
         this.setState({ bio: res });
         this.setState({ isLoading: false });
-        this.setState({selected: 'bio'});
+        this.setState({ selected: 'bio' });
       }, (rej) => {
         console.log(rej);
         this.setState({ isLoading: false });
       });
+  }
+  /*
+  removing stubs for now, to conform with ESLint
+ */
+  /*
+  handleSaveProjects(data) {
+
   }
 
   handleLoadProjects() {
 
   }
 
-  handleLoadEssays() {
+  handleSaveEssays(data) {
 
   }
 
+  handleLoadEssays() {
+
+  }
+  */
+
   handleUpload() {
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true });
     this.io.push()
       .then((res) => {
         if (res) {
           console.log('success');
         }
-        this.setState({isLoading: false});
+        this.setState({ isLoading: false });
       }, (rej) => {
         console.log(rej);
-        this.setState({isLoading: false});
+        this.setState({ isLoading: false });
       });
   }
 
   componentDidMount() {
     this.setState({ isLoading: true });
     this.io.init()
-      .then(res => {
+      .then((res) => {
         console.log(res);
         this.io.loadBio()
-          .then(res => {
+          .then((res) => {
             this.setState({ bio: res });
             this.setState({ isLoading: false });
-          }, rej => {
+          }, (rej) => {
             console.log(rej);
             this.setState({ isLoading: false });
           });
-      }, rej => {
+      }, (rej) => {
         console.log(rej);
         this.setState({ isLoading: false });
       });
   }
 
   getSelected(selected) {
-    switch(selected) {
+    let retSelection;
+    switch (selected) {
       case 'bio':
-        selected = <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio}/>;
+        retSelection = <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio}/>;
         break;
       case 'projects':
-        selected = <h1>Projects</h1>;
+        retSelection = <h1>Projects</h1>;
         break;
       case 'essays':
-        selected = <h1>Essays</h1>;
+        retSelection = <h1>Essays</h1>;
         break;
       case 'upload':
-        selected = <h1>Upload</h1>;
+        retSelection = <h1>Upload</h1>;
+        break;
+      case 'addItem':
+        retSelection = <h1>Add Menu Item</h1>;
         break;
       default:
-        selected = <h1>Default page</h1>;
+        retSelection = <h1>Default page</h1>;
     }
-    return selected;
+    return retSelection;
   }
 
   handleMenuSelect(item) {
-    let selected = this.getSelected(item);
-    this.setState({selected: selected});
+    const selected = this.getSelected(item);
+    this.setState({ selected });
   }
 
   render() {
-
-    if(this.state.isLoading){
+    if (this.state.isLoading) {
       return <Dimmer inverted active> <Loader size="big" content="One sec..." /> </Dimmer>;
     }
 
@@ -125,7 +145,4 @@ class Techfolio extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <Techfolio />,
-  document.getElementById('techfolio')
-);
+export default Techfolio;

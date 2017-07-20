@@ -1,13 +1,13 @@
 import React from 'react';
-import { Menu, Segment, Icon } from 'semantic-ui-react';
+// import { Segment } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
 
 class MainMenu extends React.Component {
-
   constructor() {
     super();
     this.state = {
       visible: true,
-      activeItem: ''
+      activeItem: '',
     };
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
@@ -18,7 +18,7 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect(name);
   }
 
-  handleUpload(e, {name}) {
+  handleUpload(e, { name }) {
     this.setState({ activeItem: name });
     this.props.onUpload();
     this.props.onMenuSelect(name);
@@ -46,6 +46,11 @@ class MainMenu extends React.Component {
         <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload} >
           <Icon name='upload' />
           Upload
+        </Menu.Item>
+
+        <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick} >
+          <Icon name='plus' />
+          Add Menu Item
         </Menu.Item>
       </Menu>
     );
