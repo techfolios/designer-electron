@@ -1,1 +1,1 @@
-(See [index.md](index.md))
+(See the [home page](https://techfolios.github.io/designer-electron/))
