@@ -1,7 +1,7 @@
 const electron = require('electron');
 const electronOauth2 = require('electron-oauth2');
 /*
-  Hid unused consts
+  next five consts are flagged as unused
  */
 // const url = require('url');
 // const path = require('path');
@@ -21,7 +21,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({ width: 920, height: 800 });
   console.log(token);
 
-  mainWindow.loadURL(`file://${__dirname}/index.html?access_token=${token.access_token}&token_type=${token.token_type}&scope=${token.scope}`);
+  mainWindow.loadURL(`file://${__dirname}/index.html?access_token=${token.access_token}\
+  &token_type=${token.token_type}&scope=${token.scope}`);
   mainWindow.on('closed', () => {
     mainWindow = null;
     app.quit();

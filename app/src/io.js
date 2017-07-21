@@ -1,7 +1,9 @@
 import FS from 'fs';
-import OS from 'os';
+// import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
+import fse from 'fs-extra';
+// import path from 'path';
 
 class IO {
   constructor(username) {
@@ -24,12 +26,12 @@ class IO {
                 if (hasRemote) {
                   // has remote, clone remote
                   this.cloneUserRemote()
-                    .then(clone => res('Cloned user remote techfolio.'),
+                    .then(() => res('Cloned user remote techfolio.'),
                       err => rej(err));
                 } else {
                   // no remote, clone template
                   this.cloneTechfoliosTemplate()
-                    .then(clone => res('Cloned remote techfolio template.'),
+                    .then(() => res('Cloned remote techfolio template.'),
                       err => rej(err));
                 }
               }, (err) => {
@@ -49,7 +51,7 @@ class IO {
       FS.mkdir(this.localURL, (err) => {
         if (!err) {
           res(false);
-        } else if (err.code == 'EEXIST') {
+        } else if (err.code === 'EEXIST') {
           res(true);
         } else {
           rej(err);
@@ -58,8 +60,9 @@ class IO {
     });
   }
 
+  /*
   hasRemote() {
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       res(false);
     });
     // return new Promise((res, rej) => {
@@ -73,28 +76,29 @@ class IO {
     //     });
     // });
   }
+  */
 
   cloneUserRemote() {
-    const options = [];
+    // const options = [];
 
     return new Promise((res, rej) => {
       Git.Clone(this.remoteURL, this.localURL)
-        .then(function (repo) {
+        .then((repo) => {
           res(repo.mergeBranches('master', 'origin/master'));
         })
-        .catch(function (err) { rej(err); });
+        .catch((err) => { rej(err); });
     });
   }
 
   cloneTechfoliosTemplate() {
-    const options = [];
+    // const options = [];
 
     return new Promise((res, rej) => {
       Git.Clone(this.templateURL, this.localURL)
-        .then(function (repo) {
+        .then((repo) => {
           res(repo.mergeBranches('master', 'origin/master'));
         })
-        .catch(function (err) { rej(err); });
+        .catch((err) => { rej(err); });
       // reset remote url and add
 
       // SimpleGit(this.localURL)
@@ -146,22 +150,41 @@ class IO {
         if (err) {
           rej(err);
         }
-        SimpleGit(this.localURL)
-          .exec(() => {
-            console.log(`Commiting changes in ${this.localURL}`);
+        let repo;
+        let index;
+        let oid;
+        Git.Repository.open(this.localURL)
+          .then((repoResult) => {
+            repo = repoResult;
+            return fse.ensureDir(Path.join(repo.workdir(), this.localURL));
           })
-          .add('.')
-          .commit(`Saved from machine: ${OS.hostname()}`, (err) => {
-            if (err) {
-              rej(err);
-              // prompt an error to the user that the state could not be saved.
-            }
+          .then(() => repo.refreshIndex())
+          .then((indexResult) => {
+            index = indexResult;
+          })
+          .then(() => index.addAll())
+          .then(() => index.write())
+          .then(() => index.writeTree())
+          .then((oidResult) => {
+            oid = oidResult;
+            return Git.Reference.nameToId(repo, 'HEAD');
+          })
+          .then(head => repo.getCommit(head))
+          .then((parent) => {
+            const author = Git.Signature.now('Techfolios', 'me@techfolios.com');
+            const committer = Git.Signature.now('Techfolios', 'me@techfolios.com');
             res(true);
+            return repo.createCommit('HEAD', author, committer, 'Update Techfolio', oid, [parent]);
+          })
+          .catch((error) => {
+            console.error(`commitBio: ${error}`);
+            rej(error);
           });
       });
     });
   }
 
+  /* ESLint fix needed
   push() {
     return new Promise((res, rej) => {
       SimpleGit(this.localURL)
@@ -173,6 +196,7 @@ class IO {
         });
     });
   }
+  */
 }
 
 module.exports = IO;

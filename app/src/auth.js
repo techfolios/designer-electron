@@ -12,14 +12,14 @@ class Auth {
   }
 
   authenticate() {
-    return new Promise((res, rej) => {
-      this.github.startRequest(function (access_token, err) {
+    return new Promise(() => {
+      this.github.startRequest((accessToken, err) => {
         if (err) {
           console.error(err);
         }
 
-        console.log(`Retrieved Github token: ${access_token}`);
-        this.token = access_token;
+        console.log(`Retrieved Github token: ${accessToken}`);
+        this.token = accessToken;
       });
     });
   }

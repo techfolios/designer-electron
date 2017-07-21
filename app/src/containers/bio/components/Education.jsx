@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Header } from 'semantic-ui-react';
+// import { Header } from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 class Education extends React.Component {
   constructor(props) {
@@ -70,7 +71,7 @@ class Education extends React.Component {
         </Form.Group>
         <Form.Dropdown multiple label='Courses'
           options={
-            education.courses.map((course, index) => ({
+            education.courses.map(course => ({
               key: index,
               value: course,
               text: course,

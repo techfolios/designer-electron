@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Segment } from 'semantic-ui-react';
+// import { Segment } from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 class Interests extends React.Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class Interests extends React.Component {
           onChange={e => this.handleChange(e, 'name', index)} />
         <Form.Dropdown multiple label='Keywords'
           options={
-            interest.keywords.map((item, index) => ({
+            interest.keywords.map(item => ({
               key: index,
               value: item,
               text: item,

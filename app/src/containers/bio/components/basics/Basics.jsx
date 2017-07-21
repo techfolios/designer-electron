@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Segment, Header } from 'semantic-ui-react';
+// import { Segment, Header } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
-import Profiles from './Profiles';
+import Profiles from './Profiles.jsx';
 
 class Basics extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class Basics extends React.Component {
     Object.keys(this.state.location).forEach((key) => {
       obj.push(<Form.Input
         key={key}
-        label={key}
+        label={key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
         defaultValue={this.state.location[key]}
         placeholder={''}
         onChange={e => this.handleLocationChange(e, key)}></Form.Input>);
