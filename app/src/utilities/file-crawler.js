@@ -11,7 +11,9 @@ class FileCrawler {
     const list = [];
     const dir = this.dir;
     fs.readdirSync(dir).forEach((file) => {
-      list.push(file);
+      if (file !== 'index.html') {
+        list.push(file);
+      }
     });
     return list;
   }
@@ -21,3 +23,5 @@ class FileCrawler {
   }
 
 }
+
+module.exports = FileCrawler;

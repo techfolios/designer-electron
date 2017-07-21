@@ -6,8 +6,9 @@ import React from 'react';
 import { Grid, Segment, Dimmer, Loader } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu.jsx';
 import Bio from './containers/bio/Bio.jsx';
+import Essay from './containers/essay/Essays.jsx';
 
-import IO from './io.js';
+import IO from './io';
 
 class Techfolio extends React.Component {
   constructor(props) {
@@ -49,7 +50,16 @@ class Techfolio extends React.Component {
   }
 
   handleLoadEssays() {
-
+    this.setState({ isLoading: true });
+    this.io.loadBio()
+        .then((res) => {
+          this.setState({ essays: res });
+          this.setState({ isLoading: false });
+          this.setState({ selected: 'essays' });
+        }, (rej) => {
+          console.log(rej);
+          this.setState({ isLoading: false });
+        });
   }
 
   handleUpload() {
@@ -95,7 +105,7 @@ class Techfolio extends React.Component {
         retSelection = <h1>Projects</h1>;
         break;
       case 'essays':
-        retSelection = <h1>Essays</h1>;
+        retSelection = <Essay dir={this.io.getLocalFolder()}/>;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;
