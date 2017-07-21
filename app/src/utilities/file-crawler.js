@@ -23,6 +23,11 @@ class FileCrawler {
     fs.outputFile(filePath, data);
   }
 
+  createJSON(fileName, data) {
+    const filePath = path.resolve(this.dir, fileName);
+    fs.outputJson(filePath, data);
+  }
+
 }
 
 module.exports = FileCrawler;
