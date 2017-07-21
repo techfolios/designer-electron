@@ -1,6 +1,7 @@
 import React from 'react';
 // import { Button, Icon, Image, Menu } from 'semantic-ui-react';
-import { Form, Segment, Grid, Header } from 'semantic-ui-react';
+import { Form, Icon, Segment, Grid, Header } from 'semantic-ui-react';
+import Project from './components/Project.jsx';
 
 function ProjectComponent(props) {
   return <Grid.Column >
@@ -52,6 +53,10 @@ class Projects extends React.Component {
   render() {
     const projects = this.state.projects;
     return <div>
+      <Segment basic textAlign="center">
+        <Icon name="cubes" size="huge" />
+        <Header as="h3"></Header>
+      </Segment>
       <Form>
         <Grid doubling relaxed padded columns={4}>
           {projects.map((project, index) => <ProjectComponent name={project.title} key={index}>
