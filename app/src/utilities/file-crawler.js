@@ -18,8 +18,9 @@ class FileCrawler {
     return list;
   }
 
-  createFile(fileName) {
-    const dir = this.dir;
+  createFile(fileName, data) {
+    const filePath = path.resolve(this.dir, fileName);
+    fs.outputFile(filePath, data);
   }
 
 }
