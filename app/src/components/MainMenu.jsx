@@ -24,29 +24,53 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect(name);
   }
 
+  renderBio(activeItem) {
+    return (
+      <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} >
+        <Icon name='user circle' />
+        Bio
+      </Menu.Item>
+    );
+  }
+
+  renderProjects(activeItem) {
+    return (
+      <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick} >
+        <Icon name='cubes' />
+        Projects
+      </Menu.Item>
+    );
+  }
+
+  renderEssays(activeItem) {
+    return (
+      <Menu.Item name='essays' active={activeItem === 'essays'} onClick={this.handleItemClick} >
+        <Icon name='file text outline' />
+        Essays
+      </Menu.Item>
+    );
+  }
+
+  renderUpload(activeItem) {
+    return (
+      <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload} >
+        <Icon name='upload' />
+        Upload
+      </Menu.Item>
+    );
+  }
+
   render() {
     const { activeItem } = this.state;
     return (
       <Menu vertical fixed="left" icon='labeled' color="teal">
-        <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} >
-          <Icon name='user circle' />
-          Bio
-        </Menu.Item>
+        {this.renderBio(activeItem)}
 
-        <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick} >
-          <Icon name='cubes' />
-          Projects
-        </Menu.Item>
+        {this.renderProjects(activeItem)}
 
-        <Menu.Item name='essays' active={activeItem === 'essays'} onClick={this.handleItemClick} >
-          <Icon name='file text outline' />
-          Essays
-        </Menu.Item>
+        {this.renderEssays(activeItem)}
 
-        <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload} >
-          <Icon name='upload' />
-          Upload
-        </Menu.Item>
+        {this.renderUpload(activeItem)}
 
         <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick} >
           <Icon name='plus' />
