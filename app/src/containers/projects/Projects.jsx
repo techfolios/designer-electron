@@ -1,7 +1,11 @@
 import React from 'react';
+import FrontMatter from 'front-matter';
+
 // import { Button, Icon, Image, Menu } from 'semantic-ui-react';
 import { Form, Icon, Segment, Grid, Header } from 'semantic-ui-react';
 import Project from './components/Project.jsx';
+
+import FileCrawler from '../../utilities/file-crawler';
 
 function ProjectComponent(props) {
   return <Grid.Column >
@@ -34,7 +38,10 @@ class Projects extends React.Component {
   }
 
   handleLoadProjects() {
-    this.props.onLoadProjects();
+    // this.props.onLoadProjects();
+    const files = FileCrawler
+    const data = {};
+    this.setState({ projects: data });
   }
 
   /*
