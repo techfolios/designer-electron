@@ -7,7 +7,11 @@ import React from 'react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu.jsx';
 import Bio from './containers/bio/Bio.jsx';
+<<<<<<< HEAD
 import Projects from './containers/projects/Projects.jsx';
+=======
+import Essay from './containers/essay/Essays.jsx';
+>>>>>>> issue-002
 
 import IO from './io';
 
@@ -76,7 +80,16 @@ class Techfolio extends React.Component {
   }
 
   handleLoadEssays() {
-
+    this.setState({ isLoading: true });
+    this.io.loadBio()
+        .then((res) => {
+          this.setState({ essays: res });
+          this.setState({ isLoading: false });
+          this.setState({ selected: 'essays' });
+        }, (rej) => {
+          console.log(rej);
+          this.setState({ isLoading: false });
+        });
   }
   */
 
@@ -132,7 +145,7 @@ class Techfolio extends React.Component {
           onLoadProjects={this.handleLoadProjects} />;
         break;
       case 'essays':
-        retSelection = <h1>Essays</h1>;
+        retSelection = <Essay dir={this.io.getLocalFolder()}/>;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;

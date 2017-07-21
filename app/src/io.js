@@ -197,6 +197,11 @@ class IO {
     });
   }
   */
+
+
+  getLocalFolder() {
+    return this.localURL;
+  }
 }
 
 module.exports = IO;

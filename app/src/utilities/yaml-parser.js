@@ -1,4 +1,7 @@
-/*
+
+const path = require('path');
+const fs = require('fs-extra');
+
 class YAMLParser {
   constructor(file) {
     this.file = file;
@@ -12,4 +15,3 @@ class YAMLParser {
     const file = this.file;
   }
 }
-*/
