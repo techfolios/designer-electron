@@ -29,6 +29,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-react": "^7.1.0",
     "fs-extra": "^4.0.0",
+    "js-yaml": "^3.9.0",
     "nodegit": "^0.18.3",
     "octonode": "^0.7.13",
     "react": "^15.6.1",
