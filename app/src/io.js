@@ -1,11 +1,9 @@
 import FS from 'fs';
-// import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
-// import path from 'path';
 
-class IO {
+class IO  {
   constructor(username) {
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(__dirname, '../.techfolios'); // OS.homedir() + "/.techfolios,
@@ -60,7 +58,7 @@ class IO {
     });
   }
 
-  /*
+
   hasRemote() {
     return new Promise((res) => {
       res(false);
@@ -76,7 +74,7 @@ class IO {
     //     });
     // });
   }
-  */
+
 
   cloneUserRemote() {
     // const options = [];
