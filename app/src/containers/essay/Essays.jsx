@@ -3,6 +3,7 @@ import Path from 'path';
 import { Container, Card, Button } from 'semantic-ui-react';
 
 import FileCrawler from '../../utilities/file-crawler';
+import YAMLParser from '../../utilities/yaml-parser';
 
 class Essay extends React.Component {
 
@@ -14,12 +15,13 @@ class Essay extends React.Component {
 
   getFiles() {
     const list = [];
+    const parser = new YAMLParser(this.crawler.getFiles());
 
-    this.crawler.getFiles().forEach((file) => {
-      list.push(<Card key={file} color='blue'>
+    parser.read().forEach((data) => {
+      list.push(<Card key={data.attributes.title} color='blue'>
         <Card.Content>
           <Card.Header>
-            {file}
+            {data.attributes.title}
           </Card.Header>
         </Card.Content>
         <Card.Content extra>

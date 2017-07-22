@@ -1,17 +1,25 @@
-
 const path = require('path');
 const fs = require('fs-extra');
+const parser = require('front-matter');
 
 class YAMLParser {
-  constructor(file) {
-    this.file = file;
+  constructor(files) {
+    this.files = files;
   }
 
   read() {
-    const file = this.file;
+    const list = this.files;
+    const data = [];
+    list.forEach((file) => {
+      data.push(parser(file));
+    });
+
+    return data;
   }
 
   write() {
-    const file = this.file;
+    const list = this.files;
   }
 }
+
+module.exports = YAMLParser;

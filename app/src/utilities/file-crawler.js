@@ -11,7 +11,7 @@ class FileCrawler {
     const dir = this.dir;
     fs.readdirSync(dir).forEach((file) => {
       if (file !== 'index.html') {
-        list.push(fs.readFileSync(dir + file));
+        list.push(fs.readFileSync(path.join(this.dir, file), 'utf8'));
       }
     });
     return list;
