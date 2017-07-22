@@ -1,5 +1,5 @@
 {
-  "name": "electron-adam",
+  "name": "techfolios",
   "version": "1.0.0",
   "description": "node git test",
   "main": "index.js",
@@ -11,27 +11,27 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/techfolios/electron-adam.git"
+    "url": "git+https://github.com/techfolios/designer-electron.git"
   },
   "keywords": [
     "ndoegit"
   ],
-  "author": "adam butac",
+  "author": "Techfolios",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/techfolios/electron-adam/issues"
+    "url": "https://github.com/techfolios/designer-electron/issues"
   },
-  "homepage": "https://github.com/techfolios/electron-adam#readme",
+  "homepage": "https://github.com/techfolios/designer-electron#readme",
   "dependencies": {
     "electron": "^1.6.11",
     "electron-oauth-github": "^1.1.1",
     "electron-oauth2": "^3.0.0",
     "electron-prebuilt-compile": "^1.6.11",
-    "fs-extra": "^4.0.0",
-    "jquery": "^3.2.1",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-react": "^7.1.0",
+    "fs-extra": "^4.0.0",
+    "jquery": "^3.2.1",
     "nodegit": "^0.18.3",
     "octonode": "^0.7.13",
     "react": "^15.6.1",
