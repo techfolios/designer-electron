@@ -1,5 +1,5 @@
 const values = {
-  dir: '',
+  page: 'list',
   data: null,
 };
 
