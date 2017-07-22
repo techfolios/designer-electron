@@ -6,12 +6,12 @@ class FileCrawler {
     this.dir = directory;
   }
 
-  getFiles(directory) {
+  getFiles() {
     const list = [];
     const dir = this.dir;
     fs.readdirSync(dir).forEach((file) => {
       if (file !== 'index.html') {
-        list.push(file);
+        list.push(fs.readFileSync(dir + file));
       }
     });
     return list;

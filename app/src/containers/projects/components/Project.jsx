@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Icon } 'semantic-ui-react';
-import { Form, Segment } from 'semantic-ui-react';
+import { Form, Icon, Image, Segment } from 'semantic-ui-react';
 
 class Project extends React.Component {
   constructor(props) {
@@ -34,7 +34,11 @@ class Project extends React.Component {
 
   render() {
     return <div>
-      <h4>{this.state.data.data}</h4>
+      <h3>{this.state.data.attributes.title}</h3>
+      <Image src={`./../.techfolios/${this.state.data.attributes.image}`} />
+      <p>{this.state.data.attributes.summary}</p>
+      <Icon link name="remove" />
+      <Icon link name="edit" />
     </div>;
   }
 }

@@ -7,11 +7,8 @@ import React from 'react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu.jsx';
 import Bio from './containers/bio/Bio.jsx';
-<<<<<<< HEAD
-import Projects from './containers/projects/Projects.jsx';
-=======
 import Essay from './containers/essay/Essays.jsx';
->>>>>>> issue-002
+import Projects from './containers/projects/Projects.jsx';
 
 import IO from './io';
 

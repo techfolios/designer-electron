@@ -2,7 +2,7 @@ import React from 'react';
 import FrontMatter from 'front-matter';
 
 // import { Button, Icon, Image, Menu } from 'semantic-ui-react';
-import { Form, Icon, Segment, Grid, Header } from 'semantic-ui-react';
+import { Button, Icon, Segment, Grid, Header } from 'semantic-ui-react';
 import Project from './components/Project.jsx';
 
 import FileCrawler from '../../utilities/file-crawler';
@@ -24,7 +24,6 @@ class Projects extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSaveProjects = this.handleSaveProjects.bind(this);
-    this.handleLoadProjects = this.handleLoadProjects.bind(this);
   }
 
   handleChange(key, data) {
@@ -37,10 +36,14 @@ class Projects extends React.Component {
     this.props.onSaveProjects(this.state.projects);
   }
 
-  handleLoadProjects() {
+  componentWillMount() {
     // this.props.onLoadProjects();
-    const files = FileCrawler
-    const data = {};
+    const fc = new FileCrawler('.techfolios/projects/');
+    const files = fc.getFiles();
+    const data = [];
+    files.forEach((file) => {
+      data.push(FrontMatter(file.toString()));
+    });
     this.setState({ projects: data });
   }
 
@@ -59,20 +62,18 @@ class Projects extends React.Component {
 
   render() {
     const projects = this.state.projects;
+    console.log(projects);
     return <div>
       <Segment basic textAlign="center">
         <Icon name="cubes" size="huge" />
         <Header as="h3"></Header>
       </Segment>
-      <Form>
         <Grid doubling relaxed padded columns={4}>
-          {projects.map((project, index) => <ProjectComponent name={project.title} key={index}>
+          {projects.map((project, index) => <ProjectComponent key={index}>
             <Project data={project} onChange={this.handleChange} />
           </ProjectComponent>)}
         </Grid>
-        <Form.Button positive floated="right" onClick={this.add}>Add</Form.Button>
-        <Form.Button positive floated="right" onClick={this.remove}>Save</Form.Button>
-      </Form>
+        <Button circular positive floated="right" icon="plus" onClick={this.add} />
     </div>;
   }
 }
