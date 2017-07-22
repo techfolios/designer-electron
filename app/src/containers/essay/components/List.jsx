@@ -1,9 +1,12 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Path from 'path';
 import { Card, Button } from 'semantic-ui-react';
 
 import FileCrawler from '../../../utilities/file-crawler';
 import YAMLParser from '../../../utilities/yaml-parser';
+import values from '../values';
+import Essay from '../Essays.jsx';
 
 class EssayList extends React.Component {
 
@@ -11,12 +14,16 @@ class EssayList extends React.Component {
     super(props);
     this.directory = Path.resolve(props.dir, 'essays');
     this.crawler = new FileCrawler(this.directory);
-
-    this.changePage = this.changePage.bind(this);
   }
 
-  changePage() {
+  static changePage(event, data) {
+    event.preventDefault();
+    values.data = data;
+    values.page = 'edit';
 
+    ReactDOM.render(
+        <Essay/>,
+        document.getElementById('essay'));
   }
 
   getFiles() {
@@ -32,7 +39,7 @@ class EssayList extends React.Component {
         </Card.Content>
         <Card.Content extra>
           <div className='ui two buttons'>
-            <Button basic color='green'>Edit</Button>
+            <Button basic color='green' onClick={event => EssayList.changePage(event, data)}>Edit</Button>
             <Button basic color='red'>Delete</Button>
           </div>
         </Card.Content>
