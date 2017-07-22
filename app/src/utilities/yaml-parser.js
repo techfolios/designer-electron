@@ -10,9 +10,14 @@ class YAMLParser {
   read() {
     const list = this.files;
     const data = [];
-    list.forEach((file) => {
+
+    if (list.length === undefined) {
       data.push(parser(file));
-    });
+    } else {
+      list.forEach((file) => {
+        data.push(parser(file));
+      });
+    }
 
     return data;
   }

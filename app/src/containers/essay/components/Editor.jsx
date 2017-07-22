@@ -1,16 +1,32 @@
 import React from 'react';
 
-class Essay extends React.Component {
+import { Form } from 'semantic-ui-react';
+
+class EssayEditor extends React.Component {
 
   constructor(props) {
     super(props);
+    this.data = props.data;
+  }
+
+  static getDate() {
+    const today = new Date();
+    return `${today.getMonth()}/${today.getDate()}/${today.getFullYear()}`;
+  }
+
+  save() {
+    this.causeiwantthatredthinggone = null;
   }
 
   render() {
-    return <div>
-    </div>;
+    return <Form>
+      <Form.Input label='Title'/>
+      <Form.Input label='Tag(s)'/>
+      <Form.TextArea label='Body' />
+      <Button content='Save' color='green' onClick={this.save} />
+    </Form>;
   }
 
 }
 
-export default List;
+export default EssayEditor;

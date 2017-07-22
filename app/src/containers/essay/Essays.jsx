@@ -5,6 +5,7 @@ import { Container, Card, Button, Icon, Segment, Header } from 'semantic-ui-reac
 import FileCrawler from '../../utilities/file-crawler';
 import YAMLParser from '../../utilities/yaml-parser';
 import EssayList from './components/List.jsx';
+import EssayEditor from './components/Editor.jsx';
 
 class Essay extends React.Component {
 

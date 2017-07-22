@@ -11,6 +11,12 @@ class EssayList extends React.Component {
     super(props);
     this.directory = Path.resolve(props.dir, 'essays');
     this.crawler = new FileCrawler(this.directory);
+
+    this.changePage = this.changePage.bind(this);
+  }
+
+  changePage() {
+
   }
 
   getFiles() {
@@ -38,8 +44,8 @@ class EssayList extends React.Component {
 
   render() {
     return <Card.Group>
-        {this.getFiles()}
-      </Card.Group>;
+      {this.getFiles()}
+    </Card.Group>;
   }
 }
 
