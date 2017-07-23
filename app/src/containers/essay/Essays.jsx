@@ -44,7 +44,7 @@ class Essay extends React.Component {
       case 'edit':
         page = <div>
           <Segment basic textAlign="center">
-            <Icon name="write text outline" size="big"/>
+            <Icon name="write" size="big"/>
             <Header as="h3"></Header>
           </Segment>
           <EssayEditor data={values.data}/>
