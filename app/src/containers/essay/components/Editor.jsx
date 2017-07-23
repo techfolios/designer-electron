@@ -20,11 +20,12 @@ class EssayEditor extends React.Component {
   }
 
   render() {
+    const data = this.data;
     return <Form>
       <Button content='Back' color='green' onClick={event => Essay.changePage(event)} />
-      <Form.Input label='Title'/>
-      <Form.Input label='Tag(s)'/>
-      <Form.TextArea label='Body' />
+      <Form.Input label='Title' defaultValue={data.attributes.title} />
+      <Form.Input label='Tag(s)' defaultValue={data.attributes.labels} />
+      <Form.TextArea label='Body' defaultValue={data.body} />
       <Button content='Save' color='green' onClick={this.save} />
     </Form>;
   }

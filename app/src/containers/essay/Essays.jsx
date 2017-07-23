@@ -34,10 +34,21 @@ class Essay extends React.Component {
     let page;
     switch (values.page) {
       case 'list':
-        page = <EssayList dir={this.directory}/>;
+        page = <div>
+          <Segment basic textAlign="center">
+            <Icon name="file text outline" size="huge"/>
+            <Header as="h3"></Header>
+          </Segment>
+          <EssayList dir={this.directory}/></div>;
         break;
       case 'edit':
-        page = <EssayEditor data={values.data}/>;
+        page = <div>
+          <Segment basic textAlign="center">
+            <Icon name="write text outline" size="big"/>
+            <Header as="h3"></Header>
+          </Segment>
+          <EssayEditor data={values.data}/>
+        </div>;
         break;
       default:
         page = <h1>404 Error</h1>;
@@ -47,11 +58,7 @@ class Essay extends React.Component {
 
   render() {
     return <Container id="essay">
-      <Segment basic textAlign="center">
-        <Icon name="file text outline" size="huge" />
-        <Header as="h3"></Header>
-      </Segment>
-        {this.getPage()}
+      {this.getPage()}
     </Container>;
   }
 }
