@@ -13,29 +13,43 @@ class EssayList extends React.Component {
     super(props);
     this.directory = Path.resolve(props.dir, 'essays');
     this.crawler = new FileCrawler(this.directory);
+    this.state = { list: new YAMLParser(this.crawler.getFiles()).read() };
+
+    this.removefile = this.removefile.bind(this);
+  }
+
+  removefile(event, key) {
+    event.preventDefault();
+    let list = this.state.list;
+    list = list.filter(index => index.frontmatter !== key);
+    console.log(list);
+    this.setState({ list });
   }
 
   getFiles() {
-    const list = [];
-    const parser = new YAMLParser(this.crawler.getFiles());
+    const list = this.state.list;
+    const cards = [];
 
-    parser.read().forEach((data) => {
-      list.push(<Card key={data.attributes.title} color='blue'>
-        <Card.Content>
-          <Card.Header>
-            {data.attributes.title}
-          </Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <div className='ui two buttons'>
-            <Button basic color='green' onClick={event => Essay.changePage(event, 'edit', data)}>Edit</Button>
-            <Button basic color='red'>Delete</Button>
-          </div>
-        </Card.Content>
-      </Card>);
+    list.forEach((data) => {
+      if (data !== null) {
+        console.log(data);
+        cards.push(<Card key={data.attributes.title} color='blue'>
+          <Card.Content>
+            <Card.Header>
+              {data.attributes.title}
+            </Card.Header>
+          </Card.Content>
+          <Card.Content extra>
+            <div className='ui two buttons'>
+              <Button basic color='green' onClick={event => Essay.changePage(event, 'edit', data)}>Edit</Button>
+              <Button basic color='red' onClick={event => this.removefile(event, data.frontmatter)}>Delete</Button>
+            </div>
+          </Card.Content>
+        </Card>);
+      }
     });
 
-    return list;
+    return cards;
   }
 
   render() {
