@@ -68,12 +68,12 @@ class Projects extends React.Component {
         <Icon name="cubes" size="huge" />
         <Header as="h3"></Header>
       </Segment>
-        <Grid doubling relaxed padded columns={4}>
-          {projects.map((project, index) => <ProjectComponent key={index}>
-            <Project data={project} onChange={this.handleChange} />
-          </ProjectComponent>)}
-        </Grid>
-        <Button circular positive floated="right" icon="plus" onClick={this.add} />
+      <Grid doubling relaxed padded columns={4}>
+        {projects.map((project, index) => <ProjectComponent key={index}>
+          <Project data={project} onChange={this.handleChange} />
+        </ProjectComponent>)}
+      </Grid>
+      <Button circular positive floated="right" icon="plus" onClick={this.add} />
     </div>;
   }
 }
