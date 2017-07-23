@@ -3,7 +3,7 @@ import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
 
-class IO  {
+class IO {
   constructor(username) {
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(__dirname, '../.techfolios'); // OS.homedir() + "/.techfolios,

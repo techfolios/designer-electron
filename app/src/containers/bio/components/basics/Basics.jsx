@@ -26,9 +26,9 @@ class Basics extends React.Component {
 
   render() {
     return (<div>
-        <Contact data={this.state} handleChange={this.handleChange} />
-        <Location data={this.state.location} onChange={this.props.onChange}/>
-        <Profiles data={this.state.profiles} onChange={this.handleProfilesChange} />
+      <Contact data={this.state} handleChange={this.handleChange} />
+      <Location data={this.state.location} onChange={this.props.onChange}/>
+      <Profiles data={this.state.profiles} onChange={this.handleProfilesChange} />
     </div>);
   }
 }
