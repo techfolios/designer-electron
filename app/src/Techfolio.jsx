@@ -7,6 +7,8 @@ import React from 'react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu.jsx';
 import Bio from './containers/bio/Bio.jsx';
+import Essay from './containers/essay/Essays.jsx';
+import Projects from './containers/projects/Projects.jsx';
 
 import IO from './io';
 
@@ -15,11 +17,23 @@ class Techfolio extends React.Component {
     super(props);
     this.io = new IO(props.username);
     this.handleSaveBio = this.handleSaveBio.bind(this);
+    this.handleLoadBio = this.handleLoadBio.bind(this);
+    this.handleSaveProjects = this.handleSaveProjects.bind(this);
+    this.handleLoadProjects = this.handleLoadProjects.bind(this);
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.state = {
       bio: null,
-      projects: null,
+      projects: [
+        {
+          title: 'Project 1',
+          data: 'data',
+        },
+        {
+          title: 'Project 2',
+          data: 'data',
+        },
+      ],
       essays: null,
       addItem: null,
       selected: <h1>Default page</h1>,
@@ -47,21 +61,32 @@ class Techfolio extends React.Component {
   /*
   removing stubs for now, to conform with ESLint
  */
-  /*
   handleSaveProjects(data) {
-
+    console.log(data);
+    console.log(this.state);
   }
 
   handleLoadProjects() {
-
+    console.log('load project');
+    console.log(this.state);
   }
 
+  /*
   handleSaveEssays(data) {
 
   }
 
   handleLoadEssays() {
-
+    this.setState({ isLoading: true });
+    this.io.loadBio()
+        .then((res) => {
+          this.setState({ essays: res });
+          this.setState({ isLoading: false });
+          this.setState({ selected: 'essays' });
+        }, (rej) => {
+          console.log(rej);
+          this.setState({ isLoading: false });
+        });
   }
   */
 
@@ -105,13 +130,19 @@ class Techfolio extends React.Component {
     let retSelection;
     switch (selected) {
       case 'bio':
-        retSelection = <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio}/>;
+        retSelection = <Bio
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
         break;
       case 'projects':
-        retSelection = <h1>Projects</h1>;
+        retSelection = <Projects
+          projects={this.state.projects}
+          onSaveProjects={this.handleSaveProjects}
+          onLoadProjects={this.handleLoadProjects} />;
         break;
       case 'essays':
-        retSelection = <h1>Essays</h1>;
+        retSelection = <Essay dir={this.io.getLocalFolder()}/>;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;
@@ -138,7 +169,7 @@ class Techfolio extends React.Component {
     return (
       <Grid>
         <Grid.Column width={3}>
-          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}/>
+          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} />
         </Grid.Column>
         <Grid.Column stretched width={12}>
           {this.state.selected}

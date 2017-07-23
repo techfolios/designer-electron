@@ -17,7 +17,7 @@
     "ndoegit"
   ],
   "author": "Techfolios",
-  "license": "ISC",
+  "license": "GNU GPL V3",
   "bugs": {
     "url": "https://github.com/techfolios/designer-electron/issues"
   },
@@ -30,6 +30,7 @@
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-react": "^7.1.0",
+    "front-matter": "^2.1.2",
     "fs-extra": "^4.0.0",
     "jquery": "^3.2.1",
     "nodegit": "^0.18.3",
