@@ -4,17 +4,25 @@ const fs = require('fs-extra');
 class FileCrawler {
   constructor(directory) {
     this.dir = directory;
+    this.map = {};
   }
 
   getFiles() {
     const list = [];
     const dir = this.dir;
+    const map = this.map;
     fs.readdirSync(dir).forEach((file) => {
       if (file !== 'index.html') {
-        list.push(fs.readFileSync(path.join(this.dir, file), 'utf8'));
+        const filePath = path.join(dir, file);
+        list.push(fs.readFileSync(filePath, 'utf8'));
+        map[file] = filePath;
       }
     });
     return list;
+  }
+
+  removeFile(name) {
+    fs.removeSync(this.map[name]);
   }
 
   createFile(fileName, data) {

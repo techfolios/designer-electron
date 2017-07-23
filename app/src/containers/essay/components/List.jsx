@@ -21,7 +21,7 @@ class EssayList extends React.Component {
   removefile(event, key) {
     event.preventDefault();
     let list = this.state.list;
-    list = list.filter(index => index.frontmatter !== key);
+    list = list.filter((data, index) => index !== key);
     console.log(list);
     this.setState({ list });
   }
@@ -30,7 +30,7 @@ class EssayList extends React.Component {
     const list = this.state.list;
     const cards = [];
 
-    list.forEach((data) => {
+    list.forEach((data, index) => {
       if (data !== null) {
         console.log(data);
         cards.push(<Card key={data.attributes.title} color='blue'>
@@ -42,7 +42,7 @@ class EssayList extends React.Component {
           <Card.Content extra>
             <div className='ui two buttons'>
               <Button basic color='green' onClick={event => Essay.changePage(event, 'edit', data)}>Edit</Button>
-              <Button basic color='red' onClick={event => this.removefile(event, data.frontmatter)}>Delete</Button>
+              <Button basic color='red' onClick={event => this.removefile(event, index)}>Delete</Button>
             </div>
           </Card.Content>
         </Card>);
