@@ -35,8 +35,8 @@ class FileCrawler {
     return list;
   }
 
-  static removeFile(fullPath) {
-    fs.removeSync(fullPath);
+  removeFile(fileName) {
+    fs.removeSync(path.join(this.dir, fileName));
   }
 
   createFile(fileName, data) {
