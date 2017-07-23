@@ -14,7 +14,7 @@ class YAMLParser {
     if (file !== undefined) {
       const json = parser(file);
       if (filePath !== undefined) {
-        json.path = filePath;
+        json.file = filePath;
       }
       data = json;
       console.log(data);
@@ -22,7 +22,7 @@ class YAMLParser {
       list.forEach((value) => {
         const json = parser(value);
         if (filePath !== undefined) {
-          json.path = filePath;
+          json.file = filePath;
         }
         data.push(json);
       });

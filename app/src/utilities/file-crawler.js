@@ -28,7 +28,7 @@ class FileCrawler {
     fs.readdirSync(dir).forEach((file) => {
       if (file !== 'index.html') {
         const filePath = path.join(dir, file);
-        const data = parser.read(fs.readFileSync(filePath, 'utf8'), filePath);
+        const data = parser.read(fs.readFileSync(filePath, 'utf8'), file);
         list.push(data);
       }
     });
