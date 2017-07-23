@@ -7,6 +7,8 @@ import React from 'react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu.jsx';
 import Bio from './containers/bio/Bio.jsx';
+import EducationSection from './containers/bio/EducationSection.jsx';
+import WorkSection from './containers/bio/WorkSection.jsx';
 import Essay from './containers/essay/Essays.jsx';
 import Projects from './containers/projects/Projects.jsx';
 
@@ -58,9 +60,7 @@ class Techfolio extends React.Component {
         this.setState({ isLoading: false });
       });
   }
-  /*
-  removing stubs for now, to conform with ESLint
- */
+
   handleSaveProjects(data) {
     console.log(data);
     console.log(this.state);
@@ -104,9 +104,6 @@ class Techfolio extends React.Component {
       });
   }
 
-  /*
-  this method causes a confusing ESLint problem...
-   */
   componentDidMount() {
     this.setState({ isLoading: true });
     this.io.init()
@@ -131,6 +128,18 @@ class Techfolio extends React.Component {
     switch (selected) {
       case 'bio':
         retSelection = <Bio
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'educationSection':
+        retSelection = <EducationSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'workSection':
+        retSelection = <WorkSection
           bio={this.state.bio}
           onSaveBio={this.handleSaveBio}
           onLoadBio={this.handleLoadBio} />;

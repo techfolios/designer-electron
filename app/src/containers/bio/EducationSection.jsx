@@ -2,11 +2,7 @@ import React from 'react';
 // import { Button, Icon, Menu } from 'semantic-ui-react';
 import { Form, Segment, Grid, Header, Image } from 'semantic-ui-react';
 
-import Awards from './components/Awards.jsx';
-import Basics from './components/basics/Basics.jsx';
-import Interests from './components/Interests.jsx';
-import References from './components/References.jsx';
-import Skills from './components/Skills.jsx';
+import Education from './components/Education.jsx';
 
 function BioComponent(props) {
   return <Grid.Column >
@@ -17,7 +13,7 @@ function BioComponent(props) {
   </Grid.Column>;
 }
 
-class Bio extends React.Component {
+class EducationSection extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props.bio;
@@ -48,20 +44,8 @@ class Bio extends React.Component {
       </Segment>
       <Form onSubmit={this.handleSaveBio}>
         <Grid doubling relaxed padded columns={2}>
-          <BioComponent name="Basics">
-            <Basics data={this.state.basics} onChange={ this.handleChange } />
-          </BioComponent>
-          <BioComponent name="Interests">
-            <Interests data={this.state.interests} onChange={ this.handleChange } />
-          </BioComponent>
-          <BioComponent name="Skills">
-            <Skills data={this.state.skills} onChange={ this.handleChange } />
-          </BioComponent>
-          <BioComponent name="Awards">
-            <Awards data={this.state.awards} onChange={ this.handleChange } />
-          </BioComponent>
-          <BioComponent name="References">
-            <References data={this.state.references} onChange={ this.handleChange } />
+          <BioComponent name="Education">
+            <Education data={this.state.education} onChange={ this.handleChange } />
           </BioComponent>
         </Grid>
         <Form.Button positive floated="right" type="Submit">Save</Form.Button>
@@ -70,4 +54,4 @@ class Bio extends React.Component {
   }
 }
 
-export default Bio;
+export default EducationSection;

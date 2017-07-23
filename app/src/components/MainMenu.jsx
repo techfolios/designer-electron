@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Segment } from 'semantic-ui-react';
-import { Menu, Icon } from 'semantic-ui-react';
+import { Menu, Icon, Accordion } from 'semantic-ui-react';
 
 class MainMenu extends React.Component {
   constructor() {
@@ -26,10 +26,26 @@ class MainMenu extends React.Component {
 
   renderBio(activeItem) {
     return (
-      <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} >
-        <Icon name='user circle' />
-        Bio
-      </Menu.Item>
+      <Accordion>
+        <Accordion.Title>
+          <Menu.Item name='bioMenu'>
+            <Icon name='dropdown' />
+            <Icon name='user circle' />
+            Bio
+          </Menu.Item>
+        </Accordion.Title>
+        <Accordion.Content>
+          <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} >
+            Profile Basics
+          </Menu.Item>
+          <Menu.Item name='educationSection' active={activeItem === 'educationSection'} onClick={this.handleItemClick} >
+            Education
+          </Menu.Item>
+          <Menu.Item name='workSection' active={activeItem === 'workSection'} onClick={this.handleItemClick} >
+            Work & Volunteer
+          </Menu.Item>
+        </Accordion.Content>
+      </Accordion>
     );
   }
 
