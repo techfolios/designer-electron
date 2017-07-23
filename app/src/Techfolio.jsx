@@ -7,6 +7,7 @@ import React from 'react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu.jsx';
 import Bio from './containers/bio/Bio.jsx';
+import Settings from './containers/settings/Settings.jsx';
 
 import IO from './io';
 
@@ -22,6 +23,7 @@ class Techfolio extends React.Component {
       projects: null,
       essays: null,
       addItem: null,
+      settings: null,
       selected: <h1>Default page</h1>,
       isLoading: false,
     };
@@ -118,6 +120,9 @@ class Techfolio extends React.Component {
         break;
       case 'addItem':
         retSelection = <h1>Add Menu Item</h1>;
+        break;
+      case 'settings':
+        retSelection = <Settings/>;
         break;
       default:
         retSelection = <h1>Default page</h1>;

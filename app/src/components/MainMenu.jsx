@@ -24,6 +24,15 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect(name);
   }
 
+  renderSettings(activeItem) {
+    return (
+      <Menu.Item name='settings' active={activeItem === 'settings'} onClick={this.handleItemClick} >
+        <Icon name='settings' />
+        Settings
+      </Menu.Item>
+    );
+  }
+
   renderBio(activeItem) {
     return (
       <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} >
@@ -64,6 +73,8 @@ class MainMenu extends React.Component {
     const { activeItem } = this.state;
     return (
       <Menu vertical fixed="left" icon='labeled' color="teal">
+        {this.renderSettings(activeItem)}
+
         {this.renderBio(activeItem)}
 
         {this.renderProjects(activeItem)}
