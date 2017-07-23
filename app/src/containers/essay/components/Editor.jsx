@@ -10,7 +10,6 @@ import values from '../values';
 const Path = require('path');
 
 class EssayEditor extends React.Component {
-
   constructor(props) {
     super(props);
     this.data = props.data;
@@ -36,15 +35,14 @@ class EssayEditor extends React.Component {
     return <Form>
       <Button content='Back' color='green' onClick={event => Essay.changePage(event)}/>
       <Form.Input label='Title' defaultValue={data.attributes.title}
-                  onChange={event => (data.attributes.title = event.target.value)}/>
+        onChange={event => (data.attributes.title = event.target.value)}/>
       <Form.Input label='Tag(s)' defaultValue={data.attributes.labels}
-                  onChange={event => (data.attributes.labels = event.target.value)}/>
+        onChange={event => (data.attributes.labels = event.target.value)}/>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body}
-                     onChange={event => (data.body = event.target.value)}/>
+        onChange={event => (data.body = event.target.value)}/>
       <Button content='Save' color='green' onClick={this.save}/>
     </Form>;
   }
-
 }
 
 export default EssayEditor;

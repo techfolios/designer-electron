@@ -11,7 +11,6 @@ import EssayEditor from './components/Editor.jsx';
 import values from './values';
 
 class Essay extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = { page: 'list' };
@@ -26,8 +25,8 @@ class Essay extends React.Component {
     values.page = page || 'list';
 
     ReactDOM.render(
-        <Essay dir={values.dir}/>,
-        document.getElementById('essay'));
+      <Essay dir={values.dir}/>,
+      document.getElementById('essay'));
   }
 
   getPage() {

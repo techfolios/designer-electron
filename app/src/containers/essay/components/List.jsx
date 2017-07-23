@@ -7,7 +7,6 @@ import values from '../values';
 import Essay from '../Essays.jsx';
 
 class EssayList extends React.Component {
-
   constructor(props) {
     super(props);
     this.directory = Path.resolve(props.dir, 'essays');
