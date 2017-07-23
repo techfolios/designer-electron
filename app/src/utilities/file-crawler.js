@@ -1,28 +1,42 @@
+import YAMLParser from './../utilities/yaml-parser';
+
 const path = require('path');
 const fs = require('fs-extra');
 
 class FileCrawler {
   constructor(directory) {
     this.dir = directory;
-    this.map = {};
   }
 
   getFiles() {
     const list = [];
     const dir = this.dir;
-    const map = this.map;
     fs.readdirSync(dir).forEach((file) => {
       if (file !== 'index.html') {
         const filePath = path.join(dir, file);
-        list.push(fs.readFileSync(filePath, 'utf8'));
-        map[file] = filePath;
+        const data = fs.readFileSync(filePath, 'utf8');
+        list.push(data);
       }
     });
     return list;
   }
 
-  removeFile(name) {
-    fs.removeSync(this.map[name]);
+  getYAML() {
+    const list = [];
+    const dir = this.dir;
+    const parser = new YAMLParser();
+    fs.readdirSync(dir).forEach((file) => {
+      if (file !== 'index.html') {
+        const filePath = path.join(dir, file);
+        const data = parser.read(fs.readFileSync(filePath, 'utf8'), filePath);
+        list.push(data);
+      }
+    });
+    return list;
+  }
+
+  static removeFile(fullPath) {
+    fs.removeSync(fullPath);
   }
 
   createFile(fileName, data) {

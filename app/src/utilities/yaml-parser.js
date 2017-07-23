@@ -7,15 +7,24 @@ class YAMLParser {
     this.files = files;
   }
 
-  read() {
+  read(file, filePath) {
+    let data = [];
     const list = this.files;
-    const data = [];
 
-    if (list.length === undefined) {
-      data.push(parser(file));
+    if (file !== undefined) {
+      const json = parser(file);
+      if (filePath !== undefined) {
+        json.path = filePath;
+      }
+      data = json;
+      console.log(data);
     } else {
-      list.forEach((file) => {
-        data.push(parser(file));
+      list.forEach((value) => {
+        const json = parser(value);
+        if (filePath !== undefined) {
+          json.path = filePath;
+        }
+        data.push(json);
       });
     }
 

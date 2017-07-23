@@ -3,7 +3,6 @@ import Path from 'path';
 import { Card, Button } from 'semantic-ui-react';
 
 import FileCrawler from '../../../utilities/file-crawler';
-import YAMLParser from '../../../utilities/yaml-parser';
 import values from '../values';
 import Essay from '../Essays.jsx';
 
@@ -13,7 +12,7 @@ class EssayList extends React.Component {
     super(props);
     this.directory = Path.resolve(props.dir, 'essays');
     this.crawler = new FileCrawler(this.directory);
-    this.state = { list: new YAMLParser(this.crawler.getFiles()).read() };
+    this.state = { list: this.crawler.getYAML() };
 
     this.removefile = this.removefile.bind(this);
   }
