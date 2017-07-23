@@ -31,8 +31,8 @@ class YAMLParser {
     return data;
   }
 
-  write() {
-    const list = this.files;
+  static write(json) {
+    return `---\n${json.frontmatter}\n---\n\n${json.body}`;
   }
 }
 

@@ -39,14 +39,15 @@ class FileCrawler {
     fs.removeSync(path.join(this.dir, fileName));
   }
 
-  createFile(fileName, data) {
+  writeFile(fileName, data) {
     const filePath = path.resolve(this.dir, fileName);
-    fs.outputFile(filePath, data);
+    console.log(filePath);
+    fs.outputFileSync(filePath, data);
   }
 
   createJSON(fileName, data) {
     const filePath = path.resolve(this.dir, fileName);
-    fs.outputJson(filePath, data);
+    fs.outputJsonSync(filePath, data);
   }
 }
 
