@@ -25,7 +25,7 @@ class EssayEditor extends React.Component {
       <Button content='Back' color='green' onClick={event => Essay.changePage(event)} />
       <Form.Input label='Title' defaultValue={data.attributes.title} />
       <Form.Input label='Tag(s)' defaultValue={data.attributes.labels} />
-      <Form.TextArea label='Body' defaultValue={data.body} />
+      <Form.TextArea label='Body' defaultValue={data.body} autoHeight />
       <Button content='Save' color='green' onClick={this.save} />
     </Form>;
   }
