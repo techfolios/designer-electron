@@ -1,5 +1,5 @@
 {
-  "name": "electron-adam",
+  "name": "techfolios",
   "version": "1.0.0",
   "description": "node git test",
   "main": "index.js",
@@ -11,17 +11,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/techfolios/electron-adam.git"
+    "url": "git+https://github.com/techfolios/designer-electron.git"
   },
   "keywords": [
     "ndoegit"
   ],
-  "author": "adam butac",
-  "license": "ISC",
+  "author": "Techfolios",
+  "license": "GNU GPL V3",
   "bugs": {
-    "url": "https://github.com/techfolios/electron-adam/issues"
+    "url": "https://github.com/techfolios/designer-electron/issues"
   },
-  "homepage": "https://github.com/techfolios/electron-adam#readme",
+  "homepage": "https://github.com/techfolios/designer-electron#readme",
   "dependencies": {
     "electron": "^1.6.11",
     "electron-oauth-github": "^1.1.1",
