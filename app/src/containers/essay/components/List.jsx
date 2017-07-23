@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Path from 'path';
 import { Card, Button } from 'semantic-ui-react';
 
@@ -16,16 +15,6 @@ class EssayList extends React.Component {
     this.crawler = new FileCrawler(this.directory);
   }
 
-  static changePage(event, data) {
-    event.preventDefault();
-    values.data = data;
-    values.page = 'edit';
-
-    ReactDOM.render(
-        <Essay/>,
-        document.getElementById('essay'));
-  }
-
   getFiles() {
     const list = [];
     const parser = new YAMLParser(this.crawler.getFiles());
@@ -39,7 +28,7 @@ class EssayList extends React.Component {
         </Card.Content>
         <Card.Content extra>
           <div className='ui two buttons'>
-            <Button basic color='green' onClick={event => EssayList.changePage(event, data)}>Edit</Button>
+            <Button basic color='green' onClick={event => Essay.changePage(event, 'edit', data)}>Edit</Button>
             <Button basic color='red'>Delete</Button>
           </div>
         </Card.Content>

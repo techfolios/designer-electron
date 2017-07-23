@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Path from 'path';
 import { Container, Card, Button, Icon, Segment, Header } from 'semantic-ui-react';
 
@@ -13,8 +14,20 @@ class Essay extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = { page: 'list' };
     this.directory = props.dir;
     this.crawler = new FileCrawler(this.directory);
+    values.dir = this.directory;
+  }
+
+  static changePage(event, page, data) {
+    event.preventDefault();
+    values.data = data || null;
+    values.page = page || 'list';
+
+    ReactDOM.render(
+        <Essay dir={values.dir}/>,
+        document.getElementById('essay'));
   }
 
   getPage() {
@@ -38,9 +51,7 @@ class Essay extends React.Component {
         <Icon name="file text outline" size="huge" />
         <Header as="h3"></Header>
       </Segment>
-      <Card.Group>
         {this.getPage()}
-      </Card.Group>
     </Container>;
   }
 }

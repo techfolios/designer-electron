@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Form, Button } from 'semantic-ui-react';
+import Essay from '../Essays.jsx';
 
 class EssayEditor extends React.Component {
 
@@ -20,6 +21,7 @@ class EssayEditor extends React.Component {
 
   render() {
     return <Form>
+      <Button content='Back' color='green' onClick={event => Essay.changePage(event)} />
       <Form.Input label='Title'/>
       <Form.Input label='Tag(s)'/>
       <Form.TextArea label='Body' />
