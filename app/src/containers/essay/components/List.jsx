@@ -17,10 +17,10 @@ class EssayList extends React.Component {
     this.removefile = this.removefile.bind(this);
   }
 
-  removefile(event, key) {
+  removefile(event, key, file) {
     event.preventDefault();
-    let list = this.state.list;
-    list = list.filter((data, index) => index !== key);
+    const list = this.state.list.filter((data, index) => index !== key);
+    this.crawler.removeFile(file);
     console.log(list);
     this.setState({ list });
   }
@@ -41,7 +41,7 @@ class EssayList extends React.Component {
           <Card.Content extra>
             <div className='ui two buttons'>
               <Button basic color='green' onClick={event => Essay.changePage(event, 'edit', data)}>Edit</Button>
-              <Button basic color='red' onClick={event => this.removefile(event, index)}>Delete</Button>
+              <Button basic color='red' onClick={event => this.removefile(event, index, data.file)}>Delete</Button>
             </div>
           </Card.Content>
         </Card>);
