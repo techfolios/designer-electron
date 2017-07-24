@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Button, Icon, Menu } from 'semantic-ui-react';
-import { Form, Segment, Grid, Header, Image } from 'semantic-ui-react';
+import { Form, Segment, Grid, Header } from 'semantic-ui-react';
 
 import Volunteer from './components/Volunteer.jsx';
 

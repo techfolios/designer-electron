@@ -140,21 +140,21 @@ class Techfolio extends React.Component {
         break;
       case 'interestsSection':
         retSelection = <InterestsSection
-            bio={this.state.bio}
-            onSaveBio={this.handleSaveBio}
-            onLoadBio={this.handleLoadBio} />;
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
         break;
       case 'skillsSection':
         retSelection = <SkillsSection
-            bio={this.state.bio}
-            onSaveBio={this.handleSaveBio}
-            onLoadBio={this.handleLoadBio} />;
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
         break;
       case 'awardsSection':
         retSelection = <AwardsSection
-            bio={this.state.bio}
-            onSaveBio={this.handleSaveBio}
-            onLoadBio={this.handleLoadBio} />;
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
         break;
       case 'educationSection':
         retSelection = <EducationSection
@@ -163,22 +163,22 @@ class Techfolio extends React.Component {
           onLoadBio={this.handleLoadBio} />;
         break;
       case 'workSection':
-      retSelection = <WorkSection
+        retSelection = <WorkSection
           bio={this.state.bio}
           onSaveBio={this.handleSaveBio}
           onLoadBio={this.handleLoadBio} />;
-      break;
+        break;
       case 'volunteerSection':
         retSelection = <VolunteerSection
-            bio={this.state.bio}
-            onSaveBio={this.handleSaveBio}
-            onLoadBio={this.handleLoadBio} />;
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
         break;
       case 'refSection':
         retSelection = <RefSection
-            bio={this.state.bio}
-            onSaveBio={this.handleSaveBio}
-            onLoadBio={this.handleLoadBio} />;
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
         break;
       case 'projects':
         retSelection = <Projects
