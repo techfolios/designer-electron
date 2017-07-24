@@ -1,6 +1,6 @@
 import React from 'react';
 import Path from 'path';
-import { Card, Button, Dropdown, Icon } from 'semantic-ui-react';
+import { Card, Button, Menu, Icon, Accordion } from 'semantic-ui-react';
 
 import FileCrawler from '../../../utilities/file-crawler';
 import Essay from '../Essays.jsx';
@@ -32,16 +32,25 @@ class EssayList extends React.Component {
     if (this.menuMode) {
       list.forEach((data, index) => {
         if (data !== null) {
-          cards.push(<Dropdown.Item key={`dropdown${data.attributes.title}`}
-                                    onClick={event => Essay.changePage(event, data, 'edit')}>
+          cards.push(<Menu.Item key={`menu${data.attributes.title}`}
+                                onClick={event => Essay.changePage(event, data, 'edit')}>
             {data.attributes.title}
             <Icon name="remove" onClick={event => this.removefile(event, index, data.file)}/>
-          </Dropdown.Item>);
+          </Menu.Item>);
         }
       });
-      cards = <Dropdown text='Essays'>
-        <Dropdown.Menu>{cards}</Dropdown.Menu>
-      </Dropdown>;
+      cards = (<Accordion>
+        <Accordion.Title>
+          <Menu.Item>
+            <Icon name='file text outline'/>
+            <Icon name='dropdown'/>
+            Essays
+          </Menu.Item>
+        </Accordion.Title>
+        <Accordion.Content>
+          {cards}
+        </Accordion.Content>
+      </Accordion>);
     } else {
       list.forEach((data, index) => {
         if (data !== null) {

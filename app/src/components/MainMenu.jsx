@@ -30,57 +30,56 @@ class MainMenu extends React.Component {
 
   renderBio(activeItem) {
     return (
-      <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} >
-        <Icon name='user circle' />
-        Bio
-      </Menu.Item>
+        <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick}>
+          <Icon name='user circle'/>
+          Bio
+        </Menu.Item>
     );
   }
 
   renderProjects(activeItem) {
     return (
-      <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick} >
-        <Icon name='cubes' />
-        Projects
-      </Menu.Item>
+        <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick}>
+          <Icon name='cubes'/>
+          Projects
+        </Menu.Item>
     );
   }
 
   renderEssays(activeItem) {
     return (
-      <Menu.Item name='essays' active={activeItem === 'essays'} onClick={this.handleItemClick} >
-        <Icon name='file text outline' />
-          <EssayList dir={Path.resolve(__dirname, '../../.techfolios')} menu />
-      </Menu.Item>
+        <Menu.Item name='essays' active={activeItem === 'essays'} onClick={this.handleItemClick}>
+          <EssayList dir={Path.resolve(__dirname, '../../.techfolios')} menu/>
+        </Menu.Item>
     );
   }
 
   renderUpload(activeItem) {
     return (
-      <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload} >
-        <Icon name='upload' />
-        Upload
-      </Menu.Item>
+        <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
+          <Icon name='upload'/>
+          Upload
+        </Menu.Item>
     );
   }
 
   render() {
     const { activeItem } = this.state;
     return (
-      <Menu vertical fixed="left" icon='labeled' color="teal">
-        {this.renderBio(activeItem)}
+        <Menu vertical fixed="left" icon='labeled' color="teal">
+          {this.renderBio(activeItem)}
 
-        {this.renderProjects(activeItem)}
+          {this.renderProjects(activeItem)}
 
-        {this.renderEssays(activeItem)}
+          {this.renderEssays(activeItem)}
 
-        {this.renderUpload(activeItem)}
+          {this.renderUpload(activeItem)}
 
-        <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick} >
-          <Icon name='plus' />
-          Add Menu Item
-        </Menu.Item>
-      </Menu>
+          <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick}>
+            <Icon name='plus'/>
+            Add Menu Item
+          </Menu.Item>
+        </Menu>
     );
   }
 }
