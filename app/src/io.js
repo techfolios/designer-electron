@@ -2,10 +2,6 @@ import FS from 'fs';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
-<<<<<<< HEAD
-import Octonode from 'octonode';
-=======
->>>>>>> master
 
 class IO {
   constructor(username) {
