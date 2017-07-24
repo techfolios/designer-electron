@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Segment, Header } from 'semantic-ui-react';
+// import { Segment, Header } from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 class Skills extends React.Component {
   constructor(props) {
@@ -54,7 +55,8 @@ class Skills extends React.Component {
             defaultValue={skill.level}
             placeholder={'Diamond'}
             onChange={e => this.handleChange(e, 'level', index)} />
-          <Form.Dropdown data-index={index} className="dropdown" multiple search selection fluid allowAdditions label='Keywords'
+          <Form.Dropdown data-index={index} className="dropdown"
+            multiple search selection fluid allowAdditions label='Keywords'
             defaultValue={skill.keywords}
             options={
               skill.keywords.map((keyword, index) => ({

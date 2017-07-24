@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Header } from 'semantic-ui-react';
+// import Header from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 class Education extends React.Component {
   constructor(props) {
@@ -77,7 +78,8 @@ class Education extends React.Component {
             placeholder={''}
             onChange={e => this.handleChange(e, 'gpa', index)} />
         </Form.Group>
-        <Form.Dropdown data-index={index} className="dropdown" multiple search selection fluid allowAdditions label='Courses'
+        <Form.Dropdown data-index={index} className="dropdown"
+          multiple search selection fluid allowAdditions label='Courses'
           defaultValue={education.courses}
           options={
             education.courses.map((course, index) => ({

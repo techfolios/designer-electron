@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Segment } from 'semantic-ui-react';
+// import Segment from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 class Interests extends React.Component {
   constructor(props) {
@@ -48,7 +49,8 @@ class Interests extends React.Component {
           defaultValue={interest.name}
           placeholder={'Programming'}
           onChange={e => this.handleChange(e, 'name', index)} />
-        <Form.Dropdown data-index={index} className="dropdown" multiple search selection fluid allowAdditions label='Keywords'
+        <Form.Dropdown data-index={index} className="dropdown"
+          multiple search selection fluid allowAdditions label='Keywords'
           defaultValue={interest.keywords}
           options={
             interest.keywords.map((item, index) => ({
