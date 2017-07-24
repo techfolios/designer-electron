@@ -1,13 +1,5 @@
 const electron = require('electron');
 const electronOauth2 = require('electron-oauth2');
-/*
-  next five consts are flagged as unused
- */
-// const url = require('url');
-// const path = require('path');
-// const react = require('react');
-// const reactDOM = require('react-dom');
-// const Techfolio = require('./Techfolio.jsx');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
