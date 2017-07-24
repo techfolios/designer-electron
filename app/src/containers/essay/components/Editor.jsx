@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Icon } from 'semantic-ui-react';
 import Essay from '../Essays.jsx';
 import FileCrawler from '../../../utilities/file-crawler';
 import YAMLParser from '../../../utilities/yaml-parser';
@@ -34,7 +34,8 @@ class EssayEditor extends React.Component {
   render() {
     const data = this.data;
     return <Form>
-      <Button content='Back' color='green' onClick={event => Essay.changePage(event, data)}/>
+      <Icon name="arrow left" color='teal' onClick={event => Essay.changePage(event, data)}
+                    size="big"/>
       <Form.Input label='Title' defaultValue={data.attributes.title}
                   onChange={event => (data.attributes.title = event.target.value)}/>
       <Form.Input label='Tag(s)' defaultValue={data.attributes.labels}
