@@ -39,9 +39,6 @@ class EducationSection extends React.Component {
 
   render() {
     return <div>
-      <Segment basic>
-        <Image centered src={this.state.basics.picture} size='small' shape='circular' />
-      </Segment>
       <Form onSubmit={this.handleSaveBio}>
         <Grid doubling relaxed padded columns={2}>
           <BioComponent name="Education">

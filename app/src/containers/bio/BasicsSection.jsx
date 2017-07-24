@@ -2,7 +2,7 @@ import React from 'react';
 // import { Button, Icon, Menu } from 'semantic-ui-react';
 import { Form, Segment, Grid, Header, Image } from 'semantic-ui-react';
 
-import Work from './components/Work.jsx';
+import Basics from './components/basics/Basics.jsx';
 
 function BioComponent(props) {
   return <Grid.Column >
@@ -13,7 +13,7 @@ function BioComponent(props) {
   </Grid.Column>;
 }
 
-class WorkSection extends React.Component {
+class BasicsSection extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props.bio;
@@ -39,10 +39,13 @@ class WorkSection extends React.Component {
 
   render() {
     return <div>
+      <Segment basic>
+        <Image centered src={this.state.basics.picture} size='small' shape='circular' />
+      </Segment>
       <Form onSubmit={this.handleSaveBio}>
         <Grid doubling relaxed padded columns={2}>
-          <BioComponent name="Work">
-            <Work data={this.state.work} onChange={ this.handleChange } />
+          <BioComponent name="Basics">
+            <Basics data={this.state.basics} onChange={ this.handleChange } />
           </BioComponent>
         </Grid>
         <Form.Button positive floated="right" type="Submit">Save</Form.Button>
@@ -51,4 +54,4 @@ class WorkSection extends React.Component {
   }
 }
 
-export default WorkSection;
+export default BasicsSection;
