@@ -1,10 +1,11 @@
 import React from 'react';
-// import { Segment } from 'semantic-ui-react';
+import FrontMatter from 'front-matter';
 import { Menu, Icon, Accordion } from 'semantic-ui-react';
+import FileCrawler from '../utilities/file-crawler';
 
 class MainMenu extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       visible: true,
       activeItem: '',
@@ -14,6 +15,13 @@ class MainMenu extends React.Component {
   }
 
   handleItemClick(e, { name }) {
+    console.log(name);
+    this.setState({ activeItem: name });
+    this.props.onMenuSelect(name);
+  }
+
+  handleProjectsClick(e, { name }) {
+    console.log(this);
     this.setState({ activeItem: name });
     this.props.onMenuSelect(name);
   }
@@ -65,11 +73,30 @@ class MainMenu extends React.Component {
   }
 
   renderProjects(activeItem) {
+    const fc = new FileCrawler('.techfolios/projects/');
+    const files = fc.getFiles();
+    const data = [];
+    files.forEach((file, index) => {
+      const yaml = FrontMatter(file.toString());
+      data.push(<Menu.Item
+        key={index}
+        name={yaml.attributes.title}
+        active={activeItem === yaml.attributes.title}
+        onClick={this.handleProjectsClick}>{yaml.attributes.title}</Menu.Item>);
+    });
     return (
-      <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick} >
-        <Icon name='cubes' />
-        Projects
-      </Menu.Item>
+      <Accordion>
+        <Accordion.Title>
+          <Menu.Item name='projects'>
+            <Icon name='dropdown' />
+            <Icon name='cubes' />
+            Projects
+          </Menu.Item>
+        </Accordion.Title>
+        <Accordion.Content>
+          {data}
+        </Accordion.Content>
+      </Accordion>
     );
   }
 
