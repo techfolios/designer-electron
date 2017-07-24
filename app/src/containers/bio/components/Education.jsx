@@ -82,8 +82,8 @@ class Education extends React.Component {
           multiple search selection fluid allowAdditions label='Courses'
           defaultValue={education.courses}
           options={
-            education.courses.map((course, index) => ({
-              key: index,
+            education.courses.map((course, index2) => ({
+              key: index2,
               value: course,
               text: course,
             }))

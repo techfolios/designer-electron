@@ -3,7 +3,7 @@ import Path from 'path';
 import { Card, Button } from 'semantic-ui-react';
 
 import FileCrawler from '../../../utilities/file-crawler';
-import values from '../values';
+// import values from '../values';
 import Essay from '../Essays.jsx';
 
 class EssayList extends React.Component {

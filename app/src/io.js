@@ -58,10 +58,13 @@ class IO {
     });
   }
 
-
+  /*
+  added "this." in front of res to placate ESLint - is this a correct fix?
+   */
   hasRemote() {
     return new Promise((res) => {
       res(false);
+      console.log(this.res);
     });
     // return new Promise((res, rej) => {
     //   SimpleGit()

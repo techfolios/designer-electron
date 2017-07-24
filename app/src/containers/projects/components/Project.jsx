@@ -1,6 +1,7 @@
 import React from 'react';
 // import { Icon } 'semantic-ui-react';
-import { Form, Icon, Image, Segment } from 'semantic-ui-react';
+// import { Form, Segment } from 'semantic-ui-react';
+import { Icon, Image } from 'semantic-ui-react';
 
 class Project extends React.Component {
   constructor(props) {

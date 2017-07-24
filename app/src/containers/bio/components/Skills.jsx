@@ -59,8 +59,8 @@ class Skills extends React.Component {
             multiple search selection fluid allowAdditions label='Keywords'
             defaultValue={skill.keywords}
             options={
-              skill.keywords.map((keyword, index) => ({
-                key: index,
+              skill.keywords.map((keyword, index2) => ({
+                key: index2,
                 value: keyword,
                 text: keyword,
               }))
