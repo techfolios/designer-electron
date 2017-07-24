@@ -53,8 +53,8 @@ class Interests extends React.Component {
           multiple search selection fluid allowAdditions label='Keywords'
           defaultValue={interest.keywords}
           options={
-            interest.keywords.map((item, index2) => ({
-              key: index2,
+            interest.keywords.map((item, key) => ({
+              key,
               value: item,
               text: item,
             }))
