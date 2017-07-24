@@ -20,13 +20,13 @@ class Essay extends React.Component {
     values.dir = this.directory;
   }
 
-  static changePage(event, page, data) {
+  static changePage(event, data, page) {
     event.preventDefault();
     values.data = data || null;
     values.page = page || 'list';
 
     ReactDOM.render(
-        <Essay dir={values.dir}/>,
+        <Essay dir={values.dir} key={data.attributes.title}/>,
         document.getElementById('essay'));
   }
 

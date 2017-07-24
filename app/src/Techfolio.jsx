@@ -11,6 +11,7 @@ import Essay from './containers/essay/Essays.jsx';
 import Projects from './containers/projects/Projects.jsx';
 
 import IO from './io';
+import values from './containers/essay/values';
 
 class Techfolio extends React.Component {
   constructor(props) {

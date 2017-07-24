@@ -1,6 +1,10 @@
 import React from 'react';
 // import { Segment } from 'semantic-ui-react';
 import { Menu, Icon, Accordion } from 'semantic-ui-react';
+import Path from 'path';
+
+import EssayList from '../containers/essay/components/List.jsx';
+import values from '../containers/essay/values';
 
 class MainMenu extends React.Component {
   constructor() {
@@ -46,15 +50,7 @@ class MainMenu extends React.Component {
     return (
       <Menu.Item name='essays' active={activeItem === 'essays'} onClick={this.handleItemClick} >
         <Icon name='file text outline' />
-        <Accordion>
-          <Accordion.Title>
-            Essays
-            <Icon name='dropdown' />
-          </Accordion.Title>
-          <Accordion.Content>
-            Essay
-          </Accordion.Content>
-        </Accordion>
+          <EssayList dir={Path.resolve(__dirname, '../../.techfolios')} menu />
       </Menu.Item>
     );
   }

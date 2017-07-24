@@ -1,9 +1,8 @@
 import React from 'react';
 import Path from 'path';
-import { Card, Button, Accordion } from 'semantic-ui-react';
+import { Card, Button, Dropdown, Icon } from 'semantic-ui-react';
 
 import FileCrawler from '../../../utilities/file-crawler';
-import values from '../values';
 import Essay from '../Essays.jsx';
 
 class EssayList extends React.Component {
@@ -33,19 +32,19 @@ class EssayList extends React.Component {
     if (this.menuMode) {
       list.forEach((data, index) => {
         if (data !== null) {
-          cards.push(<Accordion.Content key={`accordion${data.attributes.title}`}>
+          cards.push(<Dropdown.Item key={`dropdown${data.attributes.title}`}
+                                    onClick={event => Essay.changePage(event, data, 'edit')}>
             {data.attributes.title}
-            <div className='ui two buttons'>
-              <Button basic color='green' onClick={event => Essay.changePage(event, 'edit', data)}>Edit</Button>
-              <Button basic color='red' onClick={event => this.removefile(event, index, data.file)}>Delete</Button>
-            </div>
-          </Accordion.Content>);
+            <Icon name="remove" onClick={event => this.removefile(event, index, data.file)}/>
+          </Dropdown.Item>);
         }
       });
+      cards = <Dropdown text='Essays'>
+        <Dropdown.Menu>{cards}</Dropdown.Menu>
+      </Dropdown>;
     } else {
       list.forEach((data, index) => {
         if (data !== null) {
-          console.log(data);
           cards.push(<Card key={`card${data.attributes.title}`} color='blue'>
             <Card.Content>
               <Card.Header>
@@ -54,7 +53,7 @@ class EssayList extends React.Component {
             </Card.Content>
             <Card.Content extra>
               <div className='ui two buttons'>
-                <Button basic color='green' onClick={event => Essay.changePage(event, 'edit', data)}>Edit</Button>
+                <Button basic color='green' onClick={event => Essay.changePage(event, data, 'edit')}>Edit</Button>
                 <Button basic color='red' onClick={event => this.removefile(event, index, data.file)}>Delete</Button>
               </div>
             </Card.Content>

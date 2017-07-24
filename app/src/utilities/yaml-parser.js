@@ -17,7 +17,6 @@ class YAMLParser {
         json.file = fileName;
       }
       data = json;
-      console.log(data);
     } else {
       list.forEach((value) => {
         const json = parser(value);
