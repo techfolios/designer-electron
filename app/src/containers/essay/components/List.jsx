@@ -5,6 +5,7 @@ import { Card, Button, Menu, Icon, Accordion } from 'semantic-ui-react';
 import FileCrawler from '../../../utilities/file-crawler';
 import Essay from '../Essays.jsx';
 
+@deprecated
 class EssayList extends React.Component {
 
   constructor(props) {
