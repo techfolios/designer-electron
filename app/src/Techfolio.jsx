@@ -6,7 +6,15 @@ import React from 'react';
 // import { Segment } from 'semantic-ui-react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu.jsx';
-import Bio from './containers/bio/Bio.jsx';
+import BasicsSection from './containers/bio/BasicsSection.jsx';
+import InterestsSection from './containers/bio/InterestsSection.jsx';
+import SkillsSection from './containers/bio/SkillsSection.jsx';
+import AwardsSection from './containers/bio/AwardsSection.jsx';
+import EducationSection from './containers/bio/EducationSection.jsx';
+import WorkSection from './containers/bio/WorkSection.jsx';
+import VolunteerSection from './containers/bio/VolunteerSection.jsx';
+import RefSection from './containers/bio/RefSection.jsx';
+
 import Essay from './containers/essay/Essays.jsx';
 import Projects from './containers/projects/Projects.jsx';
 
@@ -58,9 +66,7 @@ class Techfolio extends React.Component {
         this.setState({ isLoading: false });
       });
   }
-  /*
-  removing stubs for now, to conform with ESLint
- */
+
   handleSaveProjects(data) {
     console.log(data);
     console.log(this.state);
@@ -104,9 +110,6 @@ class Techfolio extends React.Component {
       });
   }
 
-  /*
-  this method causes a confusing ESLint problem...
-   */
   componentDidMount() {
     this.setState({ isLoading: true });
     this.io.init()
@@ -129,8 +132,50 @@ class Techfolio extends React.Component {
   getSelected(selected) {
     let retSelection;
     switch (selected) {
-      case 'bio':
-        retSelection = <Bio
+      case 'basicsSection':
+        retSelection = <BasicsSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'interestsSection':
+        retSelection = <InterestsSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'skillsSection':
+        retSelection = <SkillsSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'awardsSection':
+        retSelection = <AwardsSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'educationSection':
+        retSelection = <EducationSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'workSection':
+        retSelection = <WorkSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'volunteerSection':
+        retSelection = <VolunteerSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'refSection':
+        retSelection = <RefSection
           bio={this.state.bio}
           onSaveBio={this.handleSaveBio}
           onLoadBio={this.handleLoadBio} />;

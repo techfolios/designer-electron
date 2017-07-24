@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Segment } from 'semantic-ui-react';
-import { Menu, Icon } from 'semantic-ui-react';
+import { Menu, Icon, Accordion } from 'semantic-ui-react';
 
 class MainMenu extends React.Component {
   constructor() {
@@ -26,10 +26,41 @@ class MainMenu extends React.Component {
 
   renderBio(activeItem) {
     return (
-      <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} >
-        <Icon name='user circle' />
-        Bio
-      </Menu.Item>
+      <Accordion>
+        <Accordion.Title>
+          <Menu.Item name='bioMenu'>
+            <Icon name='dropdown' />
+            <Icon name='user circle' />
+            Bio
+          </Menu.Item>
+        </Accordion.Title>
+        <Accordion.Content>
+          <Menu.Item name='basicsSection' active={activeItem === 'basicsSection'} onClick={this.handleItemClick} >
+            Basics
+          </Menu.Item>
+          <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'} onClick={this.handleItemClick} >
+            Interests
+          </Menu.Item>
+          <Menu.Item name='skillsSection' active={activeItem === 'skillsSection'} onClick={this.handleItemClick} >
+            Skills
+          </Menu.Item>
+          <Menu.Item name='awardsSection' active={activeItem === 'awardsSection'} onClick={this.handleItemClick} >
+            Awards
+          </Menu.Item>
+          <Menu.Item name='educationSection' active={activeItem === 'educationSection'} onClick={this.handleItemClick} >
+            Education
+          </Menu.Item>
+          <Menu.Item name='workSection' active={activeItem === 'workSection'} onClick={this.handleItemClick} >
+            Work
+          </Menu.Item>
+          <Menu.Item name='volunteerSection' active={activeItem === 'volunteerSection'} onClick={this.handleItemClick} >
+            Volunteer
+          </Menu.Item>
+          <Menu.Item name='refSection' active={activeItem === 'refSection'} onClick={this.handleItemClick} >
+            References
+          </Menu.Item>
+        </Accordion.Content>
+      </Accordion>
     );
   }
 

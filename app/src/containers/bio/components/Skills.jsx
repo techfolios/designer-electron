@@ -10,12 +10,21 @@ class Skills extends React.Component {
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
+    this.handleAddition = this.handleAddition.bind(this);
   }
 
   handleChange(e, key, index) {
+    const state = this.state.data;
+    state[index][key] = e.target.value;
+    this.props.onChange('skills', state);
+  }
+  handleAddition(e, obj) {
     const data = this.state.data;
-    data[index][key] = e.target.value;
-    this.setState({ data });
+    const index = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
+    data[index].keywords.push(obj.value);
+    this.setState({
+      data,
+    });
   }
 
   add() {
@@ -23,15 +32,15 @@ class Skills extends React.Component {
     data.push({
       name: '',
       level: '',
-      keywords: [],
+      keywords: [''],
     });
-    this.setState({ data });
+    this.props.onChange('skills', data);
   }
 
   remove() {
     const data = this.state.data;
     data.pop();
-    this.setState({ data });
+    this.props.onChange('skills', data);
   }
 
   render() {
@@ -46,14 +55,18 @@ class Skills extends React.Component {
             defaultValue={skill.level}
             placeholder={'Diamond'}
             onChange={e => this.handleChange(e, 'level', index)} />
-          <Form.Dropdown multiple label='Keywords'
+          <Form.Dropdown data-index={index} className="dropdown"
+            multiple search selection fluid allowAdditions label='Keywords'
+            defaultValue={skill.keywords}
             options={
-              skill.keywords.map(keyword => ({
-                key: index,
+              skill.keywords.map((keyword, index2) => ({
+                key: index2,
                 value: keyword,
                 text: keyword,
               }))
-            } />
+            }
+            onAddItem={this.handleAddition}
+          />
         </Form.Group>
       </div>)
       }

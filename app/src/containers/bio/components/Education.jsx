@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Header } from 'semantic-ui-react';
+// import Header from 'semantic-ui-react';
 import { Icon, Form } from 'semantic-ui-react';
 
 class Education extends React.Component {
@@ -10,12 +10,21 @@ class Education extends React.Component {
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
+    this.handleAddition = this.handleAddition.bind(this);
   }
 
   handleChange(e, key, index) {
+    const state = this.state.data;
+    state[index][key] = e.target.value;
+    this.props.onChange('education', state);
+  }
+  handleAddition(e, obj) {
     const data = this.state.data;
-    data[index][key] = e.target.value;
-    this.setState({ data });
+    const index = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
+    data[index].courses.push(obj.value);
+    this.setState({
+      data,
+    });
   }
 
   add() {
@@ -29,13 +38,13 @@ class Education extends React.Component {
       gpa: '',
       courses: [''],
     });
-    this.setState({ data });
+    this.props.onChange('education', data);
   }
 
   remove() {
     const data = this.state.data;
     data.pop();
-    this.setState({ data });
+    this.props.onChange('education', data);
   }
 
   render() {
@@ -69,14 +78,18 @@ class Education extends React.Component {
             placeholder={''}
             onChange={e => this.handleChange(e, 'gpa', index)} />
         </Form.Group>
-        <Form.Dropdown multiple label='Courses'
+        <Form.Dropdown data-index={index} className="dropdown"
+          multiple search selection fluid allowAdditions label='Courses'
+          defaultValue={education.courses}
           options={
-            education.courses.map(course => ({
-              key: index,
+            education.courses.map((course, index2) => ({
+              key: index2,
               value: course,
               text: course,
             }))
-          } />
+          }
+          onAddItem={this.handleAddition}
+        />
       </div>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

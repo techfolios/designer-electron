@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Segment } from 'semantic-ui-react';
+// import Segment from 'semantic-ui-react';
 import { Icon, Form } from 'semantic-ui-react';
 
 class Interests extends React.Component {
@@ -10,27 +10,36 @@ class Interests extends React.Component {
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
+    this.handleAddition = this.handleAddition.bind(this);
   }
 
   handleChange(e, key, index) {
+    const state = this.state.data;
+    state[index][key] = e.target.value;
+    this.props.onChange('interests', state);
+  }
+  handleAddition(e, obj) {
     const data = this.state.data;
-    data[index][key] = e.target.value;
-    this.setState({ data });
+    const index = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
+    data[index].keywords.push(obj.value);
+    this.setState({
+      data,
+    });
   }
 
   add() {
     const data = this.state.data;
     data.push({
       name: '',
-      keywords: [],
+      keywords: [''],
     });
-    this.setState({ data });
+    this.props.onChange('interests', data);
   }
 
   remove() {
     const data = this.state.data;
     data.pop();
-    this.setState({ data });
+    this.props.onChange('interests', data);
   }
 
   render() {
@@ -40,14 +49,18 @@ class Interests extends React.Component {
           defaultValue={interest.name}
           placeholder={'Programming'}
           onChange={e => this.handleChange(e, 'name', index)} />
-        <Form.Dropdown multiple label='Keywords'
+        <Form.Dropdown data-index={index} className="dropdown"
+          multiple search selection fluid allowAdditions label='Keywords'
+          defaultValue={interest.keywords}
           options={
-            interest.keywords.map(item => ({
-              key: index,
+            interest.keywords.map((item, index2) => ({
+              key: index2,
               value: item,
               text: item,
             }))
-          } />
+          }
+          onAddItem={this.handleAddition}
+        />
       </div>)
       }
 

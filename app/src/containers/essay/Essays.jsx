@@ -1,44 +1,64 @@
 import React from 'react';
-import Path from 'path';
-import { Container, Card, Button } from 'semantic-ui-react';
+import ReactDOM from 'react-dom';
+// import Path from 'path';
+// import { Card, Button } from 'semantic-ui-react';
+import { Container, Icon, Segment, Header } from 'semantic-ui-react';
 
 import FileCrawler from '../../utilities/file-crawler';
+// import YAMLParser from '../../utilities/yaml-parser';
+import EssayList from './components/List.jsx';
+import EssayEditor from './components/Editor.jsx';
+
+import values from './values';
 
 class Essay extends React.Component {
-
   constructor(props) {
     super(props);
-    this.directory = Path.resolve(props.dir, 'essays');
+    this.state = { page: 'list' };
+    this.directory = props.dir;
     this.crawler = new FileCrawler(this.directory);
+    values.dir = this.directory;
   }
 
-  getFiles() {
-    const list = [];
+  static changePage(event, page, data) {
+    event.preventDefault();
+    values.data = data || null;
+    values.page = page || 'list';
 
-    this.crawler.getFiles().forEach((file) => {
-      list.push(<Card key={file} color='blue'>
-        <Card.Content>
-          <Card.Header>
-            {file}
-          </Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <div className='ui two buttons'>
-            <Button basic color='green'>Edit</Button>
-            <Button basic color='red'>Delete</Button>
-          </div>
-        </Card.Content>
-      </Card>);
-    });
+    ReactDOM.render(
+      <Essay dir={values.dir}/>,
+      document.getElementById('essay'));
+  }
 
-    return list;
+  getPage() {
+    let page;
+    switch (values.page) {
+      case 'list':
+        page = <div>
+          <Segment basic textAlign="center">
+            <Icon name="file text outline" size="huge"/>
+            <Header as="h3"></Header>
+          </Segment>
+          <EssayList dir={this.directory}/></div>;
+        break;
+      case 'edit':
+        page = <div>
+          <Segment basic textAlign="center">
+            <Icon name="write" size="big"/>
+            <Header as="h3"></Header>
+          </Segment>
+          <EssayEditor data={values.data}/>
+        </div>;
+        break;
+      default:
+        page = <h1>404 Error</h1>;
+    }
+    return page;
   }
 
   render() {
-    return <Container>
-      <Card.Group>
-        {this.getFiles()}
-      </Card.Group>
+    return <Container id="essay">
+      {this.getPage()}
     </Container>;
   }
 }

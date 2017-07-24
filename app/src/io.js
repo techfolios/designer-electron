@@ -2,7 +2,10 @@ import FS from 'fs';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
+<<<<<<< HEAD
 import Octonode from 'octonode';
+=======
+>>>>>>> master
 
 class IO {
   constructor(username) {
@@ -46,15 +49,15 @@ class IO {
   }
 
 
-  hasRemote(token) {
-    console.log(this);
-    const client = Octonode.client(token);
-    const me = client.me();
-    me.repos((data) => {
-      console.log(data);
+  /*
+  added "this." in front of res to placate ESLint - is this a correct fix?
+   */
+  hasRemote() {
+    return new Promise((res) => {
+      res(false);
+      console.log(this.res);
     });
   }
-
 
   cloneUserRemote() {
     return new Promise((res, rej) => {
