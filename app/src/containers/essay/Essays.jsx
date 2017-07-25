@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import { Container, Icon, Segment, Header } from 'semantic-ui-react';
 
 import EssayEditor from './components/Editor.jsx';
+import FileCrawler from '../../utilities/file-crawler';
 import values from './values';
 
 class Essay extends React.Component {
