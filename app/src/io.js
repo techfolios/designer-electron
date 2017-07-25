@@ -1,9 +1,7 @@
 import FS from 'fs';
-// import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
-// import path from 'path';
 
 class IO {
   constructor(username) {
@@ -61,9 +59,12 @@ class IO {
   }
 
   /*
+  added "this." in front of res to placate ESLint - is this a correct fix?
+   */
   hasRemote() {
     return new Promise((res) => {
       res(false);
+      console.log(this.res);
     });
     // return new Promise((res, rej) => {
     //   SimpleGit()
@@ -76,7 +77,7 @@ class IO {
     //     });
     // });
   }
-  */
+
 
   cloneUserRemote() {
     // const options = [];

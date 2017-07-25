@@ -1,20 +1,20 @@
 import React from 'react';
-import { Icon, Form, Segment, Header } from 'semantic-ui-react';
+// import { Segment, Header } from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
-class Skills extends React.Component{
-
+class Skills extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data
-    }
+      data: props.data,
+    };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
     this.handleAddition = this.handleAddition.bind(this);
   }
 
   handleChange(e, key, index) {
-    let state = this.state.data;
+    const state = this.state.data;
     state[index][key] = e.target.value;
     this.props.onChange('skills', state);
   }
@@ -23,59 +23,56 @@ class Skills extends React.Component{
     const index = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
     data[index].keywords.push(obj.value);
     this.setState({
-      data: data
+      data,
     });
   }
 
   add() {
-    let data = this.state.data;
+    const data = this.state.data;
     data.push({
-      name:'',
+      name: '',
       level: '',
-      keywords: ['']
+      keywords: [''],
     });
     this.props.onChange('skills', data);
   }
 
   remove() {
-    let data = this.state.data;
+    const data = this.state.data;
     data.pop();
     this.props.onChange('skills', data);
   }
 
   render() {
     return <div>
-      {this.state.data.map((skill, index) => {
-          return <div key={index}>
-            <Form.Input label='Name'
-                defaultValue={skill.name}
-                placeholder={"Hacky Sack"}
-                onChange={(e) => this.handleChange(e, 'name', index)} />
-            <Form.Group>
-              <Form.Input label='Level'
-                defaultValue={skill.level}
-                placeholder={"Diamond"}
-                onChange={(e) => this.handleChange(e, 'level', index)} />
-                <Form.Dropdown data-index={index} className="dropdown" multiple search selection fluid allowAdditions label='Keywords'
-                  defaultValue={skill.keywords}
-                  options={
-                    skill.keywords.map((keyword, index) => {
-                      return {
-                        key: index,
-                        value: keyword,
-                        text: keyword
-                      }
-                    })
-                  }
-                  onAddItem={this.handleAddition}
-                 />
-            </Form.Group>
-          </div>
-        })
+      {this.state.data.map((skill, index) => <div key={index}>
+        <Form.Input label='Name'
+          defaultValue={skill.name}
+          placeholder={'Hacky Sack'}
+          onChange={e => this.handleChange(e, 'name', index)} />
+        <Form.Group>
+          <Form.Input label='Level'
+            defaultValue={skill.level}
+            placeholder={'Diamond'}
+            onChange={e => this.handleChange(e, 'level', index)} />
+          <Form.Dropdown data-index={index} className="dropdown"
+            multiple search selection fluid allowAdditions label='Keywords'
+            defaultValue={skill.keywords}
+            options={
+              skill.keywords.map((keyword, key) => ({
+                key,
+                value: keyword,
+                text: keyword,
+              }))
+            }
+            onAddItem={this.handleAddition}
+          />
+        </Form.Group>
+      </div>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
-    </div>
+    </div>;
   }
 }
 

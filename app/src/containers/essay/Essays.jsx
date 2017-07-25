@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Path from 'path';
-import { Container, Card, Button, Icon, Segment, Header } from 'semantic-ui-react';
+// import Path from 'path';
+// import { Card, Button } from 'semantic-ui-react';
+import { Container, Icon, Segment, Header } from 'semantic-ui-react';
 
-import FileCrawler from '../../utilities/file-crawler';
-import YAMLParser from '../../utilities/yaml-parser';
 import EssayEditor from './components/Editor.jsx';
-
 import values from './values';
 
 class Essay extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = { page: 'list' };
