@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Segment } from 'semantic-ui-react';
-import { Menu, Icon, Accordion } from 'semantic-ui-react';
+import { Menu, Icon, Accordion, Divider, MenuItem } from 'semantic-ui-react';
 import Path from 'path';
 
 import Essay from '../containers/essay/Essays.jsx';
@@ -18,6 +18,7 @@ class MainMenu extends React.Component {
     };
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   handleItemClick(e, { name }) {
@@ -29,6 +30,12 @@ class MainMenu extends React.Component {
     this.setState({ activeItem: name });
     this.props.onUpload();
     this.props.onMenuSelect(name);
+  }
+
+  handlePageChange(event, name, data) {
+    event.preventDefault();
+    this.setState({ activeItem: data.attributes.title });
+    this.props.onMenuSelect(name, data);
   }
 
   renderBio(activeItem) {
@@ -58,15 +65,18 @@ class MainMenu extends React.Component {
     this.setState(list);
   }
 
-  getYAML(files) {
+  getYAML(files, crawler, state) {
     const list = [];
+    const { activeItem } = this.state;
+    let key;
     files.forEach((data, index) => {
       if (data !== null) {
-        list.push(<Menu.Item key={`menu${data.attributes.title}`}
-                             onClick={event => Essay.changePage(event, data, 'edit')}>
+        key = `${data.attributes.title}`;
+        list.push(<Menu.Item name={key} key={key} active={activeItem === key}
+                             onClick={ event => this.handlePageChange(event, 'essays', data)}>
           {data.attributes.title}
           <Icon name="remove"
-                onClick={event => this.removeYAML(event, index, data.file, this.essayCrawler, 'essayList')}/>
+                onClick={event => this.removeYAML(event, index, data.file, crawler, state)}/>
         </Menu.Item>);
       }
     });
@@ -75,18 +85,18 @@ class MainMenu extends React.Component {
   }
 
   renderEssays(activeItem) {
-    return <Accordion>
-          <Accordion.Title>
-            <Menu.Item name='essays' active={activeItem === 'essays'} onClick={this.handleItemClick}>
-              <Icon name='file text outline'/>
-              <Icon name='dropdown'/>
-              Essays
-            </Menu.Item>
-          </Accordion.Title>
-          <Accordion.Content>
-            {this.getYAML(this.state.essayList)}
-          </Accordion.Content>
-        </Accordion>;
+    return <Accordion as={MenuItem}>
+      <Accordion.Title>
+        <Menu.Item>
+          <Icon name='file text outline'/>
+          <Icon name='dropdown'/>
+          Essays
+        </Menu.Item>
+      </Accordion.Title>
+      <Accordion.Content>
+        {this.getYAML(this.state.essayList, this.essayCrawler, 'essayList')}
+      </Accordion.Content>
+    </Accordion>;
   }
 
   renderUpload(activeItem) {

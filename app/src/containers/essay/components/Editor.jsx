@@ -34,8 +34,6 @@ class EssayEditor extends React.Component {
   render() {
     const data = this.data;
     return <Form>
-      <Icon name="arrow left" color='teal' onClick={event => Essay.changePage(event, data)}
-                    size="big"/>
       <Form.Input label='Title' defaultValue={data.attributes.title}
                   onChange={event => (data.attributes.title = event.target.value)}/>
       <Form.Input label='Tag(s)' defaultValue={data.attributes.labels}
