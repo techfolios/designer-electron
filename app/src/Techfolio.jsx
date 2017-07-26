@@ -1,9 +1,4 @@
 import React from 'react';
-/*
-  Hid unused consts
- */
-// import ReactDOM from 'react-dom';
-// import { Segment } from 'semantic-ui-react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 
 import MainMenu from './components/MainMenu.jsx';
@@ -18,7 +13,6 @@ import RefSection from './containers/bio/RefSection.jsx';
 
 import Essay from './containers/essay/Essays.jsx';
 import Projects from './containers/projects/Projects.jsx';
-
 
 import IO from './io';
 import values from './containers/essay/values';
@@ -186,29 +180,32 @@ class Techfolio extends React.Component {
     this.io.init()
       .then((res) => {
         console.log(res);
-        this.setState({ isLoading: false });
-        this.io.loadBio()
-          .then((res2) => {
-            this.setState({ bio: res2 });
-          }, (rej) => {
-            console.log(rej);
-          });
-        this.io.loadProjects()
-          .then((res2) => {
-            console.log(res2);
-            this.setState({ projects: res2 });
-          }, (rej) => {
-            console.log(rej);
-          });
+        return this.io.loadBio();
       }, (rej) => {
         console.log(rej);
+        this.setState({ isLoading: false });
+      })
+      .then((resBio) => {
+        console.log(resBio);
+        this.setState({ bio: resBio });
+        return this.io.loadProjects();
+      }, (rejBio) => {
+        console.log(rejBio);
+        this.setState({ isLoading: false });
+      })
+      .then((resProj) => {
+        console.log(resProj);
+        this.setState({ projects: resProj });
+        this.setState({ isLoading: false });
+      }, (rejProj) => {
+        console.log(rejProj);
         this.setState({ isLoading: false });
       });
   }
 
   render() {
     if (this.state.isLoading || !this.state.bio || !this.state.projects) {
-      return <Dimmer inverted active> <Loader size="big" content="One sec..." /> </Dimmer>;
+      return <Dimmer inverted active> <Loader size="big" content="Loading..." /> </Dimmer>;
     }
 
     return (

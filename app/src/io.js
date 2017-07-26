@@ -132,26 +132,15 @@ class IO {
     return new Promise((res, rej) => {
       const path = Path.resolve(this.localURL, 'projects');
       const list = [];
-      FS.readdir(path, (err, projFiles) => {
-        if (!err) {
-          projFiles.forEach((file) => {
-            if (file !== 'index.html') {
-              const filePath = Path.resolve(path, file);
-              FS.readFile(filePath, (err2, projData) => {
-                if (!err2) {
-                  list.push(FrontMatter(projData.toString()));
-                } else {
-                  rej(err2);
-                }
-              });
-              console.log(list);
-            }
-          });
-          res(list);
-        } else {
-          rej(err);
+      const projFiles = FS.readdirSync(path);
+      projFiles.forEach((file) => {
+        if (file !== 'index.html') {
+          const filePath = Path.resolve(path, file);
+          const projData = FS.readFileSync(filePath);
+          list.push(FrontMatter(projData.toString()));
         }
       });
+      res(list);
     });
   }
 
