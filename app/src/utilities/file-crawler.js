@@ -36,7 +36,7 @@ class FileCrawler {
   }
 
   removeFile(fileName) {
-    fs.removeSync(path.join(this.dir, fileName));
+    if (fileName !== undefined) fs.removeSync(path.join(this.dir, fileName));
   }
 
   writeFile(fileName, data) {
