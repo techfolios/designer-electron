@@ -130,7 +130,7 @@ class Techfolio extends React.Component {
       });
   }
 
-  getSelected(selected, data) {
+  getSelected(selected, data, state) {
     let retSelection;
     switch (selected) {
       case 'basicsSection':
@@ -188,7 +188,7 @@ class Techfolio extends React.Component {
           onLoadProjects={this.handleLoadProjects} />;
         break;
       case 'essays':
-        retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title} data={data}/>;
+        retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title} data={data} state={state}/>;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;
@@ -202,8 +202,8 @@ class Techfolio extends React.Component {
     return retSelection;
   }
 
-  handleMenuSelect(item, data) {
-    const selected = this.getSelected(item, data);
+  handleMenuSelect(item, data, state) {
+    const selected = this.getSelected(item, data, state);
     this.setState({ selected });
   }
 

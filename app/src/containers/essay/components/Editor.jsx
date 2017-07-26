@@ -13,6 +13,7 @@ class EssayEditor extends React.Component {
   constructor(props) {
     super(props);
     this.data = props.data;
+    this.menu = props.state;
     this.crawler = new FileCrawler(Path.resolve(values.dir, 'essays'));
 
     this.save = this.save.bind(this);
@@ -20,14 +21,14 @@ class EssayEditor extends React.Component {
 
   static getDate() {
     const today = new Date();
-    return `${today.getMonth()}/${today.getDate()}/${today.getFullYear()}`;
+    return `${today.getMonth()}-${today.getDate()}-${today.getFullYear()}`;
   }
 
   save(event) {
     event.preventDefault();
     const yaml = YAMLParser.write(this.data);
     console.log(yaml);
-    this.crawler.writeFile(this.data.file, yaml);
+    this.crawler.writeFile(this.data.file || EssayEditor.getDate(), yaml);
   }
 
   render() {

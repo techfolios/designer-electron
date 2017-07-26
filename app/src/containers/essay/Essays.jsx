@@ -23,7 +23,7 @@ class Essay extends React.Component {
           <Icon name="write" size="big"/>
           <Header as="h3"></Header>
         </Segment>
-        <EssayEditor data={this.props.data}/>
+        <EssayEditor data={this.props.data} state={this.props.state}/>
     </Segment>;
   }
 }

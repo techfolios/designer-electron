@@ -33,7 +33,7 @@ class MainMenu extends React.Component {
   handlePageChange(event, name, data) {
     event.preventDefault();
     this.setState({ activeItem: data.attributes.title });
-    this.props.onMenuSelect(name, data);
+    this.props.onMenuSelect(name, data, this.state);
   }
 
   renderBio(activeItem) {
@@ -103,7 +103,6 @@ class MainMenu extends React.Component {
     let key;
     files.forEach((data, index) => {
       const json = data;
-      json.index = index;
       console.log(data);
       key = `${data.attributes.title}`;
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}
