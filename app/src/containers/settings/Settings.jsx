@@ -1,4 +1,7 @@
 import React from 'react';
+import { Button, Container } from 'semantic-ui-react';
+import { request } from 'superagent';
+
 
 class Settings extends React.Component {
   constructor() {
@@ -7,6 +10,7 @@ class Settings extends React.Component {
     };
     // this.handleItemClick = this.handleItemClick.bind(this);
     // this.handleUpload = this.handleUpload.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   handleItemClick(e, { name }) {
@@ -14,9 +18,18 @@ class Settings extends React.Component {
     this.props.onMenuSelect(name);
   }
 
+  logout() {
+    console.log(this);
+  }
+
   render() {
     return (
-      <p>test</p>
+      <Container fluid>
+      <h1>Settings</h1>
+        <Button size='small' onClick={this.logout}>
+          Logout
+        </Button>
+      </Container>
     );
   }
 }
