@@ -2,6 +2,7 @@ import FS from 'fs';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
+import FrontMatter from 'front-matter';
 
 class IO {
   constructor(username) {
@@ -21,7 +22,7 @@ class IO {
             // clone template
             this.cloneTechfoliosTemplate()
               .then(() => res('Cloned remote techfolio template.'),
-                err => rej(err));
+              err => rej(err));
           }
         }, (err) => {
           // error checking for local repo.
@@ -123,6 +124,33 @@ class IO {
             console.error(`commitBio: ${error}`);
             rej(error);
           });
+      });
+    });
+  }
+
+  loadProjects() {
+    return new Promise((res, rej) => {
+      const path = Path.resolve(this.localURL, 'projects');
+      const list = [];
+      FS.readdir(path, (err, projFiles) => {
+        if (!err) {
+          projFiles.forEach((file) => {
+            if (file !== 'index.html') {
+              const filePath = Path.resolve(path, file);
+              FS.readFile(filePath, (err2, projData) => {
+                if (!err2) {
+                  list.push(FrontMatter(projData.toString()));
+                } else {
+                  rej(err2);
+                }
+              });
+              console.log(list);
+            }
+          });
+          res(list);
+        } else {
+          rej(err);
+        }
       });
     });
   }

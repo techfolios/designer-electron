@@ -185,13 +185,19 @@ class Techfolio extends React.Component {
     this.io.init()
       .then((res) => {
         console.log(res);
+        this.setState({ isLoading: false });
         this.io.loadBio()
           .then((res2) => {
             this.setState({ bio: res2 });
-            this.setState({ isLoading: false });
           }, (rej) => {
             console.log(rej);
-            this.setState({ isLoading: false });
+          });
+        this.io.loadProjects()
+          .then((res2) => {
+            console.log(res2);
+            this.setState({ projects: res2 });
+          }, (rej) => {
+            console.log(rej);
           });
       }, (rej) => {
         console.log(rej);
@@ -200,14 +206,14 @@ class Techfolio extends React.Component {
   }
 
   render() {
-    if (this.state.isLoading) {
+    if (this.state.isLoading || !this.state.bio || !this.state.projects) {
       return <Dimmer inverted active> <Loader size="big" content="One sec..." /> </Dimmer>;
     }
 
     return (
       <Grid>
         <Grid.Column width={3}>
-          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} />
+          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} projects={this.state.projects} />
         </Grid.Column>
         <Grid.Column stretched width={12}>
           {this.state.selected}

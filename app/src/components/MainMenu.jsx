@@ -1,7 +1,5 @@
 import React from 'react';
-import FrontMatter from 'front-matter';
 import { Menu, Icon, Accordion } from 'semantic-ui-react';
-import FileCrawler from '../utilities/file-crawler';
 
 class MainMenu extends React.Component {
   constructor(props) {
@@ -9,8 +7,10 @@ class MainMenu extends React.Component {
     this.state = {
       visible: true,
       activeItem: '',
+      projects: props.projects,
     };
     this.handleItemClick = this.handleItemClick.bind(this);
+    this.handleProjectsClick = this.handleProjectsClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
   }
 
@@ -21,7 +21,7 @@ class MainMenu extends React.Component {
   }
 
   handleProjectsClick(e, { name }) {
-    console.log(this);
+    console.log(name);
     this.setState({ activeItem: name });
     this.props.onMenuSelect(name);
   }
@@ -73,16 +73,13 @@ class MainMenu extends React.Component {
   }
 
   renderProjects(activeItem) {
-    const fc = new FileCrawler('.techfolios/projects/');
-    const files = fc.getFiles();
     const data = [];
-    files.forEach((file, index) => {
-      const yaml = FrontMatter(file.toString());
+    this.state.projects.forEach((file, index) => {
       data.push(<Menu.Item
         key={index}
-        name={yaml.attributes.title}
-        active={activeItem === yaml.attributes.title}
-        onClick={this.handleProjectsClick}>{yaml.attributes.title}</Menu.Item>);
+        name={file.attributes.title}
+        active={activeItem === file.attributes.title}
+        onClick={this.handleProjectsClick}>{file.attributes.title}</Menu.Item>);
     });
     return (
       <Accordion>
