@@ -1,25 +1,28 @@
 import React from 'react';
-// import { Segment } from 'semantic-ui-react';
-import { Menu, Icon, Accordion, MenuItem } from 'semantic-ui-react';
-import Path from 'path';
-
-import FileCrawler from '../utilities/file-crawler';
+import { Menu, Icon, Accordion } from 'semantic-ui-react';
 
 class MainMenu extends React.Component {
-  constructor() {
-    super();
-    this.essayCrawler = new FileCrawler(Path.resolve(__dirname, '../../.techfolios/essays'));
+  constructor(props) {
+    super(props);
     this.state = {
       visible: true,
       activeItem: '',
-      essayList: this.essayCrawler.getYAML(),
+      projects: props.projects,
     };
     this.handleItemClick = this.handleItemClick.bind(this);
+    this.handleProjectsClick = this.handleProjectsClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   handleItemClick(e, { name }) {
+    console.log(name);
+    this.setState({ activeItem: name });
+    this.props.onMenuSelect(name);
+  }
+
+  handleProjectsClick(e, { name }) {
+    console.log(name);
     this.setState({ activeItem: name });
     this.props.onMenuSelect(name);
   }
@@ -77,11 +80,34 @@ class MainMenu extends React.Component {
   }
 
   renderProjects(activeItem) {
+    const data = [];
+    this.state.projects.forEach((file, index) => {
+      data.push(<Menu.Item
+        key={index}
+        name={file.attributes.title}
+        active={activeItem === file.attributes.title}
+        onClick={this.handleProjectsClick}>{file.attributes.title}</Menu.Item>);
+    });
     return (
+<<<<<<< HEAD
         <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick}>
           <Icon name='cubes'/>
           Projects
         </Menu.Item>
+=======
+      <Accordion>
+        <Accordion.Title>
+          <Menu.Item name='projects'>
+            <Icon name='dropdown' />
+            <Icon name='cubes' />
+            Projects
+          </Menu.Item>
+        </Accordion.Title>
+        <Accordion.Content>
+          {data}
+        </Accordion.Content>
+      </Accordion>
+>>>>>>> eac19120f7c9114fd4f54b71822428b214478259
     );
   }
 

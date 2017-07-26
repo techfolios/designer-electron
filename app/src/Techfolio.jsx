@@ -5,6 +5,7 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 // import { Segment } from 'semantic-ui-react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
+
 import MainMenu from './components/MainMenu.jsx';
 import BasicsSection from './containers/bio/BasicsSection.jsx';
 import InterestsSection from './containers/bio/InterestsSection.jsx';
@@ -18,6 +19,7 @@ import RefSection from './containers/bio/RefSection.jsx';
 import Essay from './containers/essay/Essays.jsx';
 import Projects from './containers/projects/Projects.jsx';
 
+
 import IO from './io';
 import values from './containers/essay/values';
 
@@ -25,29 +27,97 @@ class Techfolio extends React.Component {
   constructor(props) {
     super(props);
     this.io = new IO(props.username);
+    this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.handleSaveBio = this.handleSaveBio.bind(this);
     this.handleLoadBio = this.handleLoadBio.bind(this);
     this.handleSaveProjects = this.handleSaveProjects.bind(this);
     this.handleLoadProjects = this.handleLoadProjects.bind(this);
-    this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.state = {
       bio: null,
-      projects: [
-        {
-          title: 'Project 1',
-          data: 'data',
-        },
-        {
-          title: 'Project 2',
-          data: 'data',
-        },
-      ],
+      projects: null,
       essays: null,
       addItem: null,
       selected: <h1>Default page</h1>,
       isLoading: false,
     };
+  }
+
+  getSelected(selected) {
+    let retSelection;
+    switch (selected) {
+      case 'basicsSection':
+        retSelection = <BasicsSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'interestsSection':
+        retSelection = <InterestsSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'skillsSection':
+        retSelection = <SkillsSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'awardsSection':
+        retSelection = <AwardsSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'educationSection':
+        retSelection = <EducationSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'workSection':
+        retSelection = <WorkSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'volunteerSection':
+        retSelection = <VolunteerSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'refSection':
+        retSelection = <RefSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'projects':
+        retSelection = <Projects
+          projects={this.state.projects}
+          onSaveProjects={this.handleSaveProjects}
+          onLoadProjects={this.handleLoadProjects} />;
+        break;
+      case 'essays':
+        retSelection = <Essay dir={this.io.getLocalFolder()} />;
+        break;
+      case 'upload':
+        retSelection = <h1>Upload</h1>;
+        break;
+      case 'addItem':
+        retSelection = <h1>Add Menu Item</h1>;
+        break;
+      default:
+        retSelection = <h1>Default page</h1>;
+    }
+    return retSelection;
+  }
+
+  handleMenuSelect(name) {
+    const selected = this.getSelected(name);
+    this.setState({ selected });
   }
 
   handleSaveBio(data) {
@@ -116,13 +186,19 @@ class Techfolio extends React.Component {
     this.io.init()
       .then((res) => {
         console.log(res);
+        this.setState({ isLoading: false });
         this.io.loadBio()
           .then((res2) => {
             this.setState({ bio: res2 });
-            this.setState({ isLoading: false });
           }, (rej) => {
             console.log(rej);
-            this.setState({ isLoading: false });
+          });
+        this.io.loadProjects()
+          .then((res2) => {
+            console.log(res2);
+            this.setState({ projects: res2 });
+          }, (rej) => {
+            console.log(rej);
           });
       }, (rej) => {
         console.log(rej);
@@ -130,92 +206,15 @@ class Techfolio extends React.Component {
       });
   }
 
-  getSelected(selected, data) {
-    let retSelection;
-    switch (selected) {
-      case 'basicsSection':
-        retSelection = <BasicsSection
-          bio={this.state.bio}
-          onSaveBio={this.handleSaveBio}
-          onLoadBio={this.handleLoadBio} />;
-        break;
-      case 'interestsSection':
-        retSelection = <InterestsSection
-          bio={this.state.bio}
-          onSaveBio={this.handleSaveBio}
-          onLoadBio={this.handleLoadBio} />;
-        break;
-      case 'skillsSection':
-        retSelection = <SkillsSection
-          bio={this.state.bio}
-          onSaveBio={this.handleSaveBio}
-          onLoadBio={this.handleLoadBio} />;
-        break;
-      case 'awardsSection':
-        retSelection = <AwardsSection
-          bio={this.state.bio}
-          onSaveBio={this.handleSaveBio}
-          onLoadBio={this.handleLoadBio} />;
-        break;
-      case 'educationSection':
-        retSelection = <EducationSection
-          bio={this.state.bio}
-          onSaveBio={this.handleSaveBio}
-          onLoadBio={this.handleLoadBio} />;
-        break;
-      case 'workSection':
-        retSelection = <WorkSection
-          bio={this.state.bio}
-          onSaveBio={this.handleSaveBio}
-          onLoadBio={this.handleLoadBio} />;
-        break;
-      case 'volunteerSection':
-        retSelection = <VolunteerSection
-          bio={this.state.bio}
-          onSaveBio={this.handleSaveBio}
-          onLoadBio={this.handleLoadBio} />;
-        break;
-      case 'refSection':
-        retSelection = <RefSection
-          bio={this.state.bio}
-          onSaveBio={this.handleSaveBio}
-          onLoadBio={this.handleLoadBio} />;
-        break;
-      case 'projects':
-        retSelection = <Projects
-          projects={this.state.projects}
-          onSaveProjects={this.handleSaveProjects}
-          onLoadProjects={this.handleLoadProjects} />;
-        break;
-      case 'essays':
-        retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title} data={data}/>;
-        break;
-      case 'upload':
-        retSelection = <h1>Upload</h1>;
-        break;
-      case 'addItem':
-        retSelection = <h1>Add Menu Item</h1>;
-        break;
-      default:
-        retSelection = <h1>Default page</h1>;
-    }
-    return retSelection;
-  }
-
-  handleMenuSelect(item, data) {
-    const selected = this.getSelected(item, data);
-    this.setState({ selected });
-  }
-
   render() {
-    if (this.state.isLoading) {
+    if (this.state.isLoading || !this.state.bio || !this.state.projects) {
       return <Dimmer inverted active> <Loader size="big" content="One sec..." /> </Dimmer>;
     }
 
     return (
       <Grid>
         <Grid.Column width={3}>
-          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} />
+          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} projects={this.state.projects} />
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
           {this.state.selected}
