@@ -102,6 +102,8 @@ class MainMenu extends React.Component {
     const { activeItem } = this.state;
     let key;
     files.forEach((data, index) => {
+      const json = data;
+      json.index = index;
       console.log(data);
       key = `${data.attributes.title}`;
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}
