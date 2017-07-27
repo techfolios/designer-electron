@@ -13,6 +13,7 @@ class EssayEditor extends React.Component {
   constructor(props) {
     super(props);
     this.data = props.data;
+    this.menu = props.state;
     this.crawler = new FileCrawler(Path.resolve(values.dir, 'essays'));
 
     this.save = this.save.bind(this);
@@ -20,24 +21,24 @@ class EssayEditor extends React.Component {
 
   static getDate() {
     const today = new Date();
-    return `${today.getMonth()}/${today.getDate()}/${today.getFullYear()}`;
+    return `${today.getMonth()}-${today.getDate()}-${today.getFullYear()}`;
   }
 
   save(event) {
     event.preventDefault();
     const yaml = YAMLParser.write(this.data);
     console.log(yaml);
-    this.crawler.writeFile(this.data.file, yaml);
+    this.crawler.writeFile(this.data.file || EssayEditor.getDate(), yaml);
   }
 
   render() {
     const data = this.data;
     return <Form>
-      <Form.Input label='Title' defaultValue={data.attributes.title}
-        onChange={event => (data.attributes.title = event.target.value)}/>
-      <Form.Input label='Tag(s)' defaultValue={data.attributes.labels}
-        onChange={event => (data.attributes.labels = event.target.value)}/>
-      <Form.TextArea autoHeight label='Body' defaultValue={data.body}
+      <Form.Input label='Title' defaultValue={data.attributes.title || ''}
+        onChange={event => (data.attributes.title = event.target.value || '')}/>
+      <Form.Input label='Tag(s)' defaultValue={data.attributes.labels || ''}
+        onChange={event => (data.attributes.labels = event.target.value || '')}/>
+      <Form.TextArea autoHeight label='Body' defaultValue={data.body || ''}
         onChange={event => (data.body = event.target.value)}/>
       <Button content='Save' color='green' onClick={this.save}/>
     </Form>;
