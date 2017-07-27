@@ -2,12 +2,15 @@ import React from 'react';
 // import { Segment } from 'semantic-ui-react';
 import { Menu, Icon, Accordion, MenuItem } from 'semantic-ui-react';
 
+import ProjectsMenu from './ProjectsMenu.jsx';
+
 class MainMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       visible: true,
       activeItem: '',
+      projects: props.projects,
       essayList: props.essays,
       essayCrawler: props.essayCrawler,
     };

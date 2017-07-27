@@ -178,7 +178,7 @@ class Techfolio extends React.Component {
       .then((resProj) => {
         console.log(resProj);
         this.setState({ projects: resProj });
-        return this.loadEssays();
+        return this.io.loadEssays();
       }, (rejProj) => {
         console.log(rejProj);
         this.setState({ isLoading: false });
@@ -199,7 +199,7 @@ class Techfolio extends React.Component {
       <Grid>
         <Grid.Column width={3}>
           <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
-            essays={this.state.essays} essayCrawler={this.state.essayCrawler} />
+            essays={this.state.essays} essayCrawler={this.state.essayCrawler} projects={this.state.projects}/>
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
           {this.state.selected}
