@@ -36,17 +36,6 @@ class Projects extends React.Component {
     this.props.onSaveProjects(this.state.projects);
   }
 
-  componentWillMount() {
-    // this.props.onLoadProjects();
-    const fc = new FileCrawler('.techfolios/projects/');
-    const files = fc.getFiles();
-    const data = [];
-    files.forEach((file) => {
-      data.push(FrontMatter(file.toString()));
-    });
-    this.setState({ projects: data });
-  }
-
   /*
   commented out unused method stubs
    */

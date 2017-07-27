@@ -1,10 +1,6 @@
 import React from 'react';
-/*
-  Hid unused consts
- */
-// import ReactDOM from 'react-dom';
-// import { Segment } from 'semantic-ui-react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
+
 import MainMenu from './components/MainMenu.jsx';
 import BasicsSection from './containers/bio/BasicsSection.jsx';
 import InterestsSection from './containers/bio/InterestsSection.jsx';
@@ -25,24 +21,15 @@ class Techfolio extends React.Component {
   constructor(props) {
     super(props);
     this.io = new IO(props.username);
+    this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.handleSaveBio = this.handleSaveBio.bind(this);
     this.handleLoadBio = this.handleLoadBio.bind(this);
     this.handleSaveProjects = this.handleSaveProjects.bind(this);
     this.handleLoadProjects = this.handleLoadProjects.bind(this);
-    this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.state = {
       bio: null,
-      projects: [
-        {
-          title: 'Project 1',
-          data: 'data',
-        },
-        {
-          title: 'Project 2',
-          data: 'data',
-        },
-      ],
+      projects: null,
       essays: null,
       addItem: null,
       selected: <h1>Default page</h1>,
@@ -50,6 +37,7 @@ class Techfolio extends React.Component {
     };
   }
 
+<<<<<<< HEAD
   handleSaveBio(data) {
     this.setState({ bio: data });
     this.io.writeBio(data);
@@ -131,6 +119,9 @@ class Techfolio extends React.Component {
   }
 
   getSelected(selected, data, state) {
+=======
+  getSelected(selected) {
+>>>>>>> issue-003
     let retSelection;
     switch (selected) {
       case 'basicsSection':
@@ -188,7 +179,11 @@ class Techfolio extends React.Component {
           onLoadProjects={this.handleLoadProjects} />;
         break;
       case 'essays':
+<<<<<<< HEAD
         retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title} data={data} state={state}/>;
+=======
+        retSelection = <Essay dir={this.io.getLocalFolder()} />;
+>>>>>>> issue-003
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;
@@ -202,20 +197,114 @@ class Techfolio extends React.Component {
     return retSelection;
   }
 
+<<<<<<< HEAD
   handleMenuSelect(item, data, state) {
     const selected = this.getSelected(item, data, state);
+=======
+  handleMenuSelect(name) {
+    const selected = this.getSelected(name);
+>>>>>>> issue-003
     this.setState({ selected });
   }
 
+  handleSaveBio(data) {
+    this.setState({ bio: data });
+    this.io.writeBio(data);
+  }
+
+  handleLoadBio() {
+    this.setState({ isLoading: true });
+    this.io.loadBio()
+      .then((res) => {
+        this.setState({ bio: res });
+        this.setState({ isLoading: false });
+        this.setState({ selected: 'bio' });
+      }, (rej) => {
+        console.log(rej);
+        this.setState({ isLoading: false });
+      });
+  }
+
+  handleSaveProjects(data) {
+    console.log(data);
+    console.log(this.state);
+  }
+
+  handleLoadProjects() {
+    console.log('load project');
+    console.log(this.state);
+  }
+
+  /*
+  handleSaveEssays(data) {
+
+  }
+
+  handleLoadEssays() {
+    this.setState({ isLoading: true });
+    this.io.loadBio()
+        .then((res) => {
+          this.setState({ essays: res });
+          this.setState({ isLoading: false });
+          this.setState({ selected: 'essays' });
+        }, (rej) => {
+          console.log(rej);
+          this.setState({ isLoading: false });
+        });
+  }
+  */
+
+  handleUpload() {
+    this.setState({ isLoading: true });
+    this.io.push()
+      .then((res) => {
+        if (res) {
+          console.log('success');
+        }
+        this.setState({ isLoading: false });
+      }, (rej) => {
+        console.log(rej);
+        this.setState({ isLoading: false });
+      });
+  }
+
+  componentDidMount() {
+    this.setState({ isLoading: true });
+    this.io.init()
+      .then((res) => {
+        console.log(res);
+        return this.io.loadBio();
+      }, (rej) => {
+        console.log(rej);
+        this.setState({ isLoading: false });
+      })
+      .then((resBio) => {
+        console.log(resBio);
+        this.setState({ bio: resBio });
+        return this.io.loadProjects();
+      }, (rejBio) => {
+        console.log(rejBio);
+        this.setState({ isLoading: false });
+      })
+      .then((resProj) => {
+        console.log(resProj);
+        this.setState({ projects: resProj });
+        this.setState({ isLoading: false });
+      }, (rejProj) => {
+        console.log(rejProj);
+        this.setState({ isLoading: false });
+      });
+  }
+
   render() {
-    if (this.state.isLoading) {
-      return <Dimmer inverted active> <Loader size="big" content="One sec..." /> </Dimmer>;
+    if (this.state.isLoading || !this.state.bio || !this.state.projects) {
+      return <Dimmer inverted active> <Loader size="big" content="Loading..." /> </Dimmer>;
     }
 
     return (
       <Grid>
         <Grid.Column width={3}>
-          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} />
+          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} projects={this.state.projects} />
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
           {this.state.selected}
