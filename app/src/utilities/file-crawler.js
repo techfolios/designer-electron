@@ -8,6 +8,17 @@ class FileCrawler {
     this.dir = directory;
   }
 
+  getFileNames() {
+    const list = [];
+    const dir = this.dir;
+    fs.readdirSync(dir).forEach((file) => {
+      if (file !== 'index.html') {
+        list.push(file);
+      }
+    });
+    return list;
+  }
+
   getFiles() {
     const list = [];
     const dir = this.dir;
@@ -36,7 +47,7 @@ class FileCrawler {
   }
 
   removeFile(fileName) {
-    fs.removeSync(path.join(this.dir, fileName));
+    if (fileName !== undefined) fs.removeSync(path.join(this.dir, fileName));
   }
 
   writeFile(fileName, data) {
