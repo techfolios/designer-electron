@@ -21,14 +21,16 @@ class EssayEditor extends React.Component {
 
   static getDate() {
     const today = new Date();
-    return `${today.getMonth()}-${today.getDate()}-${today.getFullYear()}`;
+    return `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}}`;
   }
 
   save(event) {
     event.preventDefault();
+    this.data.attributes.date = Essay.getDate();
     const yaml = YAMLParser.write(this.data);
     console.log(yaml);
-    this.crawler.writeFile(this.data.file || EssayEditor.getDate(), yaml);
+    this.crawler.writeFile(this.data.file || `${EssayEditor.getDate()}.md`, yaml);
+    this.menu.setState(this.data);
   }
 
   render() {

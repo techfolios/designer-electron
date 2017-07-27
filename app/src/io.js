@@ -70,7 +70,6 @@ class IO {
 
   cloneTechfoliosTemplate() {
     return new Promise((res, rej) => {
-      console.log("Clone function");
       Git.Clone(this.templateURL, this.localURL)
         .then((repo) => {
           res(repo.mergeBranches('master', 'origin/master'));

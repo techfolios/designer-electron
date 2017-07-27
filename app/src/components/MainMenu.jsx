@@ -42,7 +42,7 @@ class MainMenu extends React.Component {
   handlePageChange(event, name, data) {
     event.preventDefault();
     this.setState({ activeItem: data.attributes.title });
-    this.props.onMenuSelect(name, data, this.state);
+    this.props.onMenuSelect(name, data, this);
   }
 
   renderBio(activeItem) {

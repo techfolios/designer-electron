@@ -1,5 +1,3 @@
-// const path = require('path');
-// const fs = require('fs-extra');
 const parser = require('front-matter');
 
 class YAMLParser {
@@ -31,7 +29,18 @@ class YAMLParser {
   }
 
   static write(json) {
-    return `---\n${json.frontmatter}\n---\n\n${json.body}`;
+    let yaml = '';
+    Object.keys(json.attributes).forEach((key) => {
+      if (Array.isArray(json.attributes[key])) {
+        yaml = yaml.concat(`${key}:\n`);
+        json.attributes[key].forEach((value) => {
+          yaml = yaml.concat(`  -${value}\n`);
+        });
+      } else {
+        yaml = yaml.concat(`${key}: ${json.attributes[key]}\n`);
+      }
+    });
+    return `---\n${yaml}---\n\n${json.body}`;
   }
 }
 
