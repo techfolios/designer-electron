@@ -34,7 +34,7 @@ class YAMLParser {
       if (Array.isArray(json.attributes[key])) {
         yaml = yaml.concat(`${key}:\n`);
         json.attributes[key].forEach((value) => {
-          yaml = yaml.concat(`  -${value}\n`);
+          yaml = yaml.concat(`  - ${value}\n`);
         });
       } else {
         yaml = yaml.concat(`${key}: ${json.attributes[key]}\n`);

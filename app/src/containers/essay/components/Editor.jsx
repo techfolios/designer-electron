@@ -12,7 +12,8 @@ const Path = require('path');
 class EssayEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.data = props.data;
+    this.state = { data: props.data };
+    this.data = this.state.data;
     this.menu = props.state;
     this.crawler = new FileCrawler(Path.resolve(values.dir, 'essays'));
 
@@ -24,12 +25,12 @@ class EssayEditor extends React.Component {
 
   static getDate() {
     const today = new Date();
-    return `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}}`;
+    return `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
   }
 
   save(event) {
     event.preventDefault();
-    this.data.attributes.date = Essay.getDate();
+    this.data.attributes.date = EssayEditor.getDate();
     const yaml = YAMLParser.write(this.data);
     console.log(yaml);
     this.crawler.writeFile(this.data.file || `${EssayEditor.getDate()}.md`, yaml);
@@ -53,18 +54,19 @@ class EssayEditor extends React.Component {
     return list;
   }
 
-  removeLabel(event, value) {
+  removeLabel(event, index) {
     event.preventDefault();
-    console.log(value);
-    this.remove('interests', 'name', value);
+    const data = this.data;
+    data.attributes.labels = data.attributes.labels.filter((value, key) => key !== index);
+    this.setState({ data });
   }
 
   addLabel(event) {
     event.preventDefault();
-    this.add(this.bio.interests, {
-      'name': '',
-      'keywords': []
-    });
+    const data = this.data;
+    const labels = data.attributes.labels;
+    labels.push('');
+    this.setState(data);
   }
 
   render() {
@@ -72,7 +74,7 @@ class EssayEditor extends React.Component {
     return <Form>
       <Form.Input label='Title' defaultValue={data.attributes.title || ''}
                   onChange={event => (data.attributes.title = event.target.value || '')}/>
-      <Form.TextArea autoHeight label='Body' defaultValue={data.body || ''}
+      <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim() || ''}
                      onChange={event => (data.body = event.target.value)}/>
       <Accordion>
         <Accordion.Title>
