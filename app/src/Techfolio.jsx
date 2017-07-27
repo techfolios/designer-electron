@@ -30,7 +30,7 @@ class Techfolio extends React.Component {
     this.state = {
       bio: null,
       projects: null,
-      essays: [],
+      essays: null,
       essayCrawler: null,
       addItem: null,
       selected: <h1>Default page</h1>,
@@ -184,9 +184,9 @@ class Techfolio extends React.Component {
         this.setState({ isLoading: false });
       })
       .then((resEssay) => {
-        this.setState({ isLoading: false });
-        this.setState({ essays: resEssay });
+        this.setState({ essays: resEssay.essays });
         this.setState({ essayCrawler: resEssay.crawler });
+        this.setState({ isLoading: false });
       });
   }
 

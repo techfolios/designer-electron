@@ -150,10 +150,11 @@ class IO {
   loadEssays() {
     return new Promise((res, rej) => {
       const path = Path.resolve(this.localURL, 'essays');
-      let list = [];
+      const list = {};
       const crawler = new FileCrawler(path);
-      list = crawler.getYAML();
-      list.push({ crawler });
+      console.log(list);
+      list.essays = crawler.getYAML();
+      list.crawler = crawler;
       res(list);
     });
   }

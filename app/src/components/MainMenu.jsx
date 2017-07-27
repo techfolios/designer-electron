@@ -15,7 +15,6 @@ class MainMenu extends React.Component {
       essayCrawler: props.essayCrawler,
     };
 
-    this.essayCrawler = this.state.essayCrawler;
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleProjectsClick = this.handleProjectsClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
@@ -133,7 +132,6 @@ class MainMenu extends React.Component {
   }
 
   renderEssays(activeItem) {
-    console.log(this);
     return <Accordion as={MenuItem}>
       <Accordion.Title>
         <Menu.Item>
@@ -143,9 +141,10 @@ class MainMenu extends React.Component {
         </Menu.Item>
       </Accordion.Title>
       <Accordion.Content>
-        {this.getYAML(this.state.essayList, this.essayCrawler, 'essayList')}
+        {this.getYAML(this.state.essayList, this.state.essayCrawler, 'essayList')}
         <Menu.Item>
-        <Icon name='plus' onClick={event => this.addYAML(event, this.state.essayList, this.essayCrawler, 'essayList')}/>
+          <Icon name='plus'
+                onClick={event => this.addYAML(event, this.state.essayList, this.state.essayCrawler, 'essayList')}/>
         </Menu.Item>
       </Accordion.Content>
     </Accordion>;
@@ -166,7 +165,7 @@ class MainMenu extends React.Component {
         <Menu vertical fixed="left" icon='labeled' color="teal">
           {this.renderBio(activeItem)}
 
-          <ProjectsMenu data={projects} />
+          <ProjectsMenu data={projects}/>
 
           {this.renderEssays(activeItem)}
 
