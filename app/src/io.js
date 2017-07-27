@@ -4,6 +4,8 @@ import Git from 'nodegit';
 import fse from 'fs-extra';
 import FrontMatter from 'front-matter';
 
+import FileCrawler from './utilities/file-crawler';
+
 class IO {
   constructor(username) {
     this.templateURL = 'https://github.com/techfolios/template';
@@ -68,6 +70,7 @@ class IO {
 
   cloneTechfoliosTemplate() {
     return new Promise((res, rej) => {
+      console.log("Clone function");
       Git.Clone(this.templateURL, this.localURL)
         .then((repo) => {
           res(repo.mergeBranches('master', 'origin/master'));
@@ -140,6 +143,17 @@ class IO {
           list.push(FrontMatter(projData.toString()));
         }
       });
+      res(list);
+    });
+  }
+
+  loadEssays() {
+    return new Promise((res, rej) => {
+      const path = Path.resolve(this.localURL, 'essays');
+      let list = [];
+      const crawler = new FileCrawler(path);
+      list = crawler.getYAML();
+      list.push({ crawler });
       res(list);
     });
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import Path from 'path';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 
 import MainMenu from './components/MainMenu.jsx';
@@ -15,7 +16,6 @@ import Essay from './containers/essay/Essays.jsx';
 import Projects from './containers/projects/Projects.jsx';
 
 import IO from './io';
-import values from './containers/essay/values';
 
 class Techfolio extends React.Component {
   constructor(props) {
@@ -30,98 +30,15 @@ class Techfolio extends React.Component {
     this.state = {
       bio: null,
       projects: null,
-      essays: null,
+      essays: [],
+      essayCrawler: null,
       addItem: null,
       selected: <h1>Default page</h1>,
       isLoading: false,
     };
   }
 
-<<<<<<< HEAD
-  handleSaveBio(data) {
-    this.setState({ bio: data });
-    this.io.writeBio(data);
-  }
-
-  handleLoadBio() {
-    this.setState({ isLoading: true });
-    this.io.loadBio()
-      .then((res) => {
-        this.setState({ bio: res });
-        this.setState({ isLoading: false });
-        this.setState({ selected: 'bio' });
-      }, (rej) => {
-        console.log(rej);
-        this.setState({ isLoading: false });
-      });
-  }
-
-  handleSaveProjects(data) {
-    console.log(data);
-    console.log(this.state);
-  }
-
-  handleLoadProjects() {
-    console.log('load project');
-    console.log(this.state);
-  }
-
-  /*
-  handleSaveEssays(data) {
-
-  }
-
-  handleLoadEssays() {
-    this.setState({ isLoading: true });
-    this.io.loadBio()
-        .then((res) => {
-          this.setState({ essays: res });
-          this.setState({ isLoading: false });
-          this.setState({ selected: 'essays' });
-        }, (rej) => {
-          console.log(rej);
-          this.setState({ isLoading: false });
-        });
-  }
-  */
-
-  handleUpload() {
-    this.setState({ isLoading: true });
-    this.io.push()
-      .then((res) => {
-        if (res) {
-          console.log('success');
-        }
-        this.setState({ isLoading: false });
-      }, (rej) => {
-        console.log(rej);
-        this.setState({ isLoading: false });
-      });
-  }
-
-  componentDidMount() {
-    this.setState({ isLoading: true });
-    this.io.init()
-      .then((res) => {
-        console.log(res);
-        this.io.loadBio()
-          .then((res2) => {
-            this.setState({ bio: res2 });
-            this.setState({ isLoading: false });
-          }, (rej) => {
-            console.log(rej);
-            this.setState({ isLoading: false });
-          });
-      }, (rej) => {
-        console.log(rej);
-        this.setState({ isLoading: false });
-      });
-  }
-
   getSelected(selected, data, state) {
-=======
-  getSelected(selected) {
->>>>>>> issue-003
     let retSelection;
     switch (selected) {
       case 'basicsSection':
@@ -179,11 +96,7 @@ class Techfolio extends React.Component {
           onLoadProjects={this.handleLoadProjects} />;
         break;
       case 'essays':
-<<<<<<< HEAD
-        retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title} data={data} state={state}/>;
-=======
-        retSelection = <Essay dir={this.io.getLocalFolder()} />;
->>>>>>> issue-003
+        retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title} data={data} state={state} />;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;
@@ -197,13 +110,8 @@ class Techfolio extends React.Component {
     return retSelection;
   }
 
-<<<<<<< HEAD
   handleMenuSelect(item, data, state) {
     const selected = this.getSelected(item, data, state);
-=======
-  handleMenuSelect(name) {
-    const selected = this.getSelected(name);
->>>>>>> issue-003
     this.setState({ selected });
   }
 
@@ -234,25 +142,6 @@ class Techfolio extends React.Component {
     console.log('load project');
     console.log(this.state);
   }
-
-  /*
-  handleSaveEssays(data) {
-
-  }
-
-  handleLoadEssays() {
-    this.setState({ isLoading: true });
-    this.io.loadBio()
-        .then((res) => {
-          this.setState({ essays: res });
-          this.setState({ isLoading: false });
-          this.setState({ selected: 'essays' });
-        }, (rej) => {
-          console.log(rej);
-          this.setState({ isLoading: false });
-        });
-  }
-  */
 
   handleUpload() {
     this.setState({ isLoading: true });
@@ -289,10 +178,15 @@ class Techfolio extends React.Component {
       .then((resProj) => {
         console.log(resProj);
         this.setState({ projects: resProj });
-        this.setState({ isLoading: false });
+        return this.loadEssays();
       }, (rejProj) => {
         console.log(rejProj);
         this.setState({ isLoading: false });
+      })
+      .then((resEssay) => {
+        this.setState({ isLoading: false });
+        this.setState({ essays: resEssay });
+        this.setState({ essayCrawler: resEssay.crawler });
       });
   }
 
@@ -304,7 +198,8 @@ class Techfolio extends React.Component {
     return (
       <Grid>
         <Grid.Column width={3}>
-          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} projects={this.state.projects} />
+          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
+            essays={this.state.essays} essayCrawler={this.state.essayCrawler} />
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
           {this.state.selected}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Menu, MenuItem, Icon, Accordion } from 'semantic-ui-react';
-import ProjectsMenu from './ProjectsMenu.jsx';
+// import { Segment } from 'semantic-ui-react';
+import { Menu, Icon, Accordion, MenuItem } from 'semantic-ui-react';
 
 class MainMenu extends React.Component {
   constructor(props) {
@@ -8,8 +8,11 @@ class MainMenu extends React.Component {
     this.state = {
       visible: true,
       activeItem: '',
-      projects: props.projects,
+      essayList: props.essays,
+      essayCrawler: props.essayCrawler,
     };
+
+    this.essayCrawler = this.state.essayCrawler;
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleProjectsClick = this.handleProjectsClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
@@ -83,7 +86,6 @@ class MainMenu extends React.Component {
     );
   }
 
-<<<<<<< HEAD
   renderProjects(activeItem) {
     return (
         <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick}>
@@ -127,8 +129,6 @@ class MainMenu extends React.Component {
     this.setState(list);
   }
 
-=======
->>>>>>> issue-003
   renderEssays(activeItem) {
     console.log(this);
     return <Accordion as={MenuItem}>
@@ -140,13 +140,10 @@ class MainMenu extends React.Component {
         </Menu.Item>
       </Accordion.Title>
       <Accordion.Content>
-<<<<<<< HEAD
         {this.getYAML(this.state.essayList, this.essayCrawler, 'essayList')}
         <Menu.Item>
         <Icon name='plus' onClick={event => this.addYAML(event, this.state.essayList, this.essayCrawler, 'essayList')}/>
         </Menu.Item>
-=======
->>>>>>> issue-003
       </Accordion.Content>
     </Accordion>;
   }
