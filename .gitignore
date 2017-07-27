@@ -2,3 +2,4 @@ app/.techfolios
 app/node_modules
 .idea
 *.log
+package-lock.json
