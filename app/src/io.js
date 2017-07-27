@@ -70,7 +70,6 @@ class IO {
 
   cloneTechfoliosTemplate() {
     return new Promise((res, rej) => {
-      console.log("Clone function");
       Git.Clone(this.templateURL, this.localURL)
         .then((repo) => {
           res(repo.mergeBranches('master', 'origin/master'));
@@ -148,7 +147,7 @@ class IO {
   }
 
   loadEssays() {
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       const path = Path.resolve(this.localURL, 'essays');
       const list = {};
       const crawler = new FileCrawler(path);
