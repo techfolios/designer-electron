@@ -198,7 +198,7 @@ class Techfolio extends React.Component {
       <Grid>
         <Grid.Column width={3}>
           <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
-            essays={this.state.essays} essayCrawler={this.state.essayCrawler} projects={this.state.projects}/>
+            essays={this.state.essays} essayCrawler={this.state.essayCrawler} projects={this.state.projects} />
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
           {this.state.selected}
