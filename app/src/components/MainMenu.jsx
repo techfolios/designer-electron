@@ -90,7 +90,7 @@ class MainMenu extends React.Component {
       <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick}>
         <Icon name='cubes' />
         Projects
-        </Menu.Item>
+      </Menu.Item>
     );
   }
 
