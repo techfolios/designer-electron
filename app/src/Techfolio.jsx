@@ -12,7 +12,6 @@ import VolunteerSection from './containers/bio/VolunteerSection.jsx';
 import RefSection from './containers/bio/RefSection.jsx';
 
 import Essay from './containers/essay/Essays.jsx';
-import Projects from './containers/project/ProjectEditor.jsx';
 
 import IO from './io';
 
@@ -89,10 +88,7 @@ class Techfolio extends React.Component {
           onLoadBio={this.handleLoadBio} />;
         break;
       case 'projects':
-        retSelection = <ProjectEditor
-          data={data}
-          onSaveProjects={this.handleSaveProjects}
-          onLoadProjects={this.handleLoadProjects} />;
+
         break;
       case 'essays':
         retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title} data={data} state={state} />;
