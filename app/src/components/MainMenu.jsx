@@ -160,7 +160,7 @@ class MainMenu extends React.Component {
       <Menu vertical fixed="left" icon='labeled' color="teal">
         {this.renderBio(activeItem)}
 
-        <ProjectsMenu data={projects} setSelected={this.props.setSelected} />
+        <ProjectsMenu data={projects} setSelected={this.props.setSelected} saveProject={this.props.saveProject} />
 
         {this.renderEssays(activeItem)}
 

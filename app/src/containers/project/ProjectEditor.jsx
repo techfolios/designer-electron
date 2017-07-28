@@ -8,29 +8,58 @@ class ProjectEditor extends React.Component {
     super(props);
     this.state = {
       data: props.data,
+      index: props.index,
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.setTitle = this.setTitle.bind(this);
+    this.setSummary = this.setSummary.bind(this);
+    this.setBody = this.setBody.bind(this);
+    this.saveProject = this.saveProject.bind(this);
   }
 
-  handleChange(e, item) {
-    console.log(this);
+  setTitle(e) {
+    const data = this.state.data;
+    data.attributes.title = e.target.value;
+    this.setState({ data });
+  }
+
+  setSummary(e) {
+    const data = this.state.data;
+    data.attributes.summary = e.target.value;
+    this.setState({ data });
+  }
+
+  setBody(e) {
+    const data = this.state.data;
+    data.body = e.target.value;
+    this.setState({ data });
+  }
+
+  saveProject() {
+    this.props.saveProject(this.state.index, this.state.data);
   }
 
   render() {
     const { title, summary } = this.props.data.attributes;
-    const { body } = this.props.data.body;
+    const body = this.props.data.body;
     return <div>
       <Segment textAlign="center" basic>
         <Icon size="huge" name='cubes' />
       </Segment>
-      <Form>
+      <Form onSubmit={this.saveProject}>
         <Form.Input label='Title'
-          defaultValue={title}
+          value={title}
           placeholder={'Title of your Project'}
-          onChange={e => this.handleChange(e, 'title')} />
-        <Form.Input value={title} />
-        <Form.Input value={summary} />
-        <Form.TextArea value={body} autoHeight />
+          onChange={this.setTitle} />
+        <Form.Input label='Summary'
+          value={summary}
+          placeholder={'A short description about your project'}
+          onChange={this.setSummary} />
+        <Form.TextArea label='Body'
+          autoHeight
+          value={body}
+          placeholder={'A detailed description of your project'}
+          onChange={this.setBody} />
+        <Form.Button positive floated="right" type="Submit">Save</Form.Button>
       </Form>
     </div>;
   }

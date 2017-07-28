@@ -15,7 +15,7 @@ class ProjectsMenu extends React.Component {
   }
 
   handleClick(file, activeIndex) {
-    this.props.setSelected(<ProjectEditor data={file} />);
+    this.props.setSelected(<ProjectEditor index={activeIndex} saveProject={this.props.saveProject} data={file} />);
     this.setState({ activeIndex });
   }
 

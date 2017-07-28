@@ -6,6 +6,7 @@ import fse from 'fs-extra';
 import FrontMatter from 'front-matter';
 
 import FileCrawler from './utilities/file-crawler';
+import YamlParser from './utilities/yaml-parser';
 
 class IO {
   constructor(username) {
@@ -144,6 +145,20 @@ class IO {
         }
       });
       res(list);
+    });
+  }
+
+  writeProject(index, data) {
+    return new Promise((res, rej) => {
+      const path = Path.resolve(this.localURL, 'projects', `project-${index + 1}.md`);
+      const yamlString = YamlParser.write(data);
+      FS.writeFile(path, yamlString, (err) => {
+        if (err) {
+          rej(err);
+        } else {
+          res(true);
+        }
+      });
     });
   }
 
