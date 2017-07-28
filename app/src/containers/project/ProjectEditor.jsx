@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Icon } 'semantic-ui-react';
 // import { Form, Segment } from 'semantic-ui-react';
-import { Form, Header, Icon, Image, Segment } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class ProjectEditor extends React.Component {
   constructor(props) {
