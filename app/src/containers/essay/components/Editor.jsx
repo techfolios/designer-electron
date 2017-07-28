@@ -39,12 +39,12 @@ class EssayEditor extends React.Component {
 
     labels.forEach((value, index) => {
       list.push(
-          <Form.Group key={`${index}: ${value}`}>
-            <Form.Input defaultValue={value}
-                        onChange={ (event) => { labels[index] = event.target.value; } }/>
-            <Icon link color='red' name='delete'
-                  onClick={ event => this.removeLabel(event, index)}/>
-          </Form.Group>);
+        <Form.Group key={`${index}: ${value}`}>
+          <Form.Input defaultValue={value}
+            onChange={ (event) => { labels[index] = event.target.value; } }/>
+          <Icon link color='red' name='delete'
+            onClick={ event => this.removeLabel(event, index)}/>
+        </Form.Group>);
     });
 
     return list;
@@ -70,9 +70,9 @@ class EssayEditor extends React.Component {
     if (!data.body) data.body = '';
     return <Form>
       <Form.Input label='Title' defaultValue={data.attributes.title || ''}
-                  onChange={event => (data.attributes.title = event.target.value || '')}/>
+        onChange={event => (data.attributes.title = event.target.value || '')}/>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
-                     onChange={event => (data.body = event.target.value)}/>
+        onChange={event => (data.body = event.target.value)}/>
       <Accordion>
         <Accordion.Title>
           <Icon name='dropdown'/>

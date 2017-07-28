@@ -24,7 +24,7 @@ class IO {
             // clone template
             this.cloneTechfoliosTemplate()
               .then(() => res('Cloned remote techfolio template.'),
-              err => rej(err));
+                err => rej(err));
           }
         }, (err) => {
           // error checking for local repo.
@@ -131,7 +131,7 @@ class IO {
   }
 
   loadProjects() {
-    return new Promise((res, rej) => {
+    return new Promise((res) => { // removed 'rej' as unused parameter
       const path = Path.resolve(this.localURL, 'projects');
       const list = [];
       const projFiles = FS.readdirSync(path);

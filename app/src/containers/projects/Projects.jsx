@@ -1,11 +1,11 @@
 import React from 'react';
-import FrontMatter from 'front-matter';
+// import FrontMatter from 'front-matter';
 
 // import { Button, Icon, Image, Menu } from 'semantic-ui-react';
 import { Button, Icon, Segment, Grid, Header } from 'semantic-ui-react';
 import Project from './components/Project.jsx';
 
-import FileCrawler from '../../utilities/file-crawler';
+// import FileCrawler from '../../utilities/file-crawler';
 
 function ProjectComponent(props) {
   return <Grid.Column >
