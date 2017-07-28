@@ -147,7 +147,7 @@ class IO {
   }
 
   loadEssays() {
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       const path = Path.resolve(this.localURL, 'essays');
       const list = {};
       const crawler = new FileCrawler(path);
