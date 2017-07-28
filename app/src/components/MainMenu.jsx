@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Segment } from 'semantic-ui-react';
 import { Menu, Icon, Accordion, MenuItem } from 'semantic-ui-react';
 
 import ProjectsMenu from './ProjectsMenu.jsx';
@@ -101,9 +100,10 @@ class MainMenu extends React.Component {
     event.preventDefault();
     const list = this.state;
     list[state] = list[state].filter((data, index) => index !== key);
-    crawler.removeFile(file);
+    if (file) crawler.removeFile(file);
     console.log(list);
     this.setState(list);
+    this.props.onMenuSelect('default');
   }
 
   getYAML(files, crawler, state) {
@@ -111,27 +111,38 @@ class MainMenu extends React.Component {
     const { activeItem } = this.state;
     let key;
     files.forEach((data, index) => {
-      const json = data;
       console.log(data);
       key = `${data.attributes.title}`;
-      list.push(<Menu.Item name={key} key={key} active={activeItem === key}
-                           onClick={event => this.handlePageChange(event, 'essays', data)}>
-        {data.attributes.title}
-        <Icon name="remove"
-              onClick={event => this.removeYAML(event, index, data.file, crawler, state)}/>
+      list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
+          {data.attributes.title}
+          <br/>
+        <div>
+          <Icon link size='big' name='edit' color='black'
+                onClick={event => this.handlePageChange(event, 'essays', data)}/>
+          <Icon link size='big' name='remove' color='red'
+                onClick={event => this.removeYAML(event, index, data.file, crawler, state)}/>
+        </div>
       </Menu.Item>);
     });
 
     return list;
   }
 
-  addYAML(event, files, crawler, state) {
+  addYAML(event, files) {
     const list = files;
-    list.push({ attributes: { title: 'New Essay' } });
+    list.push({
+      attributes: {
+        layout: 'essay',
+        type: 'essay',
+        title: 'New Essay',
+        date: '',
+        labels: [],
+      },
+    });
     this.setState(list);
   }
 
-  renderEssays(activeItem) {
+  renderEssays() {
     return <Accordion as={MenuItem}>
       <Accordion.Title>
         <Menu.Item>
@@ -143,7 +154,7 @@ class MainMenu extends React.Component {
       <Accordion.Content>
         {this.getYAML(this.state.essayList, this.state.essayCrawler, 'essayList')}
         <Menu.Item>
-          <Icon name='plus'
+          <Icon link name='plus' color='green'
                 onClick={event => this.addYAML(event, this.state.essayList, this.state.essayCrawler, 'essayList')}/>
         </Menu.Item>
       </Accordion.Content>
