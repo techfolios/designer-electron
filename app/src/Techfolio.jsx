@@ -1,5 +1,4 @@
 import React from 'react';
-import Path from 'path';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 
 import MainMenu from './components/MainMenu.jsx';

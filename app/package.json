@@ -26,10 +26,6 @@
     "electron": "^1.6.11",
     "electron-oauth-github": "^1.1.1",
     "electron-oauth2": "^3.0.0",
-    "electron-prebuilt-compile": "^1.6.11",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-react": "^7.1.0",
     "front-matter": "^2.1.2",
     "fs-extra": "^4.0.0",
     "jquery": "^3.2.1",
@@ -38,12 +34,14 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "semantic-ui-css": "^2.2.10",
-    "semantic-ui-react": "^0.70.0"
+    "semantic-ui-react": "^0.70.0",
+    "electron-prebuilt-compile": "^1.6.11"
   },
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-react": "^7.1.0"
   },
   "false": {}
 }
