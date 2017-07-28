@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Form, Button, Icon, Accordion } from 'semantic-ui-react';
-import Essay from '../Essays.jsx';
 import FileCrawler from '../../../utilities/file-crawler';
 import YAMLParser from '../../../utilities/yaml-parser';
+import ISODate from '../../../utilities/iso-date';
 
 import values from '../values';
 
@@ -23,17 +23,13 @@ class EssayEditor extends React.Component {
     this.removeLabel = this.removeLabel.bind(this);
   }
 
-  static getDate() {
-    const today = new Date();
-    return `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
-  }
-
   save(event) {
     event.preventDefault();
-    this.data.attributes.date = EssayEditor.getDate();
+    this.data.attributes.date = ISODate.getDate();
+    if (!this.data.file) this.data.file = `${ISODate.getDate()}.md`;
     const yaml = YAMLParser.write(this.data);
     console.log(yaml);
-    this.crawler.writeFile(this.data.file || `${EssayEditor.getDate()}.md`, yaml);
+    this.crawler.writeFile(this.data.file, yaml);
     this.menu.setState(this.data);
   }
 
@@ -43,12 +39,12 @@ class EssayEditor extends React.Component {
 
     labels.forEach((value, index) => {
       list.push(
-          <Form.Group key={`tags: ${value}`}>
-            <Form.Input defaultValue={value}
-                        onChange={ (event) => { labels[index] = event.target.value; } }/>
-            <Icon color='red' name='delete'
-                  onClick={ event => this.removeLabel(event, index)}/>
-          </Form.Group>);
+        <Form.Group key={`${index}: ${value}`}>
+          <Form.Input defaultValue={value}
+            onChange={ (event) => { labels[index] = event.target.value; } }/>
+          <Icon link color='red' name='delete'
+            onClick={ event => this.removeLabel(event, index)}/>
+        </Form.Group>);
     });
 
     return list;
@@ -74,9 +70,9 @@ class EssayEditor extends React.Component {
     if (!data.body) data.body = '';
     return <Form>
       <Form.Input label='Title' defaultValue={data.attributes.title || ''}
-                  onChange={event => (data.attributes.title = event.target.value || '')}/>
+        onChange={event => (data.attributes.title = event.target.value || '')}/>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
-                     onChange={event => (data.body = event.target.value)}/>
+        onChange={event => (data.body = event.target.value)}/>
       <Accordion>
         <Accordion.Title>
           <Icon name='dropdown'/>
@@ -84,7 +80,7 @@ class EssayEditor extends React.Component {
         </Accordion.Title>
         <Accordion.Content>
           {this.displayLabels()}
-          <Icon name='plus' color='teal' onClick={this.addLabel}/>
+          <Icon link name='plus' color='teal' onClick={this.addLabel}/>
         </Accordion.Content>
       </Accordion>
       <br/>

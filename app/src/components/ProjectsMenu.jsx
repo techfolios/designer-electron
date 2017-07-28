@@ -4,7 +4,6 @@ import { Menu, Icon, Accordion } from 'semantic-ui-react';
 import ProjectEditor from '../containers/project/ProjectEditor.jsx';
 
 class ProjectsMenu extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
