@@ -1,4 +1,5 @@
 import FS from 'fs';
+import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
@@ -9,7 +10,7 @@ import FileCrawler from './utilities/file-crawler';
 class IO {
   constructor(username) {
     this.templateURL = 'https://github.com/techfolios/template';
-    this.localURL = Path.resolve(__dirname, '../.techfolios'); // OS.homedir() + "/.techfolios,
+    this.localURL = Path.resolve(OS.homedir(), '.techfolios');
     this.remoteURL = `https://github.com/${username}/${username}.github.io`;
   }
 

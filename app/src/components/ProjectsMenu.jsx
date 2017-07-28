@@ -1,26 +1,31 @@
 import React from 'react';
 import { Menu, Icon, Accordion } from 'semantic-ui-react';
 
+import ProjectEditor from '../containers/project/ProjectEditor.jsx';
+
 class ProjectsMenu extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       data: props.data,
-      activeItem: null,
+      activeIndex: null,
     };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(file, activeIndex) {
+    this.props.setSelected(<ProjectEditor data={file} />);
+    this.setState({ activeIndex });
   }
 
   render() {
-    console.log(this.state.data);
-    const { activeItem, data } = this.state;
+    const { activeIndex } = this.state;
     const result = [];
-    data.forEach((file, index) => {
-      result.push(<Menu.Item
-        key={index}
-        name={file.attributes.title}
-        active={activeItem === index}
-        onClick={() => this.setState({ activeItem: index })}>{file.attributes.title}</Menu.Item>);
+    this.props.data.forEach((file, index) => {
+      const title = file.attributes.title;
+      result.push(<Menu.Item key={index} name={title} active={activeIndex === index}
+        onClick={() => this.handleClick(file, index)}>{title}</Menu.Item>);
     });
 
     return (
