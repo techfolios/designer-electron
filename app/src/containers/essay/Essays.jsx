@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 // import Path from 'path';
 // import { Card, Button } from 'semantic-ui-react';
-import { Container, Icon, Segment, Header } from 'semantic-ui-react';
+import { Icon, Segment, Header } from 'semantic-ui-react';
 
 import EssayEditor from './components/Editor.jsx';
 import FileCrawler from '../../utilities/file-crawler';
@@ -19,11 +18,11 @@ class Essay extends React.Component {
 
   render() {
     return <Segment piled>
-        <Segment basic textAlign="center">
-          <Icon name="write" size="big"/>
-          <Header as="h3"></Header>
-        </Segment>
-        <EssayEditor data={this.props.data} state={this.props.state}/>
+      <Segment basic textAlign="center">
+        <Icon name="write" size="big"/>
+        <Header as="h3"></Header>
+      </Segment>
+      <EssayEditor data={this.props.data} state={this.props.state}/>
     </Segment>;
   }
 }
