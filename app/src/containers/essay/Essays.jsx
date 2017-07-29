@@ -17,13 +17,13 @@ class Essay extends React.Component {
   }
 
   render() {
-    return <Segment piled>
+    return <div>
       <Segment basic textAlign="center">
         <Icon name="write" size="big"/>
         <Header as="h3"></Header>
       </Segment>
       <EssayEditor data={this.props.data} state={this.props.state}/>
-    </Segment>;
+    </div>;
   }
 }
 
