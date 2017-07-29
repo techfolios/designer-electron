@@ -59,45 +59,45 @@ class Education extends React.Component {
           </span>
         </h2>
         <Form.Input label='Institution'
-                    defaultValue={education.institution}
-                    placeholder={''}
-                    onChange={e => this.handleChange(e, 'institution', index)}/>
+          defaultValue={education.institution}
+          placeholder={''}
+          onChange={e => this.handleChange(e, 'institution', index)}/>
         <Form.Input label='Area'
-                    defaultValue={education.area}
-                    placeholder={''}
-                    onChange={e => this.handleChange(e, 'area', index)}/>
+          defaultValue={education.area}
+          placeholder={''}
+          onChange={e => this.handleChange(e, 'area', index)}/>
         <Form.Group>
           <Form.Input label='Start Date'
-                      defaultValue={education.startDate}
-                      placeholder={''}
-                      onChange={e => this.handleChange(e, 'startDate', index)}/>
+            defaultValue={education.startDate}
+            placeholder={''}
+            onChange={e => this.handleChange(e, 'startDate', index)}/>
           <Form.Input label='End Date'
-                      defaultValue={education.endDate}
-                      placeholder={''}
-                      onChange={e => this.handleChange(e, 'endDate', index)}/>
+            defaultValue={education.endDate}
+            placeholder={''}
+            onChange={e => this.handleChange(e, 'endDate', index)}/>
         </Form.Group>
         <Form.Group>
           <Form.Input label='Study Type'
-                      defaultValue={education.studyType}
-                      placeholder={''}
-                      onChange={e => this.handleChange(e, 'studyType', index)}/>
+            defaultValue={education.studyType}
+            placeholder={''}
+            onChange={e => this.handleChange(e, 'studyType', index)}/>
           <Form.Input label='GPA'
-                      defaultValue={education.gpa}
-                      placeholder={''}
-                      onChange={e => this.handleChange(e, 'gpa', index)}/>
+            defaultValue={education.gpa}
+            placeholder={''}
+            onChange={e => this.handleChange(e, 'gpa', index)}/>
         </Form.Group>
         <Form.Dropdown data-index={index} className="dropdown"
-                       multiple search selection fluid allowAdditions label='Courses'
-                       defaultValue={education.courses}
-                       noResultsMessage={'Start typing to add a new keyword!'}
-                       options={
-                         education.courses.map((course, key) => ({
-                           key,
-                           value: course,
-                           text: course,
-                         }))
-                       }
-                       onAddItem={this.handleAddition}
+          multiple search selection fluid allowAdditions label='Courses'
+          defaultValue={education.courses}
+          noResultsMessage={'Start typing to add a new keyword!'}
+          options={
+            education.courses.map((course, key) => ({
+              key,
+              value: course,
+              text: course,
+            }))
+          }
+          onAddItem={this.handleAddition}
         />
         <br/>
       </div>)

@@ -42,6 +42,14 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect(name, data, this);
   }
 
+  renderUser(activeItem) {
+    return (
+      <Menu.Item name='user' active={activeItem === 'user'} onClick={this.handleItemClick}>
+      User: username
+      </Menu.Item>
+    );
+  }
+
   renderBio(activeItem) {
     return (
       <Accordion>
@@ -175,6 +183,8 @@ class MainMenu extends React.Component {
     const { activeItem, projects } = this.state;
     return (
       <Menu vertical fixed="left" icon='labeled' color="teal">
+        {this.renderUser(activeItem)}
+
         {this.renderBio(activeItem)}
 
         <ProjectsMenu data={projects} setSelected={this.props.setSelected} saveProject={this.props.saveProject} />

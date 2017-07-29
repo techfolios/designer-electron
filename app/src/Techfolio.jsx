@@ -11,6 +11,7 @@ import EducationSection from './containers/bio/EducationSection.jsx';
 import WorkSection from './containers/bio/WorkSection.jsx';
 import VolunteerSection from './containers/bio/VolunteerSection.jsx';
 import RefSection from './containers/bio/RefSection.jsx';
+import User from './containers/User.jsx';
 
 import Essay from './containers/essay/Essays.jsx';
 
@@ -106,8 +107,11 @@ class Techfolio extends React.Component {
       case 'addItem':
         retSelection = <h1>Add Menu Item</h1>;
         break;
+      case 'user':
+        retSelection = <User data={data} state={state} />;
+        break;
       default:
-        retSelection = <h1>Default page</h1>;
+        retSelection = <User data={data} state={state} />;
     }
     return retSelection;
   }
