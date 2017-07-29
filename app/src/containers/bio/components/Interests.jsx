@@ -1,5 +1,4 @@
 import React from 'react';
-// import Segment from 'semantic-ui-react';
 import { Icon, Form } from 'semantic-ui-react';
 
 class Interests extends React.Component {
@@ -45,22 +44,32 @@ class Interests extends React.Component {
   render() {
     return <div>
       {this.state.data.map((interest, index) => <div key={index}>
-        <Form.Input label='Name'
-          defaultValue={interest.name}
-          placeholder={'Programming'}
-          onChange={e => this.handleChange(e, 'name', index)} />
-        <Form.Dropdown data-index={index} className="dropdown"
-          multiple search selection fluid allowAdditions label='Keywords'
-          defaultValue={interest.keywords}
-          options={
-            interest.keywords.map((item, key) => ({
-              key,
-              value: item,
-              text: item,
-            }))
-          }
-          onAddItem={this.handleAddition}
-        />
+        <div>
+          <h2 className="ui horizontal divider header">
+            <span data-tooltip={interest.keywords.join(', ')} data-position="bottom center">
+              <i className={"idea icon " + interest.name}></i>
+              {interest.name}
+            </span>
+          </h2>
+          <Form.Input label='Name'
+            defaultValue={interest.name}
+            placeholder={'Programming'}
+            onChange={e => this.handleChange(e, 'name', index)} />
+          <Form.Dropdown data-index={index} className="dropdown"
+            multiple search selection fluid allowAdditions label='Keywords'
+            defaultValue={interest.keywords}
+            noResultsMessage={'Start typing to add a new keyword!'}
+            options={
+              interest.keywords.map((item, key) => ({
+                key,
+                value: item,
+                text: item
+              }))
+            }
+            onAddItem={this.handleAddition}
+          />
+          <br />
+        </div>
       </div>)
       }
 

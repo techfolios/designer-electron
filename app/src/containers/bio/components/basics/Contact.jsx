@@ -15,7 +15,8 @@ class Contact extends React.Component {
         <Form.Input label='Name'
           defaultValue={this.state.name}
           placeholder={'John Smith'}
-          onChange={e => this.handleChange(e, 'name')} />
+          onChange={e => this.handleChange(e, 'name')}
+        />
         <Form.Input label='Label'
           defaultValue={this.state.label}
           placeholder={'Student'}
@@ -44,7 +45,7 @@ class Contact extends React.Component {
         defaultValue={this.state.summary}
         placeholder="Once upon a midnight dreary, while I pondered weak and weary..."
         onChange={e => this.handleChange(e, 'summary')} />
-    </div>);
+    </div>)
   }
 }
 

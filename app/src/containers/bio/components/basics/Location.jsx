@@ -31,8 +31,8 @@ class Location extends React.Component {
 
   render() {
     return (<div>
-      {this.renderLocation()};
-    </div>);
+      {this.renderLocation()}
+    </div>)
   }
 }
 

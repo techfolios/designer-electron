@@ -50,6 +50,12 @@ class Education extends React.Component {
   render() {
     return <div>
       {this.state.data.map((education, index) => <div key={index}>
+        <h2 className="ui horizontal divider header">
+          <span data-tooltip={`${education.institution} ${education.area} ${education.gpa}`} data-position="bottom center">
+            <i className={"student icon"}></i>
+            {education.institution}
+          </span>
+        </h2>
         <Form.Input label='Institution'
           defaultValue={education.institution}
           placeholder={''}
@@ -81,6 +87,7 @@ class Education extends React.Component {
         <Form.Dropdown data-index={index} className="dropdown"
           multiple search selection fluid allowAdditions label='Courses'
           defaultValue={education.courses}
+          noResultsMessage={'Start typing to add a new keyword!'}
           options={
             education.courses.map((course, key) => ({
               key,
@@ -90,6 +97,7 @@ class Education extends React.Component {
           }
           onAddItem={this.handleAddition}
         />
+        <br />
       </div>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

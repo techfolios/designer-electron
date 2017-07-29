@@ -1,16 +1,16 @@
 import React from 'react';
-// import { Button, Icon, Menu } from 'semantic-ui-react';
 import { Form, Segment, Grid, Header, Image } from 'semantic-ui-react';
 
 import Basics from './components/basics/Basics.jsx';
 
 function BioComponent(props) {
-  return <Grid.Column >
+  return (<Grid.Column >
     <Segment color="teal">
-      <Header as="h2"> {props.name} </Header>
+      <Header className="ui center aligned header" as="h1"> {props.name} </Header>
+      <div className="ui divider"></div>
       {props.children}
     </Segment>
-  </Grid.Column>;
+  </Grid.Column>)
 }
 
 class BasicsSection extends React.Component {
@@ -38,7 +38,7 @@ class BasicsSection extends React.Component {
   }
 
   render() {
-    return <div>
+    return (<div>
       <Segment basic>
         <Image centered src={this.state.basics.picture} size='small' shape='circular' />
       </Segment>
@@ -50,7 +50,7 @@ class BasicsSection extends React.Component {
         </Grid>
         <Form.Button positive floated="right" type="Submit">Save</Form.Button>
       </Form>
-    </div>;
+    </div>)
   }
 }
 

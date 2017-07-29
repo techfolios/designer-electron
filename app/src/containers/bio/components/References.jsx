@@ -35,6 +35,12 @@ class References extends React.Component {
   render() {
     return <div>
       {this.state.data.map((reference, index) => <div key={index}>
+        <h2 className="ui horizontal divider header">
+          <span data-tooltip={`${reference.name}`} data-position="bottom center">
+            <i className={"checkmark icon"}></i>
+            {reference.name}
+          </span>
+        </h2>
         <Form.Input label='Name'
           defaultValue={reference.name}
           placeholder={'Available upon request'}
@@ -43,6 +49,7 @@ class References extends React.Component {
           defaultValue={reference.reference}
           placeholder={''}
           onChange={e => this.handleChange(e, 'reference', index)} />
+        <br />
       </div>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

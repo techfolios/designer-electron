@@ -36,9 +36,19 @@ class Profiles extends React.Component {
   }
 
   render() {
-    return <div>
-      <Header as="h3">Profiles</Header>
+    return (<div>
+      <br />
+      <h2 className="ui horizontal divider header">
+        <i className="users icon"></i>
+        Profiles
+      </h2>
       {this.state.data.map((profile, index) => <div key={index}>
+        <div className="ui horizontal divider header">
+          <span data-tooltip={profile.username} data-position="bottom center">
+            <i className={"user icon " + profile.network}></i>
+            {profile.network}
+          </span>
+        </div>
         <Form.Input label="Network"
           defaultValue={profile.network}
           placeholder="Github"
@@ -51,10 +61,11 @@ class Profiles extends React.Component {
           defaultValue={profile.url}
           placeholder="https://github.com"
           onChange={e => this.handleChange(e, 'url', index)} />
+        <br />
       </div>)}
       <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
-    </div>;
+    </div>)
   }
 }
 

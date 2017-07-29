@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Form } from 'semantic-ui-react';
 
 import Contact from './Contact.jsx';
 import Location from './Location.jsx';
@@ -29,7 +28,7 @@ class Basics extends React.Component {
       <Contact data={this.state} handleChange={this.handleChange} />
       <Location data={this.state.location} onChange={this.props.onChange}/>
       <Profiles data={this.state.profiles} onChange={this.handleProfilesChange} />
-    </div>);
+    </div>)
   }
 }
 
