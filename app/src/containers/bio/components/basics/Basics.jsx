@@ -7,6 +7,7 @@ class Basics extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.data;
+    this.handleChange = this.handleChange.bind(this);
     this.handleProfilesChange = this.handleProfilesChange.bind(this);
   }
 
