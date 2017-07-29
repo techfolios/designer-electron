@@ -70,9 +70,9 @@ class EssayEditor extends React.Component {
     if (!data.body) data.body = '';
     return <Form>
       <Form.Input label='Title' defaultValue={data.attributes.title || ''}
-        onChange={event => (data.attributes.title = event.target.value || '')}/>
+        onChange={(event) => { data.attributes.title = event.target.value || ''; } }/>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
-        onChange={event => (data.body = event.target.value)}/>
+        onChange={(event) => { data.body = event.target.value; } }/>
       <Accordion>
         <Accordion.Title>
           <Icon name='dropdown'/>
