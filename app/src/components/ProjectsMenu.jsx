@@ -13,15 +13,15 @@ class ProjectsMenu extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(file, activeIndex) {
-    this.props.setSelected(<ProjectEditor index={activeIndex} saveProject={this.props.saveProject} data={file} />);
-    this.setState({ activeIndex });
+  handleClick(file, index) {
+    this.setState({ index });
+    this.props.setSelected(<ProjectEditor key={index} index={index} saveProject={this.props.saveProject} data={file} />);
   }
 
   render() {
-    const { activeIndex } = this.state;
+    const { activeIndex, data } = this.state;
     const result = [];
-    this.props.data.forEach((file, index) => {
+    data.forEach((file, index) => {
       const title = file.attributes.title;
       result.push(<Menu.Item key={index} name={title} active={activeIndex === index}
         onClick={() => this.handleClick(file, index)}>{title}</Menu.Item>);

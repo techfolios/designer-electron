@@ -102,7 +102,6 @@ class MainMenu extends React.Component {
     const list = this.state;
     list[state] = list[state].filter((data, index) => index !== key);
     if (file) crawler.removeFile(file);
-    console.log(list);
     this.setState(list);
     this.props.onMenuSelect('default');
   }
@@ -112,7 +111,6 @@ class MainMenu extends React.Component {
     const { activeItem } = this.state;
     let key;
     files.forEach((data, index) => {
-      console.log(data);
       key = `${data.attributes.title}`;
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
         {data.attributes.title}
