@@ -56,6 +56,9 @@ class MainMenu extends React.Component {
           <Menu.Item name='basicsSection' active={activeItem === 'basicsSection'} onClick={this.handleItemClick}>
               Basics
           </Menu.Item>
+          <Menu.Item name='profilesSection' active={activeItem === 'profilesSection'} onClick={this.handleItemClick}>
+            Profiles
+          </Menu.Item>
           <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'}
             onClick={this.handleItemClick}>
               Interests
