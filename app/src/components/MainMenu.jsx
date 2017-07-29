@@ -105,9 +105,9 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect('default');
   }
 
-  static getShortenString(str, maxLength) {
+  getShortenString(str) {
     let returnString = '';
-    if (str.length > maxLength) returnString = `${str.trim().slice(0, maxLength - 3)}...`;
+    if (str.length > this.maxWidth) returnString = `${str.trim().slice(0, this.maxWidth - 3)}...`;
     else returnString = str;
 
     return returnString;
@@ -121,7 +121,7 @@ class MainMenu extends React.Component {
       console.log(data);
       key = `${data.attributes.title}`;
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
-        {MainMenu.getShortenString(key, this.maxWidth)}
+        {this.getShortenString(key)}
         <br/>
         <div>
           <Icon link size='big' name='edit' color='black'
