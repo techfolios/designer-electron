@@ -13,6 +13,9 @@ class IO {
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(OS.homedir(), '.techfolios');
     this.remoteURL = `https://github.com/${username}/${username}.github.io`;
+    this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
+    this.projectsURL = Path.resolve(this.localURL, 'projects');
+    this.essaysURL = Path.resolve(this.localURL, 'essays');
   }
 
   init() {
@@ -82,7 +85,7 @@ class IO {
 
   loadBio() {
     return new Promise((res, rej) => {
-      const path = Path.resolve(this.localURL, '_data/bio.json');
+      const path = this.bioURL;
       FS.readFile(path, (err, data) => {
         if (err) {
           rej(err);
@@ -94,7 +97,7 @@ class IO {
 
   writeBio(data) {
     return new Promise((res, rej) => {
-      FS.writeFile(Path.resolve(this.localURL, '_data/bio.json'), JSON.stringify(data, null, 2), (err) => {
+      FS.writeFile(this.bioURL, JSON.stringify(data, null, 2), (err) => {
         if (err) {
           rej(err);
         }
@@ -104,7 +107,7 @@ class IO {
         Git.Repository.open(this.localURL)
           .then((repoResult) => {
             repo = repoResult;
-            return fse.ensureDir(Path.join(repo.workdir(), this.localURL));
+            return fse.ensureDir(this.localURL);
           })
           .then(() => repo.refreshIndex())
           .then((indexResult) => {
@@ -134,12 +137,11 @@ class IO {
 
   loadProjects() {
     return new Promise((res) => { // removed 'rej' as unused parameter
-      const path = Path.resolve(this.localURL, 'projects');
       const list = [];
-      const projFiles = FS.readdirSync(path);
+      const projFiles = FS.readdirSync(this.projectsURL);
       projFiles.forEach((file) => {
         if (file !== 'index.html') {
-          const filePath = Path.resolve(path, file);
+          const filePath = Path.resolve(this.projectsURL, file);
           const projData = FS.readFileSync(filePath);
           list.push(FrontMatter(projData.toString()));
         }
@@ -150,7 +152,7 @@ class IO {
 
   writeProject(index, data) {
     return new Promise((res, rej) => {
-      const path = Path.resolve(this.localURL, 'projects', `project-${index + 1}.md`);
+      const path = Path.resolve(this.projectsURL, `project-${index + 1}.md`);
       const yamlString = YamlParser.write(data);
       FS.writeFile(path, yamlString, (err) => {
         if (err) {
@@ -164,9 +166,8 @@ class IO {
 
   loadEssays() {
     return new Promise((res) => {
-      const path = Path.resolve(this.localURL, 'essays');
       const list = {};
-      const crawler = new FileCrawler(path);
+      const crawler = new FileCrawler(this.essaysURL);
       console.log(list);
       list.essays = crawler.getYAML();
       list.crawler = crawler;
