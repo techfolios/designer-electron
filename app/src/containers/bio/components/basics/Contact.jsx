@@ -15,7 +15,8 @@ class Contact extends React.Component {
         <Form.Input label='Name'
           defaultValue={this.state.name}
           placeholder={'John Smith'}
-          onChange={e => this.handleChange(e, 'name')} />
+          onChange={e => this.handleChange(e, 'name')}
+        />
         <Form.Input label='Label'
           defaultValue={this.state.label}
           placeholder={'Student'}

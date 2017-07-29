@@ -7,7 +7,8 @@ import Awards from './components/Awards.jsx';
 function BioComponent(props) {
   return <Grid.Column >
     <Segment color="teal">
-      <Header as="h2"> {props.name} </Header>
+      <Header className="ui center aligned header" as="h1"> {props.name} </Header>
+      <div className="ui divider"></div>
       {props.children}
     </Segment>
   </Grid.Column>;

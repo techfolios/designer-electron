@@ -12,7 +12,6 @@ import VolunteerSection from './containers/bio/VolunteerSection.jsx';
 import RefSection from './containers/bio/RefSection.jsx';
 
 import Essay from './containers/essay/Essays.jsx';
-import Projects from './containers/projects/Projects.jsx';
 
 import IO from './io';
 
@@ -21,11 +20,11 @@ class Techfolio extends React.Component {
     super(props);
     this.io = new IO(props.username);
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
+    this.setSelected = this.setSelected.bind(this);
     this.handleSaveBio = this.handleSaveBio.bind(this);
     this.handleLoadBio = this.handleLoadBio.bind(this);
-    this.handleSaveProjects = this.handleSaveProjects.bind(this);
-    this.handleLoadProjects = this.handleLoadProjects.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
+    this.saveProject = this.saveProject.bind(this);
     this.state = {
       bio: null,
       projects: null,
@@ -89,10 +88,7 @@ class Techfolio extends React.Component {
           onLoadBio={this.handleLoadBio} />;
         break;
       case 'projects':
-        retSelection = <Projects
-          projects={this.state.projects}
-          onSaveProjects={this.handleSaveProjects}
-          onLoadProjects={this.handleLoadProjects} />;
+
         break;
       case 'essays':
         retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title} data={data} state={state} />;
@@ -114,6 +110,10 @@ class Techfolio extends React.Component {
     this.setState({ selected });
   }
 
+  setSelected(selected) {
+    this.setState({ selected });
+  }
+
   handleSaveBio(data) {
     this.setState({ bio: data });
     this.io.writeBio(data);
@@ -132,14 +132,11 @@ class Techfolio extends React.Component {
       });
   }
 
-  handleSaveProjects(data) {
-    console.log(data);
-    console.log(this.state);
-  }
-
-  handleLoadProjects() {
-    console.log('load project');
-    console.log(this.state);
+  saveProject(index, data) {
+    const projects = this.state.projects;
+    projects[index] = data;
+    this.setState({ projects });
+    this.io.writeProject(index, data);
   }
 
   handleUpload() {
@@ -190,7 +187,9 @@ class Techfolio extends React.Component {
   }
 
   render() {
-    if (this.state.isLoading || !this.state.bio || !this.state.projects) {
+    const { isLoading, bio, projects, selected, essays, essayCrawler } = this.state;
+
+    if (isLoading || !bio || !projects) {
       return <Dimmer inverted active> <Loader size="big" content="Loading..." /> </Dimmer>;
     }
 
@@ -198,10 +197,14 @@ class Techfolio extends React.Component {
       <Grid>
         <Grid.Column width={3}>
           <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
-            essays={this.state.essays} essayCrawler={this.state.essayCrawler} projects={this.state.projects}/>
+            essays={essays}
+            essayCrawler={essayCrawler}
+            projects={projects}
+            setSelected={this.setSelected}
+            saveProject={this.saveProject} />
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
-          {this.state.selected}
+          {selected}
         </Grid.Column>
       </Grid>
     );

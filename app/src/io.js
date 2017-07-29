@@ -1,15 +1,17 @@
 import FS from 'fs';
+import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
 import FrontMatter from 'front-matter';
 
 import FileCrawler from './utilities/file-crawler';
+import YamlParser from './utilities/yaml-parser';
 
 class IO {
   constructor(username) {
     this.templateURL = 'https://github.com/techfolios/template';
-    this.localURL = Path.resolve(__dirname, '../.techfolios'); // OS.homedir() + "/.techfolios,
+    this.localURL = Path.resolve(OS.homedir(), '.techfolios');
     this.remoteURL = `https://github.com/${username}/${username}.github.io`;
   }
 
@@ -24,7 +26,7 @@ class IO {
             // clone template
             this.cloneTechfoliosTemplate()
               .then(() => res('Cloned remote techfolio template.'),
-              err => rej(err));
+                err => rej(err));
           }
         }, (err) => {
           // error checking for local repo.
@@ -131,7 +133,7 @@ class IO {
   }
 
   loadProjects() {
-    return new Promise((res, rej) => {
+    return new Promise((res) => { // removed 'rej' as unused parameter
       const path = Path.resolve(this.localURL, 'projects');
       const list = [];
       const projFiles = FS.readdirSync(path);
@@ -143,6 +145,20 @@ class IO {
         }
       });
       res(list);
+    });
+  }
+
+  writeProject(index, data) {
+    return new Promise((res, rej) => {
+      const path = Path.resolve(this.localURL, 'projects', `project-${index + 1}.md`);
+      const yamlString = YamlParser.write(data);
+      FS.writeFile(path, yamlString, (err) => {
+        if (err) {
+          rej(err);
+        } else {
+          res(true);
+        }
+      });
     });
   }
 

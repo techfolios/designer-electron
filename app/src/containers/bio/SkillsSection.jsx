@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Button, Icon, Menu } from 'semantic-ui-react';
 import { Form, Segment, Grid, Header } from 'semantic-ui-react';
 
 import Skills from './components/Skills.jsx';
@@ -7,7 +6,8 @@ import Skills from './components/Skills.jsx';
 function BioComponent(props) {
   return <Grid.Column >
     <Segment color="teal">
-      <Header as="h2"> {props.name} </Header>
+      <Header className="ui center aligned header" as="h1"> {props.name} </Header>
+      <div className="ui divider"></div>
       {props.children}
     </Segment>
   </Grid.Column>;

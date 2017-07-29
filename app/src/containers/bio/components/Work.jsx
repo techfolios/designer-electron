@@ -46,6 +46,12 @@ class Work extends React.Component {
   render() {
     return <div>
       {this.state.data.map((work, index) => <Segment key={index}>
+        <h2 className="ui horizontal divider header">
+          <span data-tooltip={`${work.company} ${work.position}`} data-position="bottom center">
+            <i className={`laptop icon ${work.company}`}></i>
+            {work.company}
+          </span>
+        </h2>
         <Form.Input label='Company'
           defaultValue={work.company}
           placeholder='Example Co.'
@@ -64,7 +70,7 @@ class Work extends React.Component {
             placeholder='01/01/1970'
             onChange={e => this.handleChange(e, 'startDate', index)} />
         </Form.Group>
-        <Form.Input label='website'
+        <Form.Input label='Website'
           defaultValue={work.website}
           placeholder="www.exampleco.com"
           onChange={e => this.handleChange(e, 'website', index)} />
@@ -78,6 +84,7 @@ class Work extends React.Component {
           placeholder="Design firmware for distributed weather sensor network"
           onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)} />)
         }
+        <br />
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>
