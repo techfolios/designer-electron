@@ -104,6 +104,14 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect('default');
   }
 
+  static getShortenString(str, maxLength) {
+    let returnString = '';
+    if (str.length > maxLength) returnString = `${str.slice(0, maxLength - 3)}...`;
+    else returnString = str;
+
+    return returnString;
+  }
+
   getYAML(files, crawler, state) {
     const list = [];
     const { activeItem } = this.state;
@@ -112,7 +120,7 @@ class MainMenu extends React.Component {
       console.log(data);
       key = `${data.attributes.title}`;
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
-        {data.attributes.title}
+        {MainMenu.getShortenString(key, 10)}
         <br/>
         <div>
           <Icon link size='big' name='edit' color='black'
@@ -171,7 +179,7 @@ class MainMenu extends React.Component {
   render() {
     const { activeItem, projects } = this.state;
     return (
-      <Menu vertical fixed="left" icon='labeled' color="teal">
+      <Menu vertical widths={10} fixed="left" icon='labeled' color="teal">
         {this.renderBio(activeItem)}
 
         <ProjectsMenu data={projects} setSelected={this.props.setSelected} saveProject={this.props.saveProject} />
