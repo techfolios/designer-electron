@@ -47,7 +47,7 @@ class Interests extends React.Component {
         <div>
           <h2 className="ui horizontal divider header">
             <span data-tooltip={interest.keywords.join(', ')} data-position="bottom center">
-              <i className={"idea icon " + interest.name}></i>
+              <i className={`idea icon ${interest.name}`}></i>
               {interest.name}
             </span>
           </h2>
@@ -63,7 +63,7 @@ class Interests extends React.Component {
               interest.keywords.map((item, key) => ({
                 key,
                 value: item,
-                text: item
+                text: item,
               }))
             }
             onAddItem={this.handleAddition}

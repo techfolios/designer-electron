@@ -10,7 +10,7 @@ function BioComponent(props) {
       <div className="ui divider"></div>
       {props.children}
     </Segment>
-  </Grid.Column>)
+  </Grid.Column>);
 }
 
 class BasicsSection extends React.Component {
@@ -50,7 +50,7 @@ class BasicsSection extends React.Component {
         </Grid>
         <Form.Button positive floated="right" type="Submit">Save</Form.Button>
       </Form>
-    </div>)
+    </div>);
   }
 }
 

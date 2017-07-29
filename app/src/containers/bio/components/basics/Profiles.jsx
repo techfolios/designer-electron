@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Form, Header } from 'semantic-ui-react';
+// import Header from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 class Profiles extends React.Component {
   constructor(props) {
@@ -45,7 +46,7 @@ class Profiles extends React.Component {
       {this.state.data.map((profile, index) => <div key={index}>
         <div className="ui horizontal divider header">
           <span data-tooltip={profile.username} data-position="bottom center">
-            <i className={"user icon " + profile.network}></i>
+            <i className={`user icon ${profile.network}`}></i>
             {profile.network}
           </span>
         </div>
@@ -65,7 +66,7 @@ class Profiles extends React.Component {
       </div>)}
       <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
-    </div>)
+    </div>);
   }
 }
 

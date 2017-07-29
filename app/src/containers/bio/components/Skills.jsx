@@ -47,7 +47,7 @@ class Skills extends React.Component {
       {this.state.data.map((skill, index) => <div key={index}>
         <h2 className="ui horizontal divider header">
           <span data-tooltip={skill.keywords.join(', ')} data-position="bottom center">
-            <i className={"wizard icon " + skill.name}></i>
+            <i className={`wizard icon ${skill.name}`}></i>
             {skill.name}
           </span>
         </h2>
@@ -64,7 +64,7 @@ class Skills extends React.Component {
               skill.keywords.map((keyword, key) => ({
                 key,
                 value: keyword,
-                text: keyword
+                text: keyword,
               }))
             }
             onAddItem={this.handleAddition}

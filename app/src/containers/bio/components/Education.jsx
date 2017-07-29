@@ -51,8 +51,9 @@ class Education extends React.Component {
     return <div>
       {this.state.data.map((education, index) => <div key={index}>
         <h2 className="ui horizontal divider header">
-          <span data-tooltip={`${education.institution} ${education.area} ${education.gpa}`} data-position="bottom center">
-            <i className={"student icon"}></i>
+          <span data-tooltip={`${education.institution} ${education.area} ${education.gpa}`}
+            data-position="bottom center">
+            <i className={'student icon'}></i>
             {education.institution}
           </span>
         </h2>

@@ -37,7 +37,7 @@ class References extends React.Component {
       {this.state.data.map((reference, index) => <div key={index}>
         <h2 className="ui horizontal divider header">
           <span data-tooltip={`${reference.name}`} data-position="bottom center">
-            <i className={"checkmark icon"}></i>
+            <i className={'checkmark icon'}></i>
             {reference.name}
           </span>
         </h2>

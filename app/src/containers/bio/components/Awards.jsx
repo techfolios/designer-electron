@@ -39,7 +39,7 @@ class Awards extends React.Component {
       {this.state.data.map((award, index) => <Segment key={index}>
         <h2 className="ui horizontal divider header">
           <span data-tooltip={`${award.title} ${award.date} ${award.awarder}`} data-position="bottom center">
-            <i className={"trophy icon"}></i>
+            <i className={'trophy icon'}></i>
             {award.title}
           </span>
         </h2>

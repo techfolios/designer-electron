@@ -48,7 +48,7 @@ class Volunteer extends React.Component {
       {this.state.data.map((volunteer, index) => <Segment key={index}>
         <h2 className="ui horizontal divider header">
           <span data-tooltip={`${volunteer.organization} ${volunteer.position}`} data-position="bottom center">
-            <i className={"world icon " + volunteer.organization}></i>
+            <i className={`world icon ${volunteer.organization}`}></i>
             {volunteer.organization}
           </span>
         </h2>

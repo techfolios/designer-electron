@@ -45,7 +45,7 @@ class Contact extends React.Component {
         defaultValue={this.state.summary}
         placeholder="Once upon a midnight dreary, while I pondered weak and weary..."
         onChange={e => this.handleChange(e, 'summary')} />
-    </div>)
+    </div>);
   }
 }
 

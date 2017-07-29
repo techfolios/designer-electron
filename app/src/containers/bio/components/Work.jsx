@@ -48,7 +48,7 @@ class Work extends React.Component {
       {this.state.data.map((work, index) => <Segment key={index}>
         <h2 className="ui horizontal divider header">
           <span data-tooltip={`${work.company} ${work.position}`} data-position="bottom center">
-            <i className={"laptop icon " + work.company}></i>
+            <i className={`laptop icon ${work.company}`}></i>
             {work.company}
           </span>
         </h2>
