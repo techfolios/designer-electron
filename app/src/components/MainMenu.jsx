@@ -14,6 +14,7 @@ class MainMenu extends React.Component {
       essayCrawler: props.essayCrawler,
     };
 
+    this.maxWidth = 16;
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleProjectsClick = this.handleProjectsClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
@@ -106,7 +107,7 @@ class MainMenu extends React.Component {
 
   static getShortenString(str, maxLength) {
     let returnString = '';
-    if (str.length > maxLength) returnString = `${str.slice(0, maxLength - 3)}...`;
+    if (str.length > maxLength) returnString = `${str.trim().slice(0, maxLength - 3)}...`;
     else returnString = str;
 
     return returnString;
@@ -120,7 +121,7 @@ class MainMenu extends React.Component {
       console.log(data);
       key = `${data.attributes.title}`;
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
-        {MainMenu.getShortenString(key, 10)}
+        {MainMenu.getShortenString(key, this.maxWidth)}
         <br/>
         <div>
           <Icon link size='big' name='edit' color='black'
@@ -179,7 +180,7 @@ class MainMenu extends React.Component {
   render() {
     const { activeItem, projects } = this.state;
     return (
-      <Menu vertical widths={10} fixed="left" icon='labeled' color="teal">
+      <Menu vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
         {this.renderBio(activeItem)}
 
         <ProjectsMenu data={projects} setSelected={this.props.setSelected} saveProject={this.props.saveProject} />
