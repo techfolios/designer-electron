@@ -108,10 +108,8 @@ class Techfolio extends React.Component {
         retSelection = <h1>Add Menu Item</h1>;
         break;
       case 'user':
-        retSelection = <User data={data} state={state} />;
-        break;
       default:
-        retSelection = <User data={data} state={state} />;
+        retSelection = <User bio={this.state.bio} />;
     }
     return retSelection;
   }

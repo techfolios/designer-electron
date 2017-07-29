@@ -46,7 +46,7 @@ class MainMenu extends React.Component {
   renderUser(activeItem) {
     return (
       <Menu.Item name='user' active={activeItem === 'user'} onClick={this.handleItemClick}>
-      User: username
+      User
       </Menu.Item>
     );
   }

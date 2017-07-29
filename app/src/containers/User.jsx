@@ -1,24 +1,26 @@
 import React from 'react';
-import { Icon, Segment, Header } from 'semantic-ui-react';
+import { Segment, Header, Image } from 'semantic-ui-react';
 
 class User extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.props;
+    this.state = this.props.bio;
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(key, data) {
+    const state = this.state;
+    state[key] = data;
+    this.setState(state);
   }
 
   render() {
-    return <Segment piled>
-      <Segment basic textAlign="center">
-        <Icon name="write" size="big"/>
-        <Header as="h3">User login page</Header>
+    return (
+      <Segment User>
+        <Image centered src={this.state.basics.picture} size='small' shape='circular' />
+        <Header>User login - coming soon</Header>
       </Segment>
-      <Form.Input label='Username'
-        defaultValue={this.state.name}
-        placeholder={'John Smith'}
-        onChange={e => this.handleChange(e, 'name')}
-      />
-    </Segment>;
+    );
   }
 }
 
