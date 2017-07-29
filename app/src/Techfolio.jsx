@@ -3,6 +3,7 @@ import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 
 import MainMenu from './components/MainMenu.jsx';
 import BasicsSection from './containers/bio/BasicsSection.jsx';
+import ProfilesSection from './containers/bio/ProfilesSection.jsx';
 import InterestsSection from './containers/bio/InterestsSection.jsx';
 import SkillsSection from './containers/bio/SkillsSection.jsx';
 import AwardsSection from './containers/bio/AwardsSection.jsx';
@@ -41,6 +42,12 @@ class Techfolio extends React.Component {
     switch (selected) {
       case 'basicsSection':
         retSelection = <BasicsSection
+          bio={this.state.bio}
+          onSaveBio={this.handleSaveBio}
+          onLoadBio={this.handleLoadBio} />;
+        break;
+      case 'profilesSection':
+        retSelection = <ProfilesSection
           bio={this.state.bio}
           onSaveBio={this.handleSaveBio}
           onLoadBio={this.handleLoadBio} />;
