@@ -191,13 +191,9 @@ class MainMenu extends React.Component {
   render() {
     const { activeItem, projects } = this.state;
     return (
-<<<<<<< HEAD
-      <Menu vertical fixed="left" icon='labeled' color="teal">
+      <Menu vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
         {this.renderUser(activeItem)}
 
-=======
-      <Menu vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
->>>>>>> master
         {this.renderBio(activeItem)}
 
         <ProjectsMenu data={projects} setSelected={this.props.setSelected} saveProject={this.props.saveProject} />
