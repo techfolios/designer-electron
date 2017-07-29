@@ -36,12 +36,7 @@ class Profiles extends React.Component {
   }
 
   render() {
-    return (<div>
-      <br />
-      <h2 className="ui horizontal divider header">
-        <i className="users icon"></i>
-        Profiles
-      </h2>
+    return <div>
       {this.state.data.map((profile, index) => <div key={index}>
         <div className="ui horizontal divider header">
           <span data-tooltip={profile.username} data-position="bottom center">
@@ -65,7 +60,7 @@ class Profiles extends React.Component {
       </div>)}
       <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
-    </div>);
+    </div>;
   }
 }
 

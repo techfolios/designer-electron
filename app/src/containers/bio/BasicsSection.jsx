@@ -31,10 +31,9 @@ class BasicsSection extends React.Component {
   render() {
     return (<div>
       <Segment basic>
-        <Image centered src={this.state.basics.picture} size='small' shape='circular' />
+        <Header className="ui center aligned header" as="h1"> Basics </Header>
+        <div className="ui divider"></div>
       </Segment>
-      <Header className="ui center aligned header" as="h1"> {this.state.basics.name} </Header>
-      <div className="ui divider"></div>
       <Form>
         <Basics data={this.state.basics} onChange={this.handleChange} />
       </Form>

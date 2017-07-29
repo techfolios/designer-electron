@@ -4,16 +4,6 @@ import { Form, Segment, Grid, Header } from 'semantic-ui-react';
 
 import References from './components/References.jsx';
 
-function BioComponent(props) {
-  return <Grid.Column >
-    <Segment color="teal">
-      <Header className="ui center aligned header" as="h1"> {props.name} </Header>
-      <div className="ui divider"></div>
-      {props.children}
-    </Segment>
-  </Grid.Column>;
-}
-
 class RefSection extends React.Component {
   constructor(props) {
     super(props);
@@ -40,14 +30,14 @@ class RefSection extends React.Component {
 
   render() {
     return <div>
-      <Form onSubmit={this.handleSaveBio}>
-        <Grid doubling relaxed padded columns={2}>
-          <BioComponent name="References">
-            <References data={this.state.references} onChange={ this.handleChange } />
-          </BioComponent>
-        </Grid>
-        <Form.Button positive floated="right" type="Submit">Save</Form.Button>
+      <Segment basic>
+        <Header className="ui center aligned header" as="h1"> References </Header>
+        <div className="ui divider"></div>
+      </Segment>
+      <Form>
+        <References data={this.state.references} onChange={ this.handleChange } />
       </Form>
+      <Form.Button positive floated="right" type="Submit" onClick={this.handleSaveBio}>Save</Form.Button>
     </div>;
   }
 }

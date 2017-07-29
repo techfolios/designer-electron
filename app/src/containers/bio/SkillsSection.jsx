@@ -3,16 +3,6 @@ import { Form, Segment, Grid, Header } from 'semantic-ui-react';
 
 import Skills from './components/Skills.jsx';
 
-function BioComponent(props) {
-  return <Grid.Column >
-    <Segment color="teal">
-      <Header className="ui center aligned header" as="h1"> {props.name} </Header>
-      <div className="ui divider"></div>
-      {props.children}
-    </Segment>
-  </Grid.Column>;
-}
-
 class SkillsSection extends React.Component {
   constructor(props) {
     super(props);
@@ -39,14 +29,14 @@ class SkillsSection extends React.Component {
 
   render() {
     return <div>
-      <Form onSubmit={this.handleSaveBio}>
-        <Grid doubling relaxed padded columns={2}>
-          <BioComponent name="Skills">
-            <Skills data={this.state.skills} onChange={ this.handleChange } />
-          </BioComponent>
-        </Grid>
-        <Form.Button positive floated="right" type="Submit">Save</Form.Button>
+      <Segment basic>
+        <Header className="ui center aligned header" as="h1"> Skills </Header>
+        <div className="ui divider"></div>
+      </Segment>
+      <Form>
+        <Skills data={this.state.skills} onChange={this.handleChange} />>
       </Form>
+      <Form.Button positive floated="right" type="Submit" onClick={this.handleSaveBio}>Save</Form.Button>
     </div>;
   }
 }
