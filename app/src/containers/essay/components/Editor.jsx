@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Form, Button, Icon, Accordion } from 'semantic-ui-react';
+import { Form, Button, Icon, Accordion, Label } from 'semantic-ui-react';
 import FileCrawler from '../../../utilities/file-crawler';
 import YAMLParser from '../../../utilities/yaml-parser';
 import ISODate from '../../../utilities/iso-date';
@@ -38,13 +38,15 @@ class EssayEditor extends React.Component {
     const labels = this.data.attributes.labels || [];
 
     labels.forEach((value, index) => {
-      list.push(
-        <Form.Group key={`${index}: ${value}`}>
-          <Form.Input defaultValue={value}
-            onChange={ (event) => { labels[index] = event.target.value; } }/>
-          <Icon link color='red' name='delete'
-            onClick={ event => this.removeLabel(event, index)}/>
-        </Form.Group>);
+      list.push(<Label tag key={`${index}: ${value}`}>
+            <Form.Group>
+              <Form.Input defaultValue={value} onChange={(event) => {
+                labels[index] = event.target.value;
+              }}/>
+              <Icon link size='big' color='red' name='delete'
+                    onClick={event => this.removeLabel(event, index)}/>
+            </Form.Group>
+          </Label>);
     });
 
     return list;
@@ -70,9 +72,13 @@ class EssayEditor extends React.Component {
     if (!data.body) data.body = '';
     return <Form>
       <Form.Input label='Title' defaultValue={data.attributes.title || ''}
-        onChange={(event) => { data.attributes.title = event.target.value || ''; } }/>
+                  onChange={(event) => {
+                    data.attributes.title = event.target.value || '';
+                  }}/>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
-        onChange={(event) => { data.body = event.target.value; } }/>
+                     onChange={(event) => {
+                       data.body = event.target.value;
+                     }}/>
       <Accordion>
         <Accordion.Title>
           <Icon name='dropdown'/>
@@ -80,7 +86,8 @@ class EssayEditor extends React.Component {
         </Accordion.Title>
         <Accordion.Content>
           {this.displayLabels()}
-          <Icon link name='plus' color='teal' onClick={this.addLabel}/>
+          <br/>
+          <Icon link size='big' name='plus' color='teal' onClick={this.addLabel}/>
         </Accordion.Content>
       </Accordion>
       <br/>
