@@ -32,7 +32,7 @@ class Techfolio extends React.Component {
       essayCrawler: null,
       addItem: null,
       settings: null,
-      selected: <h1>Default page</h1>,
+      selected: <Settings />,
       isLoading: false,
     };
   }
@@ -107,7 +107,7 @@ class Techfolio extends React.Component {
         retSelection = <h1>Add Menu Item</h1>;
         break;
       case 'settings':
-        retSelection = <Settings/>;
+        retSelection = <Settings />;
         break;
       default:
         retSelection = <h1>Default page</h1>;
@@ -196,41 +196,6 @@ class Techfolio extends React.Component {
       });
   }
 
-// <<<<<<< HEAD
-//   getSelected(selected) {
-//     let retSelection;
-//     switch (selected) {
-//       case 'bio':
-//         retSelection = <Bio bio={this.state.bio} onSaveBio={this.handleSaveBio} onLoadBio={this.handleLoadBio}/>;
-//         break;
-//       case 'projects':
-//         retSelection = <h1>Projects</h1>;
-//         break;
-//       case 'essays':
-//         retSelection = <h1>Essays</h1>;
-//         break;
-//       case 'upload':
-//         retSelection = <h1>Upload</h1>;
-//         break;
-//       case 'addItem':
-//         retSelection = <h1>Add Menu Item</h1>;
-//         break;
-//       case 'settings':
-//         retSelection = <Settings/>;
-//         break;
-//       default:
-//         retSelection = <h1>Default page</h1>;
-//     }
-//     return retSelection;
-//   }
-//
-//   handleMenuSelect(item) {
-//     const selected = this.getSelected(item);
-//     this.setState({ selected });
-//   }
-//
-// =======
-// >>>>>>> master
   render() {
     const { isLoading, bio, projects, selected, essays, essayCrawler } = this.state;
 
