@@ -8,11 +8,14 @@ import FrontMatter from 'front-matter';
 import FileCrawler from './utilities/file-crawler';
 import YamlParser from './utilities/yaml-parser';
 
+import GitHubAPI from './utilities/GitHubAPI'; // TODO
+
 class IO {
   constructor(username) {
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(OS.homedir(), '.techfolios');
     this.remoteURL = `https://github.com/${username}/${username}.github.io`;
+    this.GitHubAPI = new GitHubAPI();
     this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
     this.projectsURL = Path.resolve(this.localURL, 'projects');
     this.essaysURL = Path.resolve(this.localURL, 'essays');
@@ -20,6 +23,14 @@ class IO {
 
   init() {
     return new Promise((res, rej) => {
+      // Temporary - get username example
+      this.GitHubAPI.getUsername()
+        .then((username) => {
+          console.log(username);
+        });
+
+      this.hasRemote();
+
       this.hasLocal()
         .then((hasLocal) => {
           if (hasLocal) {
@@ -58,6 +69,10 @@ class IO {
    */
   hasRemote() {
     return new Promise((res) => {
+      this.GitHubAPI.hasRemote()
+        .then((hasRemote) => {
+          console.log(`hasRemote ${hasRemote}`);
+        });
       res(false);
       console.log(this.res);
     });
