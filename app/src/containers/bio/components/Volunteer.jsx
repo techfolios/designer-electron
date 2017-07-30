@@ -1,7 +1,7 @@
 import React from 'react';
-import { Icon, Form, Segment } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
-class Voulnteer extends React.Component {
+class Volunteer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,11 +46,17 @@ class Voulnteer extends React.Component {
   render() {
     return <div>
       {this.state.data.map((volunteer, index) => <Segment key={index}>
+        <h2 className="ui horizontal divider header">
+          <span data-tooltip={`${volunteer.organization} ${volunteer.position}`} data-position="bottom center">
+            <i className={`world icon ${volunteer.organization}`}></i>
+            {volunteer.organization}
+          </span>
+        </h2>
         <Form.Input label='Organization'
           defaultValue={volunteer.organization}
           placeholder='Example High School'
           onChange={e => this.handleChange(e, 'organization', index)} />
-        <Form.Input label='position'
+        <Form.Input label='Position'
           defaultValue={volunteer.position}
           placeholder="Example Specialist"
           onChange={e => this.handleChange(e, 'position', index)} />
@@ -78,6 +84,7 @@ class Voulnteer extends React.Component {
           placeholder="Design firmware for distributed weather sensor network"
           onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)} />)
         }
+        <br />
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>
@@ -86,4 +93,4 @@ class Voulnteer extends React.Component {
   }
 }
 
-export default Voulnteer;
+export default Volunteer;

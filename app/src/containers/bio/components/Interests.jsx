@@ -1,20 +1,19 @@
 import React from 'react';
-import { Icon, Form, Segment } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
-class Interests extends React.Component{
-
+class Interests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data
-    }
+      data: props.data,
+    };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
     this.handleAddition = this.handleAddition.bind(this);
   }
 
   handleChange(e, key, index) {
-    let state = this.state.data;
+    const state = this.state.data;
     state[index][key] = e.target.value;
     this.props.onChange('interests', state);
   }
@@ -23,53 +22,60 @@ class Interests extends React.Component{
     const index = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
     data[index].keywords.push(obj.value);
     this.setState({
-      data: data
+      data,
     });
   }
 
-  add(){
-    let data = this.state.data;
+  add() {
+    const data = this.state.data;
     data.push({
       name: '',
-      keywords: ['']
+      keywords: [],
     });
     this.props.onChange('interests', data);
   }
 
-  remove(){
-    let data = this.state.data;
+  remove() {
+    const data = this.state.data;
     data.pop();
     this.props.onChange('interests', data);
   }
 
   render() {
     return <div>
-      {this.state.data.map((interest, index) => {
-        return <div key={index}>
-            <Form.Input label='Name'
-              defaultValue={interest.name}
-              placeholder={"Programming"}
-              onChange={(e) => this.handleChange(e, 'name', index)} />
-              <Form.Dropdown data-index={index} className="dropdown" multiple search selection fluid allowAdditions label='Keywords'
-                defaultValue={interest.keywords}
-                options={
-                  interest.keywords.map((item, index) => {
-                    return {
-                      key: index,
-                      value: item,
-                      text: item
-                    }
-                  })
-                }
-                onAddItem={this.handleAddition}
-              />
-          </div>
-        })
+      {this.state.data.map((interest, index) => <Segment key={index}>
+        <div>
+          <h2 className="ui horizontal divider header">
+            <span data-tooltip={interest.keywords.join(', ')} data-position="bottom center">
+              <i className={`idea icon ${interest.name}`}></i>
+              {interest.name}
+            </span>
+          </h2>
+          <Form.Input label='Name'
+            defaultValue={interest.name}
+            placeholder={'Programming'}
+            onChange={e => this.handleChange(e, 'name', index)} />
+          <Form.Dropdown data-index={index} className="dropdown"
+            multiple search selection fluid allowAdditions label='Keywords'
+            defaultValue={interest.keywords}
+            noResultsMessage={'Start typing to add a new keyword!'}
+            options={
+              interest.keywords.map((item, key) => ({
+                key,
+                value: item,
+                text: item,
+              }))
+            }
+            onAddItem={this.handleAddition}
+          />
+          <br />
+        </div>
+      </Segment>)
       }
 
       <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
-    </div>
+    </div>;
   }
 }
 

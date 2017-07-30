@@ -1,15 +1,21 @@
 import FS from 'fs';
-// import OS from 'os';
+import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
-// import path from 'path';
+import FrontMatter from 'front-matter';
+
+import FileCrawler from './utilities/file-crawler';
+import YamlParser from './utilities/yaml-parser';
 
 class IO {
   constructor(username) {
     this.templateURL = 'https://github.com/techfolios/template';
-    this.localURL = Path.resolve(__dirname, '../.techfolios'); // OS.homedir() + "/.techfolios,
+    this.localURL = Path.resolve(OS.homedir(), '.techfolios');
     this.remoteURL = `https://github.com/${username}/${username}.github.io`;
+    this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
+    this.projectsURL = Path.resolve(this.localURL, 'projects');
+    this.essaysURL = Path.resolve(this.localURL, 'essays');
   }
 
   init() {
@@ -20,24 +26,10 @@ class IO {
             // has local, good to go.
             res('Local techfolio found.');
           } else {
-            // no local files, clone user remote or template.
-            this.hasRemote()
-              .then((hasRemote) => {
-                if (hasRemote) {
-                  // has remote, clone remote
-                  this.cloneUserRemote()
-                    .then(() => res('Cloned user remote techfolio.'),
-                      err => rej(err));
-                } else {
-                  // no remote, clone template
-                  this.cloneTechfoliosTemplate()
-                    .then(() => res('Cloned remote techfolio template.'),
-                      err => rej(err));
-                }
-              }, (err) => {
-                // error checking for user remote
-                rej(err);
-              });
+            // clone template
+            this.cloneTechfoliosTemplate()
+              .then(() => res('Cloned remote techfolio template.'),
+                err => rej(err));
           }
         }, (err) => {
           // error checking for local repo.
@@ -60,27 +52,18 @@ class IO {
     });
   }
 
+
   /*
+  added "this." in front of res to placate ESLint - is this a correct fix?
+   */
   hasRemote() {
     return new Promise((res) => {
       res(false);
+      console.log(this.res);
     });
-    // return new Promise((res, rej) => {
-    //   SimpleGit()
-    //     .listRemote([this.remoteURL], function (err, data) {
-    //       if (!err) {
-    //         res(data);
-    //       } else {
-    //         rej(err);
-    //       }
-    //     });
-    // });
   }
-  */
 
   cloneUserRemote() {
-    // const options = [];
-
     return new Promise((res, rej) => {
       Git.Clone(this.remoteURL, this.localURL)
         .then((repo) => {
@@ -91,50 +74,18 @@ class IO {
   }
 
   cloneTechfoliosTemplate() {
-    // const options = [];
-
     return new Promise((res, rej) => {
       Git.Clone(this.templateURL, this.localURL)
         .then((repo) => {
           res(repo.mergeBranches('master', 'origin/master'));
         })
         .catch((err) => { rej(err); });
-      // reset remote url and add
-
-      // SimpleGit(this.localURL)
-      //   .exec(() => {
-      //     console.log(`Cloning ${this.templateURL}...`);
-      //   }).clone(this.templateURL, this.localURL, options, (err) => {
-      //     if (err) {
-      //       console.log(`Could not clone ${this.templateURL}`);
-      //       rej(err);
-      //     }
-      //   }).exec(() => {
-      //     console.log(`Removing remote origin => ${this.templateURL} to replace with origin => ${this.remoteURL}`);
-      //   })
-      //   .removeRemote('origin', (err) => {
-      //     if (err) {
-      //       console.log('Could not remove remote origin.');
-      //       rej(err);
-      //     }
-      //   })
-      //   .exec(() => {
-      //     console.log(`Adding remote origin ${this.remoteURL}`);
-      //   }).addRemote('origin', this.remoteURL, (err) => {
-      //     if (err) {
-      //       console.log(`Could not add remote origin ${this.remoteURL}`);
-      //       rej(err);
-      //     } else {
-      //       console.log(`Cloned ${this.remoteURL} to ${this.localURL}`);
-      //       res(true);
-      //     }
-      //   });
     });
   }
 
   loadBio() {
     return new Promise((res, rej) => {
-      const path = Path.resolve(this.localURL, '_data/bio.json');
+      const path = this.bioURL;
       FS.readFile(path, (err, data) => {
         if (err) {
           rej(err);
@@ -146,7 +97,7 @@ class IO {
 
   writeBio(data) {
     return new Promise((res, rej) => {
-      FS.writeFile(Path.resolve(this.localURL, '_data/bio.json'), JSON.stringify(data, null, 2), (err) => {
+      FS.writeFile(this.bioURL, JSON.stringify(data, null, 2), (err) => {
         if (err) {
           rej(err);
         }
@@ -156,7 +107,7 @@ class IO {
         Git.Repository.open(this.localURL)
           .then((repoResult) => {
             repo = repoResult;
-            return fse.ensureDir(Path.join(repo.workdir(), this.localURL));
+            return fse.ensureDir(this.localURL);
           })
           .then(() => repo.refreshIndex())
           .then((indexResult) => {
@@ -184,6 +135,46 @@ class IO {
     });
   }
 
+  loadProjects() {
+    return new Promise((res) => { // removed 'rej' as unused parameter
+      const list = [];
+      const projFiles = FS.readdirSync(this.projectsURL);
+      projFiles.forEach((file) => {
+        if (file !== 'index.html') {
+          const filePath = Path.resolve(this.projectsURL, file);
+          const projData = FS.readFileSync(filePath);
+          list.push(FrontMatter(projData.toString()));
+        }
+      });
+      res(list);
+    });
+  }
+
+  writeProject(index, data) {
+    return new Promise((res, rej) => {
+      const path = Path.resolve(this.projectsURL, `project-${index + 1}.md`);
+      const yamlString = YamlParser.write(data);
+      FS.writeFile(path, yamlString, (err) => {
+        if (err) {
+          rej(err);
+        } else {
+          res(true);
+        }
+      });
+    });
+  }
+
+  loadEssays() {
+    return new Promise((res) => {
+      const list = {};
+      const crawler = new FileCrawler(this.essaysURL);
+      console.log(list);
+      list.essays = crawler.getYAML();
+      list.crawler = crawler;
+      res(list);
+    });
+  }
+
   /* ESLint fix needed
   push() {
     return new Promise((res, rej) => {
@@ -197,6 +188,11 @@ class IO {
     });
   }
   */
+
+
+  getLocalFolder() {
+    return this.localURL;
+  }
 }
 
 module.exports = IO;

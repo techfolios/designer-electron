@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Form } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class References extends React.Component {
   constructor(props) {
@@ -34,7 +34,13 @@ class References extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((reference, index) => <div key={index}>
+      {this.state.data.map((reference, index) => <Segment key={index}>
+        <h2 className="ui horizontal divider header">
+          <span data-tooltip={`${reference.name}`} data-position="bottom center">
+            <i className={'checkmark icon'}></i>
+            {reference.name}
+          </span>
+        </h2>
         <Form.Input label='Name'
           defaultValue={reference.name}
           placeholder={'Available upon request'}
@@ -43,7 +49,8 @@ class References extends React.Component {
           defaultValue={reference.reference}
           placeholder={''}
           onChange={e => this.handleChange(e, 'reference', index)} />
-      </div>)
+        <br />
+      </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
