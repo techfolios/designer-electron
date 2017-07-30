@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Form } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class Profiles extends React.Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class Profiles extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((profile, index) => <div key={index}>
+      {this.state.data.map((profile, index) => <Segment key={index}>
         <div className="ui horizontal divider header">
           <span data-tooltip={profile.username} data-position="bottom center">
             <i className={`user icon ${profile.network}`}></i>
@@ -57,7 +57,7 @@ class Profiles extends React.Component {
           placeholder="https://github.com"
           onChange={e => this.handleChange(e, 'url', index)} />
         <br />
-      </div>)}
+      </Segment>)}
       <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>
     </div>;
