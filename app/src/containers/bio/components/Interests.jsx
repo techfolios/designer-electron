@@ -30,7 +30,7 @@ class Interests extends React.Component {
     const data = this.state.data;
     data.push({
       name: '',
-      keywords: [''],
+      keywords: [],
     });
     this.props.onChange('interests', data);
   }
