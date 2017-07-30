@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Container } from 'semantic-ui-react';
-import { request } from 'superagent';
 
 
 class Settings extends React.Component {
