@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button, Container } from 'semantic-ui-react';
+import { Button, Container, Form } from 'semantic-ui-react';
 
 const electronOauth2 = require('electron-oauth2');
 const config = require('../../config.js');
 
 class Settings extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     if (!window.localStorage.getItem('githubtoken')) {
       this.state = { isLoggedIn: false };
@@ -82,12 +82,12 @@ class Settings extends React.Component {
 
     return (
       <Container fluid>
-      <h1>Settings</h1>
+        <h1>Settings</h1>
         <Form>
           <Form.Input label='Username'
-                      defaultValue={props.username}
-                      placeholder={''}
-                      onChange={e => this.handleChange(e, 'institution', index)}/>
+            defaultValue={this.props.username}
+            placeholder={''}
+            onChange={e => this.handleChange(e, 'institution', index)}/>
         </Form>
         {button}
       </Container>

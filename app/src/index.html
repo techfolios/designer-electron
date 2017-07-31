@@ -11,8 +11,9 @@
     import React from 'react';
     import ReactDOM from 'react-dom';
     import Techfolio from './Techfolio';
+    let username = 'billmullen42';
     ReactDOM.render(
-      <Techfolio username="adambutac" />,
+      <Techfolio username={username} />,
       document.getElementById('techfolio')
     );
     if (typeof module === 'object') {
