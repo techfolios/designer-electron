@@ -38,7 +38,7 @@ class EssayEditor extends React.Component {
     const labels = this.data.attributes.labels || [];
 
     labels.forEach((value, index) => {
-      list.push(<Label tag key={`${index}: ${value}`}>
+      list.push(<Label tag color='blue' key={`${index}: ${value}`}>
             <Form.Group>
               <Form.Input defaultValue={value} onChange={(event) => {
                 labels[index] = event.target.value;

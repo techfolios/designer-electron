@@ -1,11 +1,11 @@
 import React from 'react';
 import { Icon, Segment, Header } from 'semantic-ui-react';
+import preview from 'marked';
+import renderHTML from 'react-render-html';
 
 import EssayEditor from './components/Editor.jsx';
 import FileCrawler from '../../utilities/file-crawler';
 import values from './values';
-
-const preview = require('marked');
 
 class Essay extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class Essay extends React.Component {
       icon: <Icon link name="write" size="big" onClick={ event => this.setPage(event, 'preview') }/>,
     };
     if (this.state.page === 'preview') {
-      page.view = preview(this.props.data.body);
+      page.view = renderHTML(preview(this.props.data.body));
       page.icon = <Icon link name="picture" size="big" onClick={ event => this.setPage(event, 'write') }/>;
     }
     return page;
