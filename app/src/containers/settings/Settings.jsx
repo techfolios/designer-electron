@@ -23,6 +23,12 @@ class Settings extends React.Component {
     this.props.onMenuSelect(name);
   }
 
+  handleChange(e, key, index) {
+    const data = this.state.data;
+    data[index][key] = e.target.value;
+    this.setState({ data });
+  }
+
   logout() {
     window.localStorage.removeItem('githubtoken');
     this.setState({ isLoggedIn: false });
@@ -63,7 +69,7 @@ class Settings extends React.Component {
     if (!isLoggedIn) {
       button = (
         <Button size='small' onClick={this.login}>
-          Login
+          Login with GitHub
         </Button>
       );
     } else {
@@ -77,6 +83,12 @@ class Settings extends React.Component {
     return (
       <Container fluid>
       <h1>Settings</h1>
+        <Form>
+          <Form.Input label='Username'
+                      defaultValue={props.username}
+                      placeholder={''}
+                      onChange={e => this.handleChange(e, 'institution', index)}/>
+        </Form>
         {button}
       </Container>
     );
