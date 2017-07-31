@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 
 import MainMenu from './components/MainMenu.jsx';
+import Settings from './containers/settings/Settings.jsx';
 import BasicsSection from './containers/bio/BasicsSection.jsx';
 import ProfilesSection from './containers/bio/ProfilesSection.jsx';
 import InterestsSection from './containers/bio/InterestsSection.jsx';
@@ -11,10 +12,8 @@ import EducationSection from './containers/bio/EducationSection.jsx';
 import WorkSection from './containers/bio/WorkSection.jsx';
 import VolunteerSection from './containers/bio/VolunteerSection.jsx';
 import RefSection from './containers/bio/RefSection.jsx';
-import User from './containers/User.jsx';
 
 import Essay from './containers/essay/Essays.jsx';
-
 import IO from './io';
 
 class Techfolio extends React.Component {
@@ -33,7 +32,8 @@ class Techfolio extends React.Component {
       essays: null,
       essayCrawler: null,
       addItem: null,
-      selected: <h1>Default page</h1>,
+      settings: null,
+      selected: <Settings />,
       isLoading: false,
     };
   }
@@ -107,7 +107,13 @@ class Techfolio extends React.Component {
       case 'addItem':
         retSelection = <h1>Add Menu Item</h1>;
         break;
+<<<<<<< HEAD
       case 'user':
+=======
+      case 'settings':
+        retSelection = <Settings />;
+        break;
+>>>>>>> master
       default:
         retSelection = <User bio={this.state.bio} />;
     }

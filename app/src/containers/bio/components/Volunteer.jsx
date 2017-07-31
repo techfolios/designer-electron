@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Form, Segment } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class Volunteer extends React.Component {
   constructor(props) {

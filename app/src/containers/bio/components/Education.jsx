@@ -1,6 +1,5 @@
 import React from 'react';
-// import Header from 'semantic-ui-react';
-import { Icon, Form } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class Education extends React.Component {
   constructor(props) {
@@ -50,7 +49,7 @@ class Education extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((education, index) => <div key={index}>
+      {this.state.data.map((education, index) => <Segment key={index}>
         <h2 className="ui horizontal divider header">
           <span data-tooltip={`${education.institution} ${education.area} ${education.gpa}`}
             data-position="bottom center">
@@ -100,7 +99,7 @@ class Education extends React.Component {
           onAddItem={this.handleAddition}
         />
         <br/>
-      </div>)
+      </Segment>)
       }
       <Icon link name="minus" onClick={this.remove}></Icon>
       <Icon link name="plus" color="teal" onClick={this.add}></Icon>

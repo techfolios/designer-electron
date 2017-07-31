@@ -37,6 +37,16 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect(name);
   }
 
+
+  renderSettings(activeItem) {
+    return (
+      <Menu.Item name='settings' active={activeItem === 'settings'} onClick={this.handleItemClick} >
+        <Icon name='settings' />
+        Settings
+      </Menu.Item>
+    );
+  }
+
   handlePageChange(event, name, data) {
     event.preventDefault();
     this.setState({ activeItem: data.attributes.title });
@@ -111,7 +121,6 @@ class MainMenu extends React.Component {
     const list = this.state;
     list[state] = list[state].filter((data, index) => index !== key);
     if (file) crawler.removeFile(file);
-    console.log(list);
     this.setState(list);
     this.props.onMenuSelect('default');
   }
@@ -129,7 +138,6 @@ class MainMenu extends React.Component {
     const { activeItem } = this.state;
     let key;
     files.forEach((data, index) => {
-      console.log(data);
       key = `${data.attributes.title}`;
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
         {this.getShortenString(key)}
@@ -192,7 +200,8 @@ class MainMenu extends React.Component {
     const { activeItem, projects } = this.state;
     return (
       <Menu vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
-        {this.renderUser(activeItem)}
+        {this.renderSettings(activeItem)}
+
 
         {this.renderBio(activeItem)}
 
