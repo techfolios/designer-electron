@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Segment, Header } from 'semantic-ui-react';
 import { Icon, Form } from 'semantic-ui-react';
 
 class Skills extends React.Component {
@@ -46,18 +45,21 @@ class Skills extends React.Component {
   render() {
     return <div>
       {this.state.data.map((skill, index) => <div key={index}>
+        <h2 className="ui horizontal divider header">
+          <span data-tooltip={skill.keywords.join(', ')} data-position="bottom center">
+            <i className={`wizard icon ${skill.name}`}></i>
+            {skill.name}
+          </span>
+        </h2>
         <Form.Input label='Name'
           defaultValue={skill.name}
           placeholder={'Hacky Sack'}
           onChange={e => this.handleChange(e, 'name', index)} />
         <Form.Group>
-          <Form.Input label='Level'
-            defaultValue={skill.level}
-            placeholder={'Diamond'}
-            onChange={e => this.handleChange(e, 'level', index)} />
           <Form.Dropdown data-index={index} className="dropdown"
             multiple search selection fluid allowAdditions label='Keywords'
             defaultValue={skill.keywords}
+            noResultsMessage={'Start typing to add a new keyword!'}
             options={
               skill.keywords.map((keyword, key) => ({
                 key,
@@ -68,6 +70,7 @@ class Skills extends React.Component {
             onAddItem={this.handleAddition}
           />
         </Form.Group>
+        <br />
       </div>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

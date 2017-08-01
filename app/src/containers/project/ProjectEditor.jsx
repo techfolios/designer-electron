@@ -5,21 +5,43 @@ import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class ProjectEditor extends React.Component {
   constructor(props) {
+    console.log(props.index);
     super(props);
     this.state = {
       data: props.data,
       index: props.index,
     };
+
+    if (!props.data) {
+      this.state.data = {
+        data: {
+          layout: 'project',
+          type: 'project',
+          image: '',
+          title: 'New Project',
+          permalink: 'projects/newproject',
+          date: '',
+          labels: [],
+          summary: '',
+        },
+      };
+    }
+
+    if (!props.index) {
+      this.state.index = 0;
+    }
+
     this.setAttribute = this.setAttribute.bind(this);
     this.setBody = this.setBody.bind(this);
+    this.addLabel = this.addLabel.bind(this);
     this.saveProject = this.saveProject.bind(this);
     this.addLabel = this.addLabel.bind(this);
     this.setLabels = this.setLabels.bind(this);
   }
 
-  setAttribute(e, attr) {
+  setAttribute(e, attribute) {
     const data = this.state.data;
-    data.attributes[attr] = e.target.value;
+    data.attributes[attribute] = e.target.value;
     this.setState({ data });
   }
 
@@ -46,38 +68,42 @@ class ProjectEditor extends React.Component {
   }
 
   render() {
-    const { date, image, labels, title, summary } = this.props.data.attributes;
-    const body = this.props.data.body;
-    return <div>
+    const { date, image, labels, permalink, summary, title } = this.state.data.attributes;
+    const body = this.state.data.body;
+    console.log(this.state.index);
+    return <div key={this.state.index}>
       <Segment textAlign="center" basic>
         <Icon size="huge" name='cubes' />
       </Segment>
-      <Form onSubmit={this.saveProject}>
+      <Form onSubmit={this.saveProject }>
         <Form.Input label='Title'
           value={title}
           placeholder={'Title of your Project'}
           onChange={e => this.setAttribute(e, 'title')} />
         <Form.Input label='Image'
           value={image}
-          placeholder={''}
+          placeholder={'url to cover image'}
           onChange={e => this.setAttribute(e, 'image')} />
         <Form.Input label='Date'
           value={date}
           placeholder={''}
           onChange={e => this.setAttribute(e, 'date')} />
+        <Form.Input label='Permalink'
+          value={permalink}
+          placeholder={''}
+          onChange={e => this.setAttribute(e, 'permalink')} />
         <Form.Dropdown
           multiple search selection fluid allowAdditions label='Labels'
-          defaultValue={labels}
+          value={labels}
+          noResultsMessage={'Start typing to add a new keyword!'}
           options={
-            labels.map((item, key) => ({
+            labels.map((label, key) => ({
               key,
-              value: item,
-              text: item,
+              value: label,
+              text: label,
             }))
           }
-          onAddItem={this.addLabel}
-          onChange={this.setLabels}
-        />
+          onAddItem={this.addLabel} />
         <Form.Input label='Summary'
           value={summary}
           placeholder={'A short description about your project'}

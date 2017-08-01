@@ -14,6 +14,7 @@ class MainMenu extends React.Component {
       essayCrawler: props.essayCrawler,
     };
 
+    this.maxWidth = 16;
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleProjectsClick = this.handleProjectsClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
@@ -56,6 +57,9 @@ class MainMenu extends React.Component {
           <Menu.Item name='basicsSection' active={activeItem === 'basicsSection'} onClick={this.handleItemClick}>
               Basics
           </Menu.Item>
+          <Menu.Item name='profilesSection' active={activeItem === 'profilesSection'} onClick={this.handleItemClick}>
+            Profiles
+          </Menu.Item>
           <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'}
             onClick={this.handleItemClick}>
               Interests
@@ -90,7 +94,7 @@ class MainMenu extends React.Component {
       <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick}>
         <Icon name='cubes' />
         Projects
-        </Menu.Item>
+      </Menu.Item>
     );
   }
 
@@ -103,6 +107,14 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect('default');
   }
 
+  getShortenString(str) {
+    let returnString = '';
+    if (str.length > this.maxWidth) returnString = `${str.trim().slice(0, this.maxWidth - 3)}...`;
+    else returnString = str;
+
+    return returnString;
+  }
+
   getYAML(files, crawler, state) {
     const list = [];
     const { activeItem } = this.state;
@@ -110,7 +122,7 @@ class MainMenu extends React.Component {
     files.forEach((data, index) => {
       key = `${data.attributes.title}`;
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
-        {data.attributes.title}
+        {this.getShortenString(key)}
         <br/>
         <div>
           <Icon link size='big' name='edit' color='black'
@@ -169,7 +181,7 @@ class MainMenu extends React.Component {
   render() {
     const { activeItem, projects } = this.state;
     return (
-      <Menu vertical fixed="left" icon='labeled' color="teal">
+      <Menu vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
         {this.renderBio(activeItem)}
 
         <ProjectsMenu data={projects} setSelected={this.props.setSelected} saveProject={this.props.saveProject} />

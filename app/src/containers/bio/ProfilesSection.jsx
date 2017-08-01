@@ -1,19 +1,20 @@
 import React from 'react';
-import { Form, Segment, Grid, Header, Image } from 'semantic-ui-react';
+// import { Button, Icon, Menu } from 'semantic-ui-react';
+import { Form, Segment, Grid, Header } from 'semantic-ui-react';
 
-import Basics from './components/basics/Basics.jsx';
+import Profiles from './components/Profiles.jsx';
 
 function BioComponent(props) {
-  return (<Grid.Column >
+  return <Grid.Column >
     <Segment color="teal">
       <Header className="ui center aligned header" as="h1"> {props.name} </Header>
       <div className="ui divider"></div>
       {props.children}
     </Segment>
-  </Grid.Column>);
+  </Grid.Column>;
 }
 
-class BasicsSection extends React.Component {
+class ProfilesSection extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props.bio;
@@ -38,20 +39,17 @@ class BasicsSection extends React.Component {
   }
 
   render() {
-    return (<div>
-      <Segment basic>
-        <Image centered src={this.state.basics.picture} size='small' shape='circular' />
-      </Segment>
+    return <div>
       <Form onSubmit={this.handleSaveBio}>
         <Grid doubling relaxed padded columns={2}>
-          <BioComponent name="Basics">
-            <Basics data={this.state.basics} onChange={ this.handleChange } />
+          <BioComponent name="Profiles">
+            <Profiles data={this.state.basics.profiles} onChange={ this.handleChange } />
           </BioComponent>
         </Grid>
         <Form.Button positive floated="right" type="Submit">Save</Form.Button>
       </Form>
-    </div>);
+    </div>;
   }
 }
 
-export default BasicsSection;
+export default ProfilesSection;

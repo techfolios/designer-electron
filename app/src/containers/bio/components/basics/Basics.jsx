@@ -1,9 +1,7 @@
 import React from 'react';
-// import { Form } from 'semantic-ui-react';
 
 import Contact from './Contact.jsx';
 import Location from './Location.jsx';
-import Profiles from './Profiles.jsx';
 
 class Basics extends React.Component {
   constructor(props) {
@@ -28,7 +26,6 @@ class Basics extends React.Component {
     return (<div>
       <Contact data={this.state} handleChange={this.handleChange} />
       <Location data={this.state.location} onChange={this.props.onChange}/>
-      <Profiles data={this.state.profiles} onChange={this.handleProfilesChange} />
     </div>);
   }
 }
