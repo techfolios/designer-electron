@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Form } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class Interests extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class Interests extends React.Component {
     const data = this.state.data;
     data.push({
       name: '',
-      keywords: [''],
+      keywords: [],
     });
     this.props.onChange('interests', data);
   }
@@ -44,7 +44,7 @@ class Interests extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((interest, index) => <div key={index}>
+      {this.state.data.map((interest, index) => <Segment key={index}>
         <div>
           <h2 className="ui horizontal divider header">
             <span data-tooltip={interest.keywords.join(', ')} data-position="bottom center">
@@ -71,7 +71,7 @@ class Interests extends React.Component {
           />
           <br />
         </div>
-      </div>)
+      </Segment>)
       }
 
       <Icon link name="minus" onClick={this.remove} ></Icon>

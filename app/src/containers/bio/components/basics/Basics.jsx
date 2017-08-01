@@ -1,4 +1,5 @@
 import React from 'react';
+import { Segment } from 'semantic-ui-react';
 
 import Contact from './Contact.jsx';
 import Location from './Location.jsx';
@@ -7,6 +8,7 @@ class Basics extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.data;
+    this.handleChange = this.handleChange.bind(this);
     this.handleProfilesChange = this.handleProfilesChange.bind(this);
   }
 
@@ -23,10 +25,10 @@ class Basics extends React.Component {
   }
 
   render() {
-    return (<div>
+    return (<Segment>
       <Contact data={this.state} handleChange={this.handleChange} />
       <Location data={this.state.location} onChange={this.props.onChange}/>
-    </div>);
+    </Segment>);
   }
 }
 

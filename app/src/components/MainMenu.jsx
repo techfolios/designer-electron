@@ -37,6 +37,16 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect(name);
   }
 
+
+  renderSettings(activeItem) {
+    return (
+      <Menu.Item name='settings' active={activeItem === 'settings'} onClick={this.handleItemClick} >
+        <Icon name='settings' />
+        Settings
+      </Menu.Item>
+    );
+  }
+
   handlePageChange(event, name, data) {
     event.preventDefault();
     this.setState({ activeItem: data.attributes.title });
@@ -182,6 +192,8 @@ class MainMenu extends React.Component {
     const { activeItem, projects } = this.state;
     return (
       <Menu vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
+        {this.renderSettings(activeItem)}
+
         {this.renderBio(activeItem)}
 
         <ProjectsMenu data={projects} setSelected={this.props.setSelected} saveProject={this.props.saveProject} />
