@@ -22,7 +22,7 @@ class ProjectEditor extends React.Component {
           title: 'New Project',
           permalink: 'projects/newproject',
           date: '',
-          labels: [null],
+          labels: [],
           summary: '',
         },
         body: '',
@@ -76,7 +76,11 @@ class ProjectEditor extends React.Component {
   }
 
   render() {
-    const { date, image, labels, permalink, summary, title } = this.state.data.attributes;
+    const { date, image, permalink, summary, title } = this.state.data.attributes;
+    let labels = this.state.data.attributes.labels;
+    if (!labels) {
+      labels = [];
+    }
     const body = this.state.data.body;
     const saved = this.state.saved;
 
