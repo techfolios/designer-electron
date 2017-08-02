@@ -39,6 +39,16 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect(name);
   }
 
+
+  renderSettings(activeItem) {
+    return (
+      <Menu.Item name='settings' active={activeItem === 'settings'} onClick={this.handleItemClick} >
+        <Icon name='settings' />
+        Settings
+      </Menu.Item>
+    );
+  }
+
   handlePageChange(event, name, data) {
     event.preventDefault();
     this.setState({ activeItem: data.attributes.title });
@@ -47,56 +57,44 @@ class MainMenu extends React.Component {
 
   renderBio(activeItem) {
     return (
-        <Accordion>
-          <Accordion.Title>
-            <Menu.Item name='bioMenu'>
-              <Icon name='dropdown'/>
-              <Icon name='user circle'/>
-              Bio
-            </Menu.Item>
-          </Accordion.Title>
-          <Accordion.Content>
-            <Menu.Item name='basicsSection' active={activeItem === 'basicsSection'} onClick={this.handleItemClick}>
-              Basics
-            </Menu.Item>
-            <Menu.Item name='profilesSection' active={activeItem === 'profilesSection'} onClick={this.handleItemClick}>
-              Profiles
-            </Menu.Item>
-            <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'}
-                       onClick={this.handleItemClick}>
-              Interests
-            </Menu.Item>
-            <Menu.Item name='skillsSection' active={activeItem === 'skillsSection'} onClick={this.handleItemClick}>
-              Skills
-            </Menu.Item>
-            <Menu.Item name='awardsSection' active={activeItem === 'awardsSection'} onClick={this.handleItemClick}>
-              Awards
-            </Menu.Item>
-            <Menu.Item name='educationSection' active={activeItem === 'educationSection'}
-                       onClick={this.handleItemClick}>
-              Education
-            </Menu.Item>
-            <Menu.Item name='workSection' active={activeItem === 'workSection'} onClick={this.handleItemClick}>
-              Work
-            </Menu.Item>
-            <Menu.Item name='volunteerSection' active={activeItem === 'volunteerSection'}
-                       onClick={this.handleItemClick}>
-              Volunteer
-            </Menu.Item>
-            <Menu.Item name='refSection' active={activeItem === 'refSection'} onClick={this.handleItemClick}>
-              References
-            </Menu.Item>
-          </Accordion.Content>
-        </Accordion>
-    );
-  }
-
-  renderProjects(activeItem) {
-    return (
-        <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick}>
-          <Icon name='cubes'/>
-          Projects
-        </Menu.Item>
+      <Accordion>
+        <Accordion.Title>
+          <Menu.Item name='bioMenu'>
+            <Icon name='dropdown' />
+            <Icon name='user circle' />
+            Bio
+          </Menu.Item>
+        </Accordion.Title>
+        <Accordion.Content>
+          <Menu.Item name='basicsSection' active={activeItem === 'basicsSection'} onClick={this.handleItemClick}>
+            Basics
+          </Menu.Item>
+          <Menu.Item name='profilesSection' active={activeItem === 'profilesSection'} onClick={this.handleItemClick}>
+            Profiles
+          </Menu.Item>
+          <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'} onClick={this.handleItemClick}>
+            Interests
+          </Menu.Item>
+          <Menu.Item name='skillsSection' active={activeItem === 'skillsSection'} onClick={this.handleItemClick}>
+            Skills
+          </Menu.Item>
+          <Menu.Item name='awardsSection' active={activeItem === 'awardsSection'} onClick={this.handleItemClick}>
+            Awards
+          </Menu.Item>
+          <Menu.Item name='educationSection' active={activeItem === 'educationSection'} onClick={this.handleItemClick}>
+            Education
+          </Menu.Item>
+          <Menu.Item name='workSection' active={activeItem === 'workSection'} onClick={this.handleItemClick}>
+            Work
+          </Menu.Item>
+          <Menu.Item name='volunteerSection' active={activeItem === 'volunteerSection'} onClick={this.handleItemClick}>
+            Volunteer
+          </Menu.Item>
+          <Menu.Item name='refSection' active={activeItem === 'refSection'} onClick={this.handleItemClick}>
+            References
+          </Menu.Item>
+        </Accordion.Content>
+      </Accordion>
     );
   }
 
@@ -106,7 +104,6 @@ class MainMenu extends React.Component {
     if (checkpoint) list[checkpoint] = list[state][key];
     list[state] = list[state].filter((data, index) => index !== key);
     if (file) crawler.removeFile(file);
-    console.log(list);
     this.setState(list);
     this.props.onMenuSelect('default');
   }
@@ -137,7 +134,7 @@ class MainMenu extends React.Component {
       key = `${data.attributes.title}`;
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
         {this.getShortenString(key)}
-        <br/>
+        <br />
         <div>
           <Icon link size='big' name='edit' color='black'
                 onClick={event => this.handlePageChange(event, 'essays', data)}/>
@@ -191,30 +188,36 @@ class MainMenu extends React.Component {
 
   renderUpload(activeItem) {
     return (
-        <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
-          <Icon name='upload'/>
-          Upload
-        </Menu.Item>
+      <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
+        <Icon name='upload' />
+        Upload
+      </Menu.Item>
     );
   }
 
   render() {
     const { activeItem, projects } = this.state;
     return (
-        <Menu vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
-          {this.renderBio(activeItem)}
+      <Menu vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
+        {this.renderSettings(activeItem)}
 
-          <ProjectsMenu data={projects} setSelected={this.props.setSelected} saveProject={this.props.saveProject}/>
+        {this.renderBio(activeItem)}
+
+        <ProjectsMenu
+          data={projects}
+          setSelected={this.props.setSelected}
+          saveProject={this.props.saveProject}
+          removeProject={this.props.removeProject} />
 
           {this.renderEssays(activeItem)}
 
           {this.renderUpload(activeItem)}
 
-          <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick}>
-            <Icon name='plus'/>
-            Add Menu Item
-          </Menu.Item>
-        </Menu>
+        <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick}>
+          <Icon name='plus' />
+          Add Menu Item
+        </Menu.Item>
+      </Menu>
     );
   }
 }

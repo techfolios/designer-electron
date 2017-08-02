@@ -24,7 +24,6 @@
   "homepage": "https://github.com/techfolios/designer-electron#readme",
   "dependencies": {
     "electron": "^1.6.11",
-    "electron-oauth-github": "^1.1.1",
     "electron-oauth2": "^3.0.0",
     "electron-prebuilt-compile": "^1.6.11",
     "front-matter": "^2.1.2",

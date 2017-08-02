@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 
 import MainMenu from './components/MainMenu.jsx';
+import Settings from './containers/settings/Settings.jsx';
 import BasicsSection from './containers/bio/BasicsSection.jsx';
 import ProfilesSection from './containers/bio/ProfilesSection.jsx';
 import InterestsSection from './containers/bio/InterestsSection.jsx';
@@ -11,9 +12,7 @@ import EducationSection from './containers/bio/EducationSection.jsx';
 import WorkSection from './containers/bio/WorkSection.jsx';
 import VolunteerSection from './containers/bio/VolunteerSection.jsx';
 import RefSection from './containers/bio/RefSection.jsx';
-
 import Essay from './containers/essay/Essays.jsx';
-
 import IO from './io';
 
 class Techfolio extends React.Component {
@@ -26,13 +25,15 @@ class Techfolio extends React.Component {
     this.handleLoadBio = this.handleLoadBio.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.saveProject = this.saveProject.bind(this);
+    this.removeProject = this.removeProject.bind(this);
     this.state = {
       bio: null,
       projects: null,
       essays: null,
       essayCrawler: null,
       addItem: null,
-      selected: <h1>Default page</h1>,
+      settings: null,
+      selected: <Settings />,
       isLoading: false,
     };
   }
@@ -106,6 +107,9 @@ class Techfolio extends React.Component {
       case 'addItem':
         retSelection = <h1>Add Menu Item</h1>;
         break;
+      case 'settings':
+        retSelection = <Settings />;
+        break;
       default:
         retSelection = <h1>Default page</h1>;
     }
@@ -144,6 +148,15 @@ class Techfolio extends React.Component {
     projects[index] = data;
     this.setState({ projects });
     this.io.writeProject(index, data);
+  }
+
+  removeProject(cb) {
+    const index = cb();
+    const projects = this.state.projects;
+    projects.splice(index, 1);
+    this.setState({ projects });
+    this.setSelected(<div>Removed Project</div>);
+    this.io.removeProject(index);
   }
 
   handleUpload() {
@@ -208,7 +221,8 @@ class Techfolio extends React.Component {
             essayCrawler={essayCrawler}
             projects={projects}
             setSelected={this.setSelected}
-            saveProject={this.saveProject} />
+            saveProject={this.saveProject}
+            removeProject={this.removeProject} />
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
           {selected}
