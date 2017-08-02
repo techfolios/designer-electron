@@ -17,6 +17,7 @@ class Interests extends React.Component {
     state[index][key] = e.target.value;
     this.props.onChange('interests', state);
   }
+
   handleAddition(e, obj) {
     const data = this.state.data;
     const index = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
