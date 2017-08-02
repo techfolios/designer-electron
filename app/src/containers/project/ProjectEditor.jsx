@@ -1,19 +1,19 @@
 import React from 'react';
-// import { Icon } 'semantic-ui-react';
-// import { Form, Segment } from 'semantic-ui-react';
-import { Form, Icon, Segment } from 'semantic-ui-react';
+import { Button, Form, Icon, Segment } from 'semantic-ui-react';
 
 class ProjectEditor extends React.Component {
   constructor(props) {
     console.log(props.index);
     super(props);
+
     this.state = {
       data: props.data,
       index: props.index,
+      saved: true,
     };
 
     if (!props.data) {
-      this.state.unsaved = true;
+      this.state.saved = false;
       this.state.data = {
         attributes: {
           layout: 'project',
@@ -59,7 +59,7 @@ class ProjectEditor extends React.Component {
   }
 
   saveProject() {
-    this.setState({ unsaved: false });
+    this.setState({ saved: true });
     this.props.saveProject(this.state.index, this.state.data);
   }
 
@@ -78,7 +78,7 @@ class ProjectEditor extends React.Component {
   render() {
     const { date, image, labels, permalink, summary, title } = this.state.data.attributes;
     const body = this.state.data.body;
-    const unsaved = this.state.unsaved;
+    const saved = this.state.saved;
 
     return <div key={this.state.index}>
       <Segment textAlign="center" basic>
@@ -122,9 +122,9 @@ class ProjectEditor extends React.Component {
           value={body}
           placeholder={'A detailed description of your project'}
           onChange={this.setBody} />
-        <Form.Button secondary onClick={this.removeProject} disabled={unsaved}>Delete</Form.Button>          
       </Form>
-      <Form.Button positive floated="right" onClick={this.saveProject}>Save</Form.Button>
+      <Button positive floated="right" onClick={this.saveProject}>Save</Button>
+      <Button secondary floated="right" onClick={this.removeProject} disabled={!saved}>Delete</Button>
     </div>;
   }
 }
