@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Grid, Header, Image } from 'semantic-ui-react';
+import { Form, Segment, Header } from 'semantic-ui-react';
 
 import Basics from './components/basics/Basics.jsx';
 

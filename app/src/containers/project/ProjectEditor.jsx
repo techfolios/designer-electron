@@ -1,20 +1,21 @@
 import React from 'react';
-// import { Icon } 'semantic-ui-react';
-// import { Form, Segment } from 'semantic-ui-react';
-import { Form, Icon, Segment } from 'semantic-ui-react';
+import { Button, Form, Icon, Segment } from 'semantic-ui-react';
 
 class ProjectEditor extends React.Component {
   constructor(props) {
     console.log(props.index);
     super(props);
+
     this.state = {
       data: props.data,
       index: props.index,
+      saved: true,
     };
 
     if (!props.data) {
+      this.state.saved = false;
       this.state.data = {
-        data: {
+        attributes: {
           layout: 'project',
           type: 'project',
           image: '',
@@ -24,6 +25,7 @@ class ProjectEditor extends React.Component {
           labels: [],
           summary: '',
         },
+        body: '',
       };
     }
 
@@ -35,6 +37,13 @@ class ProjectEditor extends React.Component {
     this.setBody = this.setBody.bind(this);
     this.addLabel = this.addLabel.bind(this);
     this.saveProject = this.saveProject.bind(this);
+    this.addLabel = this.addLabel.bind(this);
+    this.setLabels = this.setLabels.bind(this);
+    this.removeProject = this.removeProject.bind(this);
+  }
+
+  removeProject() {
+    this.props.removeProject(() => this.state.index);
   }
 
   setAttribute(e, attribute) {
@@ -49,25 +58,37 @@ class ProjectEditor extends React.Component {
     this.setState({ data });
   }
 
+  saveProject() {
+    this.setState({ saved: true });
+    this.props.saveProject(this.state.index, this.state.data);
+  }
+
   addLabel(e, obj) {
     const data = this.state.data;
     data.attributes.labels.push(obj.value);
     this.setState({ data });
   }
 
-  saveProject() {
-    this.props.saveProject(this.state.index, this.state.data);
+  setLabels(e, obj) {
+    const data = this.state.data;
+    data.attributes.labels = obj.value;
+    this.setState({ data });
   }
 
   render() {
-    const { date, image, labels, permalink, summary, title } = this.state.data.attributes;
+    const { date, image, permalink, summary, title } = this.state.data.attributes;
+    let labels = this.state.data.attributes.labels;
+    if (!labels) {
+      labels = [];
+    }
     const body = this.state.data.body;
-    console.log(this.state.index);
+    const saved = this.state.saved;
+
     return <div key={this.state.index}>
       <Segment textAlign="center" basic>
         <Icon size="huge" name='cubes' />
       </Segment>
-      <Form onSubmit={this.saveProject }>
+      <Form onSubmit={this.saveProject}>
         <Form.Input label='Title'
           value={title}
           placeholder={'Title of your Project'}
@@ -105,8 +126,9 @@ class ProjectEditor extends React.Component {
           value={body}
           placeholder={'A detailed description of your project'}
           onChange={this.setBody} />
-        <Form.Button positive floated="right" type="Submit">Save</Form.Button>
       </Form>
+      <Button positive floated="right" onClick={this.saveProject}>Save</Button>
+      <Button secondary floated="right" onClick={this.removeProject} disabled={!saved}>Delete</Button>
     </div>;
   }
 }

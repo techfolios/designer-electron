@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Grid, Header } from 'semantic-ui-react';
+import { Form, Segment, Header } from 'semantic-ui-react';
 
 import Skills from './components/Skills.jsx';
 
@@ -34,7 +34,7 @@ class SkillsSection extends React.Component {
         <div className="ui divider"></div>
       </Segment>
       <Form>
-        <Skills data={this.state.skills} onChange={this.handleChange} />>
+        <Skills data={this.state.skills} onChange={this.handleChange} />
       </Form>
       <Form.Button positive floated="right" type="Submit" onClick={this.handleSaveBio}>Save</Form.Button>
     </div>;

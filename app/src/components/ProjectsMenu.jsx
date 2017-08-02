@@ -16,7 +16,7 @@ class ProjectsMenu extends React.Component {
   handleClick(file, index) {
     this.setState({ activeIndex: index });
     this.props.setSelected(<ProjectEditor key={index} index={index}
-      saveProject={this.props.saveProject} data={file} />);
+      saveProject={this.props.saveProject} data={file} removeProject={this.props.removeProject} />);
   }
 
   render() {
@@ -39,6 +39,8 @@ class ProjectsMenu extends React.Component {
         </Accordion.Title>
         <Accordion.Content>
           {result}
+          <Menu.Item key={result.length} name="Untitled" active={activeIndex === result.length}
+            onClick={() => this.handleClick(null, result.length)}>New Project</Menu.Item>
         </Accordion.Content>
       </Accordion>
     );
