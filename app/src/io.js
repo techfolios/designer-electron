@@ -29,7 +29,7 @@ class IO {
             // clone template
             this.cloneTechfoliosTemplate()
               .then(() => res('Cloned remote techfolio template.'),
-                err => rej(err));
+              err => rej(err));
           }
         }, (err) => {
           // error checking for local repo.
@@ -152,7 +152,7 @@ class IO {
 
   writeProject(index, data) {
     return new Promise((res, rej) => {
-      const path = Path.resolve(this.projectsURL, `project-${index + 1}.md`);
+      const path = Path.resolve(this.projectsURL, `project-${index}.md`);
       const yamlString = YamlParser.write(data);
       FS.writeFile(path, yamlString, (err) => {
         if (err) {
@@ -161,6 +161,20 @@ class IO {
           res(true);
         }
       });
+    });
+  }
+
+  removeProject(index) {
+    return new Promise((res, rej) => {
+      const path = Path.resolve(this.projectsURL, `project-${index}.md`);
+      const projFiles = FS.readdirSync(this.projectsURL).splice(1 + index);
+      FS.unlinkSync(path);
+      projFiles.splice(index + 1).forEach((file, fIndex) => {
+        const newURL = Path.resolve(this.projectsURL, `project-${index + fIndex}.md`);
+        const oldURL = Path.resolve(this.projectsURL, file);
+        FS.renameSync(oldURL, newURL);
+      });
+      res(true);
     });
   }
 

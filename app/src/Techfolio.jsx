@@ -25,6 +25,7 @@ class Techfolio extends React.Component {
     this.handleLoadBio = this.handleLoadBio.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.saveProject = this.saveProject.bind(this);
+    this.removeProject = this.removeProject.bind(this);
     this.state = {
       bio: null,
       projects: null,
@@ -149,6 +150,15 @@ class Techfolio extends React.Component {
     this.io.writeProject(index, data);
   }
 
+  removeProject(cb) {
+    const index = cb();
+    const projects = this.state.projects;
+    projects.splice(index, 1);
+    this.setState({ projects });
+    this.setSelected(<div>Removed Project</div>);
+    this.io.removeProject(index);
+  }
+
   handleUpload() {
     this.setState({ isLoading: true });
     this.io.push()
@@ -211,7 +221,8 @@ class Techfolio extends React.Component {
             essayCrawler={essayCrawler}
             projects={projects}
             setSelected={this.setSelected}
-            saveProject={this.saveProject} />
+            saveProject={this.saveProject}
+            removeProject={this.removeProject} />
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
           {selected}

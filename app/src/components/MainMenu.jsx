@@ -70,8 +70,7 @@ class MainMenu extends React.Component {
           <Menu.Item name='profilesSection' active={activeItem === 'profilesSection'} onClick={this.handleItemClick}>
             Profiles
           </Menu.Item>
-          <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'}
-            onClick={this.handleItemClick}>
+          <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'} onClick={this.handleItemClick}>
               Interests
           </Menu.Item>
           <Menu.Item name='skillsSection' active={activeItem === 'skillsSection'} onClick={this.handleItemClick}>
@@ -80,15 +79,13 @@ class MainMenu extends React.Component {
           <Menu.Item name='awardsSection' active={activeItem === 'awardsSection'} onClick={this.handleItemClick}>
               Awards
           </Menu.Item>
-          <Menu.Item name='educationSection' active={activeItem === 'educationSection'}
-            onClick={this.handleItemClick}>
+          <Menu.Item name='educationSection' active={activeItem === 'educationSection'} onClick={this.handleItemClick}>
               Education
           </Menu.Item>
           <Menu.Item name='workSection' active={activeItem === 'workSection'} onClick={this.handleItemClick}>
               Work
           </Menu.Item>
-          <Menu.Item name='volunteerSection' active={activeItem === 'volunteerSection'}
-            onClick={this.handleItemClick}>
+          <Menu.Item name='volunteerSection' active={activeItem === 'volunteerSection'} onClick={this.handleItemClick}>
               Volunteer
           </Menu.Item>
           <Menu.Item name='refSection' active={activeItem === 'refSection'} onClick={this.handleItemClick}>
@@ -96,15 +93,6 @@ class MainMenu extends React.Component {
           </Menu.Item>
         </Accordion.Content>
       </Accordion>
-    );
-  }
-
-  renderProjects(activeItem) {
-    return (
-      <Menu.Item name='projects' active={activeItem === 'projects'} onClick={this.handleItemClick}>
-        <Icon name='cubes' />
-        Projects
-      </Menu.Item>
     );
   }
 
@@ -196,7 +184,7 @@ class MainMenu extends React.Component {
 
         {this.renderBio(activeItem)}
 
-        <ProjectsMenu data={projects} setSelected={this.props.setSelected} saveProject={this.props.saveProject} />
+        <ProjectsMenu data={projects} setSelected={this.props.setSelected} saveProject={this.props.saveProject} removeProject={this.props.removeProject} />
 
         {this.renderEssays(activeItem)}
 

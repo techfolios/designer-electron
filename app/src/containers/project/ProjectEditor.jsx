@@ -13,17 +13,19 @@ class ProjectEditor extends React.Component {
     };
 
     if (!props.data) {
+      this.state.unsaved = true;
       this.state.data = {
-        data: {
+        attributes: {
           layout: 'project',
           type: 'project',
           image: '',
           title: 'New Project',
           permalink: 'projects/newproject',
           date: '',
-          labels: [],
+          labels: [null],
           summary: '',
         },
+        body: '',
       };
     }
 
@@ -37,6 +39,11 @@ class ProjectEditor extends React.Component {
     this.saveProject = this.saveProject.bind(this);
     this.addLabel = this.addLabel.bind(this);
     this.setLabels = this.setLabels.bind(this);
+    this.removeProject = this.removeProject.bind(this);
+  }
+
+  removeProject() {
+    this.props.removeProject(() => this.state.index);
   }
 
   setAttribute(e, attribute) {
@@ -52,6 +59,7 @@ class ProjectEditor extends React.Component {
   }
 
   saveProject() {
+    this.setState({ unsaved: false });
     this.props.saveProject(this.state.index, this.state.data);
   }
 
@@ -70,12 +78,13 @@ class ProjectEditor extends React.Component {
   render() {
     const { date, image, labels, permalink, summary, title } = this.state.data.attributes;
     const body = this.state.data.body;
-    console.log(this.state.index);
+    const unsaved = this.state.unsaved;
+
     return <div key={this.state.index}>
       <Segment textAlign="center" basic>
         <Icon size="huge" name='cubes' />
       </Segment>
-      <Form onSubmit={this.saveProject }>
+      <Form onSubmit={this.saveProject}>
         <Form.Input label='Title'
           value={title}
           placeholder={'Title of your Project'}
@@ -113,8 +122,9 @@ class ProjectEditor extends React.Component {
           value={body}
           placeholder={'A detailed description of your project'}
           onChange={this.setBody} />
-        <Form.Button positive floated="right" type="Submit">Save</Form.Button>
+        <Form.Button secondary onClick={this.removeProject} disabled={unsaved}>Delete</Form.Button>          
       </Form>
+      <Form.Button positive floated="right" onClick={this.saveProject}>Save</Form.Button>
     </div>;
   }
 }
