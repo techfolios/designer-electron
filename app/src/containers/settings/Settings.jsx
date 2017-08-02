@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container } from 'semantic-ui-react';
+import { Button, Container, Icon } from 'semantic-ui-react';
 
 const electronOauth2 = require('electron-oauth2');
 const config = require('../../config.js');
@@ -62,8 +62,9 @@ class Settings extends React.Component {
 
     if (!isLoggedIn) {
       button = (
-        <Button size='small' onClick={this.login}>
-          Login
+        <Button size='small' color='green' onClick={this.login}>
+          <Icon size='large' name='github' />
+          Login with GitHub
         </Button>
       );
     } else {
