@@ -1,4 +1,3 @@
-import renderHTML from 'html-react-parser';
 import Path from 'path';
 
 const values = {
