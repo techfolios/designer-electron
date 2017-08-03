@@ -9,9 +9,12 @@ import request from 'superagent';
 import FileCrawler from './utilities/file-crawler';
 import YamlParser from './utilities/yaml-parser';
 
+import Oauth from './utilities/Oauth';
+
 class IO {
   constructor(username) {
-    this.accessToken = window.localStorage.getItem('githubtoken');
+    console.log('start');
+    // this.accessToken = window.localStorage.getItem('githubtoken');
     this.getUsername();
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(OS.homedir(), '.techfolios');
@@ -30,53 +33,29 @@ class IO {
   }
 
   init() {
+    this.accessToken = window.localStorage.getItem('githubtoken');
     return new Promise((res, rej) => {
-      // this.hasLocal()
-      //   .then((hasLocal) => {
-      //     if (hasLocal) {
-      //       res('Local techfolio found');
-      //     } else {
-      //       this.hasRemote()
-      //         .then((hasRemote) => {
-      //           if (hasRemote) {
-      //             res('Remote techfolio found');
-      //           } else {
-      //             this.cloneTechfoliosTemplate()
-      //               .then(() => {
-      //                 res('Cloned Default techfolio template');
-      //               });
-      //           }
-      //         });
-      //     }
-      //   });
-
       this.hasLocal()
         .then((hasLocal) => {
           if (hasLocal) {
-            // has local, good to go.
-            res('Local.. techfolio found.');
+            console.log('Local techfolio found');
+            res('Local techfolio found');
           } else {
-            // clone template
-            this.cloneTechfoliosTemplate()
-              .then(() => res('Cloned remote techfolio template.'),
-              err => rej(err));
+            this.hasRemote()
+              .then((hasRemote) => {
+                if (hasRemote) {
+                  console.log('Remote techfolio found');
+                } else {
+                  console.log('Cloned Default techfolio template');
+                }
+              });
           }
-        }, (err) => {
-          // error checking for local repo.
-          rej(err);
         });
-
-      this.hasRemote().then((hasRemote) => {
-        if (hasRemote) {
-          res('has remote');
-        } else {
-          res('no has remote');
-        }
-      });
     });
   }
 
   hasLocal() {
+    console.log('hasLocal called');
     return new Promise((res, rej) => {
       FS.mkdir(this.localURL, (err) => {
         if (!err) {
@@ -95,8 +74,11 @@ class IO {
   added "this." in front of res to placate ESLint - is this a correct fix?
    */
   hasRemote() {
+    console.log('hasRemote called');
+    console.log(`accessToken : ${this.accessToken}`);
     return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
        .then((res) => {
+         console.log('inside');
          let result = false;
          const repos = JSON.parse(res.text);
 
@@ -107,6 +89,8 @@ class IO {
          }
          console.log(`hasRemote: ${result}`);
          return result;
+       }, (err) => {
+         console.log(err);
        });
   }
 
@@ -212,7 +196,7 @@ class IO {
   }
 
   removeProject(index) {
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       const path = Path.resolve(this.projectsURL, `project-${index}.md`);
       const projFiles = FS.readdirSync(this.projectsURL).splice(1 + index);
       FS.unlinkSync(path);

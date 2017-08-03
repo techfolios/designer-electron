@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button, Container, Icon } from 'semantic-ui-react';
+import Oauth from '../../utilities/Oauth';
 
-const electronOauth2 = require('electron-oauth2');
-const config = require('../../config.js');
+// const electronOauth2 = require('electron-oauth2');
+// const config = require('../../config.js');
 
 class Settings extends React.Component {
   constructor() {
@@ -14,8 +15,8 @@ class Settings extends React.Component {
       this.state = { isLoggedIn: true };
     }
 
-    this.logout = this.logout.bind(this);
-    this.login = this.login.bind(this);
+    // this.logout = this.logout.bind(this);
+    // this.login = this.login.bind(this);
   }
 
   handleItemClick(e, { name }) {
@@ -23,37 +24,46 @@ class Settings extends React.Component {
     this.props.onMenuSelect(name);
   }
 
+  login() {
+    Oauth.login();
+    this.setState({ isLoggedIn: true });
+  }
+
   logout() {
-    window.localStorage.removeItem('githubtoken');
+    Oauth.logout();
     this.setState({ isLoggedIn: false });
   }
+  // logout() {
+  //   window.localStorage.removeItem('githubtoken');
+  //   this.setState({ isLoggedIn: false });
+  // }
 
-  login() {
-    let token;
-
-    const windowParams = {
-      alwaysOnTop: true,
-      autoHideMenuBar: true,
-      webPreferences: {
-        nodeIntegration: false,
-      },
-    };
-    const scopes = ['repo', 'user:email'];
-
-    const options = {
-      scope: scopes.join(' '),
-      accessType: 'online',
-    };
-
-    const myApiOauth = electronOauth2(config, windowParams);
-
-    myApiOauth.getAccessToken(options)
-      .then((t) => {
-        token = t;
-        window.localStorage.setItem('githubtoken', token.access_token);
-        this.setState({ isLoggedIn: true });
-      });
-  }
+  // login() {
+  //   let token;
+  //
+  //   const windowParams = {
+  //     alwaysOnTop: true,
+  //     autoHideMenuBar: true,
+  //     webPreferences: {
+  //       nodeIntegration: false,
+  //     },
+  //   };
+  //   const scopes = ['repo', 'user:email'];
+  //
+  //   const options = {
+  //     scope: scopes.join(' '),
+  //     accessType: 'online',
+  //   };
+  //
+  //   const myApiOauth = electronOauth2(config, windowParams);
+  //
+  //   myApiOauth.getAccessToken(options)
+  //     .then((t) => {
+  //       token = t;
+  //       window.localStorage.setItem('githubtoken', token.access_token);
+  //       this.setState({ isLoggedIn: true });
+  //     });
+  // }
 
   render() {
     const isLoggedIn = this.state.isLoggedIn;
