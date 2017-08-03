@@ -1,7 +1,8 @@
 import React from 'react';
-import { Menu, Icon, Accordion, MenuItem } from 'semantic-ui-react';
+import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
 
 import ProjectsMenu from './ProjectsMenu.jsx';
+import YAMLParser from '../utilities/yaml-parser';
 
 class MainMenu extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class MainMenu extends React.Component {
       projects: props.projects,
       essayList: props.essays,
       essayCrawler: props.essayCrawler,
+      deletedEssay: undefined,
     };
 
     this.maxWidth = 16;
@@ -96,13 +98,24 @@ class MainMenu extends React.Component {
     );
   }
 
-  removeYAML(event, key, file, crawler, state) {
+  removeYAML(event, key, file, crawler, state, checkpoint) {
     event.preventDefault();
     const list = this.state;
+    if (checkpoint) list[checkpoint] = list[state][key];
     list[state] = list[state].filter((data, index) => index !== key);
     if (file) crawler.removeFile(file);
     this.setState(list);
     this.props.onMenuSelect('default');
+  }
+
+  restoreYAML(event, crawler, state, checkpoint) {
+    event.preventDefault();
+    const list = this.state;
+    if (!list[checkpoint]) return;
+    if (list[checkpoint].file) crawler.writeFile(list[checkpoint].file, YAMLParser.write(list[checkpoint]));
+    list[state].push(list[checkpoint]);
+    list[checkpoint] = undefined;
+    this.setState(list);
   }
 
   getShortenString(str) {
@@ -113,7 +126,7 @@ class MainMenu extends React.Component {
     return returnString;
   }
 
-  getYAML(files, crawler, state) {
+  getYAML(files, crawler, state, checkpoint) {
     const list = [];
     const { activeItem } = this.state;
     let key;
@@ -124,9 +137,9 @@ class MainMenu extends React.Component {
         <br />
         <div>
           <Icon link size='big' name='edit' color='black'
-            onClick={event => this.handlePageChange(event, 'essays', data)} />
+                onClick={event => this.handlePageChange(event, 'essays', data)}/>
           <Icon link size='big' name='remove' color='red'
-            onClick={event => this.removeYAML(event, index, data.file, crawler, state)} />
+                onClick={event => this.removeYAML(event, index, data.file, crawler, state, checkpoint)}/>
         </div>
       </Menu.Item>);
     });
@@ -152,16 +165,22 @@ class MainMenu extends React.Component {
     return <Accordion as={MenuItem}>
       <Accordion.Title>
         <Menu.Item>
-          <Icon name='file text outline' />
-          <Icon name='dropdown' />
+          <Icon name='file text outline'/>
+          <Icon name='dropdown'/>
           Essays
         </Menu.Item>
       </Accordion.Title>
       <Accordion.Content>
-        {this.getYAML(this.state.essayList, this.state.essayCrawler, 'essayList')}
+        {this.getYAML(this.state.essayList, this.state.essayCrawler, 'essayList', 'deletedEssay')}
+        <Divider/>
         <Menu.Item>
-          <Icon link name='plus' color='green'
-            onClick={event => this.addYAML(event, this.state.essayList, this.state.essayCrawler, 'essayList')} />
+          <span>
+            <Icon link size='big' name='plus' color='green'
+                  onClick={event => this.addYAML(event, this.state.essayList, this.state.essayCrawler, 'essayList')}/>
+            <Icon link={this.state.deletedEssay !== undefined} size='big' name='undo'
+                  disabled={!this.state.deletedEssay} color='teal' onClick={event =>
+                      this.restoreYAML(event, this.state.essayCrawler, 'essayList', 'deletedEssay')}/>
+          </span>
         </Menu.Item>
       </Accordion.Content>
     </Accordion>;
@@ -190,9 +209,9 @@ class MainMenu extends React.Component {
           saveProject={this.props.saveProject}
           removeProject={this.props.removeProject} />
 
-        {this.renderEssays(activeItem)}
+          {this.renderEssays(activeItem)}
 
-        {this.renderUpload(activeItem)}
+          {this.renderUpload(activeItem)}
 
         <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick}>
           <Icon name='plus' />
