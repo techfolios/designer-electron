@@ -203,15 +203,17 @@ class MainMenu extends React.Component {
 
         {this.renderBio(activeItem)}
 
-        <ProjectsMenu
-          data={projects}
-          setSelected={this.props.setSelected}
-          saveProject={this.props.saveProject}
-          removeProject={this.props.removeProject} />
+        <Menu.Item>
+          <ProjectsMenu
+            data={projects}
+            setSelected={this.props.setSelected}
+            saveProject={this.props.saveProject}
+            removeProject={this.props.removeProject} />
+        </Menu.Item>
 
-          {this.renderEssays(activeItem)}
+        {this.renderEssays(activeItem)}
 
-          {this.renderUpload(activeItem)}
+        {this.renderUpload(activeItem)}
 
         <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick}>
           <Icon name='plus' />
