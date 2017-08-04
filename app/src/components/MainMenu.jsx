@@ -156,7 +156,7 @@ class MainMenu extends React.Component {
         layout: 'essay',
         type: 'essay',
         title: 'New Essay',
-        date: '',
+        date: ISODate.getDate(),
         labels: [],
       },
       file: `${ISODate.getDate()}.md`,
@@ -168,8 +168,8 @@ class MainMenu extends React.Component {
     return <Accordion as={MenuItem}>
       <Accordion.Title>
         <Menu.Item>
-          <Icon name='file text outline'/>
           <Icon name='dropdown'/>
+          <Icon name='file text outline'/>
           Essays
         </Menu.Item>
       </Accordion.Title>
@@ -200,8 +200,9 @@ class MainMenu extends React.Component {
 
   render() {
     const { activeItem, projects } = this.state;
+    const tempStyle = { overflow: 'hidden', overflowY: 'scroll' };
     return (
-      <Menu vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
+      <Menu style={tempStyle} vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
         {this.renderSettings(activeItem)}
 
         {this.renderBio(activeItem)}
