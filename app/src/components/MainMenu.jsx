@@ -3,6 +3,7 @@ import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
 
 import ProjectsMenu from './ProjectsMenu.jsx';
 import YAMLParser from '../utilities/yaml-parser';
+import ISODate from '../utilities/iso-date';
 
 class MainMenu extends React.Component {
   constructor(props) {
@@ -132,6 +133,7 @@ class MainMenu extends React.Component {
     let key;
     files.forEach((data, index) => {
       key = `${data.attributes.title}`;
+      console.log(data);
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
         {this.getShortenString(key)}
         <br />
@@ -157,6 +159,7 @@ class MainMenu extends React.Component {
         date: '',
         labels: [],
       },
+      file: `${ISODate.getDate()}.md`,
     });
     this.setState(list);
   }

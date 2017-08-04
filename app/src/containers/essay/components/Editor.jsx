@@ -14,6 +14,8 @@ class EssayEditor extends React.Component {
     super(props);
     this.state = { data: props.data };
     this.data = this.state.data;
+    this.date = this.data.file.split(/[-.]/);
+    console.log(this.data.file.split(/[-.]/));
     this.menu = props.state;
     this.crawler = new FileCrawler(Path.resolve(values.dir, 'essays'));
 
@@ -39,14 +41,14 @@ class EssayEditor extends React.Component {
 
     labels.forEach((value, index) => {
       list.push(<Label tag color='blue' key={`${index}: ${value}`}>
-            <Form.Group>
-              <Form.Input defaultValue={value} onChange={(event) => {
-                labels[index] = event.target.value;
-              }}/>
-              <Icon link size='big' color='red' name='delete'
-                    onClick={event => this.removeLabel(event, index)}/>
-            </Form.Group>
-          </Label>);
+        <Form.Group>
+          <Form.Input defaultValue={value} onChange={(event) => {
+            labels[index] = event.target.value;
+          }}/>
+          <Icon link size='big' color='red' name='delete'
+                onClick={event => this.removeLabel(event, index)}/>
+        </Form.Group>
+      </Label>);
     });
 
     return list;
@@ -69,12 +71,18 @@ class EssayEditor extends React.Component {
 
   render() {
     const data = this.data;
+    const date = this.date;
     if (!data.body) data.body = '';
     return <Form>
       <Form.Input label='Title' defaultValue={data.attributes.title || ''}
                   onChange={(event) => {
                     data.attributes.title = event.target.value || '';
                   }}/>
+      <Form.Group>
+        <Form.Input label='Month' defaultValue={date[1]} onChange={(event) => { date[1] = event.target.value || ''; }}/>
+        <Form.Input label='Day' defaultValue={date[2]} onChange={(event) => { date[2] = event.target.value || ''; }}/>
+        <Form.Input label='Year' defaultValue={date[0]} onChange={(event) => { date[0] = event.target.value || ''; }}/>
+      </Form.Group>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
                      onChange={(event) => {
                        data.body = event.target.value;
