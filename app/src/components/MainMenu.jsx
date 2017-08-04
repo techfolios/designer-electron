@@ -2,6 +2,7 @@ import React from 'react';
 import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
 
 import ProjectsMenu from './ProjectsMenu.jsx';
+import Pics from '../containers/pics/Pics.jsx';
 import YAMLParser from '../utilities/yaml-parser';
 
 class MainMenu extends React.Component {
@@ -137,9 +138,9 @@ class MainMenu extends React.Component {
         <br />
         <div>
           <Icon link size='big' name='edit' color='black'
-                onClick={event => this.handlePageChange(event, 'essays', data)}/>
+            onClick={event => this.handlePageChange(event, 'essays', data)} />
           <Icon link size='big' name='remove' color='red'
-                onClick={event => this.removeYAML(event, index, data.file, crawler, state, checkpoint)}/>
+            onClick={event => this.removeYAML(event, index, data.file, crawler, state, checkpoint)} />
         </div>
       </Menu.Item>);
     });
@@ -165,21 +166,21 @@ class MainMenu extends React.Component {
     return <Accordion as={MenuItem}>
       <Accordion.Title>
         <Menu.Item>
-          <Icon name='file text outline'/>
-          <Icon name='dropdown'/>
+          <Icon name='file text outline' />
+          <Icon name='dropdown' />
           Essays
         </Menu.Item>
       </Accordion.Title>
       <Accordion.Content>
         {this.getYAML(this.state.essayList, this.state.essayCrawler, 'essayList', 'deletedEssay')}
-        <Divider/>
+        <Divider />
         <Menu.Item>
           <span>
             <Icon link size='big' name='plus' color='green'
-                  onClick={event => this.addYAML(event, this.state.essayList, this.state.essayCrawler, 'essayList')}/>
+              onClick={event => this.addYAML(event, this.state.essayList, this.state.essayCrawler, 'essayList')} />
             <Icon link={this.state.deletedEssay !== undefined} size='big' name='undo'
-                  disabled={!this.state.deletedEssay} color='teal' onClick={event =>
-                      this.restoreYAML(event, this.state.essayCrawler, 'essayList', 'deletedEssay')}/>
+              disabled={!this.state.deletedEssay} color='teal' onClick={event =>
+                this.restoreYAML(event, this.state.essayCrawler, 'essayList', 'deletedEssay')} />
           </span>
         </Menu.Item>
       </Accordion.Content>
@@ -213,12 +214,11 @@ class MainMenu extends React.Component {
 
         {this.renderEssays(activeItem)}
 
-        {this.renderUpload(activeItem)}
-
-        <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick}>
-          <Icon name='plus' />
-          Add Menu Item
+        <Menu.Item onClick={() => this.props.setSelected(<Pics data={null} />)}>
+          Pics
         </Menu.Item>
+
+        {this.renderUpload(activeItem)}
       </Menu>
     );
   }

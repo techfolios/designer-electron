@@ -19,20 +19,6 @@ class Pics extends React.Component {
 
   render() {
     console.log(this.state);
-    const image = document.getElementById('image');
-    const cropper = new Cropper(image, {
-      aspectRatio: 1,
-      crop: (e) => {
-        console.log(e.detail.x);
-        console.log(e.detail.y);
-        console.log(e.detail.width);
-        console.log(e.detail.height);
-        console.log(e.detail.rotate);
-        console.log(e.detail.scaleX);
-        console.log(e.detail.scaleY);
-      },
-    });
-
     return <div>
       <Image src="C:\Users\Naaupo\.techfolios\images\micromouse-robot-2.jpg" />
     </div>;
