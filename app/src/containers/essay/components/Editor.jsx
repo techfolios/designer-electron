@@ -15,7 +15,6 @@ class EssayEditor extends React.Component {
     this.state = { data: props.data };
     this.data = this.state.data;
     this.date = this.data.file.split(/[-.]/);
-    console.log(this.data.file.split(/[-.]/));
     this.menu = props.state;
     this.crawler = new FileCrawler(Path.resolve(values.dir, 'essays'));
 
@@ -27,8 +26,10 @@ class EssayEditor extends React.Component {
 
   save(event) {
     event.preventDefault();
-    this.data.attributes.date = ISODate.getDate();
-    if (!this.data.file) this.data.file = `${ISODate.getDate()}.md`;
+    const date = `${this.date[0]}-${this.date[1]}-${this.date[2]}`;
+    this.data.attributes.date = date;
+    this.data.body = this.data.body.trim();
+    if (!this.data.file) this.data.file = `${date}.md`;
     const yaml = YAMLParser.write(this.data);
     console.log(yaml);
     this.crawler.writeFile(this.data.file, yaml);
@@ -79,14 +80,15 @@ class EssayEditor extends React.Component {
                     data.attributes.title = event.target.value || '';
                   }}/>
       <Form.Group>
-        <Form.Input label='Month' defaultValue={date[1]} onChange={(event) => { date[1] = event.target.value || ''; }}/>
-        <Form.Input label='Day' defaultValue={date[2]} onChange={(event) => { date[2] = event.target.value || ''; }}/>
-        <Form.Input label='Year' defaultValue={date[0]} onChange={(event) => { date[0] = event.target.value || ''; }}/>
+        <Form.Input width={2} label='Month' defaultValue={date[1]}
+                    onChange={(event) => { date[1] = ISODate.getPadded(event.target.value); }}/>
+        <Form.Input width={2} label='Day' defaultValue={date[2]}
+                    onChange={(event) => { date[2] = ISODate.getPadded(event.target.value); }}/>
+        <Form.Input width={4} label='Year' defaultValue={date[0]}
+                    onChange={(event) => { date[0] = ISODate.getPadded(event.target.value); }}/>
       </Form.Group>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
-                     onChange={(event) => {
-                       data.body = event.target.value;
-                     }}/>
+                     onChange={(event) => { data.body = event.target.value; }}/>
       <Accordion>
         <Accordion.Title>
           <Icon name='dropdown'/>
