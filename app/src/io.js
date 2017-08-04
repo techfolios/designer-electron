@@ -9,16 +9,10 @@ import request from 'superagent';
 import FileCrawler from './utilities/file-crawler';
 import YamlParser from './utilities/yaml-parser';
 
-import Oauth from './utilities/Oauth';
-
 class IO {
-  constructor(username) {
-    console.log('start');
-    // this.accessToken = window.localStorage.getItem('githubtoken');
-    this.getUsername();
+  constructor() {
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(OS.homedir(), '.techfolios');
-    this.remoteURL = `https://github.com/${username}/${username}.github.io`;
     this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
     this.projectsURL = Path.resolve(this.localURL, 'projects');
     this.essaysURL = Path.resolve(this.localURL, 'essays');
@@ -34,19 +28,25 @@ class IO {
 
   init() {
     this.accessToken = window.localStorage.getItem('githubtoken');
-    return new Promise((res, rej) => {
+    this.getUsername().then(() => {
+      this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
+    });
+    return new Promise((res) => {
       this.hasLocal()
         .then((hasLocal) => {
           if (hasLocal) {
-            console.log('Local techfolio found');
             res('Local techfolio found');
           } else {
             this.hasRemote()
               .then((hasRemote) => {
                 if (hasRemote) {
-                  console.log('Remote techfolio found');
+                  this.cloneUserRemote().then(() => {
+                    res('Cloned remote techfolio');
+                  });
                 } else {
-                  console.log('Cloned Default techfolio template');
+                  this.cloneTechfoliosTemplate().then(() => {
+                    res('Cloned techfolios template');
+                  });
                 }
               });
           }
@@ -55,7 +55,6 @@ class IO {
   }
 
   hasLocal() {
-    console.log('hasLocal called');
     return new Promise((res, rej) => {
       FS.mkdir(this.localURL, (err) => {
         if (!err) {
@@ -74,20 +73,16 @@ class IO {
   added "this." in front of res to placate ESLint - is this a correct fix?
    */
   hasRemote() {
-    console.log('hasRemote called');
-    console.log(`accessToken : ${this.accessToken}`);
     return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
        .then((res) => {
-         console.log('inside');
          let result = false;
-         const repos = JSON.parse(res.text);
+         const repos = res.body;
 
-         for (let i = 0; i < Object.keys(repos).length; i += 1) {
+         for (let i = 0; i < res.body.length; i += 1) {
            if (repos[i].name === `${this.username}.github.io`) {
              result = true;
            }
          }
-         console.log(`hasRemote: ${result}`);
          return result;
        }, (err) => {
          console.log(err);

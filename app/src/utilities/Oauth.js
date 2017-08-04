@@ -21,11 +21,10 @@ class Oauth {
 
     const myApiOauth = electronOauth2(config, windowParams);
 
-    myApiOauth.getAccessToken(options)
+    return myApiOauth.getAccessToken(options)
       .then((t) => {
         token = t;
         window.localStorage.setItem('githubtoken', token.access_token);
-        console.log(`from Oauth accessToken ${token.access_token}`);
       });
   }
 

@@ -176,8 +176,11 @@ class Techfolio extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    Oauth.login();
-    this.io.init()
+    Oauth.login()
+      .then(() => {
+        console.log('');
+        return this.io.init();
+      })
       .then((res) => {
         console.log(res);
         return this.io.loadBio();
