@@ -217,10 +217,6 @@ class MainMenu extends React.Component {
 
           {this.renderUpload(activeItem)}
 
-        <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick}>
-          <Icon name='plus' />
-          Add Menu Item
-        </Menu.Item>
       </Menu>
     );
   }
