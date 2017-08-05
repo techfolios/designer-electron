@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
 
 import ProjectsMenu from './ProjectsMenu.jsx';
-import Pics from '../containers/pics/Pics.jsx';
+import Images from '../containers/images/Images.jsx';
 import YAMLParser from '../utilities/yaml-parser';
 
 class MainMenu extends React.Component {
@@ -214,9 +214,18 @@ class MainMenu extends React.Component {
 
         {this.renderEssays(activeItem)}
 
-        <Menu.Item onClick={() => this.props.setSelected(<Pics data={this.props.images} />)}>
+        <Menu.Item
+          onClick={() => this.props.setSelected(
+            <Images data={this.props.images} setSelected={this.props.setSelected} />)}>
           <Icon name='file image outline' />
           Pics
+        </Menu.Item>
+
+        {this.renderUpload(activeItem)}
+
+        <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick}>
+          <Icon name='plus'/>
+            Add Menu Item
         </Menu.Item>
 
         {this.renderUpload(activeItem)}

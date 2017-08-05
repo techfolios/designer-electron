@@ -168,11 +168,13 @@ class IO {
   removeProject(index) {
     return new Promise((res, rej) => {
       const path = Path.resolve(this.projectsURL, `project-${index}.md`);
-      const projFiles = FS.readdirSync(this.projectsURL).splice(1 + index);
+      /* offset 1 from the beginning for index.html, offset 1 at the end to exclude current project at index */
+      const projFiles = FS.readdirSync(this.projectsURL).splice(1 + index + 1);
       FS.unlinkSync(path);
-      projFiles.splice(index + 1).forEach((file, fIndex) => {
+      projFiles.forEach((file, fIndex) => {
         const newURL = Path.resolve(this.projectsURL, `project-${index + fIndex}.md`);
-        const oldURL = Path.resolve(this.projectsURL, file);
+        const oldURL = Path.resolve(this.projectsURL, `project-${index + fIndex + 1}.md`);
+        console.log([oldURL, newURL]);
         FS.renameSync(oldURL, newURL);
       });
       res(true);
