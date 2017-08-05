@@ -16,6 +16,7 @@ class IO {
     this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
     this.projectsURL = Path.resolve(this.localURL, 'projects');
     this.essaysURL = Path.resolve(this.localURL, 'essays');
+    this.imagesURL = Path.resolve(this.localURL, 'images');
   }
 
   init() {
@@ -189,6 +190,39 @@ class IO {
     });
   }
 
+  loadImages() {
+    return new Promise((res, rej) => {
+      FS.readdir(this.imagesURL, (err, data) => {
+        if (err) {
+          rej(err);
+        } else {
+          const result = data.map(image => Path.resolve(this.imagesURL, image));
+          res(result);
+        }
+      });
+    });
+  }
+
+  saveImage(name, data) {
+    return new Promise((res) => {
+      console.log(this);
+      console.log([name, data]);
+      res(true);
+    });
+  }
+
+  removeImage(name) {
+    return new Promise((res, rej) => {
+      const imagePath = Path.resolve(this.imagesURL, name);
+      FS.unlink(imagePath, (err) => {
+        if (err) {
+          rej(err);
+        } else {
+          res(true);
+        }
+      });
+    });
+  }
   /* ESLint fix needed
   push() {
     return new Promise((res, rej) => {

@@ -214,7 +214,8 @@ class MainMenu extends React.Component {
 
         {this.renderEssays(activeItem)}
 
-        <Menu.Item onClick={() => this.props.setSelected(<Pics data={null} />)}>
+        <Menu.Item onClick={() => this.props.setSelected(<Pics data={this.props.images} />)}>
+          <Icon name='file image outline' />
           Pics
         </Menu.Item>
 

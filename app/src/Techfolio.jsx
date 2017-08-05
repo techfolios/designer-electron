@@ -192,7 +192,6 @@ class Techfolio extends React.Component {
         this.setState({ isLoading: false });
       })
       .then((resProj) => {
-        console.log(resProj);
         this.setState({ projects: resProj });
         return this.io.loadEssays();
       }, (rejProj) => {
@@ -202,12 +201,22 @@ class Techfolio extends React.Component {
       .then((resEssay) => {
         this.setState({ essays: resEssay.essays });
         this.setState({ essayCrawler: resEssay.crawler });
+        return this.io.loadImages();
+      }, (rejEssay) => {
+        console.log(rejEssay);
+        this.setState({ isLoading: false });
+      })
+      .then((resImages) => {
+        this.setState({ images: resImages });
+        this.setState({ isLoading: false });
+      }, (rejImages) => {
+        console.log(rejImages);
         this.setState({ isLoading: false });
       });
   }
 
   render() {
-    const { isLoading, bio, projects, selected, essays, essayCrawler } = this.state;
+    const { isLoading, bio, projects, selected, essays, essayCrawler, images } = this.state;
 
     if (isLoading || !bio || !projects) {
       return <Dimmer inverted active> <Loader size="big" content="Loading..." /> </Dimmer>;
@@ -222,7 +231,8 @@ class Techfolio extends React.Component {
             projects={projects}
             setSelected={this.setSelected}
             saveProject={this.saveProject}
-            removeProject={this.removeProject} />
+            removeProject={this.removeProject}
+            images={images} />
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
           {selected}

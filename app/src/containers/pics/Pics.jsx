@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from 'semantic-ui-react';
+import { Button, Grid, Image, Segment } from 'semantic-ui-react';
 import Cropper from 'cropperjs';
 
 /**
@@ -15,13 +15,39 @@ class Pics extends React.Component {
     this.state = {
       data: props.data,
     };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(ev) {
+    console.log(ev.target);
+    const cropper = new Cropper(ev.target, {
+      aspectRatio: 16 / 9,
+      crop: (e) => {
+        console.log(e.detail.x);
+        console.log(e.detail.y);
+        console.log(e.detail.width);
+        console.log(e.detail.height);
+        console.log(e.detail.rotate);
+        console.log(e.detail.scaleX);
+        console.log(e.detail.scaleY);
+      },
+    });
+    this.setState({ clicked: ev });
   }
 
   render() {
-    console.log(this.state);
-    return <div>
-      <Image src="C:\Users\Naaupo\.techfolios\images\micromouse-robot-2.jpg" />
-    </div>;
+    const { data } = this.state;
+    return <Grid doubling columns={5}>
+      {data.map((url, index) => <Grid.Column key={index}>
+          <Segment raised>
+            <Image src={url} onClick={this.handleClick}/>
+          </Segment>
+        </Grid.Column>)
+      }
+      <Grid.Column>
+        <Button color="teal" icon="plus" />
+      </Grid.Column>
+    </Grid>;
   }
 }
 
