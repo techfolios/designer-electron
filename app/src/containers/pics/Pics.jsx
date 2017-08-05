@@ -21,7 +21,7 @@ class Pics extends React.Component {
   handleClick(ev) {
     console.log(ev.target);
     const cropper = new Cropper(ev.target, {
-      aspectRatio: 16 / 9,
+      aspectRatio: 1,
       crop: (e) => {
         console.log(e.detail.x);
         console.log(e.detail.y);
@@ -39,9 +39,9 @@ class Pics extends React.Component {
     const { data } = this.state;
     return <Grid doubling columns={5}>
       {data.map((url, index) => <Grid.Column key={index}>
-          <Segment raised>
+          <Segment raised><div>
             <Image src={url} onClick={this.handleClick}/>
-          </Segment>
+          </div></Segment>
         </Grid.Column>)
       }
       <Grid.Column>
