@@ -19,6 +19,7 @@ class EssayEditor extends React.Component {
     this.crawler = new FileCrawler(Path.resolve(values.dir, 'essays'));
 
     this.save = this.save.bind(this);
+    this.delete = this.delete.bind(this);
     this.displayLabels = this.displayLabels.bind(this);
     this.addLabel = this.addLabel.bind(this);
     this.removeLabel = this.removeLabel.bind(this);
@@ -35,6 +36,19 @@ class EssayEditor extends React.Component {
     this.crawler.writeFile(this.data.file, yaml);
     this.menu.setState(this.data);
   }
+
+  delete(event) {
+    event.preventDefault();
+    const date = `${this.date[0]}-${this.date[1]}-${this.date[2]}`;
+    this.data.attributes.date = date;
+    this.data.body = this.data.body.trim();
+    if (!this.data.file) this.data.file = `${date}.md`;
+    const yaml = YAMLParser.write(this.data);
+    console.log(yaml);
+    this.crawler.writeFile(this.data.file, yaml);
+    this.menu.setState(this.data);
+  }
+
 
   displayLabels() {
     const list = [];
@@ -102,6 +116,7 @@ class EssayEditor extends React.Component {
       </Accordion>
       <br/>
       <Button content='Save' color='green' onClick={this.save}/>
+      <Button content='Delete' color='green' onClick={this.delete}/>
     </Form>;
   }
 }
