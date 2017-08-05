@@ -166,7 +166,7 @@ class IO {
   }
 
   removeProject(index) {
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       const path = Path.resolve(this.projectsURL, `project-${index}.md`);
       /* offset 1 from the beginning for index.html, offset 1 at the end to exclude current project at index */
       const projFiles = FS.readdirSync(this.projectsURL).splice(1 + index + 1);
