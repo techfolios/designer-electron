@@ -19,13 +19,15 @@ class YAMLParser {
   static write(json) {
     let yaml = '';
     Object.keys(json.attributes).forEach((key) => {
-      if (Array.isArray(json.attributes[key])) {
-        yaml = yaml.concat(`${key}:\n`);
-        json.attributes[key].forEach((value) => {
-          yaml = yaml.concat(`  - ${value.trim()}\n`);
-        });
-      } else {
-        yaml = yaml.concat(`${key}: ${json.attributes[key]}\n`);
+      if (json.attributes[key] !== '') {
+        if (Array.isArray(json.attributes[key]) && json.attributes[key].length !== 0) {
+          yaml = yaml.concat(`${key}:\n`);
+          json.attributes[key].forEach((value) => {
+            yaml = yaml.concat(`  - ${value.trim()}\n`);
+          });
+        } else {
+          yaml = yaml.concat(`${key}: ${json.attributes[key]}\n`);
+        }
       }
     });
     return `---\n${yaml}---\n\n${json.body.trim()}`;

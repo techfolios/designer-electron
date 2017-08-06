@@ -35,9 +35,8 @@ class ProjectEditor extends React.Component {
 
     this.setAttribute = this.setAttribute.bind(this);
     this.setBody = this.setBody.bind(this);
-    this.addLabel = this.addLabel.bind(this);
     this.saveProject = this.saveProject.bind(this);
-    this.addLabel = this.addLabel.bind(this);
+    this.handleLabel = this.handleLabel.bind(this);
     this.setLabels = this.setLabels.bind(this);
     this.removeProject = this.removeProject.bind(this);
   }
@@ -63,7 +62,7 @@ class ProjectEditor extends React.Component {
     this.props.saveProject(this.state.index, this.state.data);
   }
 
-  addLabel(e, obj) {
+  handleLabel(e, obj) {
     const data = this.state.data;
     data.attributes.labels.push(obj.value);
     this.setState({ data });
@@ -107,7 +106,7 @@ class ProjectEditor extends React.Component {
           onChange={e => this.setAttribute(e, 'permalink')} />
         <Form.Dropdown
           multiple search selection fluid allowAdditions label='Labels'
-          value={labels}
+          defaultValue={labels}
           noResultsMessage={'Start typing to add a new keyword!'}
           options={
             labels.map((label, key) => ({
@@ -116,7 +115,7 @@ class ProjectEditor extends React.Component {
               text: label,
             }))
           }
-          onAddItem={this.addLabel} />
+          onChange={this.handleLabel} />
         <Form.Input label='Summary'
           value={summary}
           placeholder={'A short description about your project'}

@@ -148,18 +148,21 @@ class MainMenu extends React.Component {
     return list;
   }
 
-  addYAML(event, files, type) {
-    const list = files;
+  addYAML(event, menu, type, fileName) {
+    const list = menu;
     list.push({
       attributes: {
         layout: type,
         type,
+        image: '',
         title: `New ${type}`,
+        permalink: '',
         date: ISODate.getDate(),
         labels: [],
+        summary: '',
       },
       file: {
-        name: `${ISODate.getDate()}.md`,
+        name: `${fileName}.md`,
         index: '',
         checkpoint: '',
         state: '',
@@ -183,7 +186,7 @@ class MainMenu extends React.Component {
         <Menu.Item>
           <span>
             <Icon link size='big' name='plus' color='green'
-                  onClick={event => this.addYAML(event, this.state.essayList, 'essay')}/>
+                  onClick={event => this.addYAML(event, this.state.essayList, 'essay', ISODate.getDate())}/>
             <Icon link={this.state.deletedEssay !== undefined} size='big' name='undo'
                   disabled={!this.state.deletedEssay} color='teal' onClick={event =>
                       this.restoreYAML(event, this.state.essayCrawler, 'essayList', 'deletedEssay')}/>
@@ -191,6 +194,15 @@ class MainMenu extends React.Component {
         </Menu.Item>
       </Accordion.Content>
     </Accordion>;
+  }
+
+  renderProject() {
+    const { projects } = this.state;
+    return <ProjectsMenu
+        data={projects}
+        setSelected={this.props.setSelected}
+        saveProject={this.props.saveProject}
+        removeProject={this.props.removeProject} />;
   }
 
   renderUpload(activeItem) {
@@ -211,15 +223,11 @@ class MainMenu extends React.Component {
 
         {this.renderBio(activeItem)}
 
-        <ProjectsMenu
-          data={projects}
-          setSelected={this.props.setSelected}
-          saveProject={this.props.saveProject}
-          removeProject={this.props.removeProject} />
+        {this.renderProject()}
 
-          {this.renderEssays(activeItem)}
+        {this.renderEssays(activeItem)}
 
-          {this.renderUpload(activeItem)}
+        {this.renderUpload(activeItem)}
 
         <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick}>
           <Icon name='plus' />
