@@ -16,6 +16,7 @@ class IO {
     this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
     this.projectsURL = Path.resolve(this.localURL, 'projects');
     this.essaysURL = Path.resolve(this.localURL, 'essays');
+    this.imagesURL = Path.resolve(this.localURL, 'images');
   }
 
   getUsername() {
@@ -193,11 +194,13 @@ class IO {
   removeProject(index) {
     return new Promise((res) => {
       const path = Path.resolve(this.projectsURL, `project-${index}.md`);
-      const projFiles = FS.readdirSync(this.projectsURL).splice(1 + index);
+      /* offset 1 from the beginning for index.html, offset 1 at the end to exclude current project at index */
+      const projFiles = FS.readdirSync(this.projectsURL).splice(1 + index + 1);
       FS.unlinkSync(path);
-      projFiles.splice(index + 1).forEach((file, fIndex) => {
+      projFiles.forEach((file, fIndex) => {
         const newURL = Path.resolve(this.projectsURL, `project-${index + fIndex}.md`);
-        const oldURL = Path.resolve(this.projectsURL, file);
+        const oldURL = Path.resolve(this.projectsURL, `project-${index + fIndex + 1}.md`);
+        console.log([oldURL, newURL]);
         FS.renameSync(oldURL, newURL);
       });
       res(true);
@@ -212,6 +215,51 @@ class IO {
       list.essays = crawler.getYAML();
       list.crawler = crawler;
       res(list);
+    });
+  }
+
+  loadImages() {
+    return new Promise((res, rej) => {
+      FS.readdir(this.imagesURL, (err, data) => {
+        if (err) {
+          rej(err);
+        } else {
+          const result = data.map(image => Path.resolve(this.imagesURL, image));
+          res(result);
+        }
+      });
+    });
+  }
+
+  importImage(url) {
+    return new Promise((res) => {
+      const imageName = Path.basename(url);
+      console.log(this.imagesURL);
+      const newImagePath = Path.resolve(this.imagesURL, imageName);
+      const image = FS.readFileSync(url);
+      FS.writeFileSync(newImagePath, image);
+      res(newImagePath);
+    });
+  }
+
+  saveImage(name, data) {
+    return new Promise((res) => {
+      console.log(this);
+      console.log([name, data]);
+      res(true);
+    });
+  }
+
+  removeImage(name) {
+    return new Promise((res, rej) => {
+      const imagePath = Path.resolve(this.imagesURL, name);
+      FS.unlink(imagePath, (err) => {
+        if (err) {
+          rej(err);
+        } else {
+          res(true);
+        }
+      });
     });
   }
 
