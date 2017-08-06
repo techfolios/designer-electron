@@ -169,8 +169,8 @@ class MainMenu extends React.Component {
     return <Accordion as={MenuItem}>
       <Accordion.Title>
         <Menu.Item>
-          <Icon name='dropdown'/>
-          <Icon name='file text outline'/>
+          <Icon name='dropdown' />
+          <Icon name='file text outline' />
           Essays
         </Menu.Item>
       </Accordion.Title>
@@ -211,14 +211,16 @@ class MainMenu extends React.Component {
 
         <Menu.Item
           onClick={() => this.props.setSelected(
-            <Images data={this.props.images} setSelected={this.props.setSelected} importImage={this.props.importImage} />)}>
+            <Images data={this.props.images}
+              setSelected={this.props.setSelected}
+              importImage={this.props.importImage} />)}>
           <Icon name='file image outline' />
           Pics
         </Menu.Item>
 
-      <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
-        <Icon name='upload' />
-        Upload
+        <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
+          <Icon name='upload' />
+          Upload
       </Menu.Item>
       </Menu>
     );

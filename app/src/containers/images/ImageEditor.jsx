@@ -1,6 +1,6 @@
 import React from 'react';
 import Cropper from 'cropperjs';
-import { Dropdown, Image, Menu, Segment } from 'semantic-ui-react';
+import { Dropdown, Image, Segment } from 'semantic-ui-react';
 
 class ImageEditor extends React.Component {
 
@@ -40,7 +40,7 @@ class ImageEditor extends React.Component {
   }
 
   render() {
-    const { url, activeItem } = this.state;
+    const { url } = this.state;
     return <Segment basic padded="very">
       <Dropdown text="File">
         <Dropdown.Menu>
