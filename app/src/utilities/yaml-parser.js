@@ -25,7 +25,7 @@ class YAMLParser {
           yaml = yaml.concat(`  - ${value.trim()}\n`);
         });
       } else {
-        yaml = yaml.concat(`${key}: ${json.attributes[key].trim()}\n`);
+        yaml = yaml.concat(`${key}: ${json.attributes[key]}\n`);
       }
     });
     return `---\n${yaml}---\n\n${json.body.trim()}`;

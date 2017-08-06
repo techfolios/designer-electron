@@ -139,16 +139,9 @@ class MainMenu extends React.Component {
       yaml.file.checkpoint = checkpoint;
       yaml.file.state = state;
       console.log(data);
-      list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
+      list.push(<Menu.Item name={key} key={key} active={activeItem === key}
+                           onClick={event => this.handlePageChange(event, 'essays', data)}>
         {this.getShortenString(key)}
-        <br />
-        <div>
-          <Icon link size='big' name='edit' color='black'
-                onClick={event => this.handlePageChange(event, 'essays', data)}/>
-          <Icon link size='big' name='remove' color='red'
-                onClick={event =>
-                    this.removeYAML(event, yaml.file.index, data.file.name, crawler, state, checkpoint)}/>
-        </div>
       </Menu.Item>);
     });
 
