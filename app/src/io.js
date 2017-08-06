@@ -236,7 +236,8 @@ class IO {
       const imageName = Path.basename(url);
       console.log(this.imagesURL);
       const newImagePath = Path.resolve(this.imagesURL, imageName);
-      FS.createReadStream(url).pipe(FS.createWriteStream(newImagePath));
+      const image = FS.readFileSync(url);
+      FS.writeFileSync(newImagePath, image);
       res(newImagePath);
     });
   }
@@ -261,6 +262,7 @@ class IO {
       });
     });
   }
+
   /* ESLint fix needed
   push() {
     return new Promise((res, rej) => {
