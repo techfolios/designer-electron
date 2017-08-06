@@ -22,13 +22,13 @@ class YAMLParser {
       if (Array.isArray(json.attributes[key])) {
         yaml = yaml.concat(`${key}:\n`);
         json.attributes[key].forEach((value) => {
-          yaml = yaml.concat(`  - ${value}\n`);
+          yaml = yaml.concat(`  - ${value.trim()}\n`);
         });
       } else {
-        yaml = yaml.concat(`${key}: ${json.attributes[key]}\n`);
+        yaml = yaml.concat(`${key}: ${json.attributes[key].trim()}\n`);
       }
     });
-    return `---\n${yaml}---\n\n${json.body}`;
+    return `---\n${yaml}---\n\n${json.body.trim()}`;
   }
 }
 

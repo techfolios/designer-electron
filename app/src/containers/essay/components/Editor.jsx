@@ -20,9 +20,7 @@ class EssayEditor extends React.Component {
 
     this.delete = this.props.delete;
     this.save = this.save.bind(this);
-    this.displayLabels = this.displayLabels.bind(this);
-    this.addLabel = this.addLabel.bind(this);
-    this.removeLabel = this.removeLabel.bind(this);
+    this.handleLabel = this.handleLabel.bind(this);
   }
 
   save(event) {
@@ -36,38 +34,9 @@ class EssayEditor extends React.Component {
     this.menu.setState(this.data);
   }
 
-  displayLabels() {
-    const list = [];
-    const labels = this.data.attributes.labels || [];
-
-    labels.forEach((value, index) => {
-      list.push(<Label tag color='blue' key={`${index}: ${value}`}>
-        <Form.Group>
-          <Form.Input defaultValue={value} onChange={(event) => {
-            labels[index] = event.target.value;
-          }}/>
-          <Icon link size='big' color='red' name='delete'
-                onClick={event => this.removeLabel(event, index)}/>
-        </Form.Group>
-      </Label>);
-    });
-
-    return list;
-  }
-
-  removeLabel(event, index) {
-    event.preventDefault();
-    const data = this.data;
-    data.attributes.labels = data.attributes.labels.filter((value, key) => key !== index);
-    this.setState({ data });
-  }
-
-  addLabel(event) {
-    event.preventDefault();
-    const data = this.data;
-    const labels = data.attributes.labels;
-    labels.push('');
-    this.setState(data);
+  handleLabel(event, obj) {
+    this.data.attributes.labels = obj.value;
+    this.setState(this.data);
   }
 
   render() {
@@ -97,17 +66,18 @@ class EssayEditor extends React.Component {
                      onChange={(event) => {
                        data.body = event.target.value;
                      }}/>
-      <Accordion>
-        <Accordion.Title>
-          <Icon name='dropdown'/>
-          Tag(s)
-        </Accordion.Title>
-        <Accordion.Content>
-          {this.displayLabels()}
-          <br/>
-          <Icon link size='big' name='plus' color='teal' onClick={this.addLabel}/>
-        </Accordion.Content>
-      </Accordion>
+      <Form.Dropdown
+          multiple search selection fluid allowAdditions label='Tag(s)'
+          defaultValue={data.attributes.labels}
+          noResultsMessage={'Start typing to add a new keyword!'}
+          options={
+            data.attributes.labels.map((label, key) => ({
+              key,
+              value: label,
+              text: label,
+            }))
+          }
+          onChange={this.handleLabel} />
       <br/>
       <Button.Group floated="right">
         <Button content='Save' color='green' onClick={this.save}/>
