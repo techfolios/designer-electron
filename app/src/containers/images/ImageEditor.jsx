@@ -11,7 +11,7 @@ class ImageEditor extends React.Component {
       activeItem: '',
     };
 
-    this.handleClick = this.handleClick.bind(this);
+    this.handleImageLoad = this.handleImageLoad.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
@@ -20,6 +20,7 @@ class ImageEditor extends React.Component {
     console.log(image);
     const cropper = new Cropper(image, {
       autoCrop: true,
+      autoCropArea: 1,
       aspectRatio: 1,
       crop: (e) => {
         console.log(e.detail.x);
