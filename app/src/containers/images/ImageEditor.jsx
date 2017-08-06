@@ -15,10 +15,11 @@ class ImageEditor extends React.Component {
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
-  handleClick(ev) {
+  handleImageLoad(ev) {
     const image = ev.target;
     console.log(image);
     const cropper = new Cropper(image, {
+      autoCrop: true,
       aspectRatio: 1,
       crop: (e) => {
         console.log(e.detail.x);
@@ -59,7 +60,7 @@ class ImageEditor extends React.Component {
         </Dropdown.Menu>
       </Dropdown>
       <div>
-        <Image src={url} onClick={this.handleClick} />
+        <Image src={url} onLoad={this.handleImageLoad} />
       </div>
     </Segment>;
   }
