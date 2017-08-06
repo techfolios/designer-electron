@@ -231,6 +231,16 @@ class IO {
     });
   }
 
+  importImage(url) {
+    return new Promise((res) => {
+      const imageName = Path.basename(url);
+      console.log(this.imagesURL);
+      const newImagePath = Path.resolve(this.imagesURL, imageName);
+      FS.createReadStream(url).pipe(FS.createWriteStream(newImagePath));
+      res(newImagePath);
+    });
+  }
+
   saveImage(name, data) {
     return new Promise((res) => {
       console.log(this);

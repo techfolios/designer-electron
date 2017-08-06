@@ -27,6 +27,7 @@ class Techfolio extends React.Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.saveProject = this.saveProject.bind(this);
     this.removeProject = this.removeProject.bind(this);
+    this.importImage = this.importImage.bind(this);
     this.state = {
       bio: null,
       projects: null,
@@ -160,6 +161,10 @@ class Techfolio extends React.Component {
     this.io.removeProject(index);
   }
 
+  importImage(url) {
+    return this.io.importImage(url);
+  }
+
   handleUpload() {
     this.setState({ isLoading: true });
     this.io.push()
@@ -237,7 +242,8 @@ class Techfolio extends React.Component {
             setSelected={this.setSelected}
             saveProject={this.saveProject}
             removeProject={this.removeProject}
-            images={images} />
+            images={images}
+            importImage={this.importImage} />
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
           {selected}

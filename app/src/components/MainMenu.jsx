@@ -190,15 +190,6 @@ class MainMenu extends React.Component {
     </Accordion>;
   }
 
-  renderUpload(activeItem) {
-    return (
-      <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
-        <Icon name='upload' />
-        Upload
-      </Menu.Item>
-    );
-  }
-
   render() {
     const { activeItem, projects } = this.state;
     const tempStyle = { overflow: 'hidden', overflowY: 'scroll' };
@@ -220,13 +211,15 @@ class MainMenu extends React.Component {
 
         <Menu.Item
           onClick={() => this.props.setSelected(
-            <Images data={this.props.images} setSelected={this.props.setSelected} />)}>
+            <Images data={this.props.images} setSelected={this.props.setSelected} importImage={this.props.importImage} />)}>
           <Icon name='file image outline' />
           Pics
         </Menu.Item>
 
-        {this.renderUpload(activeItem)}
-
+      <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
+        <Icon name='upload' />
+        Upload
+      </Menu.Item>
       </Menu>
     );
   }

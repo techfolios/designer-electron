@@ -1,3 +1,4 @@
+import Electron from 'electron';
 import React from 'react';
 import { Button, Grid, Image, Segment } from 'semantic-ui-react';
 
@@ -16,11 +17,29 @@ class Images extends React.Component {
     this.state = {
       data: props.data,
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.openImageEditor = this.openImageEditor.bind(this);
+    this.importImage = this.importImage.bind(this);
   }
 
-  handleClick(url, index) {
+  openImageEditor(url, index) {
     this.props.setSelected(<ImageEditor key={index} url={url} />);
+  }
+
+  importImage() {
+    const dialog = Electron.remote.dialog;
+    console.log(this);
+    const files = dialog.showOpenDialog({ properties: ['openFile'] });
+    if (files.length > 0) {
+      const url = files[0];
+      const data = this.state.data;
+      this.props.importImage(url)
+        .then((res) => {
+          data.push(res);
+          this.setState({ data });
+        }, (rej) => {
+          console.log(rej);
+        });
+    }
   }
 
   render() {
@@ -28,12 +47,12 @@ class Images extends React.Component {
     return <Grid doubling columns={5}>
       {data.map((url, index) => <Grid.Column key={index}>
         <Segment raised><div>
-          <Image src={url} onClick={() => this.handleClick(url, index)} />
+          <Image src={url} onClick={() => this.openImageEditor(url, index)} />
         </div></Segment>
       </Grid.Column>)
       }
       <Grid.Column>
-        <Button color="teal" icon="plus" />
+        <Button color="teal" icon="plus" onClick={this.importImage} />
       </Grid.Column>
     </Grid>;
   }
