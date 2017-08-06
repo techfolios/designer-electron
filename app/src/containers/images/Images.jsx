@@ -47,7 +47,7 @@ class Images extends React.Component {
     return <Grid doubling columns={5}>
       {data.map((url, index) => <Grid.Column key={index}>
         <Segment raised><div>
-          <Image src={url} onClick={() => this.openImageEditor(url, index)} />
+          <Image centered src={url} onClick={() => this.openImageEditor(url, index)} />
         </div></Segment>
       </Grid.Column>)
       }
