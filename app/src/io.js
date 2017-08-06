@@ -4,37 +4,53 @@ import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
 import FrontMatter from 'front-matter';
+import request from 'superagent';
 
 import FileCrawler from './utilities/file-crawler';
 import YamlParser from './utilities/yaml-parser';
 
 class IO {
-  constructor(username) {
+  constructor() {
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(OS.homedir(), '.techfolios');
-    this.remoteURL = `https://github.com/${username}/${username}.github.io`;
     this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
     this.projectsURL = Path.resolve(this.localURL, 'projects');
     this.essaysURL = Path.resolve(this.localURL, 'essays');
     this.imagesURL = Path.resolve(this.localURL, 'images');
   }
 
+  getUsername() {
+    return request('GET', `https://api.github.com/user?access_token=${this.accessToken}`)
+      .then((res) => {
+        this.username = JSON.parse(res.text).login;
+        return this.username;
+      });
+  }
+
   init() {
-    return new Promise((res, rej) => {
+    this.accessToken = window.localStorage.getItem('githubtoken');
+    this.getUsername().then(() => {
+      this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
+    });
+    return new Promise((res) => {
       this.hasLocal()
         .then((hasLocal) => {
           if (hasLocal) {
-            // has local, good to go.
-            res('Local techfolio found.');
+            res('Local techfolio found');
           } else {
-            // clone template
-            this.cloneTechfoliosTemplate()
-              .then(() => res('Cloned remote techfolio template.'),
-              err => rej(err));
+            this.hasRemote()
+              .then((hasRemote) => {
+                if (hasRemote) {
+                  this.cloneUserRemote().then(() => {
+                    res('Cloned remote techfolio');
+                  });
+                } else {
+                  this.cloneTechfoliosTemplate().then(() => {
+                    res('Cloned techfolios template');
+                  });
+                }
+              });
           }
-        }, (err) => {
-          // error checking for local repo.
-          rej(err);
         });
     });
   }
@@ -58,10 +74,20 @@ class IO {
   added "this." in front of res to placate ESLint - is this a correct fix?
    */
   hasRemote() {
-    return new Promise((res) => {
-      res(false);
-      console.log(this.res);
-    });
+    return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
+       .then((res) => {
+         let result = false;
+         const repos = res.body;
+
+         for (let i = 0; i < res.body.length; i += 1) {
+           if (repos[i].name === `${this.username}.github.io`) {
+             result = true;
+           }
+         }
+         return result;
+       }, (err) => {
+         console.log(err);
+       });
   }
 
   cloneUserRemote() {

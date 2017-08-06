@@ -14,6 +14,7 @@ import VolunteerSection from './containers/bio/VolunteerSection.jsx';
 import RefSection from './containers/bio/RefSection.jsx';
 import Essay from './containers/essay/Essays.jsx';
 import IO from './io';
+import Oauth from './utilities/Oauth';
 
 class Techfolio extends React.Component {
   constructor(props) {
@@ -175,7 +176,11 @@ class Techfolio extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    this.io.init()
+    Oauth.login()
+      .then(() => {
+        console.log('');
+        return this.io.init();
+      })
       .then((res) => {
         console.log(res);
         return this.io.loadBio();

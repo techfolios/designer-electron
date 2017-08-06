@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, Container, Icon } from 'semantic-ui-react';
-
-const electronOauth2 = require('electron-oauth2');
-const config = require('../../config.js');
+import Oauth from '../../utilities/Oauth';
 
 class Settings extends React.Component {
   constructor() {
@@ -13,7 +11,6 @@ class Settings extends React.Component {
     } else {
       this.state = { isLoggedIn: true };
     }
-
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
   }
@@ -23,36 +20,14 @@ class Settings extends React.Component {
     this.props.onMenuSelect(name);
   }
 
-  logout() {
-    window.localStorage.removeItem('githubtoken');
-    this.setState({ isLoggedIn: false });
+  login() {
+    Oauth.login();
+    this.setState({ isLoggedIn: true });
   }
 
-  login() {
-    let token;
-
-    const windowParams = {
-      alwaysOnTop: true,
-      autoHideMenuBar: true,
-      webPreferences: {
-        nodeIntegration: false,
-      },
-    };
-    const scopes = ['repo', 'user:email'];
-
-    const options = {
-      scope: scopes.join(' '),
-      accessType: 'online',
-    };
-
-    const myApiOauth = electronOauth2(config, windowParams);
-
-    myApiOauth.getAccessToken(options)
-      .then((t) => {
-        token = t;
-        window.localStorage.setItem('githubtoken', token.access_token);
-        this.setState({ isLoggedIn: true });
-      });
+  logout() {
+    Oauth.logout();
+    this.setState({ isLoggedIn: false });
   }
 
   render() {
