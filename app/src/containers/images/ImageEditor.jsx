@@ -31,6 +31,7 @@ class ImageEditor extends React.Component {
       },
     });
     this.setState({ selectedImage: image });
+    console.log(cropper);
   }
 
   handleItemClick(ev, { name }) {
