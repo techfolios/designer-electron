@@ -14,6 +14,8 @@ class Essay extends React.Component {
     this.directory = props.dir;
     this.crawler = new FileCrawler(this.directory);
     values.dir = this.directory;
+
+    this.delete = this.props.delete;
     this.getPage = this.getPage.bind(this);
     this.setPage = this.setPage.bind(this);
   }
@@ -25,16 +27,12 @@ class Essay extends React.Component {
 
   getPage() {
     const page = {
-      view: <EssayEditor data={this.props.data} state={this.props.state}/>,
-      icon: <Icon link name="write" size="big" onClick={ event => this.setPage(event, 'preview') }/>,
-      button: <Button attached='right' content='Edit' color='green'
-                      onClick={ event => this.setPage(event, 'preview') }/>,
+      view: <EssayEditor delete={this.delete} data={this.props.data} state={this.props.state}/>,
+      icon: <Icon link name="edit" size="big" onClick={ event => this.setPage(event, 'preview') }/>,
     };
     if (this.state.page === 'preview') {
       page.view = renderHTML(preview(this.props.data.body), values);
-      page.icon = <Icon link name="picture" size="big" onClick={ event => this.setPage(event, 'write') }/>;
-      page.button = <Button attached='right' content='Preview' color='blue'
-                            onClick={ event => this.setPage(event, 'write') }/>;
+      page.icon = <Icon link name="picture" size="big" onClick={ event => this.setPage(event, 'edit') }/>;
     }
     return page;
   }
@@ -42,7 +40,12 @@ class Essay extends React.Component {
   render() {
     const page = this.getPage();
     return <div>
-      { page.button }
+      <Button.Group>
+        <Button compact basic={this.state.page === 'edit'} content='Edit' color='green'
+                onClick={ event => this.setPage(event, 'edit') }/>
+        <Button compact basic={this.state.page === 'preview'} content='Preview' color='blue'
+                onClick={ event => this.setPage(event, 'preview') }/>
+      </Button.Group>
       <Segment basic textAlign="center">
         { page.icon }
         <Header as="h3"></Header>

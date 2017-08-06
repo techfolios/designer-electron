@@ -5,25 +5,13 @@ class YAMLParser {
     this.files = files;
   }
 
-  read(file, fileName) {
-    let data = [];
-    const list = this.files;
+  static read(file, fileName) {
+    let data = {};
+    const json = parser(file);
 
-    if (file !== undefined) {
-      const json = parser(file);
-      if (fileName !== undefined) {
-        json.file = fileName;
-      }
-      data = json;
-    } else {
-      list.forEach((value) => {
-        const json = parser(value);
-        if (fileName !== undefined) {
-          json.file = fileName;
-        }
-        data.push(json);
-      });
-    }
+    json.file = {};
+    json.file.name = fileName;
+    data = json;
 
     return data;
   }

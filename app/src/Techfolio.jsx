@@ -99,7 +99,8 @@ class Techfolio extends React.Component {
 
         break;
       case 'essays':
-        retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title} data={data} state={state} />;
+        retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title}
+                              delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;

@@ -14,12 +14,12 @@ class EssayEditor extends React.Component {
     super(props);
     this.state = { data: props.data };
     this.data = this.state.data;
-    this.date = this.data.file.split(/[-.]/);
+    this.date = this.data.file.name.split(/[-.]/);
     this.menu = props.state;
     this.crawler = new FileCrawler(Path.resolve(values.dir, 'essays'));
 
+    this.delete = this.props.delete;
     this.save = this.save.bind(this);
-    this.delete = this.delete.bind(this);
     this.displayLabels = this.displayLabels.bind(this);
     this.addLabel = this.addLabel.bind(this);
     this.removeLabel = this.removeLabel.bind(this);
@@ -30,25 +30,11 @@ class EssayEditor extends React.Component {
     const date = `${this.date[0]}-${this.date[1]}-${this.date[2]}`;
     this.data.attributes.date = date;
     this.data.body = this.data.body.trim();
-    if (!this.data.file) this.data.file = `${date}.md`;
     const yaml = YAMLParser.write(this.data);
     console.log(yaml);
-    this.crawler.writeFile(this.data.file, yaml);
+    this.crawler.writeFile(this.data.file.name, yaml);
     this.menu.setState(this.data);
   }
-
-  delete(event) {
-    event.preventDefault();
-    const date = `${this.date[0]}-${this.date[1]}-${this.date[2]}`;
-    this.data.attributes.date = date;
-    this.data.body = this.data.body.trim();
-    if (!this.data.file) this.data.file = `${date}.md`;
-    const yaml = YAMLParser.write(this.data);
-    console.log(yaml);
-    this.crawler.writeFile(this.data.file, yaml);
-    this.menu.setState(this.data);
-  }
-
 
   displayLabels() {
     const list = [];
@@ -95,14 +81,22 @@ class EssayEditor extends React.Component {
                   }}/>
       <Form.Group>
         <Form.Input width={2} label='Month' defaultValue={date[1]}
-                    onChange={(event) => { date[1] = ISODate.getPadded(event.target.value); }}/>
+                    onChange={(event) => {
+                      date[1] = ISODate.getPadded(event.target.value);
+                    }}/>
         <Form.Input width={2} label='Day' defaultValue={date[2]}
-                    onChange={(event) => { date[2] = ISODate.getPadded(event.target.value); }}/>
+                    onChange={(event) => {
+                      date[2] = ISODate.getPadded(event.target.value);
+                    }}/>
         <Form.Input width={4} label='Year' defaultValue={date[0]}
-                    onChange={(event) => { date[0] = ISODate.getPadded(event.target.value); }}/>
+                    onChange={(event) => {
+                      date[0] = ISODate.getPadded(event.target.value);
+                    }}/>
       </Form.Group>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
-                     onChange={(event) => { data.body = event.target.value; }}/>
+                     onChange={(event) => {
+                       data.body = event.target.value;
+                     }}/>
       <Accordion>
         <Accordion.Title>
           <Icon name='dropdown'/>
@@ -115,8 +109,12 @@ class EssayEditor extends React.Component {
         </Accordion.Content>
       </Accordion>
       <br/>
-      <Button content='Save' color='green' onClick={this.save}/>
-      <Button content='Delete' color='green' onClick={this.delete}/>
+      <Button.Group floated="right">
+        <Button content='Save' color='green' onClick={this.save}/>
+        <Button content='Delete' color='red'
+                onClick={event => this.delete(event, data.file.index, data.file.name,
+                    this.crawler, data.file.state, data.file.checkpoint)}/>
+      </Button.Group>
     </Form>;
   }
 }

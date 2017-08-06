@@ -22,6 +22,7 @@ class MainMenu extends React.Component {
     this.handleProjectsClick = this.handleProjectsClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.removeYAML = this.removeYAML.bind(this);
   }
 
   handleItemClick(e, { name }) {
@@ -113,7 +114,7 @@ class MainMenu extends React.Component {
     event.preventDefault();
     const list = this.state;
     if (!list[checkpoint]) return;
-    if (list[checkpoint].file) crawler.writeFile(list[checkpoint].file, YAMLParser.write(list[checkpoint]));
+    if (list[checkpoint].file) crawler.writeFile(list[checkpoint].file.name, YAMLParser.write(list[checkpoint]));
     list[state].push(list[checkpoint]);
     list[checkpoint] = undefined;
     this.setState(list);
@@ -132,7 +133,11 @@ class MainMenu extends React.Component {
     const { activeItem } = this.state;
     let key;
     files.forEach((data, index) => {
+      const yaml = data;
       key = `${data.attributes.title}`;
+      yaml.file.index = index;
+      yaml.file.checkpoint = checkpoint;
+      yaml.file.state = state;
       console.log(data);
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
         {this.getShortenString(key)}
@@ -141,7 +146,8 @@ class MainMenu extends React.Component {
           <Icon link size='big' name='edit' color='black'
                 onClick={event => this.handlePageChange(event, 'essays', data)}/>
           <Icon link size='big' name='remove' color='red'
-                onClick={event => this.removeYAML(event, index, data.file, crawler, state, checkpoint)}/>
+                onClick={event =>
+                    this.removeYAML(event, yaml.file.index, data.file.name, crawler, state, checkpoint)}/>
         </div>
       </Menu.Item>);
     });
@@ -149,17 +155,22 @@ class MainMenu extends React.Component {
     return list;
   }
 
-  addYAML(event, files) {
+  addYAML(event, files, type) {
     const list = files;
     list.push({
       attributes: {
-        layout: 'essay',
-        type: 'essay',
-        title: 'New Essay',
+        layout: type,
+        type,
+        title: `New ${type}`,
         date: ISODate.getDate(),
         labels: [],
       },
-      file: `${ISODate.getDate()}.md`,
+      file: {
+        name: `${ISODate.getDate()}.md`,
+        index: '',
+        checkpoint: '',
+        state: '',
+      },
     });
     this.setState(list);
   }
@@ -179,7 +190,7 @@ class MainMenu extends React.Component {
         <Menu.Item>
           <span>
             <Icon link size='big' name='plus' color='green'
-                  onClick={event => this.addYAML(event, this.state.essayList, this.state.essayCrawler, 'essayList')}/>
+                  onClick={event => this.addYAML(event, this.state.essayList, 'essay')}/>
             <Icon link={this.state.deletedEssay !== undefined} size='big' name='undo'
                   disabled={!this.state.deletedEssay} color='teal' onClick={event =>
                       this.restoreYAML(event, this.state.essayCrawler, 'essayList', 'deletedEssay')}/>
