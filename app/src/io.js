@@ -110,6 +110,93 @@ class IO {
     });
   }
 
+  push() {
+    console.log('io push called');
+    let repo;
+    let index;
+    let oid;
+    let remote;
+
+    return new Promise((res, rej) => {
+      // Open the repository.
+      Git.Repository.open(this.localURL)
+        // Get the index.
+        .then((repoResult) => {
+          repo = repoResult;
+          console.log(`repoResult: ${repoResult}`);
+          return repoResult.refreshIndex();
+        })
+        // Assign the index to indexResult.
+        .then((indexResult) => {
+          index = indexResult;
+          console.log(`indexResult: ${indexResult}`);
+        })
+        // Add all files to the index.
+        .then(() => {
+          console.log('adding all');
+          return index.addAll();
+        })
+        // Write all files to index.
+        .then(() => {
+          console.log('writing all files to index');
+          return index.write();
+        })
+        .then(() => {
+          console.log('writing tree');
+          return index.writeTree();
+        })
+        .then((oidResult) => {
+          console.log('oid');
+          oid = oidResult;
+          return Git.Reference.nameToId(repo, 'HEAD');
+        })
+        .then((head) => {
+          console.log('get commit');
+          return repo.getCommit(head);
+        })
+        // Create a signature and commit
+        .then((parent) => {
+          const author = Git.Signature.default(repo);
+          return repo.createCommit('HEAD', author, author, 'Update from Techfolio Designer', oid, [parent]);
+        })
+        .then(() => {
+          console.log('create remote');
+          // console.log(`remoteURL: ${this.remoteURL}.git`);
+          // return Git.Remote.delete(repo, `${this.username}.github.io`);
+          // return Git.Remote.create(repo, `${this.username}.github.io`, `${this.remoteURL}.git`);
+          return repo.getRemote('origin');
+        })
+        .then((remoteResult) => {
+          remote = remoteResult;
+          console.log(`remoteResult: ${remoteResult}`);
+          // console.log(`remote name: ${remote.name()}`);
+          return remote.push(
+            ['refs/heads/master:refs/heads/master'],
+            {
+              callbacks: {
+                certificateCheck: () => 1,
+                credentials: () => {
+                  console.log(`username: ${this.username}`);
+                  console.log(`accessToken: ${this.accessToken}`);
+                  return Git.Cred.userpassPlainTextNew(this.accessToken, 'x-oauth-basic');
+                  // return Git.Cred.defaultNew();
+                },
+              },
+            });
+        })
+        // .done((commitId) => {
+        //   console.log('New Commit: ', commitId);
+        //   this.push2();
+        // })
+        .done(() => {
+          console.log('successfully pushhed');
+        })
+        // Catch any errors.
+        .catch((err) => { rej(err); });
+    });
+  }
+
+
   loadBio() {
     return new Promise((res, rej) => {
       const path = this.bioURL;
