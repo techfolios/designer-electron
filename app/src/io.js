@@ -166,7 +166,6 @@ class IO {
     });
   }
 
-
   loadBio() {
     return new Promise((res, rej) => {
       const path = this.bioURL;
