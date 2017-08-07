@@ -110,6 +110,62 @@ class IO {
     });
   }
 
+  push() {
+    let repo;
+    let index;
+    let oid;
+    let remote;
+
+    return new Promise((res, rej) => {
+      // Open the repository.
+      Git.Repository.open(this.localURL)
+        // Get the index.
+        .then((repoResult) => {
+          repo = repoResult;
+          return repoResult.refreshIndex();
+        })
+        // Assign the index to indexResult.
+        .then((indexResult) => {
+          index = indexResult;
+        })
+        // Add all files to the index.
+        .then(() => index.addAll())
+        // Write all files to index.
+        .then(() => index.write())
+        .then(() => index.writeTree())
+        .then((oidResult) => {
+          oid = oidResult;
+          return Git.Reference.nameToId(repo, 'HEAD');
+        })
+        .then((head) => {
+          console.log();
+          return repo.getCommit(head);
+        })
+        // Create a signature and commit
+        .then((parent) => {
+          const author = Git.Signature.default(repo);
+          return repo.createCommit('HEAD', author, author, 'Update from Techfolio Designer', oid, [parent]);
+        })
+        .then(() => repo.getRemote('origin'))
+        .then((remoteResult) => {
+          remote = remoteResult;
+          return remote.push(
+            ['refs/heads/master:refs/heads/master'],
+            {
+              callbacks: {
+                certificateCheck: () => 1,
+                credentials: () => Git.Cred.userpassPlaintextNew(this.accessToken, 'x-oauth-basic'),
+              },
+            });
+        })
+        // Catch any errors.
+        .catch((err) => { rej(err); })
+        .done(() => {
+          res('successfully pushed');
+        });
+    });
+  }
+
   loadBio() {
     return new Promise((res, rej) => {
       const path = this.bioURL;
