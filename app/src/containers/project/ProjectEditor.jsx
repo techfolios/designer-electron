@@ -6,43 +6,12 @@ class ProjectEditor extends React.Component {
     console.log(props.index);
     super(props);
 
-    this.state = {
-      data: props.data,
-      index: props.index,
-      saved: true,
-    };
-
-    if (!props.data) {
-      this.state.saved = false;
-      this.state.data = {
-        attributes: {
-          layout: 'project',
-          type: 'project',
-          image: '',
-          title: 'New Project',
-          permalink: 'projects/newproject',
-          date: '',
-          labels: [],
-          summary: '',
-        },
-        body: '',
-      };
-    }
-
-    if (!props.index) {
-      this.state.index = 0;
-    }
-
     this.setAttribute = this.setAttribute.bind(this);
     this.setBody = this.setBody.bind(this);
     this.saveProject = this.saveProject.bind(this);
     this.handleLabel = this.handleLabel.bind(this);
     this.setLabels = this.setLabels.bind(this);
-    this.removeProject = this.removeProject.bind(this);
-  }
-
-  removeProject() {
-    this.props.removeProject(() => this.state.index);
+    this.removeProject = this.props.remove;
   }
 
   setAttribute(e, attribute) {
