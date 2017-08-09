@@ -31,6 +31,7 @@ class Techfolio extends React.Component {
       projects: null,
       essays: null,
       essayCrawler: null,
+      projectCrawler: null,
       addItem: null,
       settings: null,
       selected: <Settings />,
@@ -194,7 +195,8 @@ class Techfolio extends React.Component {
       })
       .then((resProj) => {
         console.log(resProj);
-        this.setState({ projects: resProj });
+        this.setState({ projects: resProj.projects });
+        this.setState({ projectCrawler: resProj.crawler });
         return this.io.loadEssays();
       }, (rejProj) => {
         console.log(rejProj);
@@ -204,11 +206,14 @@ class Techfolio extends React.Component {
         this.setState({ essays: resEssay.essays });
         this.setState({ essayCrawler: resEssay.crawler });
         this.setState({ isLoading: false });
+      }, (rejEssay) => {
+        console.log(rejEssay);
+        this.setState({ isLoading: false });
       });
   }
 
   render() {
-    const { isLoading, bio, projects, selected, essays, essayCrawler } = this.state;
+    const { isLoading, bio, projects, projectCrawler, selected, essays, essayCrawler } = this.state;
 
     if (isLoading || !bio || !projects) {
       return <Dimmer inverted active> <Loader size="big" content="Loading..." /> </Dimmer>;
@@ -221,9 +226,8 @@ class Techfolio extends React.Component {
             essays={essays}
             essayCrawler={essayCrawler}
             projects={projects}
-            setSelected={this.setSelected}
-            saveProject={this.saveProject}
-            removeProject={this.removeProject} />
+            projectCrawler={projectCrawler}
+            setSelected={this.setSelected} />
         </Grid.Column>
         <Grid.Column stretched width={12} id="root">
           {selected}

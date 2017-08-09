@@ -11,10 +11,12 @@ class MainMenu extends React.Component {
     this.state = {
       visible: true,
       activeItem: '',
-      projects: props.projects,
+      projectList: props.projects,
       essayList: props.essays,
       essayCrawler: props.essayCrawler,
+      projectCrawler: props.projectCrawler,
       deletedEssay: undefined,
+      deletedProject: undefined,
     };
 
     this.maxWidth = 16;
@@ -197,12 +199,29 @@ class MainMenu extends React.Component {
   }
 
   renderProject() {
-    const { projects } = this.state;
-    return <ProjectsMenu
-        data={projects}
-        setSelected={this.props.setSelected}
-        saveProject={this.props.saveProject}
-        removeProject={this.props.removeProject} />;
+    const { projectList } = this.state;
+    return <Accordion as={MenuItem}>
+      <Accordion.Title>
+        <Menu.Item>
+          <Icon name='dropdown'/>
+          <Icon name='cubes'/>
+          Projects
+        </Menu.Item>
+      </Accordion.Title>
+      <Accordion.Content>
+        {this.getYAML(projectList, this.state.projectCrawler, 'projectList', 'deletedProject')}
+        <Divider/>
+        <Menu.Item>
+          <span>
+            <Icon link size='big' name='plus' color='green'
+                  onClick={event => this.addYAML(event, projectList, 'project', ISODate.getDate())}/>
+            <Icon link={this.state.deletedProject !== undefined} size='big' name='undo'
+                  disabled={!this.state.deletedProject} color='teal' onClick={event =>
+                this.restoreYAML(event, this.state.projectCrawler, 'projectList', 'deletedProject')}/>
+          </span>
+        </Menu.Item>
+      </Accordion.Content>
+    </Accordion>;
   }
 
   renderUpload(activeItem) {

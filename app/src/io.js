@@ -136,45 +136,12 @@ class IO {
   }
 
   loadProjects() {
-    return new Promise((res) => { // removed 'rej' as unused parameter
-      const list = [];
-      const projFiles = FS.readdirSync(this.projectsURL);
-      projFiles.forEach((file) => {
-        if (file !== 'index.html') {
-          const filePath = Path.resolve(this.projectsURL, file);
-          const projData = FS.readFileSync(filePath);
-          list.push(FrontMatter(projData.toString()));
-        }
-      });
+    return new Promise((res) => {
+      const list = {};
+      const crawler = new FileCrawler(this.projectsURL);
+      list.projects = crawler.getYAML();
+      list.crawler = crawler;
       res(list);
-    });
-  }
-
-  writeProject(index, data) {
-    return new Promise((res, rej) => {
-      const path = Path.resolve(this.projectsURL, `project-${index}.md`);
-      const yamlString = YamlParser.write(data);
-      FS.writeFile(path, yamlString, (err) => {
-        if (err) {
-          rej(err);
-        } else {
-          res(true);
-        }
-      });
-    });
-  }
-
-  removeProject(index) {
-    return new Promise((res, rej) => {
-      const path = Path.resolve(this.projectsURL, `project-${index}.md`);
-      const projFiles = FS.readdirSync(this.projectsURL).splice(1 + index);
-      FS.unlinkSync(path);
-      projFiles.splice(index + 1).forEach((file, fIndex) => {
-        const newURL = Path.resolve(this.projectsURL, `project-${index + fIndex}.md`);
-        const oldURL = Path.resolve(this.projectsURL, file);
-        FS.renameSync(oldURL, newURL);
-      });
-      res(true);
     });
   }
 
@@ -182,7 +149,6 @@ class IO {
     return new Promise((res) => {
       const list = {};
       const crawler = new FileCrawler(this.essaysURL);
-      console.log(list);
       list.essays = crawler.getYAML();
       list.crawler = crawler;
       res(list);
