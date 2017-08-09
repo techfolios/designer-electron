@@ -35,11 +35,10 @@ class FileCrawler {
   getYAML() {
     const list = [];
     const dir = this.dir;
-    const parser = new YAMLParser();
     fs.readdirSync(dir).forEach((file) => {
       if (file !== 'index.html') {
         const filePath = path.join(dir, file);
-        const data = parser.read(fs.readFileSync(filePath, 'utf8'), file);
+        const data = YAMLParser.read(fs.readFileSync(filePath, 'utf8'), file);
         list.push(data);
       }
     });

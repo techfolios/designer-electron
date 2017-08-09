@@ -1,7 +1,6 @@
 import React from 'react';
 import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
 
-import ProjectsMenu from './ProjectsMenu.jsx';
 import Images from '../containers/images/Images.jsx';
 import YAMLParser from '../utilities/yaml-parser';
 import ISODate from '../utilities/iso-date';
@@ -12,10 +11,12 @@ class MainMenu extends React.Component {
     this.state = {
       visible: true,
       activeItem: '',
-      projects: props.projects,
+      projectList: props.projects,
       essayList: props.essays,
       essayCrawler: props.essayCrawler,
+      projectCrawler: props.projectCrawler,
       deletedEssay: undefined,
+      deletedProject: undefined,
     };
 
     this.maxWidth = 16;
@@ -23,6 +24,7 @@ class MainMenu extends React.Component {
     this.handleProjectsClick = this.handleProjectsClick.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.removeYAML = this.removeYAML.bind(this);
   }
 
   handleItemClick(e, { name }) {
@@ -120,7 +122,7 @@ class MainMenu extends React.Component {
     event.preventDefault();
     const list = this.state;
     if (!list[checkpoint]) return;
-    if (list[checkpoint].file) crawler.writeFile(list[checkpoint].file, YAMLParser.write(list[checkpoint]));
+    if (list[checkpoint].file) crawler.writeFile(list[checkpoint].file.name, YAMLParser.write(list[checkpoint]));
     list[state].push(list[checkpoint]);
     list[checkpoint] = undefined;
     this.setState(list);
@@ -134,39 +136,45 @@ class MainMenu extends React.Component {
     return returnString;
   }
 
-  getYAML(files, crawler, state, checkpoint) {
+  getYAML(name, files, crawler, state, checkpoint) {
     const list = [];
     const { activeItem } = this.state;
     let key;
     files.forEach((data, index) => {
+      const yaml = data;
       key = `${data.attributes.title}`;
+      yaml.file.index = index;
+      yaml.file.checkpoint = checkpoint;
+      yaml.file.state = state;
       console.log(data);
-      list.push(<Menu.Item name={key} key={key} active={activeItem === key}>
+      list.push(<Menu.Item name={key} key={key} active={activeItem === key}
+                           onClick={event => this.handlePageChange(event, name, data)}>
         {this.getShortenString(key)}
-        <br />
-        <div>
-          <Icon link size='big' name='edit' color='black'
-            onClick={event => this.handlePageChange(event, 'essays', data)} />
-          <Icon link size='big' name='remove' color='red'
-            onClick={event => this.removeYAML(event, index, data.file, crawler, state, checkpoint)} />
-        </div>
       </Menu.Item>);
     });
 
     return list;
   }
 
-  addYAML(event, files) {
-    const list = files;
+  addYAML(event, menu, type, fileName) {
+    const list = menu;
     list.push({
       attributes: {
-        layout: 'essay',
-        type: 'essay',
-        title: 'New Essay',
+        layout: type,
+        type,
+        image: '',
+        title: `New ${type}`,
+        permalink: '',
         date: ISODate.getDate(),
         labels: [],
+        summary: '',
       },
-      file: `${ISODate.getDate()}.md`,
+      file: {
+        name: `${fileName}.md`,
+        index: '',
+        checkpoint: '',
+        state: '',
+      },
     });
     this.setState(list);
   }
@@ -181,12 +189,12 @@ class MainMenu extends React.Component {
         </Menu.Item>
       </Accordion.Title>
       <Accordion.Content>
-        {this.getYAML(this.state.essayList, this.state.essayCrawler, 'essayList', 'deletedEssay')}
-        <Divider />
+        {this.getYAML('essays', this.state.essayList, this.state.essayCrawler, 'essayList', 'deletedEssay')}
+        <Divider/>
         <Menu.Item>
           <span>
             <Icon link size='big' name='plus' color='green'
-              onClick={event => this.addYAML(event, this.state.essayList, this.state.essayCrawler, 'essayList')} />
+                  onClick={event => this.addYAML(event, this.state.essayList, 'essay', ISODate.getDate())}/>
             <Icon link={this.state.deletedEssay !== undefined} size='big' name='undo'
               disabled={!this.state.deletedEssay} color='teal' onClick={event =>
                 this.restoreYAML(event, this.state.essayCrawler, 'essayList', 'deletedEssay')} />
@@ -196,24 +204,44 @@ class MainMenu extends React.Component {
     </Accordion>;
   }
 
+  renderProject() {
+    const { projectList } = this.state;
+    return <Accordion as={MenuItem}>
+      <Accordion.Title>
+        <Menu.Item>
+          <Icon name='dropdown'/>
+          <Icon name='cubes'/>
+          Projects
+        </Menu.Item>
+      </Accordion.Title>
+      <Accordion.Content>
+        {this.getYAML('projects', projectList, this.state.projectCrawler, 'projectList', 'deletedProject')}
+        <Divider/>
+        <Menu.Item>
+          <span>
+            <Icon link size='big' name='plus' color='green'
+                  onClick={event => this.addYAML(event, projectList, 'project', 'New-Project')}/>
+            <Icon link={this.state.deletedProject !== undefined} size='big' name='undo'
+                  disabled={!this.state.deletedProject} color='teal' onClick={event =>
+                this.restoreYAML(event, this.state.projectCrawler, 'projectList', 'deletedProject')}/>
+          </span>
+        </Menu.Item>
+      </Accordion.Content>
+    </Accordion>;
+  }
+
   render() {
-    const { activeItem, projects } = this.state;
-    const tempStyle = { overflow: 'hidden', overflowY: 'scroll' };
+    const { activeItem } = this.state;
+    const tempCSS = { overflow: 'hidden', overflowY: 'scroll' };
     return (
-      <Menu style={tempStyle} vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
+      <Menu style={tempCSS} vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
         {this.renderSettings(activeItem)}
 
         {this.renderBio(activeItem)}
 
-        <Menu.Item>
-          <ProjectsMenu
-            data={projects}
-            setSelected={this.props.setSelected}
-            saveProject={this.props.saveProject}
-            removeProject={this.props.removeProject} />
-        </Menu.Item>
+        {this.renderProject()}
 
-        {this.renderEssays(activeItem)}
+        {this.renderEssays()}
 
         <Menu.Item
           onClick={() => this.props.setSelected(
