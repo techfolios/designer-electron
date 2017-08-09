@@ -43,19 +43,28 @@ class Awards extends React.Component {
             {award.title}
           </span>
         </h2>
-        <Form.Input label='Title'
-          defaultValue={award.title}
-          placeholder={'Example Award'}
-          onChange={e => this.handleChange(e, 'title', index)} />
-        <Form.Input label='Date'
-          defaultValue={award.date}
-          placeholder={'2015-Present'}
-          onChange={e => this.handleChange(e, 'date', index)} />
-        <Form.Input label='Phone Number'
-          defaultValue={award.awarder}
-          placeholder={'State of Hawaii'}
-          onChange={e => this.handleChange(e, 'awarder', index)} />
-        <Form.TextArea label='Summary'
+        <Form.Group>
+          <Form.Input
+            width={6}
+            label='Title'
+            defaultValue={award.title}
+            placeholder={'Title'}
+            onChange={e => this.handleChange(e, 'title', index)} />
+          <Form.Input
+            width={5}
+            label='Date'
+            defaultValue={award.date}
+            placeholder={'Date'}
+            onChange={e => this.handleChange(e, 'date', index)} />
+          <Form.Input
+            width={5}
+            label='Awarder'
+            defaultValue={award.awarder}
+            placeholder={'Awarder'}
+            onChange={e => this.handleChange(e, 'awarder', index)} />
+        </Form.Group>
+        <Form.TextArea
+          label='Summary'
           defaultValue={award.summary}
           placeholder={'My team won first place in 2015. See my partfolio site for more details.'}
           onChange={e => this.handleChange(e, 'summary', index)} />

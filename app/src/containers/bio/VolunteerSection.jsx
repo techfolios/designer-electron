@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Header } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 import Volunteer from './components/Volunteer.jsx';
 
@@ -29,10 +29,6 @@ class VolunteerSection extends React.Component {
 
   render() {
     return <div>
-      <Segment basic>
-        <Header className="ui center aligned header" as="h1"> Volunteer Work </Header>
-        <div className="ui divider"></div>
-      </Segment>
       <Form>
         <Volunteer data={this.state.volunteer} onChange={this.handleChange} />
       </Form>

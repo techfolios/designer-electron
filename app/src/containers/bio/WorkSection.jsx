@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Header } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 import Work from './components/Work.jsx';
 
@@ -29,10 +29,6 @@ class WorkSection extends React.Component {
 
   render() {
     return <div>
-      <Segment basic>
-        <Header className="ui center aligned header" as="h1"> Work </Header>
-        <div className="ui divider"></div>
-      </Segment>
       <Form>
         <Work data={this.state.work} onChange={this.handleChange} />
       </Form>
