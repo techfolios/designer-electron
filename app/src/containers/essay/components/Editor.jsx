@@ -47,7 +47,7 @@ class EssayEditor extends React.Component {
             labels[index] = event.target.value;
           }}/>
           <Icon link size='big' color='red' name='delete'
-                onClick={event => this.removeLabel(event, index)}/>
+            onClick={event => this.removeLabel(event, index)}/>
         </Form.Group>
       </Label>);
     });
@@ -76,19 +76,19 @@ class EssayEditor extends React.Component {
     if (!data.body) data.body = '';
     return <Form>
       <Form.Input label='Title' defaultValue={data.attributes.title || ''}
-                  onChange={(event) => {
-                    data.attributes.title = event.target.value || '';
-                  }}/>
+        onChange={(event) => {
+          data.attributes.title = event.target.value || '';
+        }}/>
       <Form.Group>
         <Form.Input width={2} label='Month' defaultValue={date[1]}
-                    onChange={(event) => { date[1] = ISODate.getPadded(event.target.value); }}/>
+          onChange={(event) => { date[1] = ISODate.getPadded(event.target.value); }}/>
         <Form.Input width={2} label='Day' defaultValue={date[2]}
-                    onChange={(event) => { date[2] = ISODate.getPadded(event.target.value); }}/>
+          onChange={(event) => { date[2] = ISODate.getPadded(event.target.value); }}/>
         <Form.Input width={4} label='Year' defaultValue={date[0]}
-                    onChange={(event) => { date[0] = ISODate.getPadded(event.target.value); }}/>
+          onChange={(event) => { date[0] = ISODate.getPadded(event.target.value); }}/>
       </Form.Group>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
-                     onChange={(event) => { data.body = event.target.value; }}/>
+        onChange={(event) => { data.body = event.target.value; }}/>
       <Accordion>
         <Accordion.Title>
           <Icon name='dropdown'/>

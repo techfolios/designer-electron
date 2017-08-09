@@ -52,7 +52,7 @@ class Settings extends React.Component {
 
     return (
       <Container fluid>
-      <h1>Settings</h1>
+        <h1>Settings</h1>
         {button}
       </Container>
     );

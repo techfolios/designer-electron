@@ -41,6 +41,12 @@ class MainMenu extends React.Component {
     this.props.onMenuSelect(name);
   }
 
+  handleDownload(e, { name }) {
+    this.setState({ activeItem: name });
+    this.props.onDownload();
+    this.props.onMenuSelect(name);
+  }
+
 
   renderSettings(activeItem) {
     return (
@@ -218,10 +224,15 @@ class MainMenu extends React.Component {
           Pics
         </Menu.Item>
 
+        <Menu.Item name='download' active={activeItem === 'download'} onClick={this.handleDownload}>
+          <Icon name='download' />
+          Download
+        </Menu.Item>
+
         <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
           <Icon name='upload' />
           Upload
-      </Menu.Item>
+        </Menu.Item>
       </Menu>
     );
   }

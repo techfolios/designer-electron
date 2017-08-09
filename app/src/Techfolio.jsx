@@ -165,6 +165,20 @@ class Techfolio extends React.Component {
     return this.io.importImage(url);
   }
 
+  handleDownload() {
+    this.setState({ isLoading: true });
+    this.io.cloneUserRemote()
+      .then((res) => {
+        if (res) {
+          console.log('success');
+        }
+        this.setState({ isLoading: false });
+      }, (rej) => {
+        console.log(rej);
+        this.setState({ isLoading: false });
+      });
+  }
+
   handleUpload() {
     this.setState({ isLoading: true });
     this.io.push()
@@ -235,7 +249,7 @@ class Techfolio extends React.Component {
     return (
       <Grid>
         <Grid.Column width={2}>
-          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
+          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} onDownload={this.handleDownload}
             essays={essays}
             essayCrawler={essayCrawler}
             projects={projects}
