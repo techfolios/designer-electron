@@ -234,7 +234,7 @@ class Techfolio extends React.Component {
 
     return (
       <Grid>
-        <Grid.Column width={3}>
+        <Grid.Column width={2}>
           <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
             essays={essays}
             essayCrawler={essayCrawler}
@@ -245,7 +245,7 @@ class Techfolio extends React.Component {
             images={images}
             importImage={this.importImage} />
         </Grid.Column>
-        <Grid.Column stretched width={12} id="root">
+        <Grid.Column stretched width={13} id="root">
           {selected}
         </Grid.Column>
       </Grid>
