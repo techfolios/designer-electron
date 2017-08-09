@@ -52,28 +52,40 @@ class Work extends React.Component {
             {work.company}
           </span>
         </h2>
-        <Form.Input label='Company'
-          defaultValue={work.company}
-          placeholder='Example Co.'
-          onChange={e => this.handleChange(e, 'company', index)} />
-        <Form.Input label='Position'
-          defaultValue={work.position}
-          placeholder="Example Specialist"
-          onChange={e => this.handleChange(e, 'position', index)} />
         <Form.Group>
-          <Form.Input label='End Date'
+          <Form.Input
+            width={8}
+            label='Company'
+            defaultValue={work.company}
+            placeholder='Company'
+            onChange={e => this.handleChange(e, 'company', index)} />
+          <Form.Input
+            width={8}
+            label='Position'
+            defaultValue={work.position}
+            placeholder="Position"
+            onChange={e => this.handleChange(e, 'position', index)} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
+            width={4}
+            label='End Date'
             defaultValue={work.endDate}
             placeholder="01/01/9999"
             onChange={e => this.handleChange(e, 'endDate', index)} />
-          <Form.Input label='Start Date'
+          <Form.Input
+            width={4}
+            label='Start Date'
             defaultValue={work.startDate}
             placeholder='01/01/1970'
             onChange={e => this.handleChange(e, 'startDate', index)} />
+          <Form.Input
+            width={8}
+            label='Website'
+            defaultValue={work.website}
+            placeholder="www.exampleco.com"
+            onChange={e => this.handleChange(e, 'website', index)} />
         </Form.Group>
-        <Form.Input label='Website'
-          defaultValue={work.website}
-          placeholder="www.exampleco.com"
-          onChange={e => this.handleChange(e, 'website', index)} />
         <Form.Input label='Summary'
           defaultValue={work.summary}
           placeholder="Lead developer for weather sensing project"

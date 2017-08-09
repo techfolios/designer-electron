@@ -52,36 +52,48 @@ class Volunteer extends React.Component {
             {volunteer.organization}
           </span>
         </h2>
-        <Form.Input label='Organization'
-          defaultValue={volunteer.organization}
-          placeholder='Example High School'
-          onChange={e => this.handleChange(e, 'organization', index)} />
-        <Form.Input label='Position'
-          defaultValue={volunteer.position}
-          placeholder="Example Specialist"
-          onChange={e => this.handleChange(e, 'position', index)} />
         <Form.Group>
-          <Form.Input label='Start Date'
+          <Form.Input
+            width={8}
+            label='Organization'
+            defaultValue={volunteer.organization}
+            placeholder='Organization'
+            onChange={e => this.handleChange(e, 'organization', index)} />
+          <Form.Input
+            width={8}
+            label='Position'
+            defaultValue={volunteer.position}
+            placeholder='Position'
+            onChange={e => this.handleChange(e, 'position', index)} />
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
+            width={4}
+            label='Start Date'
             defaultValue={volunteer.startDate}
             placeholder='01/01/1970'
             onChange={e => this.handleChange(e, 'startDate', index)} />
-          <Form.Input label='End Date'
+          <Form.Input
+            width={4}
+            label='End Date'
             defaultValue={volunteer.endDate}
             placeholder="01/01/9999"
             onChange={e => this.handleChange(e, 'endDate', index)} />
+          <Form.Input
+            width={8}
+            label='Website'
+            defaultValue={volunteer.website}
+            placeholder="Website"
+            onChange={e => this.handleChange(e, 'website', index)} />
         </Form.Group>
-        <Form.Input label='Website'
-          defaultValue={volunteer.website}
-          placeholder="https://www.example.org"
-          onChange={e => this.handleChange(e, 'website', index)} />
         <Form.Input label='Summary'
           defaultValue={volunteer.summary}
-          placeholder="Lead developer for weather sensing project"
+          placeholder="Summary"
           onChange={e => this.handleChange(e, 'summary', index)} />
         {volunteer.highlights.map((highlight, hindex) => <Form.Input key={hindex}
           label='Highlights'
           defaultValue={highlight}
-          placeholder="Design firmware for distributed weather sensor network"
+          placeholder="Highlights"
           onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)} />)
         }
         <br />

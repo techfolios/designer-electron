@@ -57,33 +57,45 @@ class Education extends React.Component {
             {education.institution}
           </span>
         </h2>
-        <Form.Input label='Institution'
-                    defaultValue={education.institution}
-                    placeholder={''}
-                    onChange={e => this.handleChange(e, 'institution', index)}/>
-        <Form.Input label='Area'
-                    defaultValue={education.area}
-                    placeholder={''}
-                    onChange={e => this.handleChange(e, 'area', index)}/>
+        <Form.Group>
+          <Form.Input label='Institution'
+                      defaultValue={education.institution}
+                      placeholder={'Institution'}
+                      onChange={e => this.handleChange(e, 'institution', index)}
+                      width={8}
+                    />
+          <Form.Input label='Area'
+                      defaultValue={education.area}
+                      placeholder={'Area'}
+                      onChange={e => this.handleChange(e, 'area', index)}
+                      width={8}
+                    />
+        </Form.Group>
         <Form.Group>
           <Form.Input label='Start Date'
                       defaultValue={education.startDate}
-                      placeholder={''}
-                      onChange={e => this.handleChange(e, 'startDate', index)}/>
+                      placeholder={'Start Date'}
+                      onChange={e => this.handleChange(e, 'startDate', index)}
+                      width={4}
+                    />
           <Form.Input label='End Date'
                       defaultValue={education.endDate}
-                      placeholder={''}
-                      onChange={e => this.handleChange(e, 'endDate', index)}/>
-        </Form.Group>
-        <Form.Group>
+                      placeholder={'End Date'}
+                      onChange={e => this.handleChange(e, 'endDate', index)}
+                      width={4}
+                    />
           <Form.Input label='Study Type'
                       defaultValue={education.studyType}
-                      placeholder={''}
-                      onChange={e => this.handleChange(e, 'studyType', index)}/>
+                      placeholder={'Study Type'}
+                      onChange={e => this.handleChange(e, 'studyType', index)}
+                      width={4}
+                    />
           <Form.Input label='GPA'
                       defaultValue={education.gpa}
-                      placeholder={''}
-                      onChange={e => this.handleChange(e, 'gpa', index)}/>
+                      placeholder={'GPA'}
+                      onChange={e => this.handleChange(e, 'gpa', index)}
+                      width={4}
+                    />
         </Form.Group>
         <Form.Dropdown data-index={index} className="dropdown"
                        multiple search selection fluid allowAdditions label='Courses'
