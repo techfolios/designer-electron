@@ -3,37 +3,55 @@ import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
+import request from 'superagent';
 
 import FileCrawler from './utilities/file-crawler';
 import values from './containers/values';
 
 class IO {
-  constructor(username) {
+  constructor() {
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(OS.homedir(), '.techfolios');
     values.dir = this.localURL;
-    this.remoteURL = `https://github.com/${username}/${username}.github.io`;
+
     this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
     this.projectsURL = Path.resolve(this.localURL, 'projects');
     this.essaysURL = Path.resolve(this.localURL, 'essays');
+    this.imagesURL = Path.resolve(this.localURL, 'images');
+  }
+
+  getUsername() {
+    return request('GET', `https://api.github.com/user?access_token=${this.accessToken}`)
+      .then((res) => {
+        this.username = JSON.parse(res.text).login;
+        return this.username;
+      });
   }
 
   init() {
-    return new Promise((res, rej) => {
+    this.accessToken = window.localStorage.getItem('githubtoken');
+    this.getUsername().then(() => {
+      this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
+    });
+    return new Promise((res) => {
       this.hasLocal()
         .then((hasLocal) => {
           if (hasLocal) {
-            // has local, good to go.
-            res('Local techfolio found.');
+            res('Local techfolio found');
           } else {
-            // clone template
-            this.cloneTechfoliosTemplate()
-              .then(() => res('Cloned remote techfolio template.'),
-              err => rej(err));
+            this.hasRemote()
+              .then((hasRemote) => {
+                if (hasRemote) {
+                  this.cloneUserRemote().then(() => {
+                    res('Cloned remote techfolio');
+                  });
+                } else {
+                  this.cloneTechfoliosTemplate().then(() => {
+                    res('Cloned techfolios template');
+                  });
+                }
+              });
           }
-        }, (err) => {
-          // error checking for local repo.
-          rej(err);
         });
     });
   }
@@ -57,10 +75,20 @@ class IO {
   added "this." in front of res to placate ESLint - is this a correct fix?
    */
   hasRemote() {
-    return new Promise((res) => {
-      res(false);
-      console.log(this.res);
-    });
+    return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
+       .then((res) => {
+         let result = false;
+         const repos = res.body;
+
+         for (let i = 0; i < res.body.length; i += 1) {
+           if (repos[i].name === `${this.username}.github.io`) {
+             result = true;
+           }
+         }
+         return result;
+       }, (err) => {
+         console.log(err);
+       });
   }
 
   cloneUserRemote() {
@@ -80,6 +108,62 @@ class IO {
           res(repo.mergeBranches('master', 'origin/master'));
         })
         .catch((err) => { rej(err); });
+    });
+  }
+
+  push() {
+    let repo;
+    let index;
+    let oid;
+    let remote;
+
+    return new Promise((res, rej) => {
+      // Open the repository.
+      Git.Repository.open(this.localURL)
+        // Get the index.
+        .then((repoResult) => {
+          repo = repoResult;
+          return repoResult.refreshIndex();
+        })
+        // Assign the index to indexResult.
+        .then((indexResult) => {
+          index = indexResult;
+        })
+        // Add all files to the index.
+        .then(() => index.addAll())
+        // Write all files to index.
+        .then(() => index.write())
+        .then(() => index.writeTree())
+        .then((oidResult) => {
+          oid = oidResult;
+          return Git.Reference.nameToId(repo, 'HEAD');
+        })
+        .then((head) => {
+          console.log();
+          return repo.getCommit(head);
+        })
+        // Create a signature and commit
+        .then((parent) => {
+          const author = Git.Signature.default(repo);
+          return repo.createCommit('HEAD', author, author, 'Update from Techfolio Designer', oid, [parent]);
+        })
+        .then(() => repo.getRemote('origin'))
+        .then((remoteResult) => {
+          remote = remoteResult;
+          return remote.push(
+            ['refs/heads/master:refs/heads/master'],
+            {
+              callbacks: {
+                certificateCheck: () => 1,
+                credentials: () => Git.Cred.userpassPlaintextNew(this.accessToken, 'x-oauth-basic'),
+              },
+            });
+        })
+        // Catch any errors.
+        .catch((err) => { rej(err); })
+        .done(() => {
+          res('successfully pushed');
+        });
     });
   }
 
@@ -155,6 +239,51 @@ class IO {
     });
   }
 
+  loadImages() {
+    return new Promise((res, rej) => {
+      FS.readdir(this.imagesURL, (err, data) => {
+        if (err) {
+          rej(err);
+        } else {
+          const result = data.map(image => Path.resolve(this.imagesURL, image));
+          res(result);
+        }
+      });
+    });
+  }
+
+  importImage(url) {
+    return new Promise((res) => {
+      const imageName = Path.basename(url);
+      console.log(this.imagesURL);
+      const newImagePath = Path.resolve(this.imagesURL, imageName);
+      const image = FS.readFileSync(url);
+      FS.writeFileSync(newImagePath, image);
+      res(newImagePath);
+    });
+  }
+
+  saveImage(name, data) {
+    return new Promise((res) => {
+      console.log(this);
+      console.log([name, data]);
+      res(true);
+    });
+  }
+
+  removeImage(name) {
+    return new Promise((res, rej) => {
+      const imagePath = Path.resolve(this.imagesURL, name);
+      FS.unlink(imagePath, (err) => {
+        if (err) {
+          rej(err);
+        } else {
+          res(true);
+        }
+      });
+    });
+  }
+
   /* ESLint fix needed
   push() {
     return new Promise((res, rej) => {
@@ -175,4 +304,4 @@ class IO {
   }
 }
 
-module.exports = IO;
+export default IO;

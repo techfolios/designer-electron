@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Header } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 import Awards from './components/Awards.jsx';
 
@@ -29,10 +29,6 @@ class AwardsSection extends React.Component {
 
   render() {
     return <div>
-      <Segment basic>
-        <Header className="ui center aligned header" as="h1"> Awards </Header>
-        <div className="ui divider"></div>
-      </Segment>
       <Form>
         <Awards data={this.state.awards} onChange={this.handleChange} />
       </Form>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
 
+import Images from '../containers/images/Images.jsx';
 import YAMLParser from '../utilities/yaml-parser';
 import ISODate from '../utilities/iso-date';
 
@@ -176,8 +177,8 @@ class MainMenu extends React.Component {
     return <Accordion as={MenuItem}>
       <Accordion.Title>
         <Menu.Item>
-          <Icon name='dropdown'/>
-          <Icon name='file text outline'/>
+          <Icon name='dropdown' />
+          <Icon name='file text outline' />
           Essays
         </Menu.Item>
       </Accordion.Title>
@@ -189,8 +190,8 @@ class MainMenu extends React.Component {
             <Icon link size='big' name='plus' color='green'
                   onClick={event => this.addYAML(event, this.state.essayList, 'essay', ISODate.getDate())}/>
             <Icon link={this.state.deletedEssay !== undefined} size='big' name='undo'
-                  disabled={!this.state.deletedEssay} color='teal' onClick={event =>
-                      this.restoreYAML(event, this.state.essayCrawler, 'essayList', 'deletedEssay')}/>
+              disabled={!this.state.deletedEssay} color='teal' onClick={event =>
+                this.restoreYAML(event, this.state.essayCrawler, 'essayList', 'deletedEssay')} />
           </span>
         </Menu.Item>
       </Accordion.Content>
@@ -223,15 +224,6 @@ class MainMenu extends React.Component {
     </Accordion>;
   }
 
-  renderUpload(activeItem) {
-    return (
-      <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
-        <Icon name='upload' />
-        Upload
-      </Menu.Item>
-    );
-  }
-
   render() {
     const { activeItem } = this.state;
     const tempStyle = { overflow: 'hidden', overflowY: 'scroll' };
@@ -245,12 +237,19 @@ class MainMenu extends React.Component {
 
         {this.renderEssays()}
 
-        {this.renderUpload(activeItem)}
-
-        <Menu.Item name='addItem' active={activeItem === 'addItem'} onClick={this.handleItemClick}>
-          <Icon name='plus' />
-          Add Menu Item
+        <Menu.Item
+          onClick={() => this.props.setSelected(
+            <Images data={this.props.images}
+              setSelected={this.props.setSelected}
+              importImage={this.props.importImage} />)}>
+          <Icon name='file image outline' />
+          Pics
         </Menu.Item>
+
+        <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
+          <Icon name='upload' />
+          Upload
+      </Menu.Item>
       </Menu>
     );
   }

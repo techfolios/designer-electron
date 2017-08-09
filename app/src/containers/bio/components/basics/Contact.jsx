@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'semantic-ui-react';
+import { Form, Segment } from 'semantic-ui-react';
 
 
 class Contact extends React.Component {
@@ -9,42 +9,60 @@ class Contact extends React.Component {
   }
 
   render() {
-    return (<div>
+    return (<Segment padded>
       <Form.Group>
-        <Form.Input label='Name'
+        <Form.Input
+          label={'Name'}
+          width={4}
+          type="text"
           defaultValue={this.state.name}
-          placeholder={'John Smith'}
+          placeholder={'Name'}
           onChange={e => this.props.handleChange(e, 'name')}
         />
-        <Form.Input label='Label'
+        <Form.Input
+          label={'Title'}
+          width={4}
+          type="text"
           defaultValue={this.state.label}
-          placeholder={'Student'}
+          placeholder={'Label'}
           onChange={e => this.props.handleChange(e, 'label')} />
-      </Form.Group>
-      <Form.Group>
-        <Form.Input label='Phone Number'
+        <Form.Input
+          label={'Phone Number'}
+          width={4}
+          type="tel"
           defaultValue={this.state.phone}
-          placeholder={'+1-808-867-5309'}
+          placeholder={'Phone Number'}
           onChange={e => this.props.handleChange(e, 'phone')} />
-        <Form.Input label='E-Mail'
+        <Form.Input
+          label={'Email'}
+          width={4}
+          type="email"
           defaultValue={this.state.email}
-          placeholder='jsmith@example.com'
+          placeholder={'E-Mail'}
           onChange={e => this.props.handleChange(e, 'email')} />
       </Form.Group>
-      <Form.Input label='Website'
-        width={9}
-        defaultValue={this.state.website}
-        placeholder="https://www.example.com"
-        onChange={e => this.props.handleChange(e, 'website')} />
-      <Form.Input label='Picture'
-        defaultValue={this.state.picture}
-        placeholder="https://www.example.com"
-        onChange={e => this.props.handleChange(e, 'picture')} />
-      <Form.TextArea label='Summary'
+      <Form.Group>
+        <Form.Input
+          label={'Webiste'}
+          width={8}
+          type="url"
+          defaultValue={this.state.website}
+          placeholder={'Website'}
+          onChange={e => this.props.handleChange(e, 'website')} />
+        <Form.Input
+          label={'Picture'}
+          width={8}
+          type="url"
+          defaultValue={this.state.picture}
+          placeholder={'Picture'}
+          onChange={e => this.props.handleChange(e, 'picture')} />
+      </Form.Group>
+      <Form.TextArea
+        label={'Summary'}
         defaultValue={this.state.summary}
-        placeholder="Once upon a midnight dreary, while I pondered weak and weary..."
+        placeholder={'Summary'}
         onChange={e => this.props.handleChange(e, 'summary')} />
-    </div>);
+    </Segment>);
   }
 }
 

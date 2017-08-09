@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 
 import Contact from './Contact.jsx';
 import Location from './Location.jsx';
@@ -9,7 +9,7 @@ class Basics extends React.Component {
     super(props);
     this.state = props.data;
     this.handleChange = this.handleChange.bind(this);
-    this.handleProfilesChange = this.handleProfilesChange.bind(this);
+    this.handleLocationChange = this.handleLocationChange.bind(this);
   }
 
   handleChange(e, key) {
@@ -17,18 +17,19 @@ class Basics extends React.Component {
     state[key] = e.target.value;
     this.props.onChange('basics', state);
   }
-
-  handleProfilesChange(data) {
+  handleLocationChange(e, key) {
     const state = this.state;
-    state.profiles = data;
+    state.location[key] = e.target.value;
     this.props.onChange('basics', state);
   }
 
   render() {
-    return (<Segment>
-      <Contact data={this.state} handleChange={this.handleChange} />
-      <Location data={this.state.location} onChange={this.props.onChange}/>
-    </Segment>);
+    return (
+      <Container fluid>
+        <Contact data={this.state} handleChange={this.handleChange} />
+        <Location data={this.state.location} handleChange={this.handleLocationChange}/>
+      </Container>
+    );
   }
 }
 

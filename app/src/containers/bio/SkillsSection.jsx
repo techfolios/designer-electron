@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Header } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 import Skills from './components/Skills.jsx';
 
@@ -29,10 +29,6 @@ class SkillsSection extends React.Component {
 
   render() {
     return <div>
-      <Segment basic>
-        <Header className="ui center aligned header" as="h1"> Skills </Header>
-        <div className="ui divider"></div>
-      </Segment>
       <Form>
         <Skills data={this.state.skills} onChange={this.handleChange} />
       </Form>

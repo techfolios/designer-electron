@@ -41,15 +41,20 @@ class References extends React.Component {
             {reference.name}
           </span>
         </h2>
-        <Form.Input label='Name'
-          defaultValue={reference.name}
-          placeholder={'Available upon request'}
-          onChange={e => this.handleChange(e, 'name', index)} />
-        <Form.Input label='Reference'
-          defaultValue={reference.reference}
-          placeholder={''}
-          onChange={e => this.handleChange(e, 'reference', index)} />
-        <br />
+        <Form.Group>
+          <Form.Input
+            width={8}
+            label='Name'
+            defaultValue={reference.name}
+            placeholder={'Name'}
+            onChange={e => this.handleChange(e, 'name', index)} />
+          <Form.Input
+            width={8}
+            label='Reference'
+            defaultValue={reference.reference}
+            placeholder={'Reference'}
+            onChange={e => this.handleChange(e, 'reference', index)} />
+        </Form.Group>
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

@@ -15,6 +15,7 @@ import RefSection from './containers/bio/RefSection.jsx';
 import Essay from './containers/essay/Essays.jsx';
 import Project from './containers/project/Projects.jsx';
 import IO from './io';
+import Oauth from './utilities/Oauth';
 
 class Techfolio extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class Techfolio extends React.Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.saveProject = this.saveProject.bind(this);
     this.removeProject = this.removeProject.bind(this);
+    this.importImage = this.importImage.bind(this);
     this.state = {
       bio: null,
       projects: null,
@@ -163,6 +165,10 @@ class Techfolio extends React.Component {
     this.io.removeProject(index);
   }
 
+  importImage(url) {
+    return this.io.importImage(url);
+  }
+
   handleUpload() {
     this.setState({ isLoading: true });
     this.io.push()
@@ -179,7 +185,11 @@ class Techfolio extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    this.io.init()
+    Oauth.login()
+      .then(() => {
+        console.log('');
+        return this.io.init();
+      })
       .then((res) => {
         console.log(res);
         return this.io.loadBio();
@@ -207,6 +217,16 @@ class Techfolio extends React.Component {
       .then((resEssay) => {
         this.setState({ essays: resEssay.essays });
         this.setState({ essayCrawler: resEssay.crawler });
+        return this.io.loadImages();
+      }, (rejEssay) => {
+        console.log(rejEssay);
+        this.setState({ isLoading: false });
+      })
+      .then((resImages) => {
+        this.setState({ images: resImages });
+        this.setState({ isLoading: false });
+      }, (rejImages) => {
+        console.log(rejImages);
         this.setState({ isLoading: false });
       }, (rejEssay) => {
         console.log(rejEssay);
@@ -215,7 +235,7 @@ class Techfolio extends React.Component {
   }
 
   render() {
-    const { isLoading, bio, projects, projectCrawler, selected, essays, essayCrawler } = this.state;
+    const { isLoading, bio, projects, projectCrawler, selected, essays, essayCrawler, images } = this.state;
 
     if (isLoading || !bio || !projects) {
       return <Dimmer inverted active> <Loader size="big" content="Loading..." /> </Dimmer>;
@@ -223,15 +243,17 @@ class Techfolio extends React.Component {
 
     return (
       <Grid>
-        <Grid.Column width={3}>
+        <Grid.Column width={2}>
           <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
             essays={essays}
             essayCrawler={essayCrawler}
             projects={projects}
             projectCrawler={projectCrawler}
-            setSelected={this.setSelected} />
+            setSelected={this.setSelected}
+            images={images}
+            importImage={this.importImage} />
         </Grid.Column>
-        <Grid.Column stretched width={12} id="root">
+        <Grid.Column stretched width={13} id="root">
           {selected}
         </Grid.Column>
       </Grid>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Header } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 import Interests from './components/Interests.jsx';
 
@@ -29,10 +29,6 @@ class InterestsSection extends React.Component {
 
   render() {
     return <div>
-      <Segment basic>
-        <Header className="ui center aligned header" as="h1"> Interests </Header>
-        <div className="ui divider"></div>
-      </Segment>
       <Form>
         <Interests data={this.state.interests} onChange={ this.handleChange } />
       </Form>

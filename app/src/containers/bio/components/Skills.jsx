@@ -51,13 +51,23 @@ class Skills extends React.Component {
             {skill.name}
           </span>
         </h2>
-        <Form.Input label='Name'
-          defaultValue={skill.name}
-          placeholder={'Hacky Sack'}
-          onChange={e => this.handleChange(e, 'name', index)} />
         <Form.Group>
-          <Form.Dropdown data-index={index} className="dropdown"
-            multiple search selection fluid allowAdditions label='Keywords'
+          <Form.Input
+            width={4}
+            label='Name'
+            defaultValue={skill.name}
+            placeholder={'Name'}
+            onChange={e => this.handleChange(e, 'name', index)} />
+          <Form.Dropdown
+            width={12}
+            data-index={index}
+            className="dropdown"
+            multiple
+            search
+            selection
+            fluid
+            allowAdditions
+            label='Keywords'
             defaultValue={skill.keywords}
             noResultsMessage={'Start typing to add a new keyword!'}
             options={
@@ -70,7 +80,6 @@ class Skills extends React.Component {
             onAddItem={this.handleAddition}
           />
         </Form.Group>
-        <br />
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

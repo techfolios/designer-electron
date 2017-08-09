@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Header } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 import References from './components/References.jsx';
 
@@ -29,10 +29,6 @@ class RefSection extends React.Component {
 
   render() {
     return <div>
-      <Segment basic>
-        <Header className="ui center aligned header" as="h1"> References </Header>
-        <div className="ui divider"></div>
-      </Segment>
       <Form>
         <References data={this.state.references} onChange={ this.handleChange } />
       </Form>
