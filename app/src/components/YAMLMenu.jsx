@@ -1,9 +1,11 @@
+/* eslint-disable */
+// todo
 import React from 'react';
 import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
 
 import YAMLParser from '../utilities/yaml-parser';
 import ISODate from '../utilities/iso-date';
-// todo
+
 class YAMLMenu extends React.Component {
   render() {
     return <Accordion as={MenuItem}>

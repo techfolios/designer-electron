@@ -1,7 +1,6 @@
 import React from 'react';
 import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
 
-import ProjectsMenu from '../containers/project/Projects.jsx';
 import YAMLParser from '../utilities/yaml-parser';
 import ISODate from '../utilities/iso-date';
 

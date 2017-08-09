@@ -3,10 +3,8 @@ import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
-import FrontMatter from 'front-matter';
 
 import FileCrawler from './utilities/file-crawler';
-import YamlParser from './utilities/yaml-parser';
 import values from './containers/values';
 
 class IO {
