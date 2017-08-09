@@ -1,6 +1,5 @@
 import React from 'react';
-// import { Button, Icon, Menu } from 'semantic-ui-react';
-import { Divider, Form, Header, Segment } from 'semantic-ui-react';
+import { Form} from 'semantic-ui-react';
 
 import Profiles from './components/Profiles.jsx';
 
