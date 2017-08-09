@@ -1,11 +1,9 @@
 import React from 'react';
 
-import { Form, Button, Icon, Accordion, Label } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 import FileCrawler from '../../../utilities/file-crawler';
 import YAMLParser from '../../../utilities/yaml-parser';
 import ISODate from '../../../utilities/iso-date';
-
-import values from '../values';
 
 const Path = require('path');
 
@@ -16,7 +14,7 @@ class EssayEditor extends React.Component {
     this.data = this.state.data;
     this.date = this.data.file.name.split(/[-.]/);
     this.menu = props.state;
-    this.crawler = new FileCrawler(Path.resolve(values.dir, 'essays'));
+    this.crawler = new FileCrawler(Path.resolve(this.props.dir, 'essays'));
 
     this.delete = this.props.delete;
     this.save = this.save.bind(this);
@@ -42,7 +40,7 @@ class EssayEditor extends React.Component {
   render() {
     const data = this.data;
     const date = this.date;
-    if (!data.body) data.body = '';
+
     return <Form>
       <Form.Input label='Title' defaultValue={data.attributes.title || ''}
                   onChange={(event) => {

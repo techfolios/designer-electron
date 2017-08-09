@@ -7,11 +7,13 @@ import FrontMatter from 'front-matter';
 
 import FileCrawler from './utilities/file-crawler';
 import YamlParser from './utilities/yaml-parser';
+import values from './containers/values';
 
 class IO {
   constructor(username) {
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(OS.homedir(), '.techfolios');
+    values.dir = this.localURL;
     this.remoteURL = `https://github.com/${username}/${username}.github.io`;
     this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
     this.projectsURL = Path.resolve(this.localURL, 'projects');

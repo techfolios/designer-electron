@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
 
-import ProjectsMenu from './ProjectsMenu.jsx';
+import ProjectsMenu from '../containers/project/Projects.jsx';
 import YAMLParser from '../utilities/yaml-parser';
 import ISODate from '../utilities/iso-date';
 
@@ -130,7 +130,7 @@ class MainMenu extends React.Component {
     return returnString;
   }
 
-  getYAML(files, crawler, state, checkpoint) {
+  getYAML(name, files, crawler, state, checkpoint) {
     const list = [];
     const { activeItem } = this.state;
     let key;
@@ -142,7 +142,7 @@ class MainMenu extends React.Component {
       yaml.file.state = state;
       console.log(data);
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}
-                           onClick={event => this.handlePageChange(event, 'essays', data)}>
+                           onClick={event => this.handlePageChange(event, name, data)}>
         {this.getShortenString(key)}
       </Menu.Item>);
     });
@@ -183,7 +183,7 @@ class MainMenu extends React.Component {
         </Menu.Item>
       </Accordion.Title>
       <Accordion.Content>
-        {this.getYAML(this.state.essayList, this.state.essayCrawler, 'essayList', 'deletedEssay')}
+        {this.getYAML('essays', this.state.essayList, this.state.essayCrawler, 'essayList', 'deletedEssay')}
         <Divider/>
         <Menu.Item>
           <span>
@@ -209,12 +209,12 @@ class MainMenu extends React.Component {
         </Menu.Item>
       </Accordion.Title>
       <Accordion.Content>
-        {this.getYAML(projectList, this.state.projectCrawler, 'projectList', 'deletedProject')}
+        {this.getYAML('projects', projectList, this.state.projectCrawler, 'projectList', 'deletedProject')}
         <Divider/>
         <Menu.Item>
           <span>
             <Icon link size='big' name='plus' color='green'
-                  onClick={event => this.addYAML(event, projectList, 'project', ISODate.getDate())}/>
+                  onClick={event => this.addYAML(event, projectList, 'project', 'New-Project')}/>
             <Icon link={this.state.deletedProject !== undefined} size='big' name='undo'
                   disabled={!this.state.deletedProject} color='teal' onClick={event =>
                 this.restoreYAML(event, this.state.projectCrawler, 'projectList', 'deletedProject')}/>
@@ -234,7 +234,7 @@ class MainMenu extends React.Component {
   }
 
   render() {
-    const { activeItem, projects } = this.state;
+    const { activeItem } = this.state;
     const tempStyle = { overflow: 'hidden', overflowY: 'scroll' };
     return (
       <Menu style={tempStyle} vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
@@ -244,7 +244,7 @@ class MainMenu extends React.Component {
 
         {this.renderProject()}
 
-        {this.renderEssays(activeItem)}
+        {this.renderEssays()}
 
         {this.renderUpload(activeItem)}
 
