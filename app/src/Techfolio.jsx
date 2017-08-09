@@ -101,11 +101,11 @@ class Techfolio extends React.Component {
         break;
       case 'projects':
         retSelection = <Project dir={this.io.getLocalFolder()} key={data.attributes.title}
-                                   delete={state.removeYAML} data={data} state={state} />;
+          delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'essays':
         retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title}
-                              delete={state.removeYAML} data={data} state={state} />;
+          delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;
@@ -171,7 +171,7 @@ class Techfolio extends React.Component {
 
   handleDownload() {
     this.setState({ isLoading: true });
-    this.io.cloneUserRemote()
+    this.io.download()
       .then((res) => {
         if (res) {
           console.log('success');
@@ -259,7 +259,7 @@ class Techfolio extends React.Component {
     return (
       <Grid>
         <Grid.Column width={2}>
-          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} onDownload={this.handleDownload}
+          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload} onDownload={this.handleDownload()}
             essays={essays}
             essayCrawler={essayCrawler}
             projects={projects}

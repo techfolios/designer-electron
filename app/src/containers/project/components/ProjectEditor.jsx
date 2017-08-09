@@ -57,48 +57,48 @@ class ProjectEditor extends React.Component {
     return <div>
       <Form onSubmit={this.saveProject}>
         <Form.Input label='Title'
-                    defaultValue={title}
-                    placeholder={'Title of your Project'}
-                    onChange={e => this.setAttribute(e, 'title')}/>
+          defaultValue={title}
+          placeholder={'Title of your Project'}
+          onChange={e => this.setAttribute(e, 'title')}/>
         <Form.Input label='Image'
-                    defaultValue={image}
-                    placeholder={'url to cover image'}
-                    onChange={e => this.setAttribute(e, 'image')}/>
+          defaultValue={image}
+          placeholder={'url to cover image'}
+          onChange={e => this.setAttribute(e, 'image')}/>
         <Form.Input label='Date'
-                    defaultValue={date}
-                    placeholder={''}
-                    onChange={e => this.setAttribute(e, 'date')}/>
+          defaultValue={date}
+          placeholder={''}
+          onChange={e => this.setAttribute(e, 'date')}/>
         <Form.Input label='Permalink'
-                    defaultValue={permalink}
-                    placeholder={''}
-                    onChange={e => this.setAttribute(e, 'permalink')}/>
+          defaultValue={permalink}
+          placeholder={''}
+          onChange={e => this.setAttribute(e, 'permalink')}/>
         <Form.Dropdown
-            multiple search selection fluid allowAdditions label='Labels'
-            defaultValue={labels}
-            noResultsMessage={'Start typing to add a new keyword!'}
-            options={
-              labels.map((label, key) => ({
-                key,
-                value: label,
-                text: label,
-              }))
-            }
-            onChange={this.handleLabel}/>
+          multiple search selection fluid allowAdditions label='Labels'
+          defaultValue={labels}
+          noResultsMessage={'Start typing to add a new keyword!'}
+          options={
+            labels.map((label, key) => ({
+              key,
+              value: label,
+              text: label,
+            }))
+          }
+          onChange={this.handleLabel}/>
         <Form.Input label='Summary'
-                    defaultValue={summary}
-                    placeholder={'A short description about your project'}
-                    onChange={e => this.setAttribute(e, 'summary')}/>
+          defaultValue={summary}
+          placeholder={'A short description about your project'}
+          onChange={e => this.setAttribute(e, 'summary')}/>
         <Form.TextArea label='Body'
-                       autoHeight
-                       defaultValue={body}
-                       placeholder={'A detailed description of your project'}
-                       onChange={this.setBody}/>
+          autoHeight
+          defaultValue={body}
+          placeholder={'A detailed description of your project'}
+          onChange={this.setBody}/>
       </Form>
       <Button.Group floated="right">
         <Button content='Save' color='green' onClick={this.save}/>
         <Button content='Delete' color='red'
-                onClick={event => this.delete(event, data.file.index, data.file.name,
-                    this.crawler, data.file.state, data.file.checkpoint)}/>
+          onClick={event => this.delete(event, data.file.index, data.file.name,
+            this.crawler, data.file.state, data.file.checkpoint)}/>
       </Button.Group>
     </div>;
   }

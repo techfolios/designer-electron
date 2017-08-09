@@ -56,6 +56,27 @@ class IO {
     });
   }
 
+  download() {
+    this.accessToken = window.localStorage.getItem('githubtoken');
+    this.getUsername().then(() => {
+      this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
+    });
+    return new Promise((res) => {
+      this.hasRemote()
+        .then((hasRemote) => {
+          if (hasRemote) {
+            this.cloneUserRemote().then(() => {
+              res('Cloned remote techfolio');
+            });
+          } else {
+            this.cloneTechfoliosTemplate().then(() => {
+              res('Cloned techfolios template');
+            });
+          }
+        });
+    });
+  }
+
   hasLocal() {
     return new Promise((res, rej) => {
       FS.mkdir(this.localURL, (err) => {

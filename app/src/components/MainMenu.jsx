@@ -148,7 +148,7 @@ class MainMenu extends React.Component {
       yaml.file.state = state;
       console.log(data);
       list.push(<Menu.Item name={key} key={key} active={activeItem === key}
-                           onClick={event => this.handlePageChange(event, name, data)}>
+        onClick={event => this.handlePageChange(event, name, data)}>
         {this.getShortenString(key)}
       </Menu.Item>);
     });
@@ -194,7 +194,7 @@ class MainMenu extends React.Component {
         <Menu.Item>
           <span>
             <Icon link size='big' name='plus' color='green'
-                  onClick={event => this.addYAML(event, this.state.essayList, 'essay', ISODate.getDate())}/>
+              onClick={event => this.addYAML(event, this.state.essayList, 'essay', ISODate.getDate())}/>
             <Icon link={this.state.deletedEssay !== undefined} size='big' name='undo'
               disabled={!this.state.deletedEssay} color='teal' onClick={event =>
                 this.restoreYAML(event, this.state.essayCrawler, 'essayList', 'deletedEssay')} />
@@ -220,9 +220,9 @@ class MainMenu extends React.Component {
         <Menu.Item>
           <span>
             <Icon link size='big' name='plus' color='green'
-                  onClick={event => this.addYAML(event, projectList, 'project', 'New-Project')}/>
+              onClick={event => this.addYAML(event, projectList, 'project', 'New-Project')}/>
             <Icon link={this.state.deletedProject !== undefined} size='big' name='undo'
-                  disabled={!this.state.deletedProject} color='teal' onClick={event =>
+              disabled={!this.state.deletedProject} color='teal' onClick={event =>
                 this.restoreYAML(event, this.state.projectCrawler, 'projectList', 'deletedProject')}/>
           </span>
         </Menu.Item>
