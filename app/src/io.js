@@ -29,29 +29,29 @@ class IO {
 
   init() {
     this.accessToken = window.localStorage.getItem('githubtoken');
-    this.getUsername().then(() => {
-      this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
-    });
     return new Promise((res) => {
-      this.hasLocal()
-        .then((hasLocal) => {
-          if (hasLocal) {
-            res('Local techfolio found');
-          } else {
-            this.hasRemote()
-              .then((hasRemote) => {
-                if (hasRemote) {
-                  this.cloneUserRemote().then(() => {
-                    res('Cloned remote techfolio');
-                  });
-                } else {
-                  this.cloneTechfoliosTemplate().then(() => {
-                    res('Cloned techfolios template');
-                  });
-                }
-              });
-          }
-        });
+      this.getUsername().then(() => {
+        this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
+        this.hasLocal()
+          .then((hasLocal) => {
+            if (hasLocal) {
+              res('Local techfolio found');
+            } else {
+              this.hasRemote()
+                .then((hasRemote) => {
+                  if (hasRemote) {
+                    this.cloneUserRemote().then(() => {
+                      res('Cloned remote techfolio');
+                    });
+                  } else {
+                    this.cloneTechfoliosTemplate().then(() => {
+                      res('Cloned techfolios template');
+                    });
+                  }
+                });
+            }
+          });
+      });
     });
   }
 
@@ -74,11 +74,12 @@ class IO {
   added "this." in front of res to placate ESLint - is this a correct fix?
    */
   hasRemote() {
-    return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
+    // return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
+    return request('GET', `https://api.github.com/users/${this.username}/repos?access_token=${this.accessToken}`)
        .then((res) => {
          let result = false;
          const repos = res.body;
-
+         console.log(res.body);
          console.log(`looking for: ${this.username}.github.io`);
 
          for (let i = 0; i < res.body.length; i += 1) {
