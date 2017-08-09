@@ -49,10 +49,11 @@ class FileCrawler {
     if (fileName !== undefined) fs.removeSync(path.join(this.dir, fileName));
   }
 
-  writeFile(fileName, data) {
+  writeFile(fileName, data, oldFileName) {
     const filePath = path.resolve(this.dir, fileName);
     console.log(filePath);
     fs.outputFileSync(filePath, data);
+    if (oldFileName && oldFileName !== fileName) fs.removeSync(path.resolve(this.dir, oldFileName));
   }
 
   createJSON(fileName, data) {
@@ -62,4 +63,4 @@ class FileCrawler {
 }
 
 
-module.exports = FileCrawler;
+export default FileCrawler;

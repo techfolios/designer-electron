@@ -32,10 +32,12 @@ class ProjectEditor extends React.Component {
 
   save(event) {
     event.preventDefault();
+    const oldFileName = this.data.file.name;
+    this.data.file.name = `${this.data.attributes.title.trim().replace(/\s/g, '-')}.md`;
     this.data.body = this.data.body.trim();
     const yaml = YAMLParser.write(this.data);
     console.log(yaml);
-    this.crawler.writeFile(this.data.file.name, yaml);
+    this.crawler.writeFile(this.data.file.name, yaml, oldFileName);
     this.menu.setState(this.data);
   }
 

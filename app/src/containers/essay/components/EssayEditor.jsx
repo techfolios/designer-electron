@@ -24,11 +24,13 @@ class EssayEditor extends React.Component {
   save(event) {
     event.preventDefault();
     const date = `${this.date[0]}-${this.date[1]}-${this.date[2]}`;
+    const oldFileName = this.data.file.name;
+    this.data.file.name = `${date}.md`;
     this.data.attributes.date = date;
     this.data.body = this.data.body.trim();
     const yaml = YAMLParser.write(this.data);
     console.log(yaml);
-    this.crawler.writeFile(this.data.file.name, yaml);
+    this.crawler.writeFile(this.data.file.name, yaml, oldFileName);
     this.menu.setState(this.data);
   }
 
