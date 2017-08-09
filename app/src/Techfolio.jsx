@@ -236,6 +236,7 @@ class Techfolio extends React.Component {
 
   render() {
     const { isLoading, bio, projects, projectCrawler, selected, essays, essayCrawler, images } = this.state;
+    const tempCSS = { padding: '30px 0px 30px 40px' };
 
     if (isLoading || !bio || !projects) {
       return <Dimmer inverted active> <Loader size="big" content="Loading..." /> </Dimmer>;
@@ -253,7 +254,7 @@ class Techfolio extends React.Component {
             images={images}
             importImage={this.importImage} />
         </Grid.Column>
-        <Grid.Column stretched width={13} id="root">
+        <Grid.Column stretched width={13} id="root" style={tempCSS}>
           {selected}
         </Grid.Column>
       </Grid>

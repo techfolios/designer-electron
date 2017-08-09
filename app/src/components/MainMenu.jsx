@@ -226,9 +226,9 @@ class MainMenu extends React.Component {
 
   render() {
     const { activeItem } = this.state;
-    const tempStyle = { overflow: 'hidden', overflowY: 'scroll' };
+    const tempCSS = { overflow: 'hidden', overflowY: 'scroll' };
     return (
-      <Menu style={tempStyle} vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
+      <Menu style={tempCSS} vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
         {this.renderSettings(activeItem)}
 
         {this.renderBio(activeItem)}
