@@ -44,19 +44,26 @@ class Profiles extends React.Component {
             {profile.network}
           </span>
         </div>
-        <Form.Input label="Network"
-          defaultValue={profile.network}
-          placeholder="Github"
-          onChange={e => this.handleChange(e, 'network', index)} />
-        <Form.Input label="Username"
-          defaultValue={profile.username}
-          placeholder="Username"
-          onChange={e => this.handleChange(e, 'username', index)} />
-        <Form.Input label="Url"
-          defaultValue={profile.url}
-          placeholder="https://github.com"
-          onChange={e => this.handleChange(e, 'url', index)} />
-        <br />
+        <Form.Group>
+          <Form.Input
+            label="Network"
+            width={5}
+            defaultValue={profile.network}
+            placeholder="Network"
+            onChange={e => this.handleChange(e, 'network', index)} />
+          <Form.Input
+            width={5}
+            label="Username"
+            defaultValue={profile.username}
+            placeholder="Username"
+            onChange={e => this.handleChange(e, 'username', index)} />
+          <Form.Input
+            width={6}
+            label="Url"
+            defaultValue={profile.url}
+            placeholder="Url"
+            onChange={e => this.handleChange(e, 'url', index)} />
+          </Form.Group>
       </Segment>)}
       <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>

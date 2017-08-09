@@ -30,12 +30,6 @@ class ProfilesSection extends React.Component {
 
   render() {
     return <div>
-      <Segment basic>
-        <Header className="ui horizontal centered header" as="h1">
-          Profiles
-        </Header>
-        <Divider />
-      </Segment>
       <Form>
         <Profiles data={this.state.basics.profiles} onChange={this.handleChange} />
       </Form>
