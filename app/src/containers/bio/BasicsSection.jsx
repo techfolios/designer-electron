@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Header } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 import Basics from './components/basics/Basics.jsx';
 
@@ -19,7 +19,6 @@ class BasicsSection extends React.Component {
   }
 
   handleSaveBio(e) {
-    console.log(e);
     e.preventDefault();
     this.props.onSaveBio(this.state);
   }
@@ -29,16 +28,14 @@ class BasicsSection extends React.Component {
   }
 
   render() {
-    return (<div>
-      <Segment basic>
-        <Header className="ui center aligned header" as="h1"> Basics </Header>
-        <div className="ui divider"></div>
-      </Segment>
-      <Form>
-        <Basics data={this.state.basics} onChange={this.handleChange} />
-      </Form>
-      <Form.Button positive floated="right" type="Submit" onClick={this.handleSaveBio}>Save</Form.Button>
-    </div>);
+    return (
+      <div>
+        <Form>
+          <Basics data={this.state.basics} onChange={this.handleChange} />
+        </Form>
+        <Form.Button positive floated="right" type="Submit" onClick={this.handleSaveBio}>Save</Form.Button>
+      </div>
+    );
   }
 }
 

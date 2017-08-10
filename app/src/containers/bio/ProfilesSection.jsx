@@ -1,6 +1,5 @@
 import React from 'react';
-// import { Button, Icon, Menu } from 'semantic-ui-react';
-import { Divider, Form, Header, Segment } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 import Profiles from './components/Profiles.jsx';
 
@@ -30,12 +29,6 @@ class ProfilesSection extends React.Component {
 
   render() {
     return <div>
-      <Segment basic>
-        <Header className="ui horizontal centered header" as="h1">
-          Profiles
-        </Header>
-        <Divider />
-      </Segment>
       <Form>
         <Profiles data={this.state.basics.profiles} onChange={this.handleChange} />
       </Form>

@@ -3,16 +3,17 @@ import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
-import FrontMatter from 'front-matter';
 import request from 'superagent';
 
 import FileCrawler from './utilities/file-crawler';
-import YamlParser from './utilities/yaml-parser';
+import values from './containers/values';
 
 class IO {
   constructor() {
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(OS.homedir(), '.techfolios');
+    values.dir = this.localURL;
+
     this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
     this.projectsURL = Path.resolve(this.localURL, 'projects');
     this.essaysURL = Path.resolve(this.localURL, 'essays');
@@ -110,6 +111,62 @@ class IO {
     });
   }
 
+  push() {
+    let repo;
+    let index;
+    let oid;
+    let remote;
+
+    return new Promise((res, rej) => {
+      // Open the repository.
+      Git.Repository.open(this.localURL)
+        // Get the index.
+        .then((repoResult) => {
+          repo = repoResult;
+          return repoResult.refreshIndex();
+        })
+        // Assign the index to indexResult.
+        .then((indexResult) => {
+          index = indexResult;
+        })
+        // Add all files to the index.
+        .then(() => index.addAll())
+        // Write all files to index.
+        .then(() => index.write())
+        .then(() => index.writeTree())
+        .then((oidResult) => {
+          oid = oidResult;
+          return Git.Reference.nameToId(repo, 'HEAD');
+        })
+        .then((head) => {
+          console.log();
+          return repo.getCommit(head);
+        })
+        // Create a signature and commit
+        .then((parent) => {
+          const author = Git.Signature.default(repo);
+          return repo.createCommit('HEAD', author, author, 'Update from Techfolio Designer', oid, [parent]);
+        })
+        .then(() => repo.getRemote('origin'))
+        .then((remoteResult) => {
+          remote = remoteResult;
+          return remote.push(
+            ['refs/heads/master:refs/heads/master'],
+            {
+              callbacks: {
+                certificateCheck: () => 1,
+                credentials: () => Git.Cred.userpassPlaintextNew(this.accessToken, 'x-oauth-basic'),
+              },
+            });
+        })
+        // Catch any errors.
+        .catch((err) => { rej(err); })
+        .done(() => {
+          res('successfully pushed');
+        });
+    });
+  }
+
   loadBio() {
     return new Promise((res, rej) => {
       const path = this.bioURL;
@@ -163,47 +220,12 @@ class IO {
   }
 
   loadProjects() {
-    return new Promise((res) => { // removed 'rej' as unused parameter
-      const list = [];
-      const projFiles = FS.readdirSync(this.projectsURL);
-      projFiles.forEach((file) => {
-        if (file !== 'index.html') {
-          const filePath = Path.resolve(this.projectsURL, file);
-          const projData = FS.readFileSync(filePath);
-          list.push(FrontMatter(projData.toString()));
-        }
-      });
-      res(list);
-    });
-  }
-
-  writeProject(index, data) {
-    return new Promise((res, rej) => {
-      const path = Path.resolve(this.projectsURL, `project-${index}.md`);
-      const yamlString = YamlParser.write(data);
-      FS.writeFile(path, yamlString, (err) => {
-        if (err) {
-          rej(err);
-        } else {
-          res(true);
-        }
-      });
-    });
-  }
-
-  removeProject(index) {
     return new Promise((res) => {
-      const path = Path.resolve(this.projectsURL, `project-${index}.md`);
-      /* offset 1 from the beginning for index.html, offset 1 at the end to exclude current project at index */
-      const projFiles = FS.readdirSync(this.projectsURL).splice(1 + index + 1);
-      FS.unlinkSync(path);
-      projFiles.forEach((file, fIndex) => {
-        const newURL = Path.resolve(this.projectsURL, `project-${index + fIndex}.md`);
-        const oldURL = Path.resolve(this.projectsURL, `project-${index + fIndex + 1}.md`);
-        console.log([oldURL, newURL]);
-        FS.renameSync(oldURL, newURL);
-      });
-      res(true);
+      const list = {};
+      const crawler = new FileCrawler(this.projectsURL);
+      list.projects = crawler.getYAML();
+      list.crawler = crawler;
+      res(list);
     });
   }
 
@@ -211,7 +233,6 @@ class IO {
     return new Promise((res) => {
       const list = {};
       const crawler = new FileCrawler(this.essaysURL);
-      console.log(list);
       list.essays = crawler.getYAML();
       list.crawler = crawler;
       res(list);
@@ -283,4 +304,4 @@ class IO {
   }
 }
 
-module.exports = IO;
+export default IO;

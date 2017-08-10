@@ -52,24 +52,35 @@ class Interests extends React.Component {
               {interest.name}
             </span>
           </h2>
-          <Form.Input label='Name'
-            defaultValue={interest.name}
-            placeholder={'Programming'}
-            onChange={e => this.handleChange(e, 'name', index)} />
-          <Form.Dropdown data-index={index} className="dropdown"
-            multiple search selection fluid allowAdditions label='Keywords'
-            defaultValue={interest.keywords}
-            noResultsMessage={'Start typing to add a new keyword!'}
-            options={
-              interest.keywords.map((item, key) => ({
-                key,
-                value: item,
-                text: item,
-              }))
-            }
-            onAddItem={this.handleAddition}
-          />
-          <br />
+          <Form.Group>
+            <Form.Input
+              label='Name'
+              width={4}
+              defaultValue={interest.name}
+              placeholder={'Name'}
+              onChange={e => this.handleChange(e, 'name', index)} />
+            <Form.Dropdown
+              width={12}
+              data-index={index}
+              className="dropdown"
+              multiple
+              search
+              selection
+              fluid
+              allowAdditions
+              label='Keywords'
+              defaultValue={interest.keywords}
+              noResultsMessage={'Start typing to add a new keyword!'}
+              options={
+                interest.keywords.map((item, key) => ({
+                  key,
+                  value: item,
+                  text: item,
+                }))
+              }
+              onAddItem={this.handleAddition}
+            />
+          </Form.Group>
         </div>
       </Segment>)
       }

@@ -3,11 +3,11 @@ import { Icon, Segment, Header, Button } from 'semantic-ui-react';
 import preview from 'marked';
 import renderHTML from 'html-react-parser';
 
-import EssayEditor from './components/EssayEditor.jsx';
+import ProjectEditor from './components/ProjectEditor.jsx';
 import FileCrawler from '../../utilities/file-crawler';
 import values from '../values';
 
-class Essay extends React.Component {
+class Projects extends React.Component {
   constructor(props) {
     super(props);
     this.state = { page: 'edit' };
@@ -26,7 +26,7 @@ class Essay extends React.Component {
 
   getPage() {
     const page = {
-      view: <EssayEditor delete={this.delete} data={this.props.data} dir={this.directory} state={this.props.state}/>,
+      view: <ProjectEditor delete={this.delete} data={this.props.data} dir={this.directory} state={this.props.state}/>,
       icon: <Icon link name="edit" size="big" onClick={ event => this.setPage(event, 'preview') }/>,
     };
     if (this.state.page === 'preview') {
@@ -54,4 +54,4 @@ class Essay extends React.Component {
   }
 }
 
-export default Essay;
+export default Projects;

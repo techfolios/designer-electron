@@ -1,38 +1,55 @@
 import React from 'react';
-import { Form } from 'semantic-ui-react';
+import { Form, Segment } from 'semantic-ui-react';
 
 
 class Location extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.data;
-    this.renderLocation = this.renderLocation.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(e, key) {
-    const state = this.state;
-    state[key] = e.target.value;
-    this.props.onChange('basics', state);
-  }
-
-  renderLocation() {
-    const obj = [];
-    Object.keys(this.state).forEach((key) => {
-      obj.push(<Form.Input
-        key={key}
-        label={key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-        defaultValue={this.state[key]}
-        placeholder={''}
-        onChange={e => this.handleLocationChange(e, key)}></Form.Input>);
-    });
-    return obj;
   }
 
   render() {
-    return (<div>
-      {this.renderLocation()}
-    </div>);
+    return (<Segment padded>
+      <Form.Group>
+        <Form.Input
+          label={'Address'}
+          width={16}
+          defaultValue={this.state.address}
+          placeholder={'Address'}
+          onChange={e => this.props.handleChange(e, 'address')}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Input
+          label={'City'}
+          width={4}
+          defaultValue={this.state.city}
+          placeholder={'City'}
+          onChange={e => this.props.handleChange(e, 'city')}
+        />
+        <Form.Input
+          label={'Postal Code'}
+          width={4}
+          defaultValue={this.state.postalCode}
+          placeholder={'Postal Code'}
+          onChange={e => this.props.handleChange(e, 'postalCode')}
+        />
+        <Form.Input
+          label={'Country Code'}
+          width={4}
+          defaultValue={this.state.countryCode}
+          placeholder={'Country Code'}
+          onChange={e => this.props.handleChange(e, 'countryCode')}
+        />
+        <Form.Input
+          label={'Region'}
+          width={4}
+          defaultValue={this.state.region}
+          placeholder={'Region'}
+          onChange={e => this.props.handleChange(e, 'region')}
+        />
+      </Form.Group>
+    </Segment>);
   }
 }
 
