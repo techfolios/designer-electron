@@ -27,11 +27,9 @@ class Essay extends React.Component {
   getPage() {
     const page = {
       view: <EssayEditor delete={this.delete} data={this.props.data} dir={this.directory} state={this.props.state}/>,
-      icon: <Icon link name="edit" size="big" onClick={ event => this.setPage(event, 'preview') }/>,
     };
     if (this.state.page === 'preview') {
       page.view = renderHTML(preview(this.props.data.body), values);
-      page.icon = <Icon link name="picture" size="big" onClick={ event => this.setPage(event, 'edit') }/>;
     }
     return page;
   }
@@ -45,10 +43,6 @@ class Essay extends React.Component {
         <Button compact basic={this.state.page === 'preview'} content='Preview' color='blue'
                 onClick={ event => this.setPage(event, 'preview') }/>
       </Button.Group>
-      <Segment basic textAlign="center">
-        { page.icon }
-        <Header as="h3"></Header>
-      </Segment>
       { page.view }
     </div>;
   }
