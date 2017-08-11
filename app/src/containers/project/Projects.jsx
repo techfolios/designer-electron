@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Segment, Header, Button } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import preview from 'marked';
 import renderHTML from 'html-react-parser';
 
@@ -19,32 +19,29 @@ class Projects extends React.Component {
     this.setPage = this.setPage.bind(this);
   }
 
-  setPage(event, page) {
+  setPage(event, { name }) {
     event.preventDefault();
-    this.setState({ page });
+    this.setState({ page: name });
   }
 
   getPage() {
-    const page = {
-      view: <ProjectEditor delete={this.delete} data={this.props.data} dir={this.directory} state={this.props.state}/>,
-    };
+    let page = <ProjectEditor delete={this.delete}
+                                data={this.props.data} dir={this.directory} state={this.props.state}/>;
     if (this.state.page === 'preview') {
-      page.view = renderHTML(preview(this.props.data.body), values);
+      page = renderHTML(preview(this.props.data.body), values);
     }
     return page;
   }
 
   render() {
-    const page = this.getPage();
+    const { page } = this.state;
     return <div>
-      <Button.Group>
-        <Button compact basic={this.state.page === 'edit'} content='Edit' color='green'
-                onClick={ event => this.setPage(event, 'edit') }/>
-        <Button compact basic={this.state.page === 'preview'} content='Preview' color='blue'
-                onClick={ event => this.setPage(event, 'preview') }/>
-      </Button.Group>
-      { page.view }
-    </div>;
+        <Menu tabular>
+          <Menu.Item name='edit' active={page === 'edit'} onClick={this.setPage}/>
+          <Menu.Item name='preview' active={page === 'preview'} onClick={this.setPage}/>
+        </Menu>
+        {this.getPage()}
+      </div>;
   }
 }
 
