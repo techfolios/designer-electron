@@ -11,7 +11,6 @@ function createWindow() {
   // console.log(token);
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);
-  mainWindow.webContents.openDevTools(); // REMOVE LATER
   mainWindow.on('closed', () => {
     mainWindow = null;
     app.quit();
