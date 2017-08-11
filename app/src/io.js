@@ -271,9 +271,10 @@ class IO {
     });
   }
 
-  removeImage(name) {
+  removeImage(url) {
     return new Promise((res, rej) => {
-      const imagePath = Path.resolve(this.imagesURL, name);
+      const imagePath = Path.resolve(this.imagesURL, url);
+      console.log(imagePath);
       FS.unlink(imagePath, (err) => {
         if (err) {
           rej(err);
