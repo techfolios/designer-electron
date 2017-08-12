@@ -163,6 +163,7 @@ class MainMenu extends React.Component {
         labels: [],
         summary: '',
       },
+      body: '',
       file: {
         name: `${fileName}.md`,
         index: '',

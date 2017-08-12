@@ -12,8 +12,7 @@ import EducationSection from './containers/bio/EducationSection.jsx';
 import WorkSection from './containers/bio/WorkSection.jsx';
 import VolunteerSection from './containers/bio/VolunteerSection.jsx';
 import RefSection from './containers/bio/RefSection.jsx';
-import Essay from './containers/essay/Essays.jsx';
-import Project from './containers/project/Projects.jsx';
+import YAMLDisplay from './containers/yaml/YAMLDisplay.jsx';
 import IO from './io';
 import Oauth from './utilities/Oauth';
 
@@ -100,11 +99,11 @@ class Techfolio extends React.Component {
           onLoadBio={this.handleLoadBio} />;
         break;
       case 'projects':
-        retSelection = <Project dir={this.io.getLocalFolder()} key={data.attributes.title}
+        retSelection = <YAMLDisplay editor='project' dir={this.io.getLocalFolder()} key={data.attributes.title}
                                    delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'essays':
-        retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title}
+        retSelection = <YAMLDisplay editor='essay' dir={this.io.getLocalFolder()} key={data.attributes.title}
                               delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'upload':
