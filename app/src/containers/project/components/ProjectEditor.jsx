@@ -60,7 +60,7 @@ class ProjectEditor extends YAMLEditor {
         <Form.Dropdown
             multiple search selection fluid allowAdditions label='Labels'
             defaultValue={labels}
-            noResultsMessage={'Start typing to add a new keyword!'}
+            noResultsMessage={'Start typing to add a new tag!'}
             options={
               labels.map((label, key) => ({
                 key,

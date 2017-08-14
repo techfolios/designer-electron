@@ -65,7 +65,7 @@ class EssayEditor extends YAMLEditor {
       <Form.Dropdown
           multiple search selection fluid allowAdditions label='Tag(s)'
           defaultValue={data.attributes.labels}
-          noResultsMessage={'Start typing to add a new keyword!'}
+          noResultsMessage={'Start typing to add a new tag!'}
           options={
             data.attributes.labels.map((label, key) => ({
               key,
