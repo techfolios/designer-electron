@@ -171,6 +171,34 @@ class IO {
     });
   }
 
+  pull() {
+    let repo;
+
+    return new Promise((res, rej) => {
+      Git.Repository.open(this.localURL)
+        .then((repoResult) => {
+          repo = repoResult;
+
+          return repo.fetchAll({
+            callbacks: {
+              certificateCheck: () => 1,
+              credentials: () => Git.Cred.userpassPlaintextNew(this.accessToken, 'x-oauth-basic'),
+            },
+          });
+        })
+        .then(() => repo.mergeBranches('master', 'origin/master'))
+        .then((index) => {
+          if (!index.hasConflicts()) {
+            rej('merge conflicts');
+          }
+        })
+        .catch((err) => { rej(err); })
+        .done(() => {
+          res('successfully merged');
+        });
+    });
+  }
+
   loadBio() {
     return new Promise((res, rej) => {
       const path = this.bioURL;
