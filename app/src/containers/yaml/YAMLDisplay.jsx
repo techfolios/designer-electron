@@ -35,6 +35,7 @@ class YAMLDisplay extends React.Component {
                    data={this.props.data} dir={this.directory} state={this.props.state}/>;
     }
     if (this.state.page === 'preview') {
+      console.log(renderHTML(preview(this.props.data.body), values));
       page = renderHTML(preview(this.props.data.body), values);
     }
     return page;

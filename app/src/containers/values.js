@@ -1,5 +1,3 @@
-import Path from 'path';
-
 const values = {
   dir: '',
   replace: (html) => {
@@ -7,9 +5,9 @@ const values = {
     if (!html.attribs) return;
 
     if (html.name === 'img') {
-      const imagePath = json.attribs.src;
-      json.attribs.src = Path.join(values.dir, imagePath.slice(3));
-      console.log(json.attribs.src);
+      const imagePath = json.attribs.src.split(/[\\/]/);
+      imagePath[0] = values.dir;
+      json.attribs.src = imagePath.join('\\');
     }
   },
 };

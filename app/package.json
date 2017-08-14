@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/techfolios/designer-electron#readme",
   "dependencies": {
-    "commonmark-react-renderer": "^4.3.3",
     "cropperjs": "^1.0.0-rc.3",
     "electron": "^1.6.11",
     "electron-oauth2": "^3.0.0",
