@@ -40,7 +40,7 @@ class ProjectEditor extends YAMLEditor {
     const { date, image, permalink, summary, title, labels } = this.state.data.attributes;
     const body = data.body;
 
-    return <Form onSubmit={this.saveProject}>
+    return <Form>
         <Form.Input label='Title'
                     defaultValue={title}
                     placeholder={'Title of your Project'}
@@ -58,7 +58,7 @@ class ProjectEditor extends YAMLEditor {
                     placeholder={''}
                     onChange={event => this.setAttribute(event, 'permalink')}/>
         <Form.Dropdown
-            multiple search selection fluid allowAdditions label='Labels'
+            multiple search selection fluid allowAdditions label='Tag(s)'
             defaultValue={labels}
             noResultsMessage={'Start typing to add a new tag!'}
             options={
