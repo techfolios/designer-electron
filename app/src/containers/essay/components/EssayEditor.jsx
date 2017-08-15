@@ -43,45 +43,45 @@ class EssayEditor extends React.Component {
 
     return <Form>
       <Form.Input label='Title' defaultValue={data.attributes.title || ''}
-                  onChange={(event) => {
-                    data.attributes.title = event.target.value || '';
-                  }}/>
+        onChange={(event) => {
+          data.attributes.title = event.target.value || '';
+        }}/>
       <Form.Group>
         <Form.Input width={2} label='Month' defaultValue={date[1]}
-                    onChange={(event) => {
-                      date[1] = ISODate.getPadded(event.target.value);
-                    }}/>
+          onChange={(event) => {
+            date[1] = ISODate.getPadded(event.target.value);
+          }}/>
         <Form.Input width={2} label='Day' defaultValue={date[2]}
-                    onChange={(event) => {
-                      date[2] = ISODate.getPadded(event.target.value);
-                    }}/>
+          onChange={(event) => {
+            date[2] = ISODate.getPadded(event.target.value);
+          }}/>
         <Form.Input width={4} label='Year' defaultValue={date[0]}
-                    onChange={(event) => {
-                      date[0] = ISODate.getPadded(event.target.value);
-                    }}/>
+          onChange={(event) => {
+            date[0] = ISODate.getPadded(event.target.value);
+          }}/>
       </Form.Group>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
-                     onChange={(event) => {
-                       data.body = event.target.value;
-                     }}/>
+        onChange={(event) => {
+          data.body = event.target.value;
+        }}/>
       <Form.Dropdown
-          multiple search selection fluid allowAdditions label='Tag(s)'
-          defaultValue={data.attributes.labels}
-          noResultsMessage={'Start typing to add a new keyword!'}
-          options={
-            data.attributes.labels.map((label, key) => ({
-              key,
-              value: label,
-              text: label,
-            }))
-          }
-          onChange={this.handleLabel} />
+        multiple search selection fluid allowAdditions label='Tag(s)'
+        defaultValue={data.attributes.labels}
+        noResultsMessage={'Start typing to add a new keyword!'}
+        options={
+          data.attributes.labels.map((label, key) => ({
+            key,
+            value: label,
+            text: label,
+          }))
+        }
+        onChange={this.handleLabel} />
       <br/>
       <Button.Group floated="right">
         <Button content='Save' color='green' onClick={this.save}/>
         <Button content='Delete' color='red'
-                onClick={event => this.delete(event, data.file.index, data.file.name,
-                    this.crawler, data.file.state, data.file.checkpoint)}/>
+          onClick={event => this.delete(event, data.file.index, data.file.name,
+            this.crawler, data.file.state, data.file.checkpoint)}/>
       </Button.Group>
     </Form>;
   }

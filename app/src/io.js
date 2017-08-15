@@ -88,19 +88,19 @@ class IO {
   hasRemote() {
     // return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
     return request('GET', `https://api.github.com/users/${this.username}/repos?access_token=${this.accessToken}`)
-       .then((res) => {
-         let result = false;
-         const repos = res.body;
+      .then((res) => {
+        let result = false;
+        const repos = res.body;
 
-         for (let i = 0; i < res.body.length; i += 1) {
-           if (repos[i].name === `${this.username}.github.io`) {
-             result = true;
-           }
-         }
-         return result;
-       }, (err) => {
-         console.err(err);
-       });
+        for (let i = 0; i < res.body.length; i += 1) {
+          if (repos[i].name === `${this.username}.github.io`) {
+            result = true;
+          }
+        }
+        return result;
+      }, (err) => {
+        console.err(err);
+      });
   }
 
   cloneUserRemote() {
