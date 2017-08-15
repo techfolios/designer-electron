@@ -44,7 +44,7 @@ class Skills extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((skill, index) => <Segment key={index}>
+      {this.state.data.map((skill, index) => <Segment basic key={index}>
         <h2 className="ui horizontal divider header">
           <span data-tooltip={skill.keywords.join(', ')} data-position="bottom center">
             <i className={`wizard icon ${skill.name}`}></i>

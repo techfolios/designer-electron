@@ -44,7 +44,7 @@ class Interests extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((interest, index) => <Segment key={index}>
+      {this.state.data.map((interest, index) => <Segment basic key={index}>
         <div>
           <h2 className="ui horizontal divider header">
             <span data-tooltip={interest.keywords.join(', ')} data-position="bottom center">

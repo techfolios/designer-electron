@@ -34,7 +34,7 @@ class References extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((reference, index) => <Segment key={index}>
+      {this.state.data.map((reference, index) => <Segment basic key={index}>
         <h2 className="ui horizontal divider header">
           <span data-tooltip={`${reference.name}`} data-position="bottom center">
             <i className={'checkmark icon'}></i>

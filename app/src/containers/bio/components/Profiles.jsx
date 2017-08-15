@@ -7,7 +7,6 @@ class Profiles extends React.Component {
     this.state = {
       data: props.data,
     };
-
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
   }
@@ -37,7 +36,7 @@ class Profiles extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((profile, index) => <Segment key={index}>
+      {this.state.data.map((profile, index) => <Segment basic  key={index}>
         <div className="ui horizontal divider header">
           <span data-tooltip={profile.username} data-position="bottom center">
             <i className={`user icon ${profile.network}`}></i>
