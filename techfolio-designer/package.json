@@ -1,0 +1,85 @@
+{
+    "name": "techfolio-designer",
+    "productName": "Techfolio Designer",
+    "version": "1.0.0",
+    "description": "Techfolio designer application",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "lint": "eslint --ext .js --ext .jsx --fix ./src"
+    },
+    "keywords": [],
+    "author": "Techfolios",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/techfolios/designer-electron/issues"
+    },
+    "homepage": "https://github.com/techfolios/designer-electron#readme",
+    "config": {
+        "forge": {
+            "make_targets": {
+                "win32": [
+                    "squirrel"
+                ],
+                "darwin": [
+                    "zip"
+                ],
+                "linux": [
+                    "deb",
+                    "rpm"
+                ]
+            },
+            "electronPackagerConfig": {
+                "packageManager": "npm"
+            },
+            "electronWinstallerConfig": {
+                "name": "designer_electron"
+            },
+            "electronInstallerDebian": {},
+            "electronInstallerRedhat": {},
+            "github_repository": {
+                "owner": "",
+                "name": ""
+            },
+            "windowsStoreConfig": {
+                "packageName": "",
+                "name": "designerelectron"
+            }
+        }
+    },
+    "dependencies": {
+        "electron-compile": "^6.4.1",
+        "cropperjs": "^1.0.0-rc.3",
+        "electron-devtools-installer": "^2.2.0",
+        "electron-oauth2": "^3.0.0",
+        "electron-prebuilt-compile": "^1.6.11",
+        "electron": "^1.6.11",
+        "front-matter": "^2.1.2",
+        "fs-extra": "^4.0.0",
+        "html-react-parser": "^0.3.5",
+        "jquery": "^3.2.1",
+        "marked": "^0.3.6",
+        "nodegit": "^0.18.3",
+        "octonode": "^0.7.13",
+        "react-datepicker": "^0.52.0",
+        "react-dom": "^15.6.1",
+        "react-hot-loader": "^3.0.0-beta.7",
+        "react": "^15.6.1",
+        "semantic-ui-css": "^2.2.10",
+        "semantic-ui-react": "^0.70.0",
+        "superagent": "^3.5.2"
+    },
+    "devDependencies": {
+        "babel-plugin-transform-async-to-generator": "^6.24.1",
+        "babel-plugin-transform-es2015-classes": "^6.24.1",
+        "babel-preset-env": "^1.6.0",
+        "babel-preset-react": "^6.24.1",
+        "electron-prebuilt-compile": "1.7.5",
+        "eslint-config-airbnb-base": "^11.2.0",
+        "eslint-plugin-import": "^2.7.0",
+        "eslint-plugin-react": "^7.1.0",
+        "eslint": "^3.19.0"
+    }
+}
