@@ -70,6 +70,17 @@ class IO {
     });
   }
 
+  // Helper function used to get the string of the user's techfolio remote repo name
+  getRemoteRepoString() {
+    let remoteRepoString;
+    return new Promise((res) => {
+      this.getUsername()
+        .then((username) => {
+          remoteRepoString = `${username}.github.io`;
+          res(remoteRepoString);
+        });
+    });
+  }
 
   /*
   added "this." in front of res to placate ESLint - is this a correct fix?
@@ -187,11 +198,6 @@ class IO {
           });
         })
         .then(() => repo.mergeBranches('master', 'origin/master'))
-        .then((index) => {
-          if (!index.hasConflicts()) {
-            rej('merge conflicts');
-          }
-        })
         .catch((err) => { rej(err); })
         .done(() => {
           res('successfully merged');
