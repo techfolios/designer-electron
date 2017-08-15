@@ -3,16 +3,17 @@ import OS from 'os';
 import Path from 'path';
 import Git from 'nodegit';
 import fse from 'fs-extra';
-import FrontMatter from 'front-matter';
 import request from 'superagent';
 
 import FileCrawler from './utilities/file-crawler';
-import YamlParser from './utilities/yaml-parser';
+import values from './containers/values';
 
 class IO {
   constructor() {
     this.templateURL = 'https://github.com/techfolios/template';
     this.localURL = Path.resolve(OS.homedir(), '.techfolios');
+    values.dir = this.localURL;
+
     this.bioURL = Path.resolve(this.localURL, '_data/bio.json');
     this.projectsURL = Path.resolve(this.localURL, 'projects');
     this.essaysURL = Path.resolve(this.localURL, 'essays');
@@ -29,29 +30,29 @@ class IO {
 
   init() {
     this.accessToken = window.localStorage.getItem('githubtoken');
-    this.getUsername().then(() => {
-      this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
-    });
     return new Promise((res) => {
-      this.hasLocal()
-        .then((hasLocal) => {
-          if (hasLocal) {
-            res('Local techfolio found');
-          } else {
-            this.hasRemote()
-              .then((hasRemote) => {
-                if (hasRemote) {
-                  this.cloneUserRemote().then(() => {
-                    res('Cloned remote techfolio');
-                  });
-                } else {
-                  this.cloneTechfoliosTemplate().then(() => {
-                    res('Cloned techfolios template');
-                  });
-                }
-              });
-          }
-        });
+      this.getUsername().then(() => {
+        this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
+        this.hasLocal()
+          .then((hasLocal) => {
+            if (hasLocal) {
+              res('Local techfolio found');
+            } else {
+              this.hasRemote()
+                .then((hasRemote) => {
+                  if (hasRemote) {
+                    this.cloneUserRemote().then(() => {
+                      res('Cloned remote techfolio');
+                    });
+                  } else {
+                    this.cloneTechfoliosTemplate().then(() => {
+                      res('Cloned techfolios template');
+                    });
+                  }
+                });
+            }
+          });
+      });
     });
   }
 
@@ -69,12 +70,24 @@ class IO {
     });
   }
 
+  // Helper function used to get the string of the user's techfolio remote repo name
+  getRemoteRepoString() {
+    let remoteRepoString;
+    return new Promise((res) => {
+      this.getUsername()
+        .then((username) => {
+          remoteRepoString = `${username}.github.io`;
+          res(remoteRepoString);
+        });
+    });
+  }
 
   /*
   added "this." in front of res to placate ESLint - is this a correct fix?
    */
   hasRemote() {
-    return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
+    // return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
+    return request('GET', `https://api.github.com/users/${this.username}/repos?access_token=${this.accessToken}`)
        .then((res) => {
          let result = false;
          const repos = res.body;
@@ -86,7 +99,7 @@ class IO {
          }
          return result;
        }, (err) => {
-         console.log(err);
+         console.err(err);
        });
   }
 
@@ -166,6 +179,29 @@ class IO {
     });
   }
 
+  pull() {
+    let repo;
+
+    return new Promise((res, rej) => {
+      Git.Repository.open(this.localURL)
+        .then((repoResult) => {
+          repo = repoResult;
+
+          return repo.fetchAll({
+            callbacks: {
+              certificateCheck: () => 1,
+              credentials: () => Git.Cred.userpassPlaintextNew(this.accessToken, 'x-oauth-basic'),
+            },
+          });
+        })
+        .then(() => repo.mergeBranches('master', 'origin/master'))
+        .catch((err) => { rej(err); })
+        .done(() => {
+          res('successfully merged');
+        });
+    });
+  }
+
   loadBio() {
     return new Promise((res, rej) => {
       const path = this.bioURL;
@@ -219,47 +255,12 @@ class IO {
   }
 
   loadProjects() {
-    return new Promise((res) => { // removed 'rej' as unused parameter
-      const list = [];
-      const projFiles = FS.readdirSync(this.projectsURL);
-      projFiles.forEach((file) => {
-        if (file !== 'index.html') {
-          const filePath = Path.resolve(this.projectsURL, file);
-          const projData = FS.readFileSync(filePath);
-          list.push(FrontMatter(projData.toString()));
-        }
-      });
-      res(list);
-    });
-  }
-
-  writeProject(index, data) {
-    return new Promise((res, rej) => {
-      const path = Path.resolve(this.projectsURL, `project-${index}.md`);
-      const yamlString = YamlParser.write(data);
-      FS.writeFile(path, yamlString, (err) => {
-        if (err) {
-          rej(err);
-        } else {
-          res(true);
-        }
-      });
-    });
-  }
-
-  removeProject(index) {
     return new Promise((res) => {
-      const path = Path.resolve(this.projectsURL, `project-${index}.md`);
-      /* offset 1 from the beginning for index.html, offset 1 at the end to exclude current project at index */
-      const projFiles = FS.readdirSync(this.projectsURL).splice(1 + index + 1);
-      FS.unlinkSync(path);
-      projFiles.forEach((file, fIndex) => {
-        const newURL = Path.resolve(this.projectsURL, `project-${index + fIndex}.md`);
-        const oldURL = Path.resolve(this.projectsURL, `project-${index + fIndex + 1}.md`);
-        console.log([oldURL, newURL]);
-        FS.renameSync(oldURL, newURL);
-      });
-      res(true);
+      const list = {};
+      const crawler = new FileCrawler(this.projectsURL);
+      list.projects = crawler.getYAML();
+      list.crawler = crawler;
+      res(list);
     });
   }
 
@@ -267,7 +268,6 @@ class IO {
     return new Promise((res) => {
       const list = {};
       const crawler = new FileCrawler(this.essaysURL);
-      console.log(list);
       list.essays = crawler.getYAML();
       list.crawler = crawler;
       res(list);
@@ -339,4 +339,4 @@ class IO {
   }
 }
 
-module.exports = IO;
+export default IO;
