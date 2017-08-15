@@ -91,18 +91,15 @@ class IO {
        .then((res) => {
          let result = false;
          const repos = res.body;
-         console.log(res.body);
-         console.log(`looking for: ${this.username}.github.io`);
 
          for (let i = 0; i < res.body.length; i += 1) {
-           console.log(`repository: ${repos[i].name}`);
            if (repos[i].name === `${this.username}.github.io`) {
              result = true;
            }
          }
          return result;
        }, (err) => {
-         console.log(err);
+         console.err(err);
        });
   }
 
