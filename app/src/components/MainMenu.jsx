@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
+import { Menu, Icon, Accordion, MenuItem, Divider, Popup } from 'semantic-ui-react';
 
 import Images from '../containers/images/Images.jsx';
 import YAMLParser from '../utilities/yaml-parser';
@@ -178,6 +178,11 @@ class MainMenu extends React.Component {
 
   renderYAML(name, checkpointKey, listKey, crawler, listObj, checkpointObj) {
     const capName = `${name[0].toUpperCase()}${name.substring(1)}`;
+    const addYAML = <Icon link size='large' name='plus' color='green'
+                           onClick={event => this.addYAML(event, listObj, name, ISODate.getDate())}/>;
+    const restoreYAML = <Icon link={checkpointObj !== undefined} size='large' name='undo'
+                              disabled={!checkpointObj} color='teal' onClick={event =>
+        this.restoreYAML(event, crawler, listKey, checkpointKey)}/>;
     return <Accordion as={MenuItem}>
       <Accordion.Title>
         <Menu.Item>
@@ -189,13 +194,10 @@ class MainMenu extends React.Component {
       <Accordion.Content>
         {this.getYAML(`${name}s`, listObj, crawler, listKey, checkpointKey)}
         <Divider/>
-        <Menu.Item>
+        <Menu.Item fitted key={`${name}sicon`}>
           <span>
-            <Icon link size='large' name='plus' color='green'
-                  onClick={event => this.addYAML(event, listObj, name, ISODate.getDate())}/>
-            <Icon link={checkpointObj !== undefined} size='large' name='undo'
-                  disabled={!checkpointObj} color='teal' onClick={event =>
-                this.restoreYAML(event, crawler, listKey, checkpointKey)}/>
+            <Popup trigger={addYAML} content={`Adds an new blank ${name}`}/>
+            <Popup trigger={restoreYAML} content={`Restores the last deleted ${name}`}/>
           </span>
         </Menu.Item>
       </Accordion.Content>
