@@ -30,29 +30,29 @@ class IO {
 
   init() {
     this.accessToken = window.localStorage.getItem('githubtoken');
-    this.getUsername().then(() => {
-      this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
-    });
     return new Promise((res) => {
-      this.hasLocal()
-        .then((hasLocal) => {
-          if (hasLocal) {
-            res('Local techfolio found');
-          } else {
-            this.hasRemote()
-              .then((hasRemote) => {
-                if (hasRemote) {
-                  this.cloneUserRemote().then(() => {
-                    res('Cloned remote techfolio');
-                  });
-                } else {
-                  this.cloneTechfoliosTemplate().then(() => {
-                    res('Cloned techfolios template');
-                  });
-                }
-              });
-          }
-        });
+      this.getUsername().then(() => {
+        this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
+        this.hasLocal()
+          .then((hasLocal) => {
+            if (hasLocal) {
+              res('Local techfolio found');
+            } else {
+              this.hasRemote()
+                .then((hasRemote) => {
+                  if (hasRemote) {
+                    this.cloneUserRemote().then(() => {
+                      res('Cloned remote techfolio');
+                    });
+                  } else {
+                    this.cloneTechfoliosTemplate().then(() => {
+                      res('Cloned techfolios template');
+                    });
+                  }
+                });
+            }
+          });
+      });
     });
   }
 
@@ -70,25 +70,37 @@ class IO {
     });
   }
 
+  // Helper function used to get the string of the user's techfolio remote repo name
+  getRemoteRepoString() {
+    let remoteRepoString;
+    return new Promise((res) => {
+      this.getUsername()
+        .then((username) => {
+          remoteRepoString = `${username}.github.io`;
+          res(remoteRepoString);
+        });
+    });
+  }
 
   /*
   added "this." in front of res to placate ESLint - is this a correct fix?
    */
   hasRemote() {
-    return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
-       .then((res) => {
-         let result = false;
-         const repos = res.body;
+    // return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
+    return request('GET', `https://api.github.com/users/${this.username}/repos?access_token=${this.accessToken}`)
+      .then((res) => {
+        let result = false;
+        const repos = res.body;
 
-         for (let i = 0; i < res.body.length; i += 1) {
-           if (repos[i].name === `${this.username}.github.io`) {
-             result = true;
-           }
-         }
-         return result;
-       }, (err) => {
-         console.log(err);
-       });
+        for (let i = 0; i < res.body.length; i += 1) {
+          if (repos[i].name === `${this.username}.github.io`) {
+            result = true;
+          }
+        }
+        return result;
+      }, (err) => {
+        console.err(err);
+      });
   }
 
   cloneUserRemote() {
@@ -163,6 +175,29 @@ class IO {
         .catch((err) => { rej(err); })
         .done(() => {
           res('successfully pushed');
+        });
+    });
+  }
+
+  pull() {
+    let repo;
+
+    return new Promise((res, rej) => {
+      Git.Repository.open(this.localURL)
+        .then((repoResult) => {
+          repo = repoResult;
+
+          return repo.fetchAll({
+            callbacks: {
+              certificateCheck: () => 1,
+              credentials: () => Git.Cred.userpassPlaintextNew(this.accessToken, 'x-oauth-basic'),
+            },
+          });
+        })
+        .then(() => repo.mergeBranches('master', 'origin/master'))
+        .catch((err) => { rej(err); })
+        .done(() => {
+          res('successfully merged');
         });
     });
   }

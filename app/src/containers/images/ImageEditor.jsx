@@ -3,7 +3,6 @@ import Cropper from 'cropperjs';
 import { Dropdown, Image, Segment } from 'semantic-ui-react';
 
 class ImageEditor extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
