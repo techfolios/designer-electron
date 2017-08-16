@@ -176,6 +176,8 @@ class Techfolio extends React.Component {
 
   handleUpdateURL(data) {
     this.io.remoteURL = data;
+    console.log(data);
+    console.log(this.io.remoteURL);
   }
 
   handleUpload() {
