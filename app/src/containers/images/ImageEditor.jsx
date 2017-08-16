@@ -1,5 +1,6 @@
 import React from 'react';
 import Cropper from 'cropperjs';
+import Jimp from 'jimp';
 import { Dropdown, Image, Segment } from 'semantic-ui-react';
 
 class ImageEditor extends React.Component {
@@ -33,6 +34,7 @@ class ImageEditor extends React.Component {
         console.log(e.detail.rotate);
         console.log(e.detail.scaleX);
         console.log(e.detail.scaleY);
+        this.setState({ crop: e.detail });
       },
     });
     this.setState({ selectedImage: image });
@@ -45,8 +47,20 @@ class ImageEditor extends React.Component {
   }
 
   handleCrop() {
-    const { cropper } = this.state;
-    console.log(cropper);
+    const { crop, url } = this.state;
+    console.log(crop);
+    Jimp.read(url, (err, img) => {
+      if (!err) {
+        img.crop(crop.x, crop.y, crop.width, crop.height);
+        img.write(url, (writeErr) => {
+          if (!writeErr) {
+            console.log(`image written to disk: ${url}`);
+          } else {
+            console.log(writeErr);
+          }
+        });
+      }
+    });
   }
 
   handleDelete() {
