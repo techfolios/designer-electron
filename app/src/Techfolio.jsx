@@ -37,7 +37,7 @@ class Techfolio extends React.Component {
       projectCrawler: null,
       addItem: null,
       settings: null,
-      selected: <GitHubPage />,
+      selected: <GitHubPage onUpload={this.handleUpload} />,
       isLoading: false,
     };
   }
