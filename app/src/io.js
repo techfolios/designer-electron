@@ -70,6 +70,17 @@ class IO {
     });
   }
 
+  // Helper function used to get the string of the user's techfolio remote repo name
+  getRemoteRepoString() {
+    let remoteRepoString;
+    return new Promise((res) => {
+      this.getUsername()
+        .then((username) => {
+          remoteRepoString = `${username}.github.io`;
+          res(remoteRepoString);
+        });
+    });
+  }
 
   /*
   added "this." in front of res to placate ESLint - is this a correct fix?
@@ -80,18 +91,15 @@ class IO {
        .then((res) => {
          let result = false;
          const repos = res.body;
-         console.log(res.body);
-         console.log(`looking for: ${this.username}.github.io`);
 
          for (let i = 0; i < res.body.length; i += 1) {
-           console.log(`repository: ${repos[i].name}`);
            if (repos[i].name === `${this.username}.github.io`) {
              result = true;
            }
          }
          return result;
        }, (err) => {
-         console.log(err);
+         console.err(err);
        });
   }
 
@@ -167,6 +175,29 @@ class IO {
         .catch((err) => { rej(err); })
         .done(() => {
           res('successfully pushed');
+        });
+    });
+  }
+
+  pull() {
+    let repo;
+
+    return new Promise((res, rej) => {
+      Git.Repository.open(this.localURL)
+        .then((repoResult) => {
+          repo = repoResult;
+
+          return repo.fetchAll({
+            callbacks: {
+              certificateCheck: () => 1,
+              credentials: () => Git.Cred.userpassPlaintextNew(this.accessToken, 'x-oauth-basic'),
+            },
+          });
+        })
+        .then(() => repo.mergeBranches('master', 'origin/master'))
+        .catch((err) => { rej(err); })
+        .done(() => {
+          res('successfully merged');
         });
     });
   }
