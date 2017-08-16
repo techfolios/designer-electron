@@ -37,13 +37,14 @@ class Awards extends React.Component {
   render() {
     return <div>
       {this.state.data.map((award, index) => <Segment basic key={index}>
-        <h2 className="ui horizontal divider header">
+        {/* <h2 className="ui horizontal divider header">
           <span data-tooltip={`${award.title} ${award.date} ${award.awarder}`} data-position="bottom center">
             <i className={'trophy icon'}></i>
             {award.title}
           </span>
-        </h2>
+        </h2> */}
         <Form.Group>
+          <Label pointing='right'>{award.title}</Label>
           <Form.Input
             width={6}
             label='Title'
