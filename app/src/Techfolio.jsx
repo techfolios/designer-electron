@@ -37,7 +37,11 @@ class Techfolio extends React.Component {
       projectCrawler: null,
       addItem: null,
       settings: null,
-      selected: <GitHubPage onUpload={this.handleUpload} />,
+      selected: <GitHubPage
+        io={this.io}
+        onUpload={this.handleUpload}
+        onPull={this.handlePull}
+        onUpdateURL={this.handleUpdateURL} />,
       isLoading: false,
     };
   }
@@ -112,7 +116,10 @@ class Techfolio extends React.Component {
         break;
       case 'github':
         retSelection = <GitHubPage
-          onUpload={this.handleUpload} />;
+          io={this.io}
+          onUpload={this.handleUpload}
+          onPull={this.handlePull}
+          onUpdateURL={this.handleUpdateURL} />;
         break;
       default:
         retSelection = <h1>Default page</h1>;
@@ -167,10 +174,27 @@ class Techfolio extends React.Component {
     return this.io.importImage(url);
   }
 
+  handleUpdateURL(data) {
+    this.io.remoteURL = data;
+  }
+
   handleUpload() {
-    console.log('uploadCalled');
     this.setState({ isLoading: true });
     this.io.push()
+      .then((res) => {
+        if (res) {
+          console.log('success');
+        }
+        this.setState({ isLoading: false });
+      }, (rej) => {
+        console.log(rej);
+        this.setState({ isLoading: false });
+      });
+  }
+
+  handlePull() {
+    this.setState({ isLoading: true });
+    this.io.pull()
       .then((res) => {
         if (res) {
           console.log('success');
