@@ -45,30 +45,20 @@ class ProjectEditor extends YAMLEditor {
                     defaultValue={title}
                     placeholder={'Title of your Project'}
                     onChange={event => this.setAttribute(event, 'title')}/>
-        <Form.Input label='Image'
-                    defaultValue={image}
-                    placeholder={'url to cover image'}
-                    onChange={event => this.setAttribute(event, 'image')}/>
+      <Form.Group>
         <Form.Input label='Date'
                     defaultValue={date}
                     placeholder={''}
                     onChange={event => this.setAttribute(event, 'date')}/>
+        <Form.Input label='Image'
+                    defaultValue={image}
+                    placeholder={'url to cover image'}
+                    onChange={event => this.setAttribute(event, 'image')}/>
         <Form.Input label='Permalink'
                     defaultValue={permalink}
                     placeholder={''}
                     onChange={event => this.setAttribute(event, 'permalink')}/>
-        <Form.Dropdown
-            multiple search selection fluid allowAdditions label='Tag(s)'
-            defaultValue={labels}
-            noResultsMessage={'Start typing to add a new tag!'}
-            options={
-              labels.map((label, key) => ({
-                key,
-                value: label,
-                text: label,
-              }))
-            }
-            onChange={this.handleLabel}/>
+      </Form.Group>
         <Form.Input label='Summary'
           defaultValue={summary}
           placeholder={'A short description about your project'}
@@ -78,6 +68,18 @@ class ProjectEditor extends YAMLEditor {
                        defaultValue={body}
                        placeholder={'A detailed description of your project'}
                        onChange={this.setBody}/>
+      <Form.Dropdown
+          multiple search selection fluid allowAdditions label='Tag(s)'
+          defaultValue={labels}
+          noResultsMessage={'Start typing to add a new tag!'}
+          options={
+            labels.map((label, key) => ({
+              key,
+              value: label,
+              text: label,
+            }))
+          }
+          onChange={this.handleLabel}/>
       </Form>;
   }
 }
