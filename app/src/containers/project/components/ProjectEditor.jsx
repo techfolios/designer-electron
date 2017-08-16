@@ -70,9 +70,9 @@ class ProjectEditor extends YAMLEditor {
             }
             onChange={this.handleLabel}/>
         <Form.Input label='Summary'
-                    defaultValue={summary}
-                    placeholder={'A short description about your project'}
-                    onChange={e => this.setAttribute(e, 'summary')}/>
+          defaultValue={summary}
+          placeholder={'A short description about your project'}
+          onChange={e => this.setAttribute(e, 'summary')}/>
         <Form.TextArea label='Body'
                        autoHeight
                        defaultValue={body}

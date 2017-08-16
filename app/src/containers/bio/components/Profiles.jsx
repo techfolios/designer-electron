@@ -63,7 +63,7 @@ class Profiles extends React.Component {
             defaultValue={profile.url}
             placeholder="Url"
             onChange={e => this.handleChange(e, 'url', index)} />
-          </Form.Group>
+        </Form.Group>
       </Segment>)}
       <Icon link name="minus" onClick={this.remove} ></Icon>
       <Icon link name="plus" color="teal" onClick={this.add} ></Icon>

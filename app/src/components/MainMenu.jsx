@@ -46,9 +46,9 @@ class MainMenu extends React.Component {
 
   renderSettings(activeItem) {
     return (
-      <Menu.Item name='settings' active={activeItem === 'settings'} onClick={this.handleItemClick} >
-        <Icon name='settings' />
-        Settings
+      <Menu.Item name='github' active={activeItem === 'github'} onClick={this.handleItemClick} >
+        <Icon name='github' />
+        GitHub
       </Menu.Item>
     );
   }
@@ -227,11 +227,6 @@ class MainMenu extends React.Component {
           <Icon name='file image outline' />
           Pics
         </Menu.Item>
-
-        <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
-          <Icon name='upload' />
-          Upload
-      </Menu.Item>
       </Menu>
     );
   }

@@ -48,17 +48,17 @@ class EssayEditor extends YAMLEditor {
                   onChange={event => this.setAttribute(event, 'title')}/>
       <Form.Group>
         <Form.Input width={2} label='Month' defaultValue={date[1]}
-                    onChange={(event) => {
-                      date[1] = ISODate.getPadded(event.target.value);
-                    }}/>
+          onChange={(event) => {
+            date[1] = ISODate.getPadded(event.target.value);
+          }}/>
         <Form.Input width={2} label='Day' defaultValue={date[2]}
-                    onChange={(event) => {
-                      date[2] = ISODate.getPadded(event.target.value);
-                    }}/>
+          onChange={(event) => {
+            date[2] = ISODate.getPadded(event.target.value);
+          }}/>
         <Form.Input width={4} label='Year' defaultValue={date[0]}
-                    onChange={(event) => {
-                      date[0] = ISODate.getPadded(event.target.value);
-                    }}/>
+          onChange={(event) => {
+            date[0] = ISODate.getPadded(event.target.value);
+          }}/>
       </Form.Group>
       <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
                      onChange={this.setBody}/>

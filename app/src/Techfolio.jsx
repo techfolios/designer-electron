@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 
 import MainMenu from './components/MainMenu.jsx';
-import Settings from './containers/settings/Settings.jsx';
+import GitHubPage from './containers/github/GitHubPage.jsx';
 import BasicsSection from './containers/bio/BasicsSection.jsx';
 import ProfilesSection from './containers/bio/ProfilesSection.jsx';
 import InterestsSection from './containers/bio/InterestsSection.jsx';
@@ -36,7 +36,7 @@ class Techfolio extends React.Component {
       projectCrawler: null,
       addItem: null,
       settings: null,
-      selected: <Settings />,
+      selected: <GitHubPage onUpload={this.handleUpload} />,
       isLoading: false,
     };
   }
@@ -109,11 +109,9 @@ class Techfolio extends React.Component {
       case 'upload':
         retSelection = <h1>Upload</h1>;
         break;
-      case 'addItem':
-        retSelection = <h1>Add Menu Item</h1>;
-        break;
-      case 'settings':
-        retSelection = <Settings />;
+      case 'github':
+        retSelection = <GitHubPage
+          onUpload={this.handleUpload} />;
         break;
       default:
         retSelection = <h1>Default page</h1>;
@@ -169,6 +167,7 @@ class Techfolio extends React.Component {
   }
 
   handleUpload() {
+    console.log('uploadCalled');
     this.setState({ isLoading: true });
     this.io.push()
       .then((res) => {
