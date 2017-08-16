@@ -1,5 +1,3 @@
-import ISODate from './iso-date';
-
 const parser = require('front-matter');
 
 class YAMLParser {
