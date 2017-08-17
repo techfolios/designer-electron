@@ -135,7 +135,15 @@ class MainMenu extends React.Component {
     const { activeItem } = this.state;
     let key;
     let title;
-    files.forEach((data, index) => {
+    let directory = files;
+
+    if (!Array.isArray(directory)) {
+      console.log('Non-array variable passed!');
+      directory = [];
+      directory.push(files);
+    }
+
+    directory.forEach((data, index) => {
       const yaml = data;
       title = data.attributes.title;
       key = `${title}-${index}`;
