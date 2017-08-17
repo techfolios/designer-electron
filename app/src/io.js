@@ -131,6 +131,7 @@ class IO {
 
     return new Promise((res, rej) => {
       // Open the repository.
+      console.log(this.remoteURL);
       Git.Repository.open(this.localURL)
         // Get the index.
         .then((repoResult) => {
@@ -162,6 +163,10 @@ class IO {
         .then(() => repo.getRemote('origin'))
         .then((remoteResult) => {
           remote = remoteResult;
+          console.log('pushing to remote URL');
+          console.log(remoteResult);
+          console.log(remote);
+          console.log(this.remoteURL);
           return remote.push(
             ['refs/heads/master:refs/heads/master'],
             {
@@ -318,21 +323,6 @@ class IO {
       });
     });
   }
-
-  /* ESLint fix needed
-  push() {
-    return new Promise((res, rej) => {
-      SimpleGit(this.localURL)
-        .push('origin', 'master', (err) => {
-          if (err) {
-            rej(err);
-          }
-          res(true);
-        });
-    });
-  }
-  */
-
 
   getLocalFolder() {
     return this.localURL;
