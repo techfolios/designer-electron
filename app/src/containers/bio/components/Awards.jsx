@@ -60,7 +60,7 @@ class Awards extends React.Component {
             defaultValue={award.awarder}
             placeholder={'Awarder'}
             onChange={e => this.handleChange(e, 'awarder', index)} />
-          </Form.Group>
+        </Form.Group>
         <Form.TextArea
           label='Summary'
           defaultValue={award.summary}

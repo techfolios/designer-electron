@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Icon, Accordion, MenuItem, Divider } from 'semantic-ui-react';
+import { Menu, Icon, Accordion, MenuItem, Divider, Popup } from 'semantic-ui-react';
 
 import Images from '../containers/images/Images.jsx';
 import YAMLParser from '../utilities/yaml-parser';
@@ -46,9 +46,9 @@ class MainMenu extends React.Component {
 
   renderSettings(activeItem) {
     return (
-      <Menu.Item name='settings' active={activeItem === 'settings'} onClick={this.handleItemClick} >
-        <Icon name='settings' />
-        Settings
+      <Menu.Item name='github' active={activeItem === 'github'} onClick={this.handleItemClick} >
+        <Icon name='github' />
+        GitHub
       </Menu.Item>
     );
   }
@@ -124,7 +124,7 @@ class MainMenu extends React.Component {
 
   getShortenString(str) {
     let returnString = '';
-    if (str.length > this.maxWidth) returnString = `${str.trim().slice(0, this.maxWidth - 3)}...`;
+    if (str.length > this.maxWidth) returnString = `${str.trim().slice(0, this.maxWidth - 4)}...`;
     else returnString = str;
 
     return returnString;
@@ -134,16 +134,18 @@ class MainMenu extends React.Component {
     const list = [];
     const { activeItem } = this.state;
     let key;
+    let title;
     files.forEach((data, index) => {
       const yaml = data;
-      key = `${data.attributes.title}`;
+      title = data.attributes.title;
+      key = `${title}-${index}`;
       yaml.file.index = index;
       yaml.file.checkpoint = checkpoint;
       yaml.file.state = state;
       console.log(data);
-      list.push(<Menu.Item name={key} key={key} active={activeItem === key}
+      list.push(<Menu.Item name={title} key={key} active={activeItem === title}
                            onClick={event => this.handlePageChange(event, name, data)}>
-        {this.getShortenString(key)}
+        {this.getShortenString(title)}
       </Menu.Item>);
     });
 
@@ -157,12 +159,13 @@ class MainMenu extends React.Component {
         layout: type,
         type,
         image: '',
-        title: `New ${type}`,
+        title: `New ${type[0].toUpperCase()}${type.substring(1)}`,
         permalink: '',
         date: ISODate.getDate(),
         labels: [],
         summary: '',
       },
+      body: '',
       file: {
         name: `${fileName}.md`,
         index: '',
@@ -173,51 +176,28 @@ class MainMenu extends React.Component {
     this.setState(list);
   }
 
-  renderEssays() {
-    return <Accordion as={MenuItem}>
-      <Accordion.Title>
-        <Menu.Item>
-          <Icon name='dropdown' />
-          <Icon name='file text outline' />
-          Essays
-        </Menu.Item>
-      </Accordion.Title>
-      <Accordion.Content>
-        {this.getYAML('essays', this.state.essayList, this.state.essayCrawler, 'essayList', 'deletedEssay')}
-        <Divider/>
-        <Menu.Item>
-          <span>
-            <Icon link size='big' name='plus' color='green'
-                  onClick={event => this.addYAML(event, this.state.essayList, 'essay', ISODate.getDate())}/>
-            <Icon link={this.state.deletedEssay !== undefined} size='big' name='undo'
-              disabled={!this.state.deletedEssay} color='teal' onClick={event =>
-                this.restoreYAML(event, this.state.essayCrawler, 'essayList', 'deletedEssay')} />
-          </span>
-        </Menu.Item>
-      </Accordion.Content>
-    </Accordion>;
-  }
-
-  renderProject() {
-    const { projectList } = this.state;
+  renderYAML(name, checkpointKey, listKey, crawler, listObj, checkpointObj) {
+    const capName = `${name[0].toUpperCase()}${name.substring(1)}`;
+    const addYAML = <Icon link size='large' name='plus' color='green'
+                           onClick={event => this.addYAML(event, listObj, name, ISODate.getDate())}/>;
+    const restoreYAML = <Icon link={checkpointObj !== undefined} size='large' name='undo'
+                              disabled={!checkpointObj} color='teal' onClick={event =>
+        this.restoreYAML(event, crawler, listKey, checkpointKey)}/>;
     return <Accordion as={MenuItem}>
       <Accordion.Title>
         <Menu.Item>
           <Icon name='dropdown'/>
-          <Icon name='cubes'/>
-          Projects
+          <Icon name='file text outline'/>
+          {`${capName}s`}
         </Menu.Item>
       </Accordion.Title>
       <Accordion.Content>
-        {this.getYAML('projects', projectList, this.state.projectCrawler, 'projectList', 'deletedProject')}
+        {this.getYAML(`${name}s`, listObj, crawler, listKey, checkpointKey)}
         <Divider/>
-        <Menu.Item>
+        <Menu.Item fitted key={`${name}sicon`}>
           <span>
-            <Icon link size='big' name='plus' color='green'
-                  onClick={event => this.addYAML(event, projectList, 'project', 'New-Project')}/>
-            <Icon link={this.state.deletedProject !== undefined} size='big' name='undo'
-                  disabled={!this.state.deletedProject} color='teal' onClick={event =>
-                this.restoreYAML(event, this.state.projectCrawler, 'projectList', 'deletedProject')}/>
+            <Popup trigger={addYAML} content={`Adds an new blank ${name}`}/>
+            <Popup trigger={restoreYAML} content={`Restores the last deleted ${name}`}/>
           </span>
         </Menu.Item>
       </Accordion.Content>
@@ -226,6 +206,8 @@ class MainMenu extends React.Component {
 
   render() {
     const { activeItem } = this.state;
+    const { essayCrawler, essayList, deletedEssay } = this.state;
+    const { projectCrawler, projectList, deletedProject } = this.state;
     const tempCSS = { overflow: 'hidden', overflowY: 'scroll' };
     return (
       <Menu style={tempCSS} vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
@@ -233,9 +215,9 @@ class MainMenu extends React.Component {
 
         {this.renderBio(activeItem)}
 
-        {this.renderProject()}
+        {this.renderYAML('project', 'deletedProject', 'projectList', projectCrawler, projectList, deletedProject)}
 
-        {this.renderEssays()}
+        {this.renderYAML('essay', 'deletedEssay', 'essayList', essayCrawler, essayList, deletedEssay)}
 
         <Menu.Item
           onClick={() => this.props.setSelected(
@@ -245,11 +227,6 @@ class MainMenu extends React.Component {
           <Icon name='file image outline' />
           Pics
         </Menu.Item>
-
-        <Menu.Item name='upload' active={activeItem === 'upload'} onClick={this.handleUpload}>
-          <Icon name='upload' />
-          Upload
-      </Menu.Item>
       </Menu>
     );
   }
