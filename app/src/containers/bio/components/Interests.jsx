@@ -49,7 +49,7 @@ class Interests extends React.Component {
           <Form.Group>
             <Label pointing="right" as='a' color='black'>
               <Icon name={`idea ${interest.name}`} />
-                {interest.name}
+              {interest.name}
             </Label>
             <Form.Input
               label='Name'
