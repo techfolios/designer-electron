@@ -262,6 +262,7 @@ class IO {
   loadProjects() {
     return new Promise((res) => {
       const list = {};
+      console.log(this.projectsURL);
       const crawler = new FileCrawler(this.projectsURL);
       list.projects = crawler.getYAML();
       list.crawler = crawler;
@@ -272,6 +273,7 @@ class IO {
   loadEssays() {
     return new Promise((res) => {
       const list = {};
+      console.log(this.essaysURL);
       const crawler = new FileCrawler(this.essaysURL);
       list.essays = crawler.getYAML();
       list.crawler = crawler;
