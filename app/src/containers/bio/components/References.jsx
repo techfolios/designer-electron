@@ -37,7 +37,7 @@ class References extends React.Component {
       {this.state.data.map((reference, index) => <Segment basic key={index}>
         <Form.Group>
           <Label pointing="right" as='a' color='black'>
-            <Icon name={`checkmark`} />
+            <Icon name={'checkmark'} />
             {reference.name}
           </Label>
           <Form.Input

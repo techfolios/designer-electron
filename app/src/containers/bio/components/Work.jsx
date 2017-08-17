@@ -109,7 +109,7 @@ class Work extends React.Component {
           onChange={e => this.handleChange(e, 'summary', index)}
         />
         {work.highlights.map((highlight, hindex) =>
-          <div key={"div:" + hindex}>
+          <div key={`div:${hindex}`}>
             <Form.Input
               key={hindex}
               label='Highlight'
@@ -117,13 +117,11 @@ class Work extends React.Component {
               placeholder="Design firmware for distributed weather sensor network"
               onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)}
             />
-            <Icon key={'remove:' + hindex} data-index={index} data-hindex={hindex} link name="minus" onClick={this.removeHighlight} ></Icon>
-            {((work.highlights.length - 1 == hindex) || (work.highlights.length == 0))  &&
-              <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight} ></Icon>
-            }
-          </div>
-        )
-        }
+            <Icon key={`remove:${hindex}`} data-index={index} data-hindex={hindex} link name="minus"
+                  onClick={this.removeHighlight}></Icon>
+            {((work.highlights.length - 1 === hindex) || (work.highlights.length === 0)) &&
+            <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>}
+          </div>)}
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

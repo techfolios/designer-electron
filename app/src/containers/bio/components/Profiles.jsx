@@ -36,7 +36,7 @@ class Profiles extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((profile, index) => <Segment basic  key={index}>
+      {this.state.data.map((profile, index) => <Segment basic key={index}>
         <Form.Group>
           <Label pointing="right" as='a' color='black'>
             <Icon name={`user ${profile.network}`} />
