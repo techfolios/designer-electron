@@ -16,8 +16,10 @@ const values = {
         return <div>{domToReact(html.children, values)}</div>;
       case 'img': {
         const imagePath = json.attribs.src.split(/[\\/]/);
-        imagePath[0] = values.dir;
-        json.attribs.src = imagePath.join('\\');
+        if (!imagePath[0].includes('http')) {
+          imagePath[0] = values.dir;
+          json.attribs.src = imagePath.join('\\');
+        }
         break;
       }
       default:
