@@ -137,6 +137,8 @@ class MainMenu extends React.Component {
     let title;
     let directory = files;
 
+    console.log('getYAML() called');
+
     if (!Array.isArray(directory)) {
       console.log('Non-array variable passed!');
       directory = [];
