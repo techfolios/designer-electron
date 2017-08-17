@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Segment } from 'semantic-ui-react';
+import { Form, Icon, Segment, Label } from 'semantic-ui-react';
 
 class Skills extends React.Component {
   constructor(props) {
@@ -45,13 +45,11 @@ class Skills extends React.Component {
   render() {
     return <div>
       {this.state.data.map((skill, index) => <Segment basic key={index}>
-        <h2 className="ui horizontal divider header">
-          <span data-tooltip={skill.keywords.join(', ')} data-position="bottom center">
-            <i className={`wizard icon ${skill.name}`}></i>
-            {skill.name}
-          </span>
-        </h2>
         <Form.Group>
+          <Label pointing="right" as='a' color='black'>
+            <Icon name={`wizard ${skill.name}`} />
+            {skill.name}
+          </Label>
           <Form.Input
             width={4}
             label='Name'

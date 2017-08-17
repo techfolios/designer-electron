@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Segment } from 'semantic-ui-react';
+import { Form, Icon, Segment, Label } from 'semantic-ui-react';
 
 class Profiles extends React.Component {
   constructor(props) {
@@ -37,13 +37,11 @@ class Profiles extends React.Component {
   render() {
     return <div>
       {this.state.data.map((profile, index) => <Segment basic  key={index}>
-        <div className="ui horizontal divider header">
-          <span data-tooltip={profile.username} data-position="bottom center">
-            <i className={`user icon ${profile.network}`}></i>
-            {profile.network}
-          </span>
-        </div>
         <Form.Group>
+          <Label pointing="right" as='a' color='black'>
+            <Icon name={`user ${profile.network}`} />
+            {profile.network}
+          </Label>
           <Form.Input
             label="Network"
             width={5}

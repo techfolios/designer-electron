@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Segment } from 'semantic-ui-react';
+import { Form, Icon, Segment, Label } from 'semantic-ui-react';
 
 class Work extends React.Component {
   constructor(props) {
@@ -63,13 +63,11 @@ class Work extends React.Component {
   render() {
     return <div>
       {this.state.data.map((work, index) => <Segment basic key={index}>
-        <h2 className="ui horizontal divider header">
-          <span data-tooltip={`${work.company} ${work.position}`} data-position="bottom center">
-            <i className={`laptop icon ${work.company}`}></i>
-            {work.company}
-          </span>
-        </h2>
         <Form.Group>
+          <Label pointing="right" as='a' color='black'>
+            <Icon name={`world ${work.company}`} />
+            {work.company}
+          </Label>
           <Form.Input
             width={8}
             label='Company'
