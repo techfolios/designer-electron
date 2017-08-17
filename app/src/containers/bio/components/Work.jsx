@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Segment } from 'semantic-ui-react';
+import { Form, Icon, Segment, Label } from 'semantic-ui-react';
 
 class Work extends React.Component {
   constructor(props) {
@@ -9,6 +9,10 @@ class Work extends React.Component {
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleHighlightChange = this.handleHighlightChange.bind(this);
+    this.addHighlight = this.addHighlight.bind(this);
+    this.removeHighlight = this.removeHighlight.bind(this);
   }
 
   handleChange(e, key, index) {
@@ -20,6 +24,19 @@ class Work extends React.Component {
   handleHighlightChange(e, key, windex, hindex) {
     const data = this.state.data;
     data[windex][key][hindex] = e.target.value;
+    this.setState({ data });
+  }
+  addHighlight(e) {
+    const data = this.state.data;
+    const index = e.currentTarget.getAttribute('data-index');
+    data[index].highlights.push('');
+    this.setState({ data });
+  }
+  removeHighlight(e) {
+    const data = this.state.data;
+    const index = e.currentTarget.getAttribute('data-index');
+    const hindex = e.currentTarget.getAttribute('data-hindex');
+    data[index].highlights.splice(hindex, 1);
     this.setState({ data });
   }
 
@@ -45,14 +62,12 @@ class Work extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((work, index) => <Segment key={index}>
-        <h2 className="ui horizontal divider header">
-          <span data-tooltip={`${work.company} ${work.position}`} data-position="bottom center">
-            <i className={`laptop icon ${work.company}`}></i>
-            {work.company}
-          </span>
-        </h2>
+      {this.state.data.map((work, index) => <Segment basic key={index}>
         <Form.Group>
+          <Label pointing="right" as='a' color='black'>
+            <Icon name={`world ${work.company}`} />
+            {work.company}
+          </Label>
           <Form.Input
             width={8}
             label='Company'
@@ -84,19 +99,31 @@ class Work extends React.Component {
             label='Website'
             defaultValue={work.website}
             placeholder="www.exampleco.com"
-            onChange={e => this.handleChange(e, 'website', index)} />
+            onChange={e => this.handleChange(e, 'website', index)}
+          />
         </Form.Group>
-        <Form.Input label='Summary'
+        <Form.Input
+          label='Summary'
           defaultValue={work.summary}
           placeholder="Lead developer for weather sensing project"
-          onChange={e => this.handleChange(e, 'summary', index)} />
-        {work.highlights.map((highlight, hindex) => <Form.Input key={hindex}
-          label='Highlights'
-          defaultValue={highlight}
-          placeholder="Design firmware for distributed weather sensor network"
-          onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)} />)
+          onChange={e => this.handleChange(e, 'summary', index)}
+        />
+        {work.highlights.map((highlight, hindex) =>
+          <div key={"div:" + hindex}>
+            <Form.Input
+              key={hindex}
+              label='Highlight'
+              defaultValue={highlight}
+              placeholder="Design firmware for distributed weather sensor network"
+              onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)}
+            />
+            <Icon key={'remove:' + hindex} data-index={index} data-hindex={hindex} link name="minus" onClick={this.removeHighlight} ></Icon>
+            {((work.highlights.length - 1 == hindex) || (work.highlights.length == 0))  &&
+              <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight} ></Icon>
+            }
+          </div>
+        )
         }
-        <br />
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

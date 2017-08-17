@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Segment } from 'semantic-ui-react';
+import { Form, Icon, Segment, Label } from 'semantic-ui-react';
 
 class Awards extends React.Component {
   constructor(props) {
@@ -36,14 +36,12 @@ class Awards extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((award, index) => <Segment key={index}>
-        <h2 className="ui horizontal divider header">
-          <span data-tooltip={`${award.title} ${award.date} ${award.awarder}`} data-position="bottom center">
-            <i className={'trophy icon'}></i>
-            {award.title}
-          </span>
-        </h2>
+      {this.state.data.map((award, index) => <Segment basic key={index}>
         <Form.Group>
+          <Label pointing="right" as='a' color='black'>
+            <Icon name='trophy' />
+            {award.title}
+          </Label>
           <Form.Input
             width={6}
             label='Title'
