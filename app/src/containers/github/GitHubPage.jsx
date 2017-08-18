@@ -114,10 +114,12 @@ class GitHubPage extends React.Component {
 
     return (
       <Container fluid>
-        <h1>Sync with GitHub</h1>
+        <h1>GitHub</h1>
         <Segment>
-        {logButton}
-        <h2>Username: {this.state.io.username}</h2>
+          <h3>Username: {this.state.io.username}</h3>
+          {logButton}
+        </Segment>
+        <Segment>
         <Form>
           <Form.Group>
             <Form.Input
