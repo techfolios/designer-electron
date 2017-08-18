@@ -107,7 +107,7 @@ class GitHubPage extends React.Component {
             Download from GitHub
         </Button>
       );
-      saveButton =(
+      saveButton = (
           <Form.Button positive type="Submit" onClick={this.handleUpdateURL}>Save Remote URL</Form.Button>
       );
     }

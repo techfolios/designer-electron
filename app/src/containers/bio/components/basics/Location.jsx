@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment } from 'semantic-ui-react';
+import { Form, Segment, Container } from 'semantic-ui-react';
 
 
 class Location extends React.Component {
@@ -9,7 +9,8 @@ class Location extends React.Component {
   }
 
   render() {
-    return (<Segment padded>
+    return (
+    <Container textAlign="center">
       <Form.Group>
         <Form.Input
           label={'Address'}
@@ -49,7 +50,7 @@ class Location extends React.Component {
           onChange={e => this.props.handleChange(e, 'region')}
         />
       </Form.Group>
-    </Segment>);
+    </Container>);
   }
 }
 

@@ -35,11 +35,16 @@ class FileCrawler {
   getYAML() {
     const list = [];
     const dir = this.dir;
+    let fileExt = '';
     fs.readdirSync(dir).forEach((file) => {
-      if (file !== 'index.html') {
+      /* eslint no-bitwise: ["error", { "allow": [">>>"] }] */
+      fileExt = file.slice((file.lastIndexOf('.') - 1 >>> 0) + 2);
+      if (fileExt === 'md') {
         const filePath = path.join(dir, file);
         const data = YAMLParser.read(fs.readFileSync(filePath, 'utf8'), file);
         list.push(data);
+      } else {
+        console.log(`Skipping ${file}, not an md file`);
       }
     });
     return list;
