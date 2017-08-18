@@ -29,6 +29,7 @@ class Techfolio extends React.Component {
     this.removeProject = this.removeProject.bind(this);
     this.importImage = this.importImage.bind(this);
     this.removeImage = this.removeImage.bind(this);
+    this.handlePull = this.handlePull.bind(this);
     this.state = {
       bio: null,
       projects: null,

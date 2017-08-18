@@ -1,7 +1,7 @@
 import React from 'react';
 import Cropper from 'cropperjs';
 import Jimp from 'jimp';
-import { Dropdown, Image, Segment } from 'semantic-ui-react';
+import { Button, Dropdown, Image, Modal, Segment } from 'semantic-ui-react';
 
 class ImageEditor extends React.Component {
   constructor(props) {
@@ -10,12 +10,13 @@ class ImageEditor extends React.Component {
       url: props.url,
       activeItem: '',
       index: props.index,
+      alert: false,
     };
-
     this.handleImageLoad = this.handleImageLoad.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleCrop = this.handleCrop.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.show = this.show.bind(this);
   }
 
   handleImageLoad(ev) {
@@ -47,18 +48,19 @@ class ImageEditor extends React.Component {
 
   handleCrop() {
     const { crop, url } = this.state;
-    console.log(crop);
-    Jimp.read(url, (err, img) => {
-      if (!err) {
-        img.crop(crop.x, crop.y, crop.width, crop.height);
-        img.write(url, (writeErr) => {
-          if (!writeErr) {
-            console.log(`image written to disk: ${url}`);
-          } else {
-            console.log(writeErr);
-          }
-        });
-      }
+    this.show('Crop Image', 'Are you sure?', () => {
+      Jimp.read(url, (err, img) => {
+        if (!err) {
+          img.crop(crop.x, crop.y, crop.width, crop.height);
+          img.write(url, (writeErr) => {
+            if (!writeErr) {
+              console.log(`image written to disk: ${url}`);
+            } else {
+              console.log(writeErr);
+            }
+          });
+        }
+      });
     });
   }
 
@@ -66,8 +68,22 @@ class ImageEditor extends React.Component {
     this.props.removeImage(() => this.state.index);
   }
 
+  show(header, message, res, rej) {
+    const onResolve = () => {
+      res();
+      this.setState({ alert: false });
+    };
+    const onReject = () => {
+      if (rej) {
+        rej();
+      }
+      this.setState({ alert: false });
+    };
+    this.setState({ header, message, onResolve, onReject, alert: true });
+  }
+
   render() {
-    const { url, cropper } = this.state;
+    const { url, cropper, alert, header, message, onReject, onResolve } = this.state;
     return <Segment basic padded="very">
       <Dropdown text="File">
         <Dropdown.Menu>
@@ -88,6 +104,19 @@ class ImageEditor extends React.Component {
       <div>
         <Image src={url} onLoad={this.handleImageLoad} />
       </div>
+
+      <Modal size="mini" open={alert} onClose={() => this.setState({ alert: false })} closeIcon={true}>
+        <Modal.Header>
+          {header}
+        </Modal.Header>
+        <Modal.Content>
+          <p>{message}</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button secondary content='No' onClick={onReject} />
+          <Button positive content='Yes' onClick={onResolve} />
+        </Modal.Actions>
+      </Modal>
     </Segment>;
   }
 }
