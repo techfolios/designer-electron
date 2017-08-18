@@ -105,11 +105,11 @@ class Techfolio extends React.Component {
         break;
       case 'projects':
         retSelection = <YAMLDisplay editor='project' dir={this.io.getLocalFolder()} key={data.attributes.title}
-                                   delete={state.removeYAML} data={data} state={state} />;
+          delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'essays':
         retSelection = <YAMLDisplay editor='essay' dir={this.io.getLocalFolder()} key={data.attributes.title}
-                              delete={state.removeYAML} data={data} state={state} />;
+          delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;

@@ -238,7 +238,7 @@ class MainMenu extends React.Component {
               importImage={this.props.importImage}
               removeImage={this.props.removeImage} />)}>
           <Icon name='file image outline' />
-          Pics
+          Images
         </Menu.Item>
       </Menu>
     );
