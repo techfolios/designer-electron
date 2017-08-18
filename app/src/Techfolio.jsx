@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Dimmer, Loader } from 'semantic-ui-react';
 
 import MainMenu from './components/MainMenu.jsx';
-import Settings from './containers/settings/Settings.jsx';
+import GitHubPage from './containers/github/GitHubPage.jsx';
 import BasicsSection from './containers/bio/BasicsSection.jsx';
 import ProfilesSection from './containers/bio/ProfilesSection.jsx';
 import InterestsSection from './containers/bio/InterestsSection.jsx';
@@ -12,8 +12,7 @@ import EducationSection from './containers/bio/EducationSection.jsx';
 import WorkSection from './containers/bio/WorkSection.jsx';
 import VolunteerSection from './containers/bio/VolunteerSection.jsx';
 import RefSection from './containers/bio/RefSection.jsx';
-import Essay from './containers/essay/Essays.jsx';
-import Project from './containers/project/Projects.jsx';
+import YAMLDisplay from './containers/yaml/YAMLDisplay.jsx';
 import IO from './io';
 import Oauth from './utilities/Oauth';
 
@@ -38,7 +37,11 @@ class Techfolio extends React.Component {
       projectCrawler: null,
       addItem: null,
       settings: null,
-      selected: <Settings />,
+      selected: <GitHubPage
+        io={this.io}
+        onUpload={this.handleUpload}
+        onPull={this.handlePull}
+        onUpdateURL={this.handleUpdateURL} />,
       isLoading: false,
     };
   }
@@ -101,21 +104,22 @@ class Techfolio extends React.Component {
           onLoadBio={this.handleLoadBio} />;
         break;
       case 'projects':
-        retSelection = <Project dir={this.io.getLocalFolder()} key={data.attributes.title}
+        retSelection = <YAMLDisplay editor='project' dir={this.io.getLocalFolder()} key={data.attributes.title}
                                    delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'essays':
-        retSelection = <Essay dir={this.io.getLocalFolder()} key={data.attributes.title}
+        retSelection = <YAMLDisplay editor='essay' dir={this.io.getLocalFolder()} key={data.attributes.title}
                               delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;
         break;
-      case 'addItem':
-        retSelection = <h1>Add Menu Item</h1>;
-        break;
-      case 'settings':
-        retSelection = <Settings />;
+      case 'github':
+        retSelection = <GitHubPage
+          io={this.io}
+          onUpload={this.handleUpload}
+          onPull={this.handlePull}
+          onUpdateURL={this.handleUpdateURL} />;
         break;
       default:
         retSelection = <h1>Default page</h1>;
@@ -179,9 +183,27 @@ class Techfolio extends React.Component {
     return this.io.removeImage(url);
   }
 
+  handleUpdateURL(data) {
+    this.io.remoteURL = data;
+  }
+
   handleUpload() {
     this.setState({ isLoading: true });
     this.io.push()
+      .then((res) => {
+        if (res) {
+          console.log('success');
+        }
+        this.setState({ isLoading: false });
+      }, (rej) => {
+        console.log(rej);
+        this.setState({ isLoading: false });
+      });
+  }
+
+  handlePull() {
+    this.setState({ isLoading: true });
+    this.io.pull()
       .then((res) => {
         if (res) {
           console.log('success');
@@ -197,49 +219,55 @@ class Techfolio extends React.Component {
     this.setState({ isLoading: true });
     Oauth.login()
       .then(() => {
-        console.log('');
+        console.log('Init Oauth');
         return this.io.init();
       })
       .then((res) => {
+        console.log('Loading Bio');
         console.log(res);
         return this.io.loadBio();
       }, (rej) => {
         console.log(rej);
+        console.log('Oauth Failed');
         this.setState({ isLoading: false });
       })
       .then((resBio) => {
+        console.log('Bio Loaded, loading project');
         console.log(resBio);
         this.setState({ bio: resBio });
         return this.io.loadProjects();
       }, (rejBio) => {
+        console.log('Bio failed');
         console.log(rejBio);
         this.setState({ isLoading: false });
       })
       .then((resProj) => {
-        console.log(resProj);
+        console.log('Project loaded, loading essay');
         this.setState({ projects: resProj.projects });
         this.setState({ projectCrawler: resProj.crawler });
         return this.io.loadEssays();
       }, (rejProj) => {
+        console.log('Project failed');
         console.log(rejProj);
         this.setState({ isLoading: false });
       })
       .then((resEssay) => {
+        console.log('Essay loaded, loading image');
         this.setState({ essays: resEssay.essays });
         this.setState({ essayCrawler: resEssay.crawler });
         return this.io.loadImages();
       }, (rejEssay) => {
+        console.log('Essay failed');
         console.log(rejEssay);
         this.setState({ isLoading: false });
       })
       .then((resImages) => {
+        console.log('Image loaded');
         this.setState({ images: resImages });
         this.setState({ isLoading: false });
       }, (rejImages) => {
+        console.log('Image failed');
         console.log(rejImages);
-        this.setState({ isLoading: false });
-      }, (rejEssay) => {
-        console.log(rejEssay);
         this.setState({ isLoading: false });
       });
   }

@@ -88,19 +88,19 @@ class IO {
   hasRemote() {
     // return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
     return request('GET', `https://api.github.com/users/${this.username}/repos?access_token=${this.accessToken}`)
-       .then((res) => {
-         let result = false;
-         const repos = res.body;
+      .then((res) => {
+        let result = false;
+        const repos = res.body;
 
-         for (let i = 0; i < res.body.length; i += 1) {
-           if (repos[i].name === `${this.username}.github.io`) {
-             result = true;
-           }
-         }
-         return result;
-       }, (err) => {
-         console.err(err);
-       });
+        for (let i = 0; i < res.body.length; i += 1) {
+          if (repos[i].name === `${this.username}.github.io`) {
+            result = true;
+          }
+        }
+        return result;
+      }, (err) => {
+        console.err(err);
+      });
   }
 
   cloneUserRemote() {
@@ -131,6 +131,7 @@ class IO {
 
     return new Promise((res, rej) => {
       // Open the repository.
+      console.log(this.remoteURL);
       Git.Repository.open(this.localURL)
         // Get the index.
         .then((repoResult) => {
@@ -162,6 +163,10 @@ class IO {
         .then(() => repo.getRemote('origin'))
         .then((remoteResult) => {
           remote = remoteResult;
+          console.log('pushing to remote URL');
+          console.log(remoteResult);
+          console.log(remote);
+          console.log(this.remoteURL);
           return remote.push(
             ['refs/heads/master:refs/heads/master'],
             {
@@ -257,6 +262,7 @@ class IO {
   loadProjects() {
     return new Promise((res) => {
       const list = {};
+      console.log(this.projectsURL);
       const crawler = new FileCrawler(this.projectsURL);
       list.projects = crawler.getYAML();
       list.crawler = crawler;
@@ -267,6 +273,7 @@ class IO {
   loadEssays() {
     return new Promise((res) => {
       const list = {};
+      console.log(this.essaysURL);
       const crawler = new FileCrawler(this.essaysURL);
       list.essays = crawler.getYAML();
       list.crawler = crawler;
@@ -319,21 +326,6 @@ class IO {
       });
     });
   }
-
-  /* ESLint fix needed
-  push() {
-    return new Promise((res, rej) => {
-      SimpleGit(this.localURL)
-        .push('origin', 'master', (err) => {
-          if (err) {
-            rej(err);
-          }
-          res(true);
-        });
-    });
-  }
-  */
-
 
   getLocalFolder() {
     return this.localURL;

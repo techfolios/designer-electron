@@ -24,7 +24,7 @@ class BasicsSection extends React.Component {
   }
 
   handleLoadBio() {
-    this.props.onLoadBio();
+    this.props.onUpload();
   }
 
   render() {
