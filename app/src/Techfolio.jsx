@@ -211,49 +211,55 @@ class Techfolio extends React.Component {
     this.setState({ isLoading: true });
     Oauth.login()
       .then(() => {
-        console.log('');
+        console.log('Init Oauth');
         return this.io.init();
       })
       .then((res) => {
+        console.log('Loading Bio');
         console.log(res);
         return this.io.loadBio();
       }, (rej) => {
         console.log(rej);
+        console.log('Oauth Failed');
         this.setState({ isLoading: false });
       })
       .then((resBio) => {
+        console.log('Bio Loaded, loading project');
         console.log(resBio);
         this.setState({ bio: resBio });
         return this.io.loadProjects();
       }, (rejBio) => {
+        console.log('Bio failed');
         console.log(rejBio);
         this.setState({ isLoading: false });
       })
       .then((resProj) => {
-        console.log(resProj);
+        console.log('Project loaded, loading essay');
         this.setState({ projects: resProj.projects });
         this.setState({ projectCrawler: resProj.crawler });
         return this.io.loadEssays();
       }, (rejProj) => {
+        console.log('Project failed');
         console.log(rejProj);
         this.setState({ isLoading: false });
       })
       .then((resEssay) => {
+        console.log('Essay loaded, loading image');
         this.setState({ essays: resEssay.essays });
         this.setState({ essayCrawler: resEssay.crawler });
         return this.io.loadImages();
       }, (rejEssay) => {
+        console.log('Essay failed');
         console.log(rejEssay);
         this.setState({ isLoading: false });
       })
       .then((resImages) => {
+        console.log('Image loaded');
         this.setState({ images: resImages });
         this.setState({ isLoading: false });
       }, (rejImages) => {
+        console.log('Image failed');
         console.log(rejImages);
-        this.setState({ isLoading: false });
-      }, (rejEssay) => {
-        console.log(rejEssay);
         this.setState({ isLoading: false });
       });
   }

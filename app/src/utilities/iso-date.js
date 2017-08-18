@@ -1,6 +1,7 @@
 class ISODate {
-  static getDate() {
-    const today = new Date();
+  static getDate(str) {
+    let today = new Date();
+    if (str) today = new Date(str);
     return today.toISOString().slice(0, 10);
   }
 
