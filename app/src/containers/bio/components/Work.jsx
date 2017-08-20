@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Icon, Segment } from 'semantic-ui-react';
+import $ from 'jquery';
 
 class Work extends React.Component {
   constructor(props) {
@@ -37,6 +38,7 @@ class Work extends React.Component {
     const index = e.currentTarget.getAttribute('data-index');
     const hindex = e.currentTarget.getAttribute('data-hindex');
     data[index].highlights.splice(hindex, 1);
+    console.log(data[index].highlights);
     this.setState({ data });
   }
 
@@ -110,17 +112,24 @@ class Work extends React.Component {
         {work.highlights.map((highlight, hindex) =>
           <div key={`div:${hindex}`}>
             <Form.Input
+              className="highlight"
               key={hindex}
               label='Highlight'
-              defaultValue={highlight}
+              value={highlight}
               placeholder="Design firmware for distributed weather sensor network"
               onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)}
             />
             <Icon key={`remove:${hindex}`} data-index={index} data-hindex={hindex} link name="minus"
                   onClick={this.removeHighlight}></Icon>
-            {((work.highlights.length - 1 === hindex) || (work.highlights.length === 0)) &&
-            <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>}
+            {(work.highlights.length - 1 === hindex) &&
+              <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>
+            }
           </div>)}
+          {(work.highlights.length === 0) &&
+            <span data-position="bottom center" data-tooltip="Add a highlight">
+              <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>
+            </span>
+          }
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>
