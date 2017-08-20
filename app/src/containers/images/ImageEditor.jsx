@@ -13,7 +13,6 @@ class ImageEditor extends React.Component {
       alert: false,
     };
     this.handleImageLoad = this.handleImageLoad.bind(this);
-    this.handleItemClick = this.handleItemClick.bind(this);
     this.handleCrop = this.handleCrop.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.show = this.show.bind(this);
@@ -41,11 +40,6 @@ class ImageEditor extends React.Component {
     this.setState({ cropper });
   }
 
-  handleItemClick(ev, { name }) {
-    console.log(name);
-    this.setState({ active: name });
-  }
-
   handleCrop() {
     const { crop, url } = this.state;
     this.show('Crop Image', 'Are you sure?', () => {
@@ -65,7 +59,9 @@ class ImageEditor extends React.Component {
   }
 
   handleDelete() {
-    this.props.removeImage(() => this.state.index);
+    this.show('Delete Image', 'Are you sure?', () => {
+      this.props.removeImage(() => this.state.index);
+    });
   }
 
   show(header, message, res, rej) {
