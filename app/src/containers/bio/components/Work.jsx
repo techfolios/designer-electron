@@ -64,13 +64,12 @@ class Work extends React.Component {
     return <div>
       {this.state.data.map((work, index) => <Segment basic key={index}>
         <Form.Group>
-          <Label pointing="right" as='a' color='black'>
-            <Icon name={`world ${work.company}`} />
-            {work.company}
-          </Label>
           <Form.Input
             width={8}
-            label='Company'
+            label={<span data-position="bottom center" data-tooltip={work.company}>
+              <Icon name={`world ${work.company}`} />
+              Organization
+            </span>}
             defaultValue={work.company}
             placeholder='Company'
             onChange={e => this.handleChange(e, 'company', index)} />

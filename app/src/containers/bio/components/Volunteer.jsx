@@ -47,13 +47,12 @@ class Volunteer extends React.Component {
     return <div>
       {this.state.data.map((volunteer, index) => <Segment basic key={index}>
         <Form.Group>
-          <Label pointing="right" as='a' color='black'>
-            <Icon name={`world ${volunteer.organization}`} />
-            {volunteer.organization}
-          </Label>
           <Form.Input
             width={8}
-            label='Organization'
+            label={<span data-position="bottom center" data-tooltip={volunteer.organization}>
+              <Icon name={`world ${volunteer.organization}`} />
+              Organization
+            </span>}
             defaultValue={volunteer.organization}
             placeholder='Organization'
             onChange={e => this.handleChange(e, 'organization', index)} />

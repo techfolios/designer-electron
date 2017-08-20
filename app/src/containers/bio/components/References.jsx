@@ -36,13 +36,12 @@ class References extends React.Component {
     return <div>
       {this.state.data.map((reference, index) => <Segment basic key={index}>
         <Form.Group>
-          <Label pointing="right" as='a' color='black'>
-            <Icon name={`checkmark`} />
-            {reference.name}
-          </Label>
           <Form.Input
             width={8}
-            label='Name'
+            label={<span data-position="bottom center" data-tooltip={reference.name}>
+              <Icon name={`checkmark`} />
+              Name
+            </span>}
             defaultValue={reference.name}
             placeholder={'Name'}
             onChange={e => this.handleChange(e, 'name', index)} />

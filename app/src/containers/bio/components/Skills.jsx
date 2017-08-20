@@ -46,13 +46,12 @@ class Skills extends React.Component {
     return <div>
       {this.state.data.map((skill, index) => <Segment basic key={index}>
         <Form.Group>
-          <Label pointing="right" as='a' color='black'>
-            <Icon name={`wizard ${skill.name}`} />
-            {skill.name}
-          </Label>
           <Form.Input
             width={4}
-            label='Name'
+            label={<span data-position="bottom center" data-tooltip={skill.name}>
+              <Icon name={`wizard ${skill.name}`} />
+              Name
+            </span>}
             defaultValue={skill.name}
             placeholder={'Name'}
             onChange={e => this.handleChange(e, 'name', index)} />
