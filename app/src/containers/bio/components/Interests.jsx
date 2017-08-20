@@ -1,11 +1,11 @@
 import React from 'react';
-import { Form, Icon, Segment, Label } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class Interests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data
+      data: props.data,
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);

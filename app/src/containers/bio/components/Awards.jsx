@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Segment, Rail } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class Awards extends React.Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class Awards extends React.Component {
           <Form.Input
             width={6}
             label={<span data-position="bottom center" data-tooltip={award.title}>
-              <Icon name={`trophy`} />
+              <Icon name={'trophy'} />
               Title
             </span>}
             defaultValue={award.title}

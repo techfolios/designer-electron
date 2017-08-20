@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Segment, Container, Label } from 'semantic-ui-react';
+import { Form, Container } from 'semantic-ui-react';
 
 
 class Contact extends React.Component {

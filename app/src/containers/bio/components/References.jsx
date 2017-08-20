@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Segment, Label } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class References extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class References extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={reference.name}>
-              <Icon name={`checkmark`} />
+              <Icon name={'checkmark'} />
               Name
             </span>}
             defaultValue={reference.name}
