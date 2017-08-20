@@ -36,7 +36,7 @@ class Profiles extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((profile, index) => <Segment basic  key={index}>
+      {this.state.data.map((profile, index) => <Segment basic key={index}>
         <Form.Group>
           <Form.Input
             label={<span data-position="bottom center" data-tooltip={profile.network}>

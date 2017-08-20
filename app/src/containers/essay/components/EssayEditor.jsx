@@ -13,7 +13,7 @@ class EssayEditor extends YAMLEditor {
     super(props);
     this.state = { data: props.data };
     this.data = this.state.data;
-    this.date = this.data.file.name.split(/[-.]/);
+    this.date = ISODate.getDate(this.data.attributes.date).split(/[-.]/);
     this.menu = props.state;
     this.crawler = new FileCrawler(Path.resolve(this.props.dir, 'essays'));
 
