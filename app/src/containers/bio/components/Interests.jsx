@@ -49,7 +49,7 @@ class Interests extends React.Component {
           <Form.Group>
             <Form.Input
               label={<span data-position="bottom center" data-tooltip={interest.name}>
-                <Icon name={`idea ${interest.name}`} />
+                <Icon color="teal" name={`idea ${interest.name}`} />
                 Name
               </span>}
               width={4}

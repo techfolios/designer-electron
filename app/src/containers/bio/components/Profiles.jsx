@@ -40,7 +40,7 @@ class Profiles extends React.Component {
         <Form.Group>
           <Form.Input
             label={<span data-position="bottom center" data-tooltip={profile.network}>
-              <Icon name={`user ${profile.network}`} />
+              <Icon color="teal" name={`user ${profile.network}`} />
               Network
             </span>}
             width={5}

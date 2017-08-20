@@ -41,7 +41,7 @@ class Awards extends React.Component {
           <Form.Input
             width={6}
             label={<span data-position="bottom center" data-tooltip={award.title}>
-              <Icon name={'trophy'} />
+              <Icon color="teal" name={'trophy'} />
               Title
             </span>}
             defaultValue={award.title}

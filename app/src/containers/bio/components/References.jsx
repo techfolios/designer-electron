@@ -39,7 +39,7 @@ class References extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={reference.name}>
-              <Icon name={'checkmark'} />
+              <Icon color="teal" name={'checkmark'} />
               Name
             </span>}
             defaultValue={reference.name}

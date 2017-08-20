@@ -52,7 +52,7 @@ class Education extends React.Component {
       {this.state.data.map((education, index) => <Segment basic key={index}>
         <Form.Group>
           <Form.Input label={<span data-position="bottom center" data-tooltip={education.institution}>
-            <Icon name={'student'} />
+            <Icon color="teal" name={'student'} />
             Institution
           </span>}
             defaultValue={education.institution}

@@ -5,7 +5,7 @@ class Work extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data,
+      data: props.data
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
@@ -67,7 +67,7 @@ class Work extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={work.company}>
-              <Icon name={`world ${work.company}`} />
+              <Icon color="teal" name={`laptop ${work.company}`} />
               Organization
             </span>}
             defaultValue={work.company}

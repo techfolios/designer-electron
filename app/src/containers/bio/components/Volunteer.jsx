@@ -50,7 +50,7 @@ class Volunteer extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={volunteer.organization}>
-              <Icon name={`world ${volunteer.organization}`} />
+              <Icon color="teal" name={`world ${volunteer.organization}`} />
               Organization
             </span>}
             defaultValue={volunteer.organization}

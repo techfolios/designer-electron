@@ -49,7 +49,7 @@ class Skills extends React.Component {
           <Form.Input
             width={4}
             label={<span data-position="bottom center" data-tooltip={skill.name}>
-              <Icon name={`wizard ${skill.name}`} />
+              <Icon color="teal" name={`wizard ${skill.name}`} />
               Name
             </span>}
             defaultValue={skill.name}
