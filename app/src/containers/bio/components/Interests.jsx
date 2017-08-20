@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Segment, Label } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class Interests extends React.Component {
   constructor(props) {
@@ -47,12 +47,11 @@ class Interests extends React.Component {
       {this.state.data.map((interest, index) => <Segment basic key={index}>
         <div>
           <Form.Group>
-            <Label pointing="right" as='a' color='black'>
-              <Icon name={`idea ${interest.name}`} />
-              {interest.name}
-            </Label>
             <Form.Input
-              label='Name'
+              label={<span data-position="bottom center" data-tooltip={interest.name}>
+                <Icon color="teal" name={`idea ${interest.name}`} />
+                Name
+              </span>}
               width={4}
               defaultValue={interest.name}
               placeholder={'Name'}

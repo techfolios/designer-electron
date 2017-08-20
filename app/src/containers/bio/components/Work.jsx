@@ -1,11 +1,11 @@
 import React from 'react';
-import { Form, Icon, Segment, Label } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
 
 class Work extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data,
+      data: props.data
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
@@ -64,13 +64,12 @@ class Work extends React.Component {
     return <div>
       {this.state.data.map((work, index) => <Segment basic key={index}>
         <Form.Group>
-          <Label pointing="right" as='a' color='black'>
-            <Icon name={`world ${work.company}`} />
-            {work.company}
-          </Label>
           <Form.Input
             width={8}
-            label='Company'
+            label={<span data-position="bottom center" data-tooltip={work.company}>
+              <Icon color="teal" name={`laptop ${work.company}`} />
+              Organization
+            </span>}
             defaultValue={work.company}
             placeholder='Company'
             onChange={e => this.handleChange(e, 'company', index)} />
