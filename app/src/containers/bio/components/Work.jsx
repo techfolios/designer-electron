@@ -9,6 +9,10 @@ class Work extends React.Component {
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleHighlightChange = this.handleHighlightChange.bind(this);
+    this.addHighlight = this.addHighlight.bind(this);
+    this.removeHighlight = this.removeHighlight.bind(this);
   }
 
   handleChange(e, key, index) {
@@ -20,6 +24,20 @@ class Work extends React.Component {
   handleHighlightChange(e, key, windex, hindex) {
     const data = this.state.data;
     data[windex][key][hindex] = e.target.value;
+    this.setState({ data });
+  }
+  addHighlight(e) {
+    const data = this.state.data;
+    const index = e.currentTarget.getAttribute('data-index');
+    data[index].highlights.push('');
+    this.setState({ data });
+  }
+  removeHighlight(e) {
+    const data = this.state.data;
+    const index = e.currentTarget.getAttribute('data-index');
+    const hindex = e.currentTarget.getAttribute('data-hindex');
+    data[index].highlights.splice(hindex, 1);
+    console.log(data[index].highlights);
     this.setState({ data });
   }
 
@@ -45,17 +63,14 @@ class Work extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((work, index) => <Segment key={index}>
-        <h2 className="ui horizontal divider header">
-          <span data-tooltip={`${work.company} ${work.position}`} data-position="bottom center">
-            <i className={`laptop icon ${work.company}`}></i>
-            {work.company}
-          </span>
-        </h2>
+      {this.state.data.map((work, index) => <Segment basic key={index}>
         <Form.Group>
           <Form.Input
             width={8}
-            label='Company'
+            label={<span data-position="bottom center" data-tooltip={work.company}>
+              <Icon color="teal" name={`laptop ${work.company}`} />
+              Organization
+            </span>}
             defaultValue={work.company}
             placeholder='Company'
             onChange={e => this.handleChange(e, 'company', index)} />
@@ -84,19 +99,36 @@ class Work extends React.Component {
             label='Website'
             defaultValue={work.website}
             placeholder="www.exampleco.com"
-            onChange={e => this.handleChange(e, 'website', index)} />
+            onChange={e => this.handleChange(e, 'website', index)}
+          />
         </Form.Group>
-        <Form.Input label='Summary'
+        <Form.Input
+          label='Summary'
           defaultValue={work.summary}
           placeholder="Lead developer for weather sensing project"
-          onChange={e => this.handleChange(e, 'summary', index)} />
-        {work.highlights.map((highlight, hindex) => <Form.Input key={hindex}
-          label='Highlights'
-          defaultValue={highlight}
-          placeholder="Design firmware for distributed weather sensor network"
-          onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)} />)
-        }
-        <br />
+          onChange={e => this.handleChange(e, 'summary', index)}
+        />
+        {work.highlights.map((highlight, hindex) =>
+          <div key={`div:${hindex}`}>
+            <Form.Input
+              className="highlight"
+              key={hindex}
+              label='Highlight'
+              value={highlight}
+              placeholder="Design firmware for distributed weather sensor network"
+              onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)}
+            />
+            <Icon key={`remove:${hindex}`} data-index={index} data-hindex={hindex} link name="minus"
+                  onClick={this.removeHighlight}></Icon>
+            {(work.highlights.length - 1 === hindex) &&
+              <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>
+            }
+          </div>)}
+          {(work.highlights.length === 0) &&
+            <span data-position="bottom center" data-tooltip="Add a highlight">
+              <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>
+            </span>
+          }
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

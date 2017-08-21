@@ -36,17 +36,14 @@ class Awards extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((award, index) => <Segment key={index}>
-        <h2 className="ui horizontal divider header">
-          <span data-tooltip={`${award.title} ${award.date} ${award.awarder}`} data-position="bottom center">
-            <i className={'trophy icon'}></i>
-            {award.title}
-          </span>
-        </h2>
+      {this.state.data.map((award, index) => <Segment basic key={index}>
         <Form.Group>
           <Form.Input
             width={6}
-            label='Title'
+            label={<span data-position="bottom center" data-tooltip={award.title}>
+              <Icon color="teal" name={'trophy'} />
+              Title
+            </span>}
             defaultValue={award.title}
             placeholder={'Title'}
             onChange={e => this.handleChange(e, 'title', index)} />

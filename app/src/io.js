@@ -86,18 +86,13 @@ class IO {
   added "this." in front of res to placate ESLint - is this a correct fix?
    */
   hasRemote() {
-    // return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
-    return request('GET', `https://api.github.com/users/${this.username}/repos?access_token=${this.accessToken}`)
+    return request('GET',
+      `https://api.github.com/repos/${this.username}/${this.username}.github.io?access_token=${this.accessToken}`)
       .then((res) => {
-        let result = false;
-        const repos = res.body;
-
-        for (let i = 0; i < res.body.length; i += 1) {
-          if (repos[i].name === `${this.username}.github.io`) {
-            result = true;
-          }
+        if (res.body.id) {
+          return true;
         }
-        return result;
+        return false;
       }, (err) => {
         console.err(err);
       });
@@ -202,7 +197,13 @@ class IO {
         .then(() => repo.mergeBranches('master', 'origin/master'))
         .catch((err) => { rej(err); })
         .done(() => {
-          res('successfully merged');
+          const path = this.bioURL;
+          FS.readFile(path, (err, data) => {
+            if (err) {
+              rej(err);
+            }
+            res(JSON.parse(data));
+          });
         });
     });
   }
@@ -262,6 +263,7 @@ class IO {
   loadProjects() {
     return new Promise((res) => {
       const list = {};
+      console.log(this.projectsURL);
       const crawler = new FileCrawler(this.projectsURL);
       list.projects = crawler.getYAML();
       list.crawler = crawler;
@@ -272,6 +274,7 @@ class IO {
   loadEssays() {
     return new Promise((res) => {
       const list = {};
+      console.log(this.essaysURL);
       const crawler = new FileCrawler(this.essaysURL);
       list.essays = crawler.getYAML();
       list.crawler = crawler;
@@ -311,9 +314,10 @@ class IO {
     });
   }
 
-  removeImage(name) {
+  removeImage(url) {
     return new Promise((res, rej) => {
-      const imagePath = Path.resolve(this.imagesURL, name);
+      const imagePath = Path.resolve(this.imagesURL, url);
+      console.log(imagePath);
       FS.unlink(imagePath, (err) => {
         if (err) {
           rej(err);

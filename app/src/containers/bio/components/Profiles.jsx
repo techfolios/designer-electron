@@ -7,7 +7,6 @@ class Profiles extends React.Component {
     this.state = {
       data: props.data,
     };
-
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
   }
@@ -37,16 +36,13 @@ class Profiles extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((profile, index) => <Segment key={index}>
-        <div className="ui horizontal divider header">
-          <span data-tooltip={profile.username} data-position="bottom center">
-            <i className={`user icon ${profile.network}`}></i>
-            {profile.network}
-          </span>
-        </div>
+      {this.state.data.map((profile, index) => <Segment basic key={index}>
         <Form.Group>
           <Form.Input
-            label="Network"
+            label={<span data-position="bottom center" data-tooltip={profile.network}>
+              <Icon color="teal" name={`user ${profile.network}`} />
+              Network
+            </span>}
             width={5}
             defaultValue={profile.network}
             placeholder="Network"

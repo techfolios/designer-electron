@@ -107,17 +107,19 @@ class GitHubPage extends React.Component {
             Download from GitHub
         </Button>
       );
-      saveButton =(
+      saveButton = (
           <Form.Button positive type="Submit" onClick={this.handleUpdateURL}>Save Remote URL</Form.Button>
       );
     }
 
     return (
       <Container fluid>
-        <h1>Sync with GitHub</h1>
+        <h1>GitHub</h1>
         <Segment>
-        {logButton}
-        <h2>Username: {this.state.io.username}</h2>
+          <h3>Username: {this.state.io.username}</h3>
+          {logButton}
+        </Segment>
+        <Segment>
         <Form>
           <Form.Group>
             <Form.Input

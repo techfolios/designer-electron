@@ -49,16 +49,12 @@ class Education extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((education, index) => <Segment key={index}>
-        <h2 className="ui horizontal divider header">
-          <span data-tooltip={`${education.institution} ${education.area} ${education.gpa}`}
-            data-position="bottom center">
-            <i className={'student icon'}></i>
-            {education.institution}
-          </span>
-        </h2>
+      {this.state.data.map((education, index) => <Segment basic key={index}>
         <Form.Group>
-          <Form.Input label='Institution'
+          <Form.Input label={<span data-position="bottom center" data-tooltip={education.institution}>
+            <Icon color="teal" name={'student'} />
+            Institution
+          </span>}
             defaultValue={education.institution}
             placeholder={'Institution'}
             onChange={e => this.handleChange(e, 'institution', index)}
