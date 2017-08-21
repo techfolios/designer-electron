@@ -16,13 +16,13 @@ class Skills extends React.Component {
 
   handleChange(e, key, index) {
     const state = this.state.data;
-    if (key == 'name') {
+    if (key === 'name') {
       const val = e.target.value;
       let icon = 'wizard';
-      let words = val.split(' ');
+      const words = val.split(' ');
 
-      for (let i = 0; i < words.length; i++) {
-        let word = words[i];
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
         if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
           icon = word;
         }
@@ -64,7 +64,7 @@ class Skills extends React.Component {
           <Form.Input
             width={4}
             label={<span data-position="bottom center" data-tooltip={skill.name}>
-              <Icon id={`skill-${index}`} color="teal" name={`wizard`} />
+              <Icon id={`skill-${index}`} color="teal" name={'wizard'} />
               Name
             </span>}
             defaultValue={skill.name}

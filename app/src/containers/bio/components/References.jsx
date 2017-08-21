@@ -15,13 +15,13 @@ class References extends React.Component {
 
   handleChange(e, key, index) {
     const data = this.state.data;
-    if (key == 'name') {
+    if (key === 'name') {
       const val = e.target.value;
       let icon = 'checkmark';
-      let words = val.split(' ');
+      const words = val.split(' ');
 
-      for (let i = 0; i < words.length; i++) {
-        let word = words[i];
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
         if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
           icon = word;
         }

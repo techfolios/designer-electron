@@ -16,13 +16,13 @@ class Education extends React.Component {
 
   handleChange(e, key, index) {
     const state = this.state.data;
-    if (key == 'institution') {
+    if (key === 'institution') {
       const val = e.target.value;
       let icon = 'student';
-      let words = val.split(' ');
+      const words = val.split(' ');
 
-      for (let i = 0; i < words.length; i++) {
-        let word = words[i];
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
         if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
           icon = word;
         }

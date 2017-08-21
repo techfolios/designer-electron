@@ -16,20 +16,16 @@ class Work extends React.Component {
     this.addHighlight = this.addHighlight.bind(this);
     this.removeHighlight = this.removeHighlight.bind(this);
   }
-  componentDidMount() {
-    const icons = $('.iconic');
-    console.log(icons);
-  }
 
   handleChange(e, key, index) {
     const data = this.state.data;
-    if (key == 'company') {
+    if (key === 'company') {
       const val = e.target.value;
       let icon = 'laptop';
-      let words = val.split(' ');
+      const words = val.split(' ');
 
-      for (let i = 0; i < words.length; i++) {
-        let word = words[i];
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
         if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
           icon = word;
         }
@@ -86,7 +82,7 @@ class Work extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={work.company}>
-              <Icon className={'iconic'} id={`work-${index}`} color="teal" name={`laptop`} />
+              <Icon className={'iconic'} id={`work-${index}`} color="teal" name={'laptop'} />
               Organization
             </span>}
             defaultValue={work.company}

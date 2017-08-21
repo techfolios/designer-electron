@@ -15,13 +15,13 @@ class Profiles extends React.Component {
 
   handleChange(e, key, index) {
     const data = this.state.data;
-    if (key == 'network') {
+    if (key === 'network') {
       const val = e.target.value;
       let icon = 'user';
-      let words = val.split(' ');
+      const words = val.split(' ');
 
-      for (let i = 0; i < words.length; i++) {
-        let word = words[i];
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
         if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
           icon = word;
         }
@@ -55,7 +55,7 @@ class Profiles extends React.Component {
         <Form.Group>
           <Form.Input
             label={<span data-position="bottom center" data-tooltip={profile.network}>
-              <Icon id={`profile-${index}`} color="teal" name={`user`} />
+              <Icon id={`profile-${index}`} color="teal" name={'user'} />
               Network
             </span>}
             width={5}
