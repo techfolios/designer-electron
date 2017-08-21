@@ -23,6 +23,7 @@ class Techfolio extends React.Component {
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.setSelected = this.setSelected.bind(this);
     this.handleSaveBio = this.handleSaveBio.bind(this);
+    this.handlePull = this.handlePull.bind(this);
     this.handleLoadBio = this.handleLoadBio.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.saveProject = this.saveProject.bind(this);
@@ -182,7 +183,7 @@ class Techfolio extends React.Component {
     this.io.push()
       .then((res) => {
         if (res) {
-          console.log('success');
+          console.log('success @handleUpload');
         }
         this.setState({ isLoading: false });
       }, (rej) => {
@@ -196,6 +197,8 @@ class Techfolio extends React.Component {
     this.io.pull()
       .then((res) => {
         if (res) {
+          console.log(res);
+          this.setState({ res });
           console.log('success');
         }
         this.setState({ isLoading: false });
