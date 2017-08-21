@@ -15,13 +15,13 @@ class Volunteer extends React.Component {
 
   handleChange(e, key, index) {
     const data = this.state.data;
-    if (key == 'organization') {
+    if (key === 'organization') {
       const val = e.target.value;
       let icon = 'world';
-      let words = val.split(' ');
+      const words = val.split(' ');
 
-      for (let i = 0; i < words.length; i++) {
-        let word = words[i];
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
         if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
           icon = word;
         }
@@ -65,7 +65,7 @@ class Volunteer extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={volunteer.organization}>
-              <Icon id={`volunteer-${index}`} color="teal" name={`world`} />
+              <Icon id={`volunteer-${index}`} color="teal" name={'world'} />
               Organization
             </span>}
             defaultValue={volunteer.organization}

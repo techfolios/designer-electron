@@ -16,13 +16,13 @@ class Interests extends React.Component {
 
   handleChange(e, key, index) {
     const state = this.state.data;
-    if (key == 'name') {
+    if (key === 'name') {
       const val = e.target.value;
       let icon = 'idea';
-      let words = val.split(' ');
+      const words = val.split(' ');
 
-      for (let i = 0; i < words.length; i++) {
-        let word = words[i];
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
         if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
           icon = word;
         }
@@ -64,7 +64,7 @@ class Interests extends React.Component {
           <Form.Group>
             <Form.Input
               label={<span data-position="bottom center" data-tooltip={interest.name}>
-                <Icon id={`interest-${index}`} color="teal" name={`idea`} />
+                <Icon id={`interest-${index}`} color="teal" name={'idea'} />
                 Name
               </span>}
               width={4}
