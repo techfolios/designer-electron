@@ -4,4 +4,3 @@ app/node_modules
 *.log
 package-lock.json
 app/package-lock.json
-techfolio-designer/node_modules
