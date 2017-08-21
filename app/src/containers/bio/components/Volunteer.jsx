@@ -1,5 +1,7 @@
 import React from 'react';
 import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Volunteer extends React.Component {
   constructor(props) {
@@ -13,6 +15,19 @@ class Volunteer extends React.Component {
 
   handleChange(e, key, index) {
     const data = this.state.data;
+    if (key == 'organization') {
+      const val = e.target.value;
+      let icon = 'world';
+      let words = val.split(' ');
+
+      for (let i = 0; i < words.length; i++) {
+        let word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#volunteer-${index}`)[0].className = `teal icon ${icon}`;
+    }
     data[index][key] = e.target.value;
     this.setState({ data });
   }
@@ -50,7 +65,7 @@ class Volunteer extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={volunteer.organization}>
-              <Icon color="teal" name={`world ${volunteer.organization}`} />
+              <Icon id={`volunteer-${index}`} color="teal" name={`world`} />
               Organization
             </span>}
             defaultValue={volunteer.organization}

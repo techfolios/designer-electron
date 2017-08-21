@@ -1,5 +1,7 @@
 import React from 'react';
 import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Skills extends React.Component {
   constructor(props) {
@@ -14,6 +16,19 @@ class Skills extends React.Component {
 
   handleChange(e, key, index) {
     const state = this.state.data;
+    if (key == 'name') {
+      const val = e.target.value;
+      let icon = 'wizard';
+      let words = val.split(' ');
+
+      for (let i = 0; i < words.length; i++) {
+        let word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#skill-${index}`)[0].className = `teal icon ${icon}`;
+    }
     state[index][key] = e.target.value;
     this.props.onChange('skills', state);
   }
@@ -49,7 +64,7 @@ class Skills extends React.Component {
           <Form.Input
             width={4}
             label={<span data-position="bottom center" data-tooltip={skill.name}>
-              <Icon color="teal" name={`wizard ${skill.name}`} />
+              <Icon id={`skill-${index}`} color="teal" name={`wizard`} />
               Name
             </span>}
             defaultValue={skill.name}

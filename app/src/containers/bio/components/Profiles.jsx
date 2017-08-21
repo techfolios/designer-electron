@@ -1,5 +1,7 @@
 import React from 'react';
 import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Profiles extends React.Component {
   constructor(props) {
@@ -13,6 +15,19 @@ class Profiles extends React.Component {
 
   handleChange(e, key, index) {
     const data = this.state.data;
+    if (key == 'network') {
+      const val = e.target.value;
+      let icon = 'user';
+      let words = val.split(' ');
+
+      for (let i = 0; i < words.length; i++) {
+        let word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#profile-${index}`)[0].className = `teal icon ${icon}`;
+    }
     data[index][key] = e.target.value;
     this.setState(data);
     this.props.onChange(data);
@@ -40,7 +55,7 @@ class Profiles extends React.Component {
         <Form.Group>
           <Form.Input
             label={<span data-position="bottom center" data-tooltip={profile.network}>
-              <Icon color="teal" name={`user ${profile.network}`} />
+              <Icon id={`profile-${index}`} color="teal" name={`user`} />
               Network
             </span>}
             width={5}

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Work extends React.Component {
   constructor(props) {
@@ -14,9 +16,26 @@ class Work extends React.Component {
     this.addHighlight = this.addHighlight.bind(this);
     this.removeHighlight = this.removeHighlight.bind(this);
   }
+  componentDidMount() {
+    const icons = $('.iconic');
+    console.log(icons);
+  }
 
   handleChange(e, key, index) {
     const data = this.state.data;
+    if (key == 'company') {
+      const val = e.target.value;
+      let icon = 'laptop';
+      let words = val.split(' ');
+
+      for (let i = 0; i < words.length; i++) {
+        let word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#work-${index}`)[0].className = `teal icon ${icon}`;
+    }
     data[index][key] = e.target.value;
     this.setState({ data });
   }
@@ -37,7 +56,6 @@ class Work extends React.Component {
     const index = e.currentTarget.getAttribute('data-index');
     const hindex = e.currentTarget.getAttribute('data-hindex');
     data[index].highlights.splice(hindex, 1);
-    console.log(data[index].highlights);
     this.setState({ data });
   }
 
@@ -68,7 +86,7 @@ class Work extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={work.company}>
-              <Icon color="teal" name={`laptop ${work.company}`} />
+              <Icon className={'iconic'} id={`work-${index}`} color="teal" />
               Organization
             </span>}
             defaultValue={work.company}
