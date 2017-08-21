@@ -1,7 +1,7 @@
 import React from 'react';
 import Cropper from 'cropperjs';
 import Jimp from 'jimp';
-import { Button, Checkbox, Dropdown, Image, Modal, Segment } from 'semantic-ui-react';
+import { Button, Checkbox, Dropdown, Image, Input, Modal, Segment } from 'semantic-ui-react';
 
 class ImageEditor extends React.Component {
   constructor(props) {
@@ -16,6 +16,7 @@ class ImageEditor extends React.Component {
     this.handleCrop = this.handleCrop.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.toggleSquareCrop = this.toggleSquareCrop.bind(this);
+    this.saveAs = this.saveAs.bind(this);
     this.show = this.show.bind(this);
   }
 
@@ -75,6 +76,27 @@ class ImageEditor extends React.Component {
     }
   }
 
+  saveAs() {
+    const { url } = this.state;
+    this.show('Save Image', <Input defaultValue={url} onChange={e => this.setState({ newURL: e.target.value })} />,
+      () => {
+        Jimp.read(url, (err, img) => {
+          if (!err) {
+            const { newURL } = this.state;
+            img.write(newURL, (writeErr) => {
+              if (!writeErr) {
+                console.log(`image written to disk: ${newURL}`);
+              } else {
+                console.log(writeErr);
+              }
+            });
+          } else {
+            console.log(err);
+          }
+        });
+      });
+  }
+
   show(header, message, res, rej) {
     const onResolve = () => {
       res();
@@ -98,8 +120,8 @@ class ImageEditor extends React.Component {
             onClick={this.handleCrop}
             text='Crop' />
           <Dropdown.Item
-            onClick={this.handleItemClick}
-            text='Save' />
+            onClick={this.saveAs}
+            text='Save as' />
           <Dropdown.Item
             onClick={this.handleDelete}
             text='Delete' />
@@ -108,8 +130,9 @@ class ImageEditor extends React.Component {
             text='Reset' />
         </Dropdown.Menu>
       </Dropdown>
+      <Checkbox toggle label={<label>Square Crop</label>} onClick={this.toggleSquareCrop} />
       <div>
-        <Checkbox toggle label={<label>Square Crop</label>} onClick={this.toggleSquareCrop} />
+        {url}
         <Image src={url} onLoad={this.handleImageLoad} />
       </div>
 
@@ -118,7 +141,7 @@ class ImageEditor extends React.Component {
           {header}
         </Modal.Header>
         <Modal.Content>
-          <p>{message}</p>
+          {message}
         </Modal.Content>
         <Modal.Actions>
           <Button secondary content='No' onClick={onReject} />
