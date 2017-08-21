@@ -1,12 +1,11 @@
 import React from 'react';
 import { Form, Icon, Segment } from 'semantic-ui-react';
-import $ from 'jquery';
 
 class Work extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data
+      data: props.data,
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);

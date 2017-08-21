@@ -29,6 +29,8 @@ class Techfolio extends React.Component {
     this.saveProject = this.saveProject.bind(this);
     this.removeProject = this.removeProject.bind(this);
     this.importImage = this.importImage.bind(this);
+    this.removeImage = this.removeImage.bind(this);
+    this.handlePull = this.handlePull.bind(this);
     this.state = {
       bio: null,
       projects: null,
@@ -105,11 +107,11 @@ class Techfolio extends React.Component {
         break;
       case 'projects':
         retSelection = <YAMLDisplay editor='project' dir={this.io.getLocalFolder()} key={data.attributes.title}
-                                   delete={state.removeYAML} data={data} state={state} />;
+          delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'essays':
         retSelection = <YAMLDisplay editor='essay' dir={this.io.getLocalFolder()} key={data.attributes.title}
-                              delete={state.removeYAML} data={data} state={state} />;
+          delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;
@@ -172,6 +174,15 @@ class Techfolio extends React.Component {
 
   importImage(url) {
     return this.io.importImage(url);
+  }
+
+  removeImage(index) {
+    const { images } = this.state;
+    const url = images[index];
+    images.splice(index, 1);
+    this.setState({ images });
+    this.setSelected(<div>Removed Image</div>);
+    return this.io.removeImage(url);
   }
 
   handleUpdateURL(data) {
@@ -283,7 +294,8 @@ class Techfolio extends React.Component {
             projectCrawler={projectCrawler}
             setSelected={this.setSelected}
             images={images}
-            importImage={this.importImage} />
+            importImage={this.importImage}
+            removeImage={this.removeImage} />
         </Grid.Column>
         <Grid.Column stretched width={13} id="root" style={tempCSS}>
           {selected}
