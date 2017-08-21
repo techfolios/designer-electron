@@ -1,5 +1,7 @@
 import React from 'react';
 import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class References extends React.Component {
   constructor(props) {
@@ -13,6 +15,19 @@ class References extends React.Component {
 
   handleChange(e, key, index) {
     const data = this.state.data;
+    if (key === 'name') {
+      const val = e.target.value;
+      let icon = 'checkmark';
+      const words = val.split(' ');
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#reference-${index}`)[0].className = `teal icon ${icon}`;
+    }
     data[index][key] = e.target.value;
     this.setState({ data });
   }
@@ -39,7 +54,7 @@ class References extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={reference.name}>
-              <Icon color="teal" name={'checkmark'} />
+              <Icon id={`reference-${index}`} color="teal" name={'checkmark'} />
               Name
             </span>}
             defaultValue={reference.name}

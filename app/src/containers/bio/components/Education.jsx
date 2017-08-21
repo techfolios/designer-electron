@@ -1,5 +1,7 @@
 import React from 'react';
 import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Education extends React.Component {
   constructor(props) {
@@ -14,6 +16,19 @@ class Education extends React.Component {
 
   handleChange(e, key, index) {
     const state = this.state.data;
+    if (key === 'institution') {
+      const val = e.target.value;
+      let icon = 'student';
+      const words = val.split(' ');
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#education-${index}`)[0].className = `teal icon ${icon}`;
+    }
     state[index][key] = e.target.value;
     this.props.onChange('education', state);
   }
@@ -52,7 +67,7 @@ class Education extends React.Component {
       {this.state.data.map((education, index) => <Segment basic key={index}>
         <Form.Group>
           <Form.Input label={<span data-position="bottom center" data-tooltip={education.institution}>
-            <Icon color="teal" name={'student'} />
+            <Icon id={`education-${index}`} color="teal" name={'student'} />
             Institution
           </span>}
             defaultValue={education.institution}
