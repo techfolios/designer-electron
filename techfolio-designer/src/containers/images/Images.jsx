@@ -11,7 +11,6 @@ import ImageEditor from './ImageEditor.jsx';
  */
 
 class Images extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -19,10 +18,11 @@ class Images extends React.Component {
     };
     this.openImageEditor = this.openImageEditor.bind(this);
     this.importImage = this.importImage.bind(this);
+    this.removeImage = this.removeImage.bind(this);
   }
 
   openImageEditor(url, index) {
-    this.props.setSelected(<ImageEditor key={index} url={url} />);
+    this.props.setSelected(<ImageEditor key={index} index={index} url={url} removeImage={this.removeImage}/>);
   }
 
   importImage() {
@@ -42,12 +42,17 @@ class Images extends React.Component {
     }
   }
 
+  removeImage(cb) {
+    const index = cb();
+    this.props.removeImage(index);
+  }
+
   render() {
     const { data } = this.state;
     return <Grid doubling columns={5}>
       {data.map((url, index) => <Grid.Column key={index}>
-        <Segment raised><div>
-          <Image src={url} onClick={() => this.openImageEditor(url, index)} />
+        <Segment basic><div>
+          <Image centered src={url} onClick={() => this.openImageEditor(url, index)} />
         </div></Segment>
       </Grid.Column>)
       }

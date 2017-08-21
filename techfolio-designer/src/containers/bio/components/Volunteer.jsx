@@ -45,17 +45,14 @@ class Volunteer extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((volunteer, index) => <Segment key={index}>
-        <h2 className="ui horizontal divider header">
-          <span data-tooltip={`${volunteer.organization} ${volunteer.position}`} data-position="bottom center">
-            <i className={`world icon ${volunteer.organization}`}></i>
-            {volunteer.organization}
-          </span>
-        </h2>
+      {this.state.data.map((volunteer, index) => <Segment basic key={index}>
         <Form.Group>
           <Form.Input
             width={8}
-            label='Organization'
+            label={<span data-position="bottom center" data-tooltip={volunteer.organization}>
+              <Icon color="teal" name={`world ${volunteer.organization}`} />
+              Organization
+            </span>}
             defaultValue={volunteer.organization}
             placeholder='Organization'
             onChange={e => this.handleChange(e, 'organization', index)} />

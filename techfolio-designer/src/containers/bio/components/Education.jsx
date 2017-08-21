@@ -49,66 +49,62 @@ class Education extends React.Component {
 
   render() {
     return <div>
-      {this.state.data.map((education, index) => <Segment key={index}>
-        <h2 className="ui horizontal divider header">
-          <span data-tooltip={`${education.institution} ${education.area} ${education.gpa}`}
-            data-position="bottom center">
-            <i className={'student icon'}></i>
-            {education.institution}
-          </span>
-        </h2>
+      {this.state.data.map((education, index) => <Segment basic key={index}>
         <Form.Group>
-          <Form.Input label='Institution'
-                      defaultValue={education.institution}
-                      placeholder={'Institution'}
-                      onChange={e => this.handleChange(e, 'institution', index)}
-                      width={8}
-                    />
+          <Form.Input label={<span data-position="bottom center" data-tooltip={education.institution}>
+            <Icon color="teal" name={'student'} />
+            Institution
+          </span>}
+            defaultValue={education.institution}
+            placeholder={'Institution'}
+            onChange={e => this.handleChange(e, 'institution', index)}
+            width={8}
+          />
           <Form.Input label='Area'
-                      defaultValue={education.area}
-                      placeholder={'Area'}
-                      onChange={e => this.handleChange(e, 'area', index)}
-                      width={8}
-                    />
+            defaultValue={education.area}
+            placeholder={'Area'}
+            onChange={e => this.handleChange(e, 'area', index)}
+            width={8}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Input label='Start Date'
-                      defaultValue={education.startDate}
-                      placeholder={'Start Date'}
-                      onChange={e => this.handleChange(e, 'startDate', index)}
-                      width={4}
-                    />
+            defaultValue={education.startDate}
+            placeholder={'Start Date'}
+            onChange={e => this.handleChange(e, 'startDate', index)}
+            width={4}
+          />
           <Form.Input label='End Date'
-                      defaultValue={education.endDate}
-                      placeholder={'End Date'}
-                      onChange={e => this.handleChange(e, 'endDate', index)}
-                      width={4}
-                    />
+            defaultValue={education.endDate}
+            placeholder={'End Date'}
+            onChange={e => this.handleChange(e, 'endDate', index)}
+            width={4}
+          />
           <Form.Input label='Study Type'
-                      defaultValue={education.studyType}
-                      placeholder={'Study Type'}
-                      onChange={e => this.handleChange(e, 'studyType', index)}
-                      width={4}
-                    />
+            defaultValue={education.studyType}
+            placeholder={'Study Type'}
+            onChange={e => this.handleChange(e, 'studyType', index)}
+            width={4}
+          />
           <Form.Input label='GPA'
-                      defaultValue={education.gpa}
-                      placeholder={'GPA'}
-                      onChange={e => this.handleChange(e, 'gpa', index)}
-                      width={4}
-                    />
+            defaultValue={education.gpa}
+            placeholder={'GPA'}
+            onChange={e => this.handleChange(e, 'gpa', index)}
+            width={4}
+          />
         </Form.Group>
         <Form.Dropdown data-index={index} className="dropdown"
-                       multiple search selection fluid allowAdditions label='Courses'
-                       defaultValue={education.courses}
-                       noResultsMessage={'Start typing to add a new keyword!'}
-                       options={
-                         education.courses.map((course, key) => ({
-                           key,
-                           value: course,
-                           text: course,
-                         }))
-                       }
-                       onAddItem={this.handleAddition}
+          multiple search selection fluid allowAdditions label='Courses'
+          defaultValue={education.courses}
+          noResultsMessage={'Start typing to add a new keyword!'}
+          options={
+            education.courses.map((course, key) => ({
+              key,
+              value: course,
+              text: course,
+            }))
+          }
+          onAddItem={this.handleAddition}
         />
         <br/>
       </Segment>)

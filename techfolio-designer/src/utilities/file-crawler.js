@@ -35,11 +35,16 @@ class FileCrawler {
   getYAML() {
     const list = [];
     const dir = this.dir;
+    let fileExt = '';
     fs.readdirSync(dir).forEach((file) => {
-      if (file !== 'index.html') {
+      /* eslint no-bitwise: ["error", { "allow": [">>>"] }] */
+      fileExt = file.slice((file.lastIndexOf('.') - 1 >>> 0) + 2);
+      if (fileExt === 'md') {
         const filePath = path.join(dir, file);
         const data = YAMLParser.read(fs.readFileSync(filePath, 'utf8'), file);
         list.push(data);
+      } else {
+        console.log(`Skipping ${file}, not an md file`);
       }
     });
     return list;
@@ -49,10 +54,11 @@ class FileCrawler {
     if (fileName !== undefined) fs.removeSync(path.join(this.dir, fileName));
   }
 
-  writeFile(fileName, data) {
+  writeFile(fileName, data, oldFileName) {
     const filePath = path.resolve(this.dir, fileName);
     console.log(filePath);
     fs.outputFileSync(filePath, data);
+    if (oldFileName && oldFileName !== fileName) fs.removeSync(path.resolve(this.dir, oldFileName));
   }
 
   createJSON(fileName, data) {
@@ -62,4 +68,4 @@ class FileCrawler {
 }
 
 
-module.exports = FileCrawler;
+export default FileCrawler;

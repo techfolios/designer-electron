@@ -31,7 +31,6 @@ class Oauth {
   static logout() {
     window.localStorage.removeItem('githubtoken');
   }
-
 }
 
 module.exports = Oauth;
