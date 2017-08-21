@@ -41,9 +41,9 @@ class Essay extends React.Component {
     return <div>
       <Button.Group>
         <Button compact basic={this.state.page === 'edit'} content='Edit' color='green'
-                onClick={ event => this.setPage(event, 'edit') }/>
+          onClick={ event => this.setPage(event, 'edit') }/>
         <Button compact basic={this.state.page === 'preview'} content='Preview' color='blue'
-                onClick={ event => this.setPage(event, 'preview') }/>
+          onClick={ event => this.setPage(event, 'preview') }/>
       </Button.Group>
       <Segment basic textAlign="center">
         { page.icon }

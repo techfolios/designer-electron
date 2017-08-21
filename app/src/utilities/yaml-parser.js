@@ -34,4 +34,4 @@ class YAMLParser {
   }
 }
 
-module.exports = YAMLParser;
+export default YAMLParser;
