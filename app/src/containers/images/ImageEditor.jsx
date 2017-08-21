@@ -1,30 +1,31 @@
 import React from 'react';
 import Cropper from 'cropperjs';
 import Jimp from 'jimp';
-import { Button, Dropdown, Image, Modal, Segment } from 'semantic-ui-react';
+import { Button, Checkbox, Dropdown, Image, Modal, Segment } from 'semantic-ui-react';
 
 class ImageEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       url: props.url,
-      activeItem: '',
       index: props.index,
       alert: false,
+      cropRatio: 'free',
     };
     this.handleImageLoad = this.handleImageLoad.bind(this);
     this.handleCrop = this.handleCrop.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.toggleSquareCrop = this.toggleSquareCrop.bind(this);
     this.show = this.show.bind(this);
   }
 
   handleImageLoad(ev) {
+    const { cropRatio } = this.state;
     const image = ev.target;
-    console.log(image);
     const cropper = new Cropper(image, {
       autoCrop: true,
       autoCropArea: 1,
-      aspectRatio: 1,
+      aspectRatio: cropRatio,
       crop: (e) => {
         // console.log(e.detail.x);
         // console.log(e.detail.y);
@@ -36,7 +37,6 @@ class ImageEditor extends React.Component {
         this.setState({ crop: e.detail });
       },
     });
-    this.setState({ selectedImage: image });
     this.setState({ cropper });
   }
 
@@ -62,6 +62,17 @@ class ImageEditor extends React.Component {
     this.show('Delete Image', 'Are you sure?', () => {
       this.props.removeImage(() => this.state.index);
     });
+  }
+
+  toggleSquareCrop() {
+    const { cropRatio, cropper } = this.state;
+    if (cropRatio !== 1) {
+      this.setState({ cropRatio: 1 });
+      cropper.setAspectRatio(1);
+    } else {
+      this.setState({ cropRatio: 'free' });
+      cropper.setAspectRatio('free');
+    }
   }
 
   show(header, message, res, rej) {
@@ -98,6 +109,7 @@ class ImageEditor extends React.Component {
         </Dropdown.Menu>
       </Dropdown>
       <div>
+        <Checkbox toggle label={<label>Square Crop</label>} onClick={this.toggleSquareCrop} />
         <Image src={url} onLoad={this.handleImageLoad} />
       </div>
 
