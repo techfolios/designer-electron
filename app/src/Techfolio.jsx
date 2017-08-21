@@ -208,9 +208,7 @@ class Techfolio extends React.Component {
     this.io.pull()
       .then((res) => {
         if (res) {
-          console.log(res);
           this.setState({ res });
-          console.log('success');
         }
         this.setState({ isLoading: false });
       }, (rej) => {

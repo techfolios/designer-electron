@@ -86,9 +86,9 @@ class IO {
   added "this." in front of res to placate ESLint - is this a correct fix?
    */
   hasRemote() {
-    return request('GET', `https://api.github.com/repos/${this.username}/${this.username}.github.io?access_token=${this.accessToken}`)
+    return request('GET',
+      `https://api.github.com/repos/${this.username}/${this.username}.github.io?access_token=${this.accessToken}`)
       .then((res) => {
-        const body = res.body;
         if (res.body.id) {
           return true;
         }
