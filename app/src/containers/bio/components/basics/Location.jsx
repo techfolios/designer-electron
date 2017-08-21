@@ -10,7 +10,7 @@ class Location extends React.Component {
 
   render() {
     return (
-    <Container textAlign="center">
+    <Container>
       <Form.Group>
         <Form.Input
           label={'Address'}
