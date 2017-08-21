@@ -86,7 +86,7 @@ class Work extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={work.company}>
-              <Icon className={'iconic'} id={`work-${index}`} color="teal" />
+              <Icon className={'iconic'} id={`work-${index}`} color="teal" name={`laptop`} />
               Organization
             </span>}
             defaultValue={work.company}
