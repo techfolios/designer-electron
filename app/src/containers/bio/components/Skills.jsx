@@ -14,6 +14,21 @@ class Skills extends React.Component {
     this.handleAddition = this.handleAddition.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each(function (i, e, a) {
+      const words = $(e).data().text.split(' ');
+      let icon = 'wizard';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const state = this.state.data;
     if (key === 'name') {
@@ -64,7 +79,7 @@ class Skills extends React.Component {
           <Form.Input
             width={4}
             label={<span data-position="bottom center" data-tooltip={skill.name}>
-              <Icon id={`skill-${index}`} color="teal" name={'wizard'} />
+              <Icon data-text={skill.name} className="iconic" id={`skill-${index}`} color="teal" name={'wizard'} />
               Name
             </span>}
             defaultValue={skill.name}

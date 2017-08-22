@@ -13,6 +13,21 @@ class Awards extends React.Component {
     this.remove = this.remove.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each(function (i, e, a) {
+      const words = $(e).data().text.split(' ');
+      let icon = 'trophy';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const data = this.state.data;
     if (key === 'title') {
@@ -56,7 +71,7 @@ class Awards extends React.Component {
           <Form.Input
             width={6}
             label={<span data-position="bottom center" data-tooltip={award.title}>
-              <Icon id={`award-${index}`} color="teal" name={'trophy'} />
+              <Icon data-text={award.title} className="iconic" id={`award-${index}`} color="teal" name={'trophy'} />
               Title
             </span>}
             defaultValue={award.title}

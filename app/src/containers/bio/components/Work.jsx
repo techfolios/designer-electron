@@ -17,6 +17,21 @@ class Work extends React.Component {
     this.removeHighlight = this.removeHighlight.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each(function (i, e, a) {
+      const words = $(e).data().text.split(' ');
+      let icon = 'laptop';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const data = this.state.data;
     if (key === 'company') {
@@ -82,7 +97,7 @@ class Work extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={work.company}>
-              <Icon className={'iconic'} id={`work-${index}`} color="teal" name={'laptop'} />
+              <Icon data-text={work.company} className={'iconic'} id={`work-${index}`} color="teal" name={'laptop'} />
               Organization
             </span>}
             defaultValue={work.company}

@@ -13,6 +13,21 @@ class Profiles extends React.Component {
     this.remove = this.remove.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each(function (i, e, a) {
+      const words = $(e).data().text.split(' ');
+      let icon = 'user';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const data = this.state.data;
     if (key === 'network') {
@@ -55,7 +70,7 @@ class Profiles extends React.Component {
         <Form.Group>
           <Form.Input
             label={<span data-position="bottom center" data-tooltip={profile.network}>
-              <Icon id={`profile-${index}`} color="teal" name={'user'} />
+              <Icon data-text={profile.network} className="iconic" id={`profile-${index}`} color="teal" name={'user'} />
               Network
             </span>}
             width={5}
