@@ -11,6 +11,9 @@ class Volunteer extends React.Component {
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
+    this.handleHighlightChange = this.handleHighlightChange.bind(this);
+    this.addHighlight = this.addHighlight.bind(this);
+    this.removeHighlight = this.removeHighlight.bind(this);
   }
 
   handleChange(e, key, index) {
@@ -35,6 +38,19 @@ class Volunteer extends React.Component {
   handleHighlightChange(e, key, windex, hindex) {
     const data = this.state.data;
     data[windex][key][hindex] = e.target.value;
+    this.setState({ data });
+  }
+  addHighlight(e) {
+    const data = this.state.data;
+    const index = e.currentTarget.getAttribute('data-index');
+    data[index].highlights.push('');
+    this.setState({ data });
+  }
+  removeHighlight(e) {
+    const data = this.state.data;
+    const index = e.currentTarget.getAttribute('data-index');
+    const hindex = e.currentTarget.getAttribute('data-hindex');
+    data[index].highlights.splice(hindex, 1);
     this.setState({ data });
   }
 
@@ -102,13 +118,28 @@ class Volunteer extends React.Component {
           defaultValue={volunteer.summary}
           placeholder="Summary"
           onChange={e => this.handleChange(e, 'summary', index)} />
-        {volunteer.highlights.map((highlight, hindex) => <Form.Input key={hindex}
-          label='Highlights'
-          defaultValue={highlight}
-          placeholder="Highlights"
-          onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)} />)
+        {volunteer.highlights.map((highlight, hindex) =>
+          <div key={`div:${hindex}`}>
+            <Form.Input
+              key={hindex}
+              className="highlight"
+              label='Highlights'
+              value={highlight}
+              placeholder="Highlights"
+              onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)}
+            />
+            <Icon key={`remove:${hindex}`} data-index={index} data-hindex={hindex} link name="minus"
+                  onClick={this.removeHighlight}></Icon>
+            {(volunteer.highlights.length - 1 === hindex) &&
+              <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>
+            }
+          </div>)
         }
-        <br />
+        {(volunteer.highlights.length === 0) &&
+          <span data-position="bottom center" data-tooltip="Add a highlight">
+            <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>
+          </span>
+        }
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>
