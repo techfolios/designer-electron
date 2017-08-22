@@ -16,6 +16,21 @@ class Volunteer extends React.Component {
     this.removeHighlight = this.removeHighlight.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each(function (i, e, a) {
+      const words = $(e).data().text.split(' ');
+      let icon = 'world';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const data = this.state.data;
     if (key === 'organization') {
@@ -81,7 +96,7 @@ class Volunteer extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={volunteer.organization}>
-              <Icon id={`volunteer-${index}`} color="teal" name={'world'} />
+              <Icon data-text={volunteer.organization} className="iconic" id={`volunteer-${index}`} color="teal" name={'world'} />
               Organization
             </span>}
             defaultValue={volunteer.organization}

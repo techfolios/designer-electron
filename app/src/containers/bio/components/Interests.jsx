@@ -14,6 +14,21 @@ class Interests extends React.Component {
     this.handleAddition = this.handleAddition.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each(function (i, e, a) {
+      const words = $(e).data().text.split(' ');
+      let icon = 'idea';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const state = this.state.data;
     if (key === 'name') {
@@ -64,7 +79,7 @@ class Interests extends React.Component {
           <Form.Group>
             <Form.Input
               label={<span data-position="bottom center" data-tooltip={interest.name}>
-                <Icon id={`interest-${index}`} color="teal" name={'idea'} />
+                <Icon data-text={interest.name} className="iconic" id={`interest-${index}`} color="teal" name={'idea'} />
                 Name
               </span>}
               width={4}

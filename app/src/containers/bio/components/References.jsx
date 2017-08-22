@@ -13,6 +13,21 @@ class References extends React.Component {
     this.remove = this.remove.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each(function (i, e, a) {
+      const words = $(e).data().text.split(' ');
+      let icon = 'checkmark';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const data = this.state.data;
     if (key === 'name') {
@@ -54,7 +69,7 @@ class References extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={reference.name}>
-              <Icon id={`reference-${index}`} color="teal" name={'checkmark'} />
+              <Icon data-text={reference.name} className="iconic" id={`reference-${index}`} color="teal" name={'checkmark'} />
               Name
             </span>}
             defaultValue={reference.name}
