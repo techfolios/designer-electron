@@ -22,6 +22,10 @@ const values = {
         }
         break;
       }
+      case 'a': {
+        json.attribs.target = '_blank';
+        break;
+      }
       default:
         return json;
     }
