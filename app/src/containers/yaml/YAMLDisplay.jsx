@@ -29,15 +29,23 @@ class YAMLDisplay extends React.Component {
     event.preventDefault();
     const change = new Promise((res) => { res(name); });
     const { editor } = this.state;
-    const data = this.props.data.body;
+    const { projecturl } = this.props.data.attributes;
+    const body = this.props.data.body;
     change.then((res) => {
       if (res === 'edit') {
         this.setState({ active: name, display: editor });
       } else {
-        console.log(preview(data));
-        valilator.tidy(preview(data), (err, html) => {
-          this.setState({ active: name, display: renderHTML(html, values) });
-        });
+        // eslint-disable-next-line no-lonely-if
+        if (projecturl !== '' && projecturl !== undefined) {
+          this.setState({ active: name,
+            // eslint-disable-next-line max-len
+            display: <p>This projects points to an outside <a href={projecturl} target="_blank">site</a></p> });
+        } else {
+          console.log(preview(body));
+          valilator.tidy(preview(body), (err, html) => {
+            this.setState({ active: name, display: renderHTML(html, values) });
+          });
+        }
       }
     });
   }
