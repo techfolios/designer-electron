@@ -14,8 +14,8 @@ class References extends React.Component {
   }
 
   componentDidMount() {
-    $('.iconic').each(function (i, e, a) {
-      const words = $(e).data().text.split(' ');
+    $('.iconic').each(function () {
+      const words = $(this).data().text.split(' ');
       let icon = 'checkmark';
 
       for (let i = 0; i < words.length; i += 1) {
@@ -24,7 +24,7 @@ class References extends React.Component {
           icon = word;
         }
       }
-      $(e)[0].className = `teal icon ${icon}`;
+      $(this)[0].className = `teal icon ${icon}`;
     });
   }
 
@@ -69,7 +69,13 @@ class References extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={reference.name}>
-              <Icon data-text={reference.name} className="iconic" id={`reference-${index}`} color="teal" name={'checkmark'} />
+              <Icon
+                data-text={reference.name}
+                className="iconic"
+                id={`reference-${index}`}
+                color="teal"
+                name={'checkmark'}
+              />
               Name
             </span>}
             defaultValue={reference.name}

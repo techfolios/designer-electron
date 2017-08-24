@@ -15,8 +15,8 @@ class Interests extends React.Component {
   }
 
   componentDidMount() {
-    $('.iconic').each(function (i, e, a) {
-      const words = $(e).data().text.split(' ');
+    $('.iconic').each(function () {
+      const words = $(this).data().text.split(' ');
       let icon = 'idea';
 
       for (let i = 0; i < words.length; i += 1) {
@@ -25,7 +25,7 @@ class Interests extends React.Component {
           icon = word;
         }
       }
-      $(e)[0].className = `teal icon ${icon}`;
+      $(this)[0].className = `teal icon ${icon}`;
     });
   }
 
@@ -79,7 +79,13 @@ class Interests extends React.Component {
           <Form.Group>
             <Form.Input
               label={<span data-position="bottom center" data-tooltip={interest.name}>
-                <Icon data-text={interest.name} className="iconic" id={`interest-${index}`} color="teal" name={'idea'} />
+                <Icon
+                  data-text={interest.name}
+                  className="iconic"
+                  id={`interest-${index}`}
+                  color="teal"
+                  name={'idea'}
+                />
                 Name
               </span>}
               width={4}

@@ -14,8 +14,8 @@ class Profiles extends React.Component {
   }
 
   componentDidMount() {
-    $('.iconic').each(function (i, e, a) {
-      const words = $(e).data().text.split(' ');
+    $('.iconic').each(function () {
+      const words = $(this).data().text.split(' ');
       let icon = 'user';
 
       for (let i = 0; i < words.length; i += 1) {
@@ -24,7 +24,7 @@ class Profiles extends React.Component {
           icon = word;
         }
       }
-      $(e)[0].className = `teal icon ${icon}`;
+      $(this)[0].className = `teal icon ${icon}`;
     });
   }
 

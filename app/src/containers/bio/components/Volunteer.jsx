@@ -17,8 +17,8 @@ class Volunteer extends React.Component {
   }
 
   componentDidMount() {
-    $('.iconic').each(function (i, e, a) {
-      const words = $(e).data().text.split(' ');
+    $('.iconic').each(function () {
+      const words = $(this).data().text.split(' ');
       let icon = 'world';
 
       for (let i = 0; i < words.length; i += 1) {
@@ -27,7 +27,7 @@ class Volunteer extends React.Component {
           icon = word;
         }
       }
-      $(e)[0].className = `teal icon ${icon}`;
+      $(this)[0].className = `teal icon ${icon}`;
     });
   }
 
@@ -96,7 +96,13 @@ class Volunteer extends React.Component {
           <Form.Input
             width={8}
             label={<span data-position="bottom center" data-tooltip={volunteer.organization}>
-              <Icon data-text={volunteer.organization} className="iconic" id={`volunteer-${index}`} color="teal" name={'world'} />
+              <Icon
+                data-text={volunteer.organization}
+                className="iconic"
+                id={`volunteer-${index}`}
+                color="teal"
+                name={'world'}
+              />
               Organization
             </span>}
             defaultValue={volunteer.organization}
