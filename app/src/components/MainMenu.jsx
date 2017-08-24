@@ -173,6 +173,7 @@ class MainMenu extends React.Component {
         permalink: '',
         date: ISODate.getDate(),
         labels: [],
+        projecturl: '',
         summary: '',
       },
       body: '',
