@@ -18,8 +18,8 @@ class Work extends React.Component {
   }
 
   componentDidMount() {
-    $('.iconic').each(function () {
-      const words = $(this).data().text.split(' ');
+    $('.iconic').each((_, e) => {
+      const words = $(e).data().text.split(' ');
       let icon = 'laptop';
 
       for (let i = 0; i < words.length; i += 1) {
@@ -28,7 +28,7 @@ class Work extends React.Component {
           icon = word;
         }
       }
-      $(this)[0].className = `teal icon ${icon}`;
+      $(e)[0].className = `teal icon ${icon}`;
     });
   }
 
