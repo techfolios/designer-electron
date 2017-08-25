@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Button } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 import FileCrawler from '../../utilities/file-crawler';
 import YAMLParser from '../../utilities/yaml-parser';
+import ISODate from '../../utilities/iso-date';
 
 const Path = require('path');
 
@@ -11,10 +12,12 @@ class YAMLEditor extends React.Component {
     super(props);
     this.state = { data: props.data };
     this.data = this.state.data;
+    this.date = ISODate.getDate(this.data.attributes.date).split(/[-.]/);
     this.menu = props.state;
-    this.crawler = new FileCrawler(Path.resolve(this.props.dir, 'projects'));
+    this.crawler = new FileCrawler(Path.resolve(this.props.dir, `${props.name}s`));
 
     this.setAttribute = this.setAttribute.bind(this);
+    this.setDate = this.setDate.bind(this);
     this.setBody = this.setBody.bind(this);
 
     this.delete = this.props.delete;
@@ -26,6 +29,10 @@ class YAMLEditor extends React.Component {
     this.data.attributes[attribute] = e.target.value;
   }
 
+  setDate(e, index) {
+    this.date[index] = ISODate.getPadded(e.target.value);
+  }
+
   setBody(e) {
     this.data.body = e.target.value;
   }
@@ -33,7 +40,15 @@ class YAMLEditor extends React.Component {
   save(event) {
     event.preventDefault();
     const oldFileName = this.data.file.name;
-    this.data.file.name = `${this.data.attributes.title.trim().replace(/\s/g, '-')}.md`;
+    let date = this.date[0];
+
+    if (this.date.length === 3) {
+      date = `${this.date[0]}-${this.date[1]}-${this.date[2]}`;
+      if (this.date[1] === '00' || this.date[2] === '00') date = this.date[0];
+    }
+
+    this.data.file.name = `${this.data.attributes.title.trim().replace(/\s/g, '-').toLowerCase()}.md`;
+    this.data.attributes.date = date;
     this.data.body = this.data.body.trim();
     const yaml = YAMLParser.write(this.data);
     console.log(yaml);
@@ -46,16 +61,69 @@ class YAMLEditor extends React.Component {
     this.setState(this.data);
   }
 
-  getForm() {
-    this.idontwantthisstaticyoupieceof = null;
-    return <p>No Form passed</p>;
+  getProjectFields() {
+    let fields = '';
+    const { summary, projecturl } = this.data.attributes;
+    if (this.props.name === 'project') {
+      fields = <div>
+        <Form.Input label='Project URL'
+                    defaultValue={projecturl}
+                    onChange={e => this.setAttribute(e, 'projecturl')}/>
+        <Form.Input label='Summary'
+                    defaultValue={summary}
+                    onChange={e => this.setAttribute(e, 'summary')}/>
+      </div>;
+    }
+
+    return fields;
   }
 
   render() {
-    const data = this.state.data;
-
+    const data = this.data;
+    const date = this.date;
+    const { title, permalink, image } = this.data.attributes;
     return <div>
-      {this.getForm()}
+        <Form>
+          <Form.Input label='Title' defaultValue={title || ''}
+                      onChange={event => this.setAttribute(event, 'title')}/>
+          <Form.Group>
+            <Form.Input width={4} label='Year' defaultValue={date[0] || ''}
+                        onChange={(event) => {
+                          this.setDate(event, 0);
+                        }}/>
+            <Form.Input width={2} label='Month' defaultValue={date[1] || ''}
+                        onChange={(event) => {
+                          this.setDate(event, 1);
+                        }}/>
+            <Form.Input width={2} label='Day' defaultValue={date[2] || ''}
+                        onChange={(event) => {
+                          this.setDate(event, 2);
+                        }}/>
+            <Form.Input label='Image'
+                        defaultValue={image}
+                        onChange={event => this.setAttribute(event, 'image')}/>
+            <Form.Input label='Permalink'
+                        defaultValue={permalink}
+                        placeholder={''}
+                        onChange={event => this.setAttribute(event, 'permalink')}/>
+          </Form.Group>
+          {this.getProjectFields()}
+          <Form.TextArea autoHeight label='Body' defaultValue={data.body.trim()}
+                         onChange={this.setBody}/>
+          <Form.Dropdown
+              multiple search selection fluid allowAdditions label='Tag(s)'
+              defaultValue={data.attributes.labels}
+              noResultsMessage={'Start typing to add a new tag!'}
+              options={
+                data.attributes.labels.map((label, key) => ({
+                  key,
+                  value: label,
+                  text: label,
+                }))
+              }
+              onChange={this.handleLabel} />
+          <br/>
+      </Form>
       <Button.Group floated="right">
         <Button content='Save' color='green' onClick={this.save}/>
         <Button content='Delete' color='red'

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Interests extends React.Component {
   constructor(props) {
@@ -12,8 +14,36 @@ class Interests extends React.Component {
     this.handleAddition = this.handleAddition.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each((_, e) => {
+      const words = $(e).data().text.split(' ');
+      let icon = 'idea';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const state = this.state.data;
+    if (key === 'name') {
+      const val = e.target.value;
+      let icon = 'idea';
+      const words = val.split(' ');
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#interest-${index}`)[0].className = `teal icon ${icon}`;
+    }
     state[index][key] = e.target.value;
     this.props.onChange('interests', state);
   }
@@ -49,7 +79,13 @@ class Interests extends React.Component {
           <Form.Group>
             <Form.Input
               label={<span data-position="bottom center" data-tooltip={interest.name}>
-                <Icon color="teal" name={`idea ${interest.name}`} />
+                <Icon
+                  data-text={interest.name}
+                  className="iconic"
+                  id={`interest-${index}`}
+                  color="teal"
+                  name={'idea'}
+                />
                 Name
               </span>}
               width={4}
