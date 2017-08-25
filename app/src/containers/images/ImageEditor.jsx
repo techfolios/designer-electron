@@ -86,6 +86,7 @@ class ImageEditor extends React.Component {
             img.write(newURL, (writeErr) => {
               if (!writeErr) {
                 console.log(`image written to disk: ${newURL}`);
+                this.props.removeImage(() => this.state.index);
               } else {
                 console.log(writeErr);
               }
