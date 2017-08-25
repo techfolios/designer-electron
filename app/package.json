@@ -24,15 +24,9 @@
   "homepage": "https://github.com/techfolios/designer-electron#readme",
   "dependencies": {
     "cropperjs": "^1.0.0-rc.3",
-<<<<<<< HEAD
-    "electron": "1.6.11",
-    "electron-oauth2": "^3.0.0",
-    "electron-prebuilt-compile": "1.6.11",
-=======
     "electron-oauth2": "^3.0.0",
     "electron-prebuilt-compile": "1.6.11",
     "electron": "1.6.11",
->>>>>>> master
     "front-matter": "^2.1.2",
     "fs-extra": "^4.0.0",
     "html-react-parser": "^0.3.5",
@@ -42,15 +36,9 @@
     "marked": "^0.3.6",
     "nodegit": "0.18.3",
     "octonode": "^0.7.13",
-<<<<<<< HEAD
-    "react": "15.6.1",
-    "react-datepicker": "^0.52.0",
-    "react-dom": "15.6.1",
-=======
     "react-datepicker": "^0.52.0",
     "react-dom": "^15.6.1",
     "react": "^15.6.1",
->>>>>>> master
     "semantic-ui-css": "^2.2.10",
     "semantic-ui-react": "^0.70.0",
     "superagent": "^3.5.2"
