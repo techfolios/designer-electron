@@ -158,7 +158,7 @@ class IO {
         .then(() => repo.getRemote('origin'))
         .then((remoteResult) => {
           remote = remoteResult;
-          console.log('pushing to remote URL');
+          console.log("pushing to remote URL");
           console.log(remoteResult);
           console.log(remote);
           console.log(this.remoteURL);
