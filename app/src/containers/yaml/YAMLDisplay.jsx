@@ -14,7 +14,7 @@ class YAMLDisplay extends React.Component {
     this.directory = props.dir;
     this.crawler = new FileCrawler(this.directory);
     this.editor = <YAMlEditor name={this.props.editor} delete={this.props.delete}
-                              data={this.props.data} dir={this.directory} state={this.props.state}/>;
+      data={this.props.data} dir={this.directory} state={this.props.state}/>;
     this.state = {
       editor: this.editor,
       display: this.editor,

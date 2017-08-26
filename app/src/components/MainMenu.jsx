@@ -154,7 +154,7 @@ class MainMenu extends React.Component {
       yaml.file.state = state;
       console.log(data);
       list.push(<Menu.Item name={title} key={key} active={activeItem === title}
-                           onClick={event => this.handlePageChange(event, name, data)}>
+        onClick={event => this.handlePageChange(event, name, data)}>
         {this.getShortenString(title)}
       </Menu.Item>);
     });
@@ -190,9 +190,9 @@ class MainMenu extends React.Component {
   renderYAML(name, icon, checkpointKey, listKey, crawler, listObj, checkpointObj) {
     const capName = `${name[0].toUpperCase()}${name.substring(1)}`;
     const addYAML = <Icon link size='large' name='plus' color='green'
-                           onClick={event => this.addYAML(event, listObj, name, ISODate.getDate())}/>;
+      onClick={event => this.addYAML(event, listObj, name, ISODate.getDate())}/>;
     const restoreYAML = <Icon link={checkpointObj !== undefined} size='large' name='undo'
-                              disabled={!checkpointObj} color='teal' onClick={event =>
+      disabled={!checkpointObj} color='teal' onClick={event =>
         this.restoreYAML(event, crawler, listKey, checkpointKey)}/>;
     return <Accordion as={MenuItem}>
       <Accordion.Title>
@@ -227,10 +227,10 @@ class MainMenu extends React.Component {
         {this.renderBio(activeItem)}
 
         {this.renderYAML('project', 'cubes', 'deletedProject', 'projectList',
-            projectCrawler, projectList, deletedProject)}
+          projectCrawler, projectList, deletedProject)}
 
         {this.renderYAML('essay', 'file text outline', 'deletedEssay', 'essayList',
-            essayCrawler, essayList, deletedEssay)}
+          essayCrawler, essayList, deletedEssay)}
 
         <Menu.Item
           onClick={() => this.props.setSelected(

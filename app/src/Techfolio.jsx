@@ -31,6 +31,7 @@ class Techfolio extends React.Component {
     this.importImage = this.importImage.bind(this);
     this.removeImage = this.removeImage.bind(this);
     this.handlePull = this.handlePull.bind(this);
+    this.handleUpdateURL = this.handleUpdateURL.bind(this);
     this.state = {
       bio: null,
       projects: null,
@@ -186,8 +187,17 @@ class Techfolio extends React.Component {
   }
 
   handleUpdateURL(data) {
-    this.io.remoteURL = data;
-    console.log("URL update to " + this.io.remoteURL);
+    this.setState({ isLoading: true });
+    this.io.setRemote(data)
+      .then((res) => {
+        if (res) {
+          console.log('success @handleUpdateURL');
+        }
+        this.setState({ isLoading: false });
+      }, (rej) => {
+        console.log(rej);
+        this.setState({ isLoading: false });
+      });
   }
 
   handleUpload() {

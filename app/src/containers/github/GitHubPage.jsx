@@ -89,7 +89,7 @@ class GitHubPage extends React.Component {
         </Button>
       );
       saveButton = (
-          <Form.Button color='grey' type="Submit">Save Remote URL</Form.Button>
+        <Form.Button color='grey' type="Submit">Save Remote URL</Form.Button>
       );
     } else {
       logButton = (
@@ -110,7 +110,7 @@ class GitHubPage extends React.Component {
         </Button>
       );
       saveButton = (
-          <Form.Button positive type="Submit" onClick={this.handleUpdateURL}>Save Remote URL</Form.Button>
+        <Form.Button positive type="Submit" onClick={this.handleUpdateURL}>Save Remote URL</Form.Button>
       );
     }
 
@@ -122,23 +122,23 @@ class GitHubPage extends React.Component {
           {logButton}
         </Segment>
         <Segment>
-        <Form>
-          <Form.Group>
-            <Form.Input
-              label={'Remote URL'}
-              width={12}
-              type="text"
-              defaultValue={this.state.remoteURL}
-              placeholder={'Remote URL'}
-              onChange={e => this.handleChange(e, 'remoteURL')}
-            />
-          </Form.Group>
-        </Form>
+          <Form>
+            <Form.Group>
+              <Form.Input
+                label={'Remote URL'}
+                width={12}
+                type="text"
+                defaultValue={this.state.remoteURL}
+                placeholder={'Remote URL'}
+                onChange={e => this.handleChange(e, 'remoteURL')}
+              />
+            </Form.Group>
+          </Form>
           {saveButton}
         </Segment>
         <Segment>
-        {uploadButton}
-        {downloadButton}
+          {uploadButton}
+          {downloadButton}
         </Segment>
       </Container>
     );
