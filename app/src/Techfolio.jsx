@@ -220,6 +220,7 @@ class Techfolio extends React.Component {
       .then((res) => {
         if (res) {
           this.setState({ res });
+          console.log('success @handlePull');
         }
         this.setState({ isLoading: false });
       }, (rej) => {

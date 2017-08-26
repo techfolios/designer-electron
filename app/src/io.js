@@ -186,13 +186,10 @@ class IO {
           const author = Git.Signature.default(repo);
           return repo.createCommit('HEAD', author, author, 'Update from Techfolio Designer', oid, [parent]);
         })
-        .then(() => Git.Remote.create(repo, 'userRemote', this.remoteURL))
+        .then(() => Git.Remote.setUrl(repo, 'userRemote', this.remoteURL))
+        .then(() => repo.getRemote('userRemote'))
         .then((remoteResult) => {
           remote = remoteResult;
-          console.log('pushing to remote URL');
-          console.log(remoteResult);
-          console.log(remote);
-          console.log(this.remoteURL);
           return remote.push(
             ['refs/heads/master:refs/heads/master'],
             {
