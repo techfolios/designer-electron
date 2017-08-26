@@ -1,19 +1,15 @@
 import React from 'react';
-import { Form, Segment, Container, Label } from 'semantic-ui-react';
-
+import { Form, Container } from 'semantic-ui-react';
 
 class Contact extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.data;
   }
-  // <Label as='a' image>
-  //   <img src={this.state.picture || "http://via.placeholder.com/300x300"}/>
-  //   Picture
-  // </Label>
+
   render() {
     return (
-      <Container textAlign="center">
+      <Container>
         <Form.Group>
           <Form.Input
             label={'Name'}

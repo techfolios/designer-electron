@@ -1,8 +1,12 @@
 class ISODate {
   static getDate(str) {
     let today = new Date();
+    let date = ISODate.getYear();
+
     if (str) today = new Date(str);
-    return today.toISOString().slice(0, 10);
+    if (str.toString().length === 4) date = str.toString();
+    else date = today.toISOString().slice(0, 10);
+    return date;
   }
 
   static getYear() {
@@ -11,7 +15,9 @@ class ISODate {
   }
 
   static getPadded(str) {
-    return `00${str}`.slice(-2);
+    let num = str;
+    if (isNaN(num)) num = '00';
+    return `00${num}`.slice(-2);
   }
 
   static getDateAndTime() {

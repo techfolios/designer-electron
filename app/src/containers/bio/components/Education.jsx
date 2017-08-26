@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Icon, Segment, Label } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Education extends React.Component {
   constructor(props) {
@@ -12,8 +14,36 @@ class Education extends React.Component {
     this.handleAddition = this.handleAddition.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each((_, e) => {
+      const words = $(e).data().text.split(' ');
+      let icon = 'student';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const state = this.state.data;
+    if (key === 'institution') {
+      const val = e.target.value;
+      let icon = 'student';
+      const words = val.split(' ');
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#education-${index}`)[0].className = `teal icon ${icon}`;
+    }
     state[index][key] = e.target.value;
     this.props.onChange('education', state);
   }
@@ -51,11 +81,16 @@ class Education extends React.Component {
     return <div>
       {this.state.data.map((education, index) => <Segment basic key={index}>
         <Form.Group>
-          <Label pointing="right" as='a' color='black'>
-            <Icon name='student' />
-            {education.institution}
-          </Label>
-          <Form.Input label='Institution'
+          <Form.Input label={<span data-position="bottom center" data-tooltip={education.institution}>
+            <Icon
+              data-text={education.institution}
+              className="iconic"
+              id={`education-${index}`}
+              color="teal"
+              name={'student'}
+            />
+            Institution
+          </span>}
             defaultValue={education.institution}
             placeholder={'Institution'}
             onChange={e => this.handleChange(e, 'institution', index)}

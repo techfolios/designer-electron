@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Icon, Segment, Label } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Volunteer extends React.Component {
   constructor(props) {
@@ -9,10 +11,41 @@ class Volunteer extends React.Component {
     };
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
+    this.handleHighlightChange = this.handleHighlightChange.bind(this);
+    this.addHighlight = this.addHighlight.bind(this);
+    this.removeHighlight = this.removeHighlight.bind(this);
+  }
+
+  componentDidMount() {
+    $('.iconic').each((_, e) => {
+      const words = $(e).data().text.split(' ');
+      let icon = 'world';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
   }
 
   handleChange(e, key, index) {
     const data = this.state.data;
+    if (key === 'organization') {
+      const val = e.target.value;
+      let icon = 'world';
+      const words = val.split(' ');
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#volunteer-${index}`)[0].className = `teal icon ${icon}`;
+    }
     data[index][key] = e.target.value;
     this.setState({ data });
   }
@@ -20,6 +53,19 @@ class Volunteer extends React.Component {
   handleHighlightChange(e, key, windex, hindex) {
     const data = this.state.data;
     data[windex][key][hindex] = e.target.value;
+    this.setState({ data });
+  }
+  addHighlight(e) {
+    const data = this.state.data;
+    const index = e.currentTarget.getAttribute('data-index');
+    data[index].highlights.push('');
+    this.setState({ data });
+  }
+  removeHighlight(e) {
+    const data = this.state.data;
+    const index = e.currentTarget.getAttribute('data-index');
+    const hindex = e.currentTarget.getAttribute('data-hindex');
+    data[index].highlights.splice(hindex, 1);
     this.setState({ data });
   }
 
@@ -47,13 +93,18 @@ class Volunteer extends React.Component {
     return <div>
       {this.state.data.map((volunteer, index) => <Segment basic key={index}>
         <Form.Group>
-          <Label pointing="right" as='a' color='black'>
-            <Icon name={`world ${volunteer.organization}`} />
-            {volunteer.organization}
-          </Label>
           <Form.Input
             width={8}
-            label='Organization'
+            label={<span data-position="bottom center" data-tooltip={volunteer.organization}>
+              <Icon
+                data-text={volunteer.organization}
+                className="iconic"
+                id={`volunteer-${index}`}
+                color="teal"
+                name={'world'}
+              />
+              Organization
+            </span>}
             defaultValue={volunteer.organization}
             placeholder='Organization'
             onChange={e => this.handleChange(e, 'organization', index)} />
@@ -88,13 +139,28 @@ class Volunteer extends React.Component {
           defaultValue={volunteer.summary}
           placeholder="Summary"
           onChange={e => this.handleChange(e, 'summary', index)} />
-        {volunteer.highlights.map((highlight, hindex) => <Form.Input key={hindex}
-          label='Highlights'
-          defaultValue={highlight}
-          placeholder="Highlights"
-          onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)} />)
+        {volunteer.highlights.map((highlight, hindex) =>
+          <div key={`div:${hindex}`}>
+            <Form.Input
+              key={hindex}
+              className="highlight"
+              label='Highlights'
+              value={highlight}
+              placeholder="Highlights"
+              onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)}
+            />
+            <Icon key={`remove:${hindex}`} data-index={index} data-hindex={hindex} link name="minus"
+                  onClick={this.removeHighlight}></Icon>
+            {(volunteer.highlights.length - 1 === hindex) &&
+              <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>
+            }
+          </div>)
         }
-        <br />
+        {(volunteer.highlights.length === 0) &&
+          <span data-position="bottom center" data-tooltip="Add a highlight">
+            <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>
+          </span>
+        }
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

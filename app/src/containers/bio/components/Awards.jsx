@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Icon, Segment, Label } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Awards extends React.Component {
   constructor(props) {
@@ -11,8 +13,36 @@ class Awards extends React.Component {
     this.remove = this.remove.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each((_, e) => {
+      const words = $(e).data().text.split(' ');
+      let icon = 'trophy';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const data = this.state.data;
+    if (key === 'title') {
+      const val = e.target.value;
+      let icon = 'trophy';
+      const words = val.split(' ');
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#award-${index}`)[0].className = `teal icon ${icon}`;
+    }
     data[index][key] = e.target.value;
     this.setState({ data });
   }
@@ -38,13 +68,12 @@ class Awards extends React.Component {
     return <div>
       {this.state.data.map((award, index) => <Segment basic key={index}>
         <Form.Group>
-          <Label pointing="right" as='a' color='black'>
-            <Icon name='trophy' />
-            {award.title}
-          </Label>
           <Form.Input
             width={6}
-            label='Title'
+            label={<span data-position="bottom center" data-tooltip={award.title}>
+              <Icon data-text={award.title} className="iconic" id={`award-${index}`} color="teal" name={'trophy'} />
+              Title
+            </span>}
             defaultValue={award.title}
             placeholder={'Title'}
             onChange={e => this.handleChange(e, 'title', index)} />
