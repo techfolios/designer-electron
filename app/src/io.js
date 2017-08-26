@@ -87,7 +87,7 @@ class IO {
    */
   hasRemote() {
     return request('GET',
-      `https://api.github.com/repos/${this.username}/${this.username}.github.io?access_token=${this.accessToken}`)
+      `${this.remoteURL}?access_token=${this.accessToken}`)
       .then((res) => {
         if (res.body.id) {
           return true;
@@ -155,7 +155,7 @@ class IO {
           const author = Git.Signature.default(repo);
           return repo.createCommit('HEAD', author, author, 'Update from Techfolio Designer', oid, [parent]);
         })
-        .then(() => repo.getRemote('origin'))
+        .then(() => Git.Remote.create(repo, 'userRemote', this.remoteURL))
         .then((remoteResult) => {
           remote = remoteResult;
           console.log("pushing to remote URL");
