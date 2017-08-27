@@ -168,6 +168,7 @@ class MainMenu extends React.Component {
       attributes: {
         layout: type,
         type,
+        draft: false,
         image: '',
         title: `New ${type[0].toUpperCase()}${type.substring(1)}`,
         permalink: '',

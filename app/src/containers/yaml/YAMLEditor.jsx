@@ -37,7 +37,7 @@ class YAMLEditor extends React.Component {
     this.data.body = e.target.value;
   }
 
-  save(event) {
+  save(event, draft) {
     event.preventDefault();
     const oldFileName = this.data.file.name;
     let date = this.date[0];
@@ -46,6 +46,8 @@ class YAMLEditor extends React.Component {
       date = `${this.date[0]}-${this.date[1]}-${this.date[2]}`;
       if (this.date[1] === '00' || this.date[2] === '00') date = this.date[0];
     }
+    if (draft) this.data.attributes.draft = true;
+    else this.data.attributes.draft = false;
 
     this.data.file.name = `${this.data.attributes.title.trim().replace(/\s/g, '-').toLowerCase()}.md`;
     this.data.attributes.date = date;
@@ -81,7 +83,11 @@ class YAMLEditor extends React.Component {
   render() {
     const data = this.data;
     const date = this.date;
-    const { title, permalink, image } = this.data.attributes;
+    const { title, permalink, image, draft } = this.data.attributes;
+    const getLabel = () => {
+      if (draft) return 'Finalize Draft';
+      return 'Save';
+    };
     return <div>
         <Form>
           <Form.Input label='Title' defaultValue={title || ''}
@@ -125,7 +131,8 @@ class YAMLEditor extends React.Component {
           <br/>
       </Form>
       <Button.Group floated="right">
-        <Button content='Save' color='green' onClick={this.save}/>
+        <Button content={getLabel} color='green' onClick={this.save}/>
+        <Button content='Save as Draft' color='green' onClick={event => this.save(event, true)}/>
         <Button content='Delete' color='red'
                 onClick={event => this.delete(event, data.file.index, data.file.name,
                     this.crawler, data.file.state, data.file.checkpoint)}/>
