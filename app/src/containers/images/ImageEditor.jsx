@@ -1,6 +1,7 @@
 import React from 'react';
 import Cropper from 'cropperjs';
 import Jimp from 'jimp';
+import FS from 'fs';
 import { Button, Checkbox, Dropdown, Image, Input, Modal, Segment } from 'semantic-ui-react';
 
 class ImageEditor extends React.Component {
@@ -41,24 +42,6 @@ class ImageEditor extends React.Component {
     this.setState({ cropper });
   }
 
-  handleCrop() {
-    const { crop, url } = this.state;
-    this.show('Crop Image', 'Are you sure?', () => {
-      Jimp.read(url, (err, img) => {
-        if (!err) {
-          img.crop(crop.x, crop.y, crop.width, crop.height);
-          img.write(url, (writeErr) => {
-            if (!writeErr) {
-              console.log(`image written to disk: ${url}`);
-            } else {
-              console.log(writeErr);
-            }
-          });
-        }
-      });
-    });
-  }
-
   handleDelete() {
     this.show('Delete Image', 'Are you sure?', () => {
       this.props.removeImage(() => this.state.index);
@@ -76,26 +59,44 @@ class ImageEditor extends React.Component {
     }
   }
 
-  saveAs() {
-    const { url } = this.state;
-    this.show('Save Image', <Input defaultValue={url} onChange={e => this.setState({ newURL: e.target.value })} />,
-      () => {
-        Jimp.read(url, (err, img) => {
-          if (!err) {
-            const { newURL } = this.state;
-            img.write(newURL, (writeErr) => {
-              if (!writeErr) {
-                console.log(`image written to disk: ${newURL}`);
-                this.props.removeImage(() => this.state.index);
-              } else {
-                console.log(writeErr);
-              }
-            });
-          } else {
-            console.log(err);
-          }
-        });
+  handleCrop() {
+    const { crop, url } = this.state;
+    this.show('Save Image', 'This will destroy the original image.  Are you sure?', () => {
+      Jimp.read(url, (err, img) => {
+        if (!err) {
+          img.crop(crop.x, crop.y, crop.width, crop.height);
+          img.write(url, (writeErr) => {
+            if (!writeErr) {
+              console.log(`image written to disk: ${url}`);
+            } else {
+              console.log(writeErr);
+            }
+          });
+        }
       });
+    });
+  }
+
+  saveAs() {
+    const { crop, url } = this.state;
+    this.show('Save New Image',
+      <Input fluid defaultValue={url} onChange={e => this.setState({ newURL: e.target.value })} />,
+      () => Jimp.read(url, (err, img) => {
+        if (!err) {
+          const { newURL } = this.state;
+          img.crop(crop.x, crop.y, crop.width, crop.height);
+          img.write(newURL, (writeErr) => {
+            if (!writeErr) {
+              this.props.addImage(() => newURL);
+              this.setState({ url: newURL });
+            } else {
+              console.log(writeErr);
+            }
+          });
+        } else {
+          console.log(err);
+        }
+      }));
   }
 
   show(header, message, res, rej) {
@@ -119,16 +120,16 @@ class ImageEditor extends React.Component {
         <Dropdown.Menu>
           <Dropdown.Item
             onClick={this.handleCrop}
-            text='Crop' />
+            text='Save' />
           <Dropdown.Item
             onClick={this.saveAs}
             text='Save as' />
           <Dropdown.Item
-            onClick={this.handleDelete}
-            text='Delete' />
-          <Dropdown.Item
             onClick={() => cropper.reset()}
             text='Reset' />
+          <Dropdown.Item
+            onClick={this.handleDelete}
+            text='Delete' />
         </Dropdown.Menu>
       </Dropdown>
       <Checkbox toggle label={<label>Square Crop</label>} onClick={this.toggleSquareCrop} />

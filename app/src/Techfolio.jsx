@@ -293,7 +293,8 @@ class Techfolio extends React.Component {
             setSelected={this.setSelected}
             images={images}
             importImage={this.importImage}
-            removeImage={this.removeImage} />
+            removeImage={this.removeImage}
+            renameImage={this.renameImage} />
         </Grid.Column>
         <Grid.Column stretched width={13} id="root" style={tempCSS}>
           {selected}

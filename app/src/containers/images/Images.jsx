@@ -21,10 +21,11 @@ class Images extends React.Component {
     this.openImageEditor = this.openImageEditor.bind(this);
     this.importImage = this.importImage.bind(this);
     this.removeImage = this.removeImage.bind(this);
+    this.addImage = this.addImage.bind(this);
   }
 
   openImageEditor(url, index) {
-    this.props.setSelected(<ImageEditor key={index} index={index} url={url} removeImage={this.removeImage}/>);
+    this.props.setSelected(<ImageEditor key={index} index={index} url={url} removeImage={this.removeImage} addImage={this.addImage} />);
   }
 
   importImage() {
@@ -41,6 +42,18 @@ class Images extends React.Component {
           console.log(rej);
         });
     }
+  }
+
+  addImage(cb) {
+    const url = cb();
+    const { data } = this.state;
+    this.props.importImage(url)
+      .then((res) => {
+        data.push(res);
+        this.setState({ data });
+      }, (rej) => {
+        console.log(rej);
+      });
   }
 
   removeImage(cb) {
