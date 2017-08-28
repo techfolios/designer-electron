@@ -3,9 +3,10 @@ class ISODate {
     let today = new Date();
     let date = ISODate.getYear();
 
-    if (str) today = new Date(str);
-    if (str.toString().length === 4) date = str.toString();
-    else date = today.toISOString().slice(0, 10);
+    if (str) {
+      today = new Date(str);
+      if (str.toString().length === 4) date = str.toString();
+    } else date = today.toISOString().slice(0, 10);
     return date;
   }
 
