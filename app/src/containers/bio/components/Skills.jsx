@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Icon, Segment, Label } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Skills extends React.Component {
   constructor(props) {
@@ -12,8 +14,36 @@ class Skills extends React.Component {
     this.handleAddition = this.handleAddition.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each((_, e) => {
+      const words = $(e).data().text.split(' ');
+      let icon = 'wizard';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const state = this.state.data;
+    if (key === 'name') {
+      const val = e.target.value;
+      let icon = 'wizard';
+      const words = val.split(' ');
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#skill-${index}`)[0].className = `teal icon ${icon}`;
+    }
     state[index][key] = e.target.value;
     this.props.onChange('skills', state);
   }
@@ -46,13 +76,12 @@ class Skills extends React.Component {
     return <div>
       {this.state.data.map((skill, index) => <Segment basic key={index}>
         <Form.Group>
-          <Label pointing="right" as='a' color='black'>
-            <Icon name={`wizard ${skill.name}`} />
-            {skill.name}
-          </Label>
           <Form.Input
             width={4}
-            label='Name'
+            label={<span data-position="bottom center" data-tooltip={skill.name}>
+              <Icon data-text={skill.name} className="iconic" id={`skill-${index}`} color="teal" name={'wizard'} />
+              Name
+            </span>}
             defaultValue={skill.name}
             placeholder={'Name'}
             onChange={e => this.handleChange(e, 'name', index)} />

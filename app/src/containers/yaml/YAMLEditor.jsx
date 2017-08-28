@@ -70,11 +70,11 @@ class YAMLEditor extends React.Component {
     if (this.props.name === 'project') {
       fields = <div>
         <Form.Input label='Project URL'
-                    defaultValue={projecturl}
-                    onChange={e => this.setAttribute(e, 'projecturl')}/>
+          defaultValue={projecturl}
+          onChange={e => this.setAttribute(e, 'projecturl')}/>
         <Form.Input label='Summary'
-                    defaultValue={summary}
-                    onChange={e => this.setAttribute(e, 'summary')}/>
+          defaultValue={summary}
+          onChange={e => this.setAttribute(e, 'summary')}/>
       </div>;
     }
 
@@ -137,8 +137,8 @@ class YAMLEditor extends React.Component {
         <Button key='save' content={getLabel()} color='green' onClick={event => this.save(event, false)}/>
         <Button content='Save as Draft' color='green' onClick={event => this.save(event, true)}/>
         <Button content='Delete' color='red'
-                onClick={event => this.delete(event, data.file.index, data.file.name,
-                    this.crawler, data.file.state, data.file.checkpoint)}/>
+          onClick={event => this.delete(event, data.file.index, data.file.name,
+            this.crawler, data.file.state, data.file.checkpoint)}/>
       </Button.Group>
     </div>;
   }

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Icon, Segment, Label } from 'semantic-ui-react';
+import { Form, Icon, Segment } from 'semantic-ui-react';
+import { ALL_ICONS_IN_ALL_CONTEXTS } from 'semantic-ui-react/dist/commonjs/lib/SUI';
+import $ from 'jquery';
 
 class Work extends React.Component {
   constructor(props) {
@@ -15,8 +17,36 @@ class Work extends React.Component {
     this.removeHighlight = this.removeHighlight.bind(this);
   }
 
+  componentDidMount() {
+    $('.iconic').each((_, e) => {
+      const words = $(e).data().text.split(' ');
+      let icon = 'laptop';
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(e)[0].className = `teal icon ${icon}`;
+    });
+  }
+
   handleChange(e, key, index) {
     const data = this.state.data;
+    if (key === 'company') {
+      const val = e.target.value;
+      let icon = 'laptop';
+      const words = val.split(' ');
+
+      for (let i = 0; i < words.length; i += 1) {
+        const word = words[i];
+        if (ALL_ICONS_IN_ALL_CONTEXTS.indexOf(word.toLowerCase()) > -1) {
+          icon = word;
+        }
+      }
+      $(`#work-${index}`)[0].className = `teal icon ${icon}`;
+    }
     data[index][key] = e.target.value;
     this.setState({ data });
   }
@@ -64,13 +94,12 @@ class Work extends React.Component {
     return <div>
       {this.state.data.map((work, index) => <Segment basic key={index}>
         <Form.Group>
-          <Label pointing="right" as='a' color='black'>
-            <Icon name={`world ${work.company}`} />
-            {work.company}
-          </Label>
           <Form.Input
             width={8}
-            label='Company'
+            label={<span data-position="bottom center" data-tooltip={work.company}>
+              <Icon data-text={work.company} className={'iconic'} id={`work-${index}`} color="teal" name={'laptop'} />
+              Organization
+            </span>}
             defaultValue={work.company}
             placeholder='Company'
             onChange={e => this.handleChange(e, 'company', index)} />
@@ -111,17 +140,24 @@ class Work extends React.Component {
         {work.highlights.map((highlight, hindex) =>
           <div key={`div:${hindex}`}>
             <Form.Input
+              className="highlight"
               key={hindex}
               label='Highlight'
-              defaultValue={highlight}
+              value={highlight}
               placeholder="Design firmware for distributed weather sensor network"
               onChange={e => this.handleHighlightChange(e, 'highlights', index, hindex)}
             />
             <Icon key={`remove:${hindex}`} data-index={index} data-hindex={hindex} link name="minus"
-                  onClick={this.removeHighlight}></Icon>
-            {((work.highlights.length - 1 === hindex) || (work.highlights.length === 0)) &&
-            <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>}
+              onClick={this.removeHighlight}></Icon>
+            {(work.highlights.length - 1 === hindex) &&
+              <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>
+            }
           </div>)}
+        {(work.highlights.length === 0) &&
+            <span data-position="bottom center" data-tooltip="Add a highlight">
+              <Icon data-index={index} link name="plus" color="teal" onClick={this.addHighlight}></Icon>
+            </span>
+        }
       </Segment>)
       }
       <Icon link name="minus" onClick={this.remove} ></Icon>

@@ -31,8 +31,20 @@ class IO {
   init() {
     this.accessToken = window.localStorage.getItem('githubtoken');
     return new Promise((res) => {
+      let repo;
+
       this.getUsername().then(() => {
-        this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
+        if (this.remoteURL == null) {
+          this.remoteURL = `https://github.com/${this.username}/${this.username}.github.io`;
+        }
+        Git.Repository.open(this.localURL)
+          .then((repoResult) => {
+            repo = repoResult;
+          })
+          .then(() => Git.Remote.create(repo, 'userRemote', this.remoteURL))
+        ;
+
+
         this.hasLocal()
           .then((hasLocal) => {
             if (hasLocal) {
@@ -86,18 +98,13 @@ class IO {
   added "this." in front of res to placate ESLint - is this a correct fix?
    */
   hasRemote() {
-    // return request('GET', `https://api.github.com/user/repos?sort=updated&access_token=${this.accessToken}`)
-    return request('GET', `https://api.github.com/users/${this.username}/repos?access_token=${this.accessToken}`)
+    return request('GET',
+      `${this.remoteURL}?access_token=${this.accessToken}`)
       .then((res) => {
-        let result = false;
-        const repos = res.body;
-
-        for (let i = 0; i < res.body.length; i += 1) {
-          if (repos[i].name === `${this.username}.github.io`) {
-            result = true;
-          }
+        if (res.body.id) {
+          return true;
         }
-        return result;
+        return false;
       }, (err) => {
         console.err(err);
       });
@@ -120,6 +127,25 @@ class IO {
           res(repo.mergeBranches('master', 'origin/master'));
         })
         .catch((err) => { rej(err); });
+    });
+  }
+
+  setRemote(data) {
+    let repo;
+
+    this.remoteURL = data;
+    console.log(`URL updated to ${this.remoteURL}`);
+
+    return new Promise((res, rej) => {
+      Git.Repository.open(this.localURL)
+        .then((repoResult) => {
+          repo = repoResult;
+        })
+        .then(() => Git.Remote.setUrl(repo, 'userRemote', this.remoteURL))
+        .catch((err) => { rej(err); })
+        .done(() => {
+          res('successfully updated remote');
+        });
     });
   }
 
@@ -160,13 +186,10 @@ class IO {
           const author = Git.Signature.default(repo);
           return repo.createCommit('HEAD', author, author, 'Update from Techfolio Designer', oid, [parent]);
         })
-        .then(() => repo.getRemote('origin'))
+        .then(() => Git.Remote.setUrl(repo, 'userRemote', this.remoteURL))
+        .then(() => repo.getRemote('userRemote'))
         .then((remoteResult) => {
           remote = remoteResult;
-          console.log('pushing to remote URL');
-          console.log(remoteResult);
-          console.log(remote);
-          console.log(this.remoteURL);
           return remote.push(
             ['refs/heads/master:refs/heads/master'],
             {
@@ -199,10 +222,17 @@ class IO {
             },
           });
         })
-        .then(() => repo.mergeBranches('master', 'origin/master'))
+        .then(() => Git.Remote.setUrl(repo, 'userRemote', this.remoteURL))
+        .then(() => repo.mergeBranches('master', 'userRemote/master'))
         .catch((err) => { rej(err); })
         .done(() => {
-          res('successfully merged');
+          const path = this.bioURL;
+          FS.readFile(path, (err, data) => {
+            if (err) {
+              rej(err);
+            }
+            res(JSON.parse(data));
+          });
         });
     });
   }
@@ -313,9 +343,10 @@ class IO {
     });
   }
 
-  removeImage(name) {
+  removeImage(url) {
     return new Promise((res, rej) => {
-      const imagePath = Path.resolve(this.imagesURL, name);
+      const imagePath = Path.resolve(this.imagesURL, url);
+      console.log(imagePath);
       FS.unlink(imagePath, (err) => {
         if (err) {
           rej(err);

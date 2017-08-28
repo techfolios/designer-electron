@@ -23,11 +23,15 @@ class Techfolio extends React.Component {
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.setSelected = this.setSelected.bind(this);
     this.handleSaveBio = this.handleSaveBio.bind(this);
+    this.handlePull = this.handlePull.bind(this);
     this.handleLoadBio = this.handleLoadBio.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.saveProject = this.saveProject.bind(this);
     this.removeProject = this.removeProject.bind(this);
     this.importImage = this.importImage.bind(this);
+    this.removeImage = this.removeImage.bind(this);
+    this.handlePull = this.handlePull.bind(this);
+    this.handleUpdateURL = this.handleUpdateURL.bind(this);
     this.state = {
       bio: null,
       projects: null,
@@ -104,11 +108,11 @@ class Techfolio extends React.Component {
         break;
       case 'projects':
         retSelection = <YAMLDisplay editor='project' dir={this.io.getLocalFolder()} key={data.attributes.title}
-                                   delete={state.removeYAML} data={data} state={state} />;
+          delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'essays':
         retSelection = <YAMLDisplay editor='essay' dir={this.io.getLocalFolder()} key={data.attributes.title}
-                              delete={state.removeYAML} data={data} state={state} />;
+          delete={state.removeYAML} data={data} state={state} />;
         break;
       case 'upload':
         retSelection = <h1>Upload</h1>;
@@ -173,8 +177,27 @@ class Techfolio extends React.Component {
     return this.io.importImage(url);
   }
 
+  removeImage(index) {
+    const { images } = this.state;
+    const url = images[index];
+    images.splice(index, 1);
+    this.setState({ images });
+    this.setSelected(<div>Removed Image</div>);
+    return this.io.removeImage(url);
+  }
+
   handleUpdateURL(data) {
-    this.io.remoteURL = data;
+    this.setState({ isLoading: true });
+    this.io.setRemote(data)
+      .then((res) => {
+        if (res) {
+          console.log('success @handleUpdateURL');
+        }
+        this.setState({ isLoading: false });
+      }, (rej) => {
+        console.log(rej);
+        this.setState({ isLoading: false });
+      });
   }
 
   handleUpload() {
@@ -182,7 +205,7 @@ class Techfolio extends React.Component {
     this.io.push()
       .then((res) => {
         if (res) {
-          console.log('success');
+          console.log('success @handleUpload');
         }
         this.setState({ isLoading: false });
       }, (rej) => {
@@ -196,7 +219,8 @@ class Techfolio extends React.Component {
     this.io.pull()
       .then((res) => {
         if (res) {
-          console.log('success');
+          this.setState({ res });
+          console.log('success @handlePull');
         }
         this.setState({ isLoading: false });
       }, (rej) => {
@@ -280,7 +304,8 @@ class Techfolio extends React.Component {
             projectCrawler={projectCrawler}
             setSelected={this.setSelected}
             images={images}
-            importImage={this.importImage} />
+            importImage={this.importImage}
+            removeImage={this.removeImage} />
         </Grid.Column>
         <Grid.Column stretched width={13} id="root" style={tempCSS}>
           {selected}
