@@ -84,10 +84,12 @@ class YAMLEditor extends React.Component {
     const data = this.data;
     const date = this.date;
     const { title, permalink, image, draft } = this.data.attributes;
+    let { labels } = this.data.attributes;
     const getLabel = () => {
       if (draft) return 'Finalize Draft';
       return 'Save';
     };
+    if (!labels) labels = [];
     return <div>
         <Form>
           <Form.Input label='Title' defaultValue={title || ''}
@@ -121,7 +123,7 @@ class YAMLEditor extends React.Component {
               defaultValue={data.attributes.labels}
               noResultsMessage={'Start typing to add a new tag!'}
               options={
-                data.attributes.labels.map((label, key) => ({
+                labels.map((label, key) => ({
                   key,
                   value: label,
                   text: label,
@@ -131,7 +133,7 @@ class YAMLEditor extends React.Component {
           <br/>
       </Form>
       <Button.Group floated="right">
-        <Button content={getLabel} color='green' onClick={this.save}/>
+        <Button key='save' content={getLabel()} color='green' onClick={event => this.save(event, false)}/>
         <Button content='Save as Draft' color='green' onClick={event => this.save(event, true)}/>
         <Button content='Delete' color='red'
                 onClick={event => this.delete(event, data.file.index, data.file.name,
