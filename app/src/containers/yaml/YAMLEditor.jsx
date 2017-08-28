@@ -56,6 +56,7 @@ class YAMLEditor extends React.Component {
     console.log(yaml);
     this.crawler.writeFile(this.data.file.name, yaml, oldFileName);
     this.menu.setState(this.data);
+    this.setState(this.data);
   }
 
   handleLabel(e, obj) {
