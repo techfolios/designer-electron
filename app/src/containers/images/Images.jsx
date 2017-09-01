@@ -54,9 +54,11 @@ class Images extends React.Component {
       {data.map((url, index) => {
         const imageName = Path.basename(url);
         return <Grid.Column key={index}>
-          <Segment basic><div>
-            <Image centered bordered src={url} onClick={() => this.openImageEditor(url, index)} label={imageName} />
-          </div></Segment>
+          <Segment basic>
+            <div data-tooltip={imageName}>
+              <Image centered bordered src={url} onClick={() => this.openImageEditor(url, index)} />
+            </div>
+          </Segment>
         </Grid.Column>;
       })}
       <Grid.Column>
