@@ -6,12 +6,6 @@ import { Button, Grid, Image, Segment } from 'semantic-ui-react';
 
 import ImageEditor from './ImageEditor.jsx';
 
-/**
- * PLAN:
- *  view: list of all images
- *  actions: rename, add, remove, and edit [resize, and crop (perfect squares only)]
- */
-
 class Images extends React.Component {
   constructor(props) {
     super(props);
