@@ -25,7 +25,8 @@ class Images extends React.Component {
   }
 
   openImageEditor(url, index) {
-    this.props.setSelected(<ImageEditor key={index} index={index} url={url} removeImage={this.removeImage} addImage={this.addImage} />);
+    this.props.setSelected(
+      <ImageEditor key={index} index={index} url={url} removeImage={this.removeImage} addImage={this.addImage} />);
   }
 
   importImage() {

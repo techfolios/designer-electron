@@ -1,7 +1,6 @@
 import React from 'react';
 import Cropper from 'cropperjs';
 import Jimp from 'jimp';
-import FS from 'fs';
 import { Button, Checkbox, Dropdown, Image, Input, Modal, Segment } from 'semantic-ui-react';
 
 class ImageEditor extends React.Component {
