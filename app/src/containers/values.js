@@ -1,5 +1,6 @@
 import React from 'react';
 import domToReact from 'html-react-parser/lib/dom-to-react';
+const path = require('path');
 
 const values = {
   dir: '',
@@ -17,8 +18,10 @@ const values = {
       case 'img': {
         const imagePath = json.attribs.src.split(/[\\/]/);
         if (!imagePath[0].includes('http')) {
-          imagePath[0] = values.dir;
-          json.attribs.src = imagePath.join('\\');
+          if (imagePath[0].includes('images')) imagePath[0] = `${values.dir}${path.sep}images`;
+          else imagePath[0] = values.dir;
+          json.attribs.src = imagePath.join(path.sep);
+          console.log(`Image Path: ${json.attribs.src}`);
         }
         break;
       }
