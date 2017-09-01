@@ -91,10 +91,10 @@ class Education extends React.Component {
             />
             Institution
           </span>}
-            defaultValue={education.institution}
-            placeholder={'Institution'}
-            onChange={e => this.handleChange(e, 'institution', index)}
-            width={8}
+          defaultValue={education.institution}
+          placeholder={'Institution'}
+          onChange={e => this.handleChange(e, 'institution', index)}
+          width={8}
           />
           <Form.Input label='Area'
             defaultValue={education.area}

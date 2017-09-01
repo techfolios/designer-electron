@@ -17,6 +17,7 @@ class Basics extends React.Component {
     state[key] = e.target.value;
     this.props.onChange('basics', state);
   }
+
   handleLocationChange(e, key) {
     const state = this.state;
     state.location[key] = e.target.value;

@@ -9,12 +9,14 @@ class GitHubPage extends React.Component {
     if (!window.localStorage.getItem('githubtoken')) {
       this.state = {
         isLoggedIn: false,
-        io: this.props.io,
+        remoteURL: this.props.io.remoteURL,
+        username: this.props.io.username,
       };
     } else {
       this.state = {
         isLoggedIn: true,
-        io: this.props.io,
+        remoteURL: this.props.io.remoteURL,
+        username: this.props.io.username,
       };
     }
     this.logout = this.logout.bind(this);
@@ -48,15 +50,15 @@ class GitHubPage extends React.Component {
     this.props.onPull();
   }
 
-  handleChange(key, data) {
+  handleChange(e, key) {
     const state = this.state;
-    state[key] = data;
+    state[key] = e.target.value;
     this.setState(state);
   }
 
   handleUpdateURL(e) {
     e.preventDefault();
-    this.props.onUpdateURL(this.state.io.remoteURL);
+    this.props.onUpdateURL(this.state.remoteURL);
   }
 
   render() {
@@ -87,7 +89,7 @@ class GitHubPage extends React.Component {
         </Button>
       );
       saveButton = (
-          <Form.Button color='grey' type="Submit">Save Remote URL</Form.Button>
+        <Form.Button color='grey' type="Submit">Save Remote URL</Form.Button>
       );
     } else {
       logButton = (
@@ -108,7 +110,7 @@ class GitHubPage extends React.Component {
         </Button>
       );
       saveButton = (
-          <Form.Button positive type="Submit" onClick={this.handleUpdateURL}>Save Remote URL</Form.Button>
+        <Form.Button positive type="Submit" onClick={this.handleUpdateURL}>Save Remote URL</Form.Button>
       );
     }
 
@@ -116,27 +118,27 @@ class GitHubPage extends React.Component {
       <Container fluid>
         <h1>GitHub</h1>
         <Segment>
-          <h3>Username: {this.state.io.username}</h3>
+          <h3>Username: {this.state.username}</h3>
           {logButton}
         </Segment>
         <Segment>
-        <Form>
-          <Form.Group>
-            <Form.Input
-              label={'Remote URL'}
-              width={12}
-              type="text"
-              defaultValue={this.state.io.remoteURL}
-              placeholder={'Remote URL'}
-              onChange={e => this.handleChange(e, 'remoteURL')}
-            />
-          </Form.Group>
-        </Form>
+          <Form>
+            <Form.Group>
+              <Form.Input
+                label={'Remote URL'}
+                width={12}
+                type="text"
+                defaultValue={this.state.remoteURL}
+                placeholder={'Remote URL'}
+                onChange={e => this.handleChange(e, 'remoteURL')}
+              />
+            </Form.Group>
+          </Form>
           {saveButton}
         </Segment>
         <Segment>
-        {uploadButton}
-        {downloadButton}
+          {uploadButton}
+          {downloadButton}
         </Segment>
       </Container>
     );

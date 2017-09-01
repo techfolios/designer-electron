@@ -62,7 +62,7 @@ class Contact extends React.Component {
           defaultValue={this.state.summary}
           placeholder={'Summary'}
           onChange={e => this.props.handleChange(e, 'summary')} />
-    </Container>);
+      </Container>);
   }
 }
 
