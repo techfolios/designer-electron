@@ -10,11 +10,12 @@ const Path = require('path');
 class YAMLEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: props.data };
+    this.state = { data: props.data, valid: true };
     this.data = this.state.data;
     this.date = ISODate.getDate(this.data.attributes.date).split(/[-.]/);
     this.menu = props.state;
     this.crawler = new FileCrawler(Path.resolve(this.props.dir, `${props.name}s`));
+    this.error = '';
 
     this.setAttribute = this.setAttribute.bind(this);
     this.setDate = this.setDate.bind(this);
@@ -30,7 +31,18 @@ class YAMLEditor extends React.Component {
   }
 
   setDate(e, index) {
+    const error = { dateNoMonth: 'The "Month" field cannot be empty if a day is inputted',
+      dateNoDay: 'The "Day" field cannot be empty if a Month is inputted' };
+
     this.date[index] = ISODate.getPadded(e.target.value);
+    if (index === 1 && (this.date[2] === undefined || this.date[2] === '')) {
+      this.error = error.dateNoDay;
+      this.setState({ valid: false });
+    }
+    if (index === 2 && (this.date[1] === undefined || this.date[1] === '')) {
+      this.error = error.dateNoMonth;
+      this.setState({ valid: false });
+    }
   }
 
   setBody(e) {
@@ -134,7 +146,8 @@ class YAMLEditor extends React.Component {
           <br/>
       </Form>
       <Button.Group floated="right">
-        <Button key='save' content={getLabel()} color='green' onClick={event => this.save(event, false)}/>
+        <Button key='save' disabled={!this.state.valid} content={getLabel()}
+                color='green' onClick={event => this.save(event, false)}/>
         <Button content='Save as Draft' color='green' onClick={event => this.save(event, true)}/>
         <Button content='Delete' color='red'
           onClick={event => this.delete(event, data.file.index, data.file.name,
