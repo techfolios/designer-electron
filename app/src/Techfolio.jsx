@@ -28,8 +28,6 @@ class Techfolio extends React.Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.saveProject = this.saveProject.bind(this);
     this.removeProject = this.removeProject.bind(this);
-    this.importImage = this.importImage.bind(this);
-    this.removeImage = this.removeImage.bind(this);
     this.handlePull = this.handlePull.bind(this);
     this.handleUpdateURL = this.handleUpdateURL.bind(this);
     this.state = {
@@ -304,9 +302,8 @@ class Techfolio extends React.Component {
             projectCrawler={projectCrawler}
             setSelected={this.setSelected}
             images={images}
-            importImage={this.importImage}
-            removeImage={this.removeImage}
-            renameImage={this.renameImage} />
+            importImage={imgURL => this.importImage(imgURL)}
+            removeImage={imgIndex => this.removeImage(imgIndex)} />
         </Grid.Column>
         <Grid.Column stretched width={13} id="root" style={tempCSS}>
           {selected}
