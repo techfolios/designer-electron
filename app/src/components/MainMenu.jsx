@@ -27,6 +27,11 @@ class MainMenu extends React.Component {
     this.removeYAML = this.removeYAML.bind(this);
   }
 
+  setSelected(item, name) {
+    this.setState({ activeItem: name });
+    this.props.setSelected(item);
+  }
+
   handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
     this.props.onMenuSelect(name);
@@ -234,11 +239,12 @@ class MainMenu extends React.Component {
           essayCrawler, essayList, deletedEssay)}
 
         <Menu.Item
-          onClick={() => this.props.setSelected(
+          active={activeItem === 'images'}
+          onClick={() => this.setSelected(
             <Images data={this.props.images}
-              setSelected={this.props.setSelected}
-              importImage={this.props.importImage}
-              removeImage={this.props.removeImage} />)}>
+              setSelected={item => this.setSelected(item, 'images')}
+              importImage={imgURL => this.importImage(imgURL)}
+              removeImage={imgIndex => this.removeImage(imgIndex)} />, 'images')}>
           <Icon name='file image outline' />
           Images
         </Menu.Item>

@@ -21,7 +21,6 @@ class Techfolio extends React.Component {
     super(props);
     this.io = new IO(props.username);
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
-    this.setSelected = this.setSelected.bind(this);
     this.handleSaveBio = this.handleSaveBio.bind(this);
     this.handlePull = this.handlePull.bind(this);
     this.handleLoadBio = this.handleLoadBio.bind(this);
@@ -300,7 +299,7 @@ class Techfolio extends React.Component {
             essayCrawler={essayCrawler}
             projects={projects}
             projectCrawler={projectCrawler}
-            setSelected={this.setSelected}
+            setSelected={item => this.setSelected(item)}
             images={images}
             importImage={imgURL => this.importImage(imgURL)}
             removeImage={imgIndex => this.removeImage(imgIndex)} />
