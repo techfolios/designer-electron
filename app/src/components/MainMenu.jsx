@@ -243,8 +243,8 @@ class MainMenu extends React.Component {
           onClick={() => this.setSelected(
             <Images data={this.props.images}
               setSelected={item => this.setSelected(item, 'images')}
-              importImage={imgURL => this.importImage(imgURL)}
-              removeImage={imgIndex => this.removeImage(imgIndex)} />, 'images')}>
+              importImage={imgURL => this.props.importImage(imgURL)}
+              removeImage={imgIndex => this.props.removeImage(imgIndex)} />, 'images')}>
           <Icon name='file image outline' />
           Images
         </Menu.Item>
