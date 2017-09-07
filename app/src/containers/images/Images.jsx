@@ -12,15 +12,11 @@ class Images extends React.Component {
     this.state = {
       data: props.data,
     };
-    this.openImageEditor = this.openImageEditor.bind(this);
-    this.importImage = this.importImage.bind(this);
-    this.removeImage = this.removeImage.bind(this);
-    this.addImage = this.addImage.bind(this);
   }
 
   openImageEditor(url, index) {
     this.props.setSelected(
-      <ImageEditor key={index} index={index} url={url} removeImage={this.removeImage} addImage={this.addImage} />);
+      <ImageEditor key={index} index={index} url={url} removeImage={cb => this.removeImage(cb)} addImage={cb => this.addImage(cb)} />);
   }
 
   importImage() {
@@ -70,7 +66,7 @@ class Images extends React.Component {
         </Grid.Column>;
       })}
       <Grid.Column>
-        <Button color="teal" icon="plus" onClick={this.importImage} />
+        <Button color="teal" icon="plus" onClick={() => this.importImage()} />
       </Grid.Column>
     </Grid>;
   }
