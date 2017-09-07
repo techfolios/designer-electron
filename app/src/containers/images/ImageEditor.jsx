@@ -12,12 +12,6 @@ class ImageEditor extends React.Component {
       alert: false,
       cropRatio: 'free',
     };
-    this.handleImageLoad = this.handleImageLoad.bind(this);
-    this.handleCrop = this.handleCrop.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.toggleSquareCrop = this.toggleSquareCrop.bind(this);
-    this.saveAs = this.saveAs.bind(this);
-    this.show = this.show.bind(this);
   }
 
   handleImageLoad(ev) {
@@ -118,23 +112,23 @@ class ImageEditor extends React.Component {
       <Dropdown text="File">
         <Dropdown.Menu>
           <Dropdown.Item
-            onClick={this.handleCrop}
+            onClick={() => this.handleCrop()}
             text='Save' />
           <Dropdown.Item
-            onClick={this.saveAs}
+            onClick={() => this.saveAs()}
             text='Save as' />
           <Dropdown.Item
             onClick={() => cropper.reset()}
             text='Reset' />
           <Dropdown.Item
-            onClick={this.handleDelete}
+            onClick={() => this.handleDelete()}
             text='Delete' />
         </Dropdown.Menu>
       </Dropdown>
-      <Checkbox toggle label={<label>Square Crop</label>} onClick={this.toggleSquareCrop} />
+      <Checkbox toggle label={<label>Square Crop</label>} onClick={() => this.toggleSquareCrop()} />
       <div>
         {url}
-        <Image src={url} onLoad={this.handleImageLoad} />
+        <Image src={url} onLoad={ev => this.handleImageLoad(ev)} />
       </div>
 
       <Modal size="mini" open={alert} onClose={() => this.setState({ alert: false })} closeIcon={true}>
