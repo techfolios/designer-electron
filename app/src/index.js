@@ -1,5 +1,4 @@
 const electron = require('electron');
-// const electronOauth2 = require('electron-oauth2');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -7,9 +6,7 @@ const BrowserWindow = electron.BrowserWindow;
 let mainWindow;
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 920, height: 800 });
-  // console.log(token);
-
+  mainWindow = new BrowserWindow({ width: 920, height: 800, icon: './images/techfolios-icon.JPG' });
   mainWindow.loadURL(`file://${__dirname}/index.html`);
   mainWindow.on('closed', () => {
     mainWindow = null;
