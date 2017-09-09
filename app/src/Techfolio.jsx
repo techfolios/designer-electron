@@ -28,8 +28,6 @@ class Techfolio extends React.Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.saveProject = this.saveProject.bind(this);
     this.removeProject = this.removeProject.bind(this);
-    this.importImage = this.importImage.bind(this);
-    this.removeImage = this.removeImage.bind(this);
     this.handlePull = this.handlePull.bind(this);
     this.handleUpdateURL = this.handleUpdateURL.bind(this);
     this.state = {
@@ -288,7 +286,7 @@ class Techfolio extends React.Component {
 
   render() {
     const { isLoading, bio, projects, projectCrawler, selected, essays, essayCrawler, images } = this.state;
-    const tempCSS = { padding: '30px 0px 30px 40px' };
+    const tempCSS = { marginLeft: '100px' };
 
     if (isLoading || !bio || !projects) {
       return <Dimmer inverted active> <Loader size="big" content="Loading..." /> </Dimmer>;
@@ -306,7 +304,7 @@ class Techfolio extends React.Component {
         importImage={this.importImage}
         removeImage={this.removeImage}
         renameImage={this.renameImage} />
-      <div style={{ marginLeft: '100px' }}>
+      <div style={tempCSS}>
         {selected}
       </div>
       </div>
