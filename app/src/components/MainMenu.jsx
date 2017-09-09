@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Icon, Accordion, MenuItem, Divider, Popup } from 'semantic-ui-react';
+import { Menu, Icon, Accordion, Popup } from 'semantic-ui-react';
 
 import Images from '../containers/images/Images.jsx';
 import YAMLParser from '../utilities/yaml-parser';
@@ -76,13 +76,13 @@ class MainMenu extends React.Component {
         </Accordion.Title>
         <Accordion.Content>
           <Menu.Menu>
-            <Menu.Item name='basicsSection' active={activeItem === 'basicsSection'} onClick={this.handleItemClick}>
+          <Menu.Item name='basicsSection' active={activeItem === 'basicsSection'} onClick={this.handleItemClick}>
               Basics
           </Menu.Item>
             <Menu.Item name='profilesSection' active={activeItem === 'profilesSection'} onClick={this.handleItemClick}>
               Profiles
           </Menu.Item>
-            <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'} onClick={this.handleItemClick}>
+          <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'} onClick={this.handleItemClick}>
               Interests
           </Menu.Item>
             <Menu.Item name='skillsSection' active={activeItem === 'skillsSection'} onClick={this.handleItemClick}>
@@ -91,16 +91,16 @@ class MainMenu extends React.Component {
             <Menu.Item name='awardsSection' active={activeItem === 'awardsSection'} onClick={this.handleItemClick}>
               Awards
           </Menu.Item>
-            <Menu.Item name='educationSection' active={activeItem === 'educationSection'} onClick={this.handleItemClick}>
+          <Menu.Item name='educationSection' active={activeItem === 'educationSection'} onClick={this.handleItemClick}>
               Education
           </Menu.Item>
-            <Menu.Item name='workSection' active={activeItem === 'workSection'} onClick={this.handleItemClick}>
+          <Menu.Item name='workSection' active={activeItem === 'workSection'} onClick={this.handleItemClick}>
               Work
           </Menu.Item>
-            <Menu.Item name='volunteerSection' active={activeItem === 'volunteerSection'} onClick={this.handleItemClick}>
+          <Menu.Item name='volunteerSection' active={activeItem === 'volunteerSection'} onClick={this.handleItemClick}>
               Volunteer
           </Menu.Item>
-            <Menu.Item name='refSection' active={activeItem === 'refSection'} onClick={this.handleItemClick}>
+          <Menu.Item name='refSection' active={activeItem === 'refSection'} onClick={this.handleItemClick}>
               References
           </Menu.Item>
           </Menu.Menu>
