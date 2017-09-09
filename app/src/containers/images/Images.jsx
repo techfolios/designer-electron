@@ -2,7 +2,7 @@ import Electron from 'electron';
 import React from 'react';
 import Path from 'path';
 
-import { Button, Grid, Image, Segment } from 'semantic-ui-react';
+import { Button, Image, Popup } from 'semantic-ui-react';
 
 import ImageEditor from './ImageEditor.jsx';
 
@@ -56,21 +56,17 @@ class Images extends React.Component {
 
   render() {
     const { data } = this.state;
-    return <Grid doubling columns={5}>
+    return <div>
+      <Image.Group size="small" >
       {data.map((url, index) => {
         const imageName = Path.basename(url);
-        return <Grid.Column key={index}>
-          <Segment basic>
-            <div data-tooltip={imageName}>
-              <Image centered bordered src={url} onClick={() => this.openImageEditor(url, index)} />
-            </div>
-          </Segment>
-        </Grid.Column>;
+        return <Popup
+          trigger={<Image key={index} src={url} onClick={() => this.openImageEditor(url, index)} data- />}
+          content={imageName}/>;
       })}
-      <Grid.Column>
-        <Button color="teal" icon="plus" onClick={() => this.importImage()} />
-      </Grid.Column>
-    </Grid>;
+      </Image.Group>
+      <Button color="teal" icon="plus" onClick={() => this.importImage()} />
+    </div>;
   }
 }
 
