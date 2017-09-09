@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Dimmer, Loader } from 'semantic-ui-react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 import MainMenu from './components/MainMenu.jsx';
 import GitHubPage from './containers/github/GitHubPage.jsx';
