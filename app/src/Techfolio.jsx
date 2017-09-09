@@ -295,23 +295,21 @@ class Techfolio extends React.Component {
     }
 
     return (
-      <Grid>
-        <Grid.Column width={2}>
-          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
-            essays={essays}
-            essayCrawler={essayCrawler}
-            projects={projects}
-            projectCrawler={projectCrawler}
-            setSelected={this.setSelected}
-            images={images}
-            importImage={this.importImage}
-            removeImage={this.removeImage}
-            renameImage={this.renameImage} />
-        </Grid.Column>
-        <Grid.Column stretched width={13} id="root" style={tempCSS}>
-          {selected}
-        </Grid.Column>
-      </Grid>
+      <div>
+      <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
+        essays={essays}
+        essayCrawler={essayCrawler}
+        projects={projects}
+        projectCrawler={projectCrawler}
+        setSelected={this.setSelected}
+        images={images}
+        importImage={this.importImage}
+        removeImage={this.removeImage}
+        renameImage={this.renameImage} />
+      <div style={{ marginLeft: '100px' }}>
+        {selected}
+      </div>
+      </div>
     );
   }
 }
