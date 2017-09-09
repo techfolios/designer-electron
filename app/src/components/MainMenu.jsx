@@ -225,7 +225,7 @@ class MainMenu extends React.Component {
     const { activeItem } = this.state;
     const { essayCrawler, essayList, deletedEssay } = this.state;
     const { projectCrawler, projectList, deletedProject } = this.state;
-    const tempCSS = { overflow: 'hidden', overflowY: 'scroll' };
+    const tempCSS = { overflow: 'hidden', overflowY: 'auto' };
     return (
       <Menu style={tempCSS} vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
         {this.renderSettings(activeItem)}

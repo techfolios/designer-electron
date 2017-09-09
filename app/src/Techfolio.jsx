@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Dimmer, Loader } from 'semantic-ui-react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 import MainMenu from './components/MainMenu.jsx';
 import GitHubPage from './containers/github/GitHubPage.jsx';
@@ -285,29 +285,28 @@ class Techfolio extends React.Component {
 
   render() {
     const { isLoading, bio, projects, projectCrawler, selected, essays, essayCrawler, images } = this.state;
-    const tempCSS = { padding: '30px 0px 30px 40px' };
+    const tempCSS = { marginLeft: '100px' };
 
     if (isLoading || !bio || !projects) {
       return <Dimmer inverted active> <Loader size="big" content="Loading..." /> </Dimmer>;
     }
 
     return (
-      <Grid>
-        <Grid.Column width={2}>
-          <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
-            essays={essays}
-            essayCrawler={essayCrawler}
-            projects={projects}
-            projectCrawler={projectCrawler}
-            setSelected={item => this.setSelected(item)}
-            images={images}
-            importImage={imgURL => this.importImage(imgURL)}
-            removeImage={imgIndex => this.removeImage(imgIndex)} />
-        </Grid.Column>
-        <Grid.Column stretched width={13} id="root" style={tempCSS}>
-          {selected}
-        </Grid.Column>
-      </Grid>
+      <div>
+      <MainMenu onMenuSelect={this.handleMenuSelect} onUpload={this.handleUpload}
+        essays={essays}
+        essayCrawler={essayCrawler}
+        projects={projects}
+        projectCrawler={projectCrawler}
+        setSelected={this.setSelected}
+        images={images}
+        importImage={this.importImage}
+        removeImage={this.removeImage}
+        renameImage={this.renameImage} />
+      <div style={tempCSS}>
+        {selected}
+      </div>
+      </div>
     );
   }
 }
