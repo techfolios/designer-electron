@@ -75,33 +75,35 @@ class MainMenu extends React.Component {
           </Menu.Item>
         </Accordion.Title>
         <Accordion.Content>
-          <Menu.Item name='basicsSection' active={activeItem === 'basicsSection'} onClick={this.handleItemClick}>
-            Basics
+          <Menu.Menu>
+            <Menu.Item name='basicsSection' active={activeItem === 'basicsSection'} onClick={this.handleItemClick}>
+              Basics
           </Menu.Item>
-          <Menu.Item name='profilesSection' active={activeItem === 'profilesSection'} onClick={this.handleItemClick}>
-            Profiles
+            <Menu.Item name='profilesSection' active={activeItem === 'profilesSection'} onClick={this.handleItemClick}>
+              Profiles
           </Menu.Item>
-          <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'} onClick={this.handleItemClick}>
-            Interests
+            <Menu.Item name='interestsSection' active={activeItem === 'interestsSection'} onClick={this.handleItemClick}>
+              Interests
           </Menu.Item>
-          <Menu.Item name='skillsSection' active={activeItem === 'skillsSection'} onClick={this.handleItemClick}>
-            Skills
+            <Menu.Item name='skillsSection' active={activeItem === 'skillsSection'} onClick={this.handleItemClick}>
+              Skills
           </Menu.Item>
-          <Menu.Item name='awardsSection' active={activeItem === 'awardsSection'} onClick={this.handleItemClick}>
-            Awards
+            <Menu.Item name='awardsSection' active={activeItem === 'awardsSection'} onClick={this.handleItemClick}>
+              Awards
           </Menu.Item>
-          <Menu.Item name='educationSection' active={activeItem === 'educationSection'} onClick={this.handleItemClick}>
-            Education
+            <Menu.Item name='educationSection' active={activeItem === 'educationSection'} onClick={this.handleItemClick}>
+              Education
           </Menu.Item>
-          <Menu.Item name='workSection' active={activeItem === 'workSection'} onClick={this.handleItemClick}>
-            Work
+            <Menu.Item name='workSection' active={activeItem === 'workSection'} onClick={this.handleItemClick}>
+              Work
           </Menu.Item>
-          <Menu.Item name='volunteerSection' active={activeItem === 'volunteerSection'} onClick={this.handleItemClick}>
-            Volunteer
+            <Menu.Item name='volunteerSection' active={activeItem === 'volunteerSection'} onClick={this.handleItemClick}>
+              Volunteer
           </Menu.Item>
-          <Menu.Item name='refSection' active={activeItem === 'refSection'} onClick={this.handleItemClick}>
-            References
+            <Menu.Item name='refSection' active={activeItem === 'refSection'} onClick={this.handleItemClick}>
+              References
           </Menu.Item>
+          </Menu.Menu>
         </Accordion.Content>
       </Accordion>
     );
@@ -196,27 +198,28 @@ class MainMenu extends React.Component {
   renderYAML(name, icon, checkpointKey, listKey, crawler, listObj, checkpointObj) {
     const capName = `${name[0].toUpperCase()}${name.substring(1)}`;
     const addYAML = <Icon link size='large' name='plus' color='green'
-      onClick={event => this.addYAML(event, listObj, name, ISODate.getDate())}/>;
+      onClick={event => this.addYAML(event, listObj, name, ISODate.getDate())} />;
     const restoreYAML = <Icon link={checkpointObj !== undefined} size='large' name='undo'
       disabled={!checkpointObj} color='teal' onClick={event =>
-        this.restoreYAML(event, crawler, listKey, checkpointKey)}/>;
-    return <Accordion as={MenuItem}>
+        this.restoreYAML(event, crawler, listKey, checkpointKey)} />;
+    return <Accordion>
       <Accordion.Title>
-        <Menu.Item fitted>
-          <Icon name='dropdown'/>
-          <Icon name={icon}/>
+        <Menu.Item>
+          <Icon name='dropdown' />
+          <Icon name={icon} />
           {`${capName}s`}
         </Menu.Item>
       </Accordion.Title>
       <Accordion.Content>
-        {this.getYAML(`${name}s`, listObj, crawler, listKey, checkpointKey)}
-        <Divider/>
-        <Menu.Item fitted key={`${name}sicon`}>
-          <span>
-            <Popup trigger={addYAML} content={`Adds an new blank ${name}`}/>
-            <Popup trigger={restoreYAML} content={`Restores the last deleted ${name}`}/>
-          </span>
-        </Menu.Item>
+        <Menu.Menu>
+          {this.getYAML(`${name}s`, listObj, crawler, listKey, checkpointKey)}
+          <Menu.Item fitted key={`${name}sicon`}>
+            <span>
+              <Popup trigger={addYAML} content={`Adds an new blank ${name}`} />
+              <Popup trigger={restoreYAML} content={`Restores the last deleted ${name}`} />
+            </span>
+          </Menu.Item>
+        </Menu.Menu>
       </Accordion.Content>
     </Accordion>;
   }
@@ -229,15 +232,11 @@ class MainMenu extends React.Component {
     return (
       <Menu style={tempCSS} vertical widths={this.maxWidth} fixed="left" icon='labeled' color="teal">
         {this.renderSettings(activeItem)}
-
         {this.renderBio(activeItem)}
-
         {this.renderYAML('project', 'cubes', 'deletedProject', 'projectList',
           projectCrawler, projectList, deletedProject)}
-
         {this.renderYAML('essay', 'file text outline', 'deletedEssay', 'essayList',
           essayCrawler, essayList, deletedEssay)}
-
         <Menu.Item
           active={activeItem === 'images'}
           onClick={() => this.setSelected(

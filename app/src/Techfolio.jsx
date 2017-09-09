@@ -285,7 +285,7 @@ class Techfolio extends React.Component {
 
   render() {
     const { isLoading, bio, projects, projectCrawler, selected, essays, essayCrawler, images } = this.state;
-    const tempCSS = { marginLeft: '100px' };
+    const tempCSS = { marginLeft: '100px', marginRight: '15px' };
 
     if (isLoading || !bio || !projects) {
       return <Dimmer inverted active> <Loader size="big" content="Loading..." /> </Dimmer>;
