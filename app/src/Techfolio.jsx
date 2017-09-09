@@ -298,11 +298,10 @@ class Techfolio extends React.Component {
         essayCrawler={essayCrawler}
         projects={projects}
         projectCrawler={projectCrawler}
-        setSelected={this.setSelected}
+        setSelected={item => this.setSelected(item)}
         images={images}
-        importImage={this.importImage}
-        removeImage={this.removeImage}
-        renameImage={this.renameImage} />
+        importImage={imgUrl => this.importImage(imgUrl)}
+        removeImage={index => this.removeImage(index)} />
       <div style={tempCSS}>
         {selected}
       </div>
