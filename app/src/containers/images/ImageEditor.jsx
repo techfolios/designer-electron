@@ -1,6 +1,7 @@
 import React from 'react';
 import Cropper from 'cropperjs';
 import Jimp from 'jimp';
+import Path from 'path';
 import { Button, Checkbox, Dropdown, Image, Input, Modal, Segment } from 'semantic-ui-react';
 
 class ImageEditor extends React.Component {
@@ -72,8 +73,10 @@ class ImageEditor extends React.Component {
 
   saveAs() {
     const { crop, url } = this.state;
+    const dir = Path.dirname(url);
+    const base = Path.basename(url);
     this.show('Save New Image',
-      <Input fluid defaultValue={url} onChange={e => this.setState({ newURL: e.target.value })} />,
+      <Input fluid defaultValue={base} onChange={e => this.setState({ newURL: Path.resolve(dir, e.target.value) })} />,
       () => Jimp.read(url, (err, img) => {
         if (!err) {
           const { newURL } = this.state;
